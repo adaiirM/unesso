@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+    <title>Beca mi familia</title>
+</head>
+
+<body>
+    <nav id="nav"></nav>
+    <div class="container mt-3 ">
+        <div class="row" >
+            <ol class="colorFondo breadcrumb bread-primary ">
+                <a href="../html/menuAlumno.html"><button class="btn camino" id="botonInicio" >Inicio</button></a>
+                <a href="../html/menuSolicitarBeca.html" style="text-decoration: none;"><button class="btn camino" id="botonSolicitar"> Solicitar beca colegiatura</button></a>
+                <button class="btn btn-primary camino localizacion">Mi familia</button>   
+            </ol>
+        </div>
+    </div>
+        <h1 class="titulo ps-5" style="font: bold; font-weight: 660;">MI FAMILIA</h1>
+        <div class="row ms-5 me-5">
+            <div class="col-15 p-3 rounded colorFondo">
+                <h3 style="color: #6366F1;">Domicilio</h3>
+                <div class="mt-4" style="color: #6366F1;">
+                    ¿El domicilio de tu tutor coincide con el que te encuentras actualmente?
+                </div>
+                <div class="mt-3">
+                    <input type="radio" class="input-outline-primary ms-4" id="domicilioSi" name="domicilio" style="color: #6366F1;">
+                    <label for="domicilioSi" style="color: #6366F1;" class="me-5">Si</label>
+                    <input type="radio" class="input-outline-primary" id="domicilioNo" name="domicilio" style="color: #6366F1;">
+                    <label for="domicilioNo" style="color: #6366F1;">No</label>
+                </div> 
+                <div class="row mt-4">
+                    <div class="col">
+                        <p class="textoInputs">Estado</p>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Estado 1</option>
+                            <option value="2" class="subtitulo">Estado 2</option>
+                            <option value="3" class="subtitulo">Estado 3</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Región</p>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Region 1</option>
+                            <option value="2" class="subtitulo">Region 2</option>
+                            <option value="3" class="subtitulo">Region 3</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Colonia o barrio</p>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Colonia o barrio 1</option>
+                            <option value="2" class="subtitulo">Colonia o barrio 2</option>
+                            <option value="3" class="subtitulo">Colonia o barrio 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <p class="textoInputs">Distrito</p>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Distrito 1</option>
+                            <option value="2" class="subtitulo">Distrito 2</option>
+                            <option value="3" class="subtitulo">Distrito 3</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Municipio</p>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Municipio 1</option>
+                            <option value="2" class="subtitulo">Municipio 2</option>
+                            <option value="3" class="subtitulo">Municipio 3</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Localidad</p>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Localidad 1</option>
+                            <option value="2" class="subtitulo">Localidad 2</option>
+                            <option value="3" class="subtitulo">Localidad 3</option>
+                        </select>
+                    </div>
+                </div>            
+            </div>
+        </div>
+
+        <div class="row ms-5 me-5 mb-3 mt-3">
+            <div class="col-4 p-3 rounded colorFondo ">
+                <h3 style="color: #6366F1;">Contacto</h3>
+                <div>
+                    <p class="textoInputs mt-4">Teléfono</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTelefono" placeholder="Ingrese su numero de telefono">
+                </div>
+            </div>
+            <div class="col rounded colorFondo ms-3 p-3">
+                <div class="row">
+                    <div class="col">
+                        <h3 style="color: #6366F1;">Grados de escolaridad</h3>
+                        <div>
+                            <p class="textoInputs mt-4">Escolaridad del padre</p>
+                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option selected>Elige una opción</option>
+                                <option value="1" class="subtitulo">Primaria</option>
+                                <option value="2" class="subtitulo">Secundaria</option>
+                                <option value="3" class="subtitulo">Bachillerato</option>
+                                <option value="3" class="subtitulo">Licenciatura</option>
+                                <option value="3" class="subtitulo">Postgrado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3 style="color: #F5F5F5;">Grados de escolaridad</h3>
+                        <div class="mt-4">
+                            <p class="textoInputs">Escolaridad de la madre</p>
+                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option selected>Elige una opción</option>
+                                <option value="1" class="subtitulo">Primaria</option>
+                                <option value="2" class="subtitulo">Secundaria</option>
+                                <option value="3" class="subtitulo">Bachillerato</option>
+                                <option value="3" class="subtitulo">Licenciatura</option>
+                                <option value="3" class="subtitulo">Postgrado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ms-5 mb-3 mt-2 me-5">
+            <div class="col-8 rounded colorFondo p-3">
+                <h3 style="color: #6366F1;">Vivienda</h3>
+                <div class="row mt-4">
+                    <div class="col">
+                        <div>
+                            <p class="textoInputs">La casa donde tu familia es:</p>
+                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opcion</option>
+                                <option value="1" class="subtitulo">Propia</option>
+                                <option value="2" class="subtitulo">Alquilada</option>
+                                <option value="3" class="subtitulo">Otra</option>
+                            </select>
+                        </div>
+                        <div class="mt-4">
+                            <p class="textoInputs">Material de construcción:</p>
+                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opcion</option>
+                                <option value="1" class="subtitulo">Mamposteria</option>
+                                <option value="2" class="subtitulo">Madera</option>
+                                <option value="3" class="subtitulo">Lamina</option>
+                                <option value="2" class="subtitulo">Concreto</option>
+                                <option value="3" class="subtitulo">Otros</option>
+                            </select>
+                        </div>
+                        <div class="mt-4">
+                            <p class="textoInputs">¿Con qué servicios cuenta la vivienda?</p>
+                            <div class="row">
+                                <div class="col me-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="agua">
+                                        <label class="form-check-label subtitulo" for="agua">
+                                          Agua
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="telefono" >
+                                        <label class="form-check-label subtitulo" for="telefono">
+                                          Teléfono 
+                                        </label>
+                                      </div>
+                                </div>
+                                <div class="col me-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="luz">
+                                        <label class="form-check-label subtitulo" for="luz">
+                                          Luz
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="otros" >
+                                        <label class="form-check-label subtitulo" for="otros">
+                                          Otros
+                                        </label>
+                                      </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="drenaje">
+                                        <label class="form-check-label subtitulo" for="drenaje">
+                                          Drenaje
+                                        </label>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div>
+                            <p class="textoInputs">Tipo de vivienda:</p>
+                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opcion</option>
+                                <option value="1" class="subtitulo">Casa sola</option>
+                                <option value="2" class="subtitulo">Condominio</option>
+                                <option value="3" class="subtitulo">Vecindad</option>
+                                <option value="3" class="subtitulo">Departamento</option>
+                            </select>
+                        </div>
+                        <div class="mt-4">
+                            <p class="textoInputs">¿Cuántas personas habitan en la vivienda?</p>
+                            <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="Numero personas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col rounded colorFondo ms-3 p-3">
+                <h3 style="color: #6366F1;">Información complementaria </h3>
+                <div class="mt-4">
+                    <p class="textoInputs">¿Cuentas con acceso a internet?</p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mt-3">
+                                <input type="radio" class="input-outline-primary ms-4" id="internetSi" name="internet" style="color: #6366F1;">
+                                <label for="domicilioSi" style="color: #6366F1;" class="me-5">Si</label>
+                                <input type="radio" class="input-outline-primary" id="internetNo" name="internet" style="color: #6366F1;">
+                                <label for="domicilioNo" style="color: #6366F1;">No</label>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="textoInputs">Tipo de conexión</p>
+                    <div class="row">
+                        <div class="col me-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="agua">
+                                    <label class="form-check-label subtitulo" for="agua">
+                                      Cable
+                                    </label>
+                                </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="telefono" >
+                                    <label class="form-check-label subtitulo" for="telefono">
+                                      Satelite 
+                                    </label>
+                                  </div>
+                            </div>
+                            <div class="col me-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="luz">
+                                    <label class="form-check-label subtitulo" for="luz">
+                                      WiFi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="otros" >
+                                    <label class="form-check-label subtitulo" for="otros">
+                                        DLS
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    
+</div>
+        <div class="row ms-5 me-5 colorFondo rounded p-3">
+            <h3 style="color: #6366F1;">Hermanos</h3>
+            <div class="row">
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos hermanos tienes?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNumHermano" placeholder="">
+                </div>
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos están estudiando?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputEst" placeholder="">
+                </div>
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos dejaron de estudiar?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNum" placeholder="">
+                </div>
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos tienen licenciatura?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputLicHermano" placeholder="">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row mt-2">
+                    <div class="col-3">
+                        <p class="textoInputs">Nombre completo:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
+                    </div>
+                    <div class="col-1">
+                        <p class="textoInputs">Edad:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="">
+                    </div>
+                    
+                    <div class="col-2">
+                        <p class="textoInputs">Grado de estudios:</p>
+                        <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Primaria</option>
+                            <option value="2" class="subtitulo">Secundaria</option>
+                            <option value="3" class="subtitulo">Bachillerato</option>
+                            <option value="4" class="subtitulo">Universidad</option>
+                            <option value="5" class="subtitulo">Postgrado</option>
+                        </select>                    
+                    </div>
+                    <div class="col-3">
+                        <p class="textoInputs">Nombre de su instituciónes:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputInst" placeholder="">
+                    </div>
+                    <div class="col" >
+                        <p class="textoInputs">Adjuntar comprobante:</p>
+                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
+                    </div>
+                <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row mt-2">
+                    <div class="col-3">
+                        <p class="textoInputs">Nombre completo:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
+                    </div>
+                    <div class="col-1">
+                        <p class="textoInputs">Edad:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                    </div>
+                    
+                    <div class="col-2">
+                        <p class="textoInputs">Grado de estudios:</p>
+                        <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Primaria</option>
+                            <option value="2" class="subtitulo">Secundaria</option>
+                            <option value="3" class="subtitulo">Bachillerato</option>
+                            <option value="4" class="subtitulo">Universidad</option>
+                            <option value="5" class="subtitulo">Postgrado</option>
+                        </select>                    
+                    </div>
+                    <div class="col-3">
+                        <p class="textoInputs">Nombre de su instituciónes:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputInst" placeholder="">
+                    </div>
+                    <div class="col" >
+                        <p class="textoInputs">Subir comprobante:</p>
+                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <p class="textoInputs">Nombre completo:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
+                    </div>
+                    <div class="col-1 mt-4">
+                        <p class="textoInputs">Edad:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="">
+                    </div>
+                    
+                    <div class="col-2 mt-4">
+                        <p class="textoInputs">Grado de estudios:</p>
+                        <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                            <option selected class="subtitulo">Elige una opción</option>
+                            <option value="1" class="subtitulo">Primaria</option>
+                            <option value="2" class="subtitulo">Secundaria</option>
+                            <option value="3" class="subtitulo">Bachillerato</option>
+                            <option value="4" class="subtitulo">Universidad</option>
+                            <option value="5" class="subtitulo">Postgrado</option>
+                        </select>                    
+                    </div>
+                    <div class="col-3 mt-4">
+                        <p class="textoInputs">Nombre de su instituciónes:</p>
+                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputInst" placeholder="">
+                    </div>
+                    <div class="col mt-4">
+                        <p class="textoInputs">Subir comprobante:</p>
+                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
+                    </div>
+                </div>
+            </div>
+        <div class="line mx-auto mt-5" style="width: 68%;"></div>
+            <h3 style="color: #6366F1;" class="mt-4">Personas dependientes</h3>
+            <div class="mt-2">
+                <p class="textoInputs">Además de ti y tus padres, ¿Cuántas personas dependen económicamente de tu ingreso familiar ?</p>
+                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 20%;" id="inputNombre" placeholder="">
+            </div>
+        <p class="textoInputs mt-3">Personas que dependen económicamente:</p>
+            <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row">
+                <div class="col-5">
+                    <p class="textoInputs">Nombre completo:</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
+                </div>
+                <div class="col-1">
+                    <p class="textoInputs">Edad:</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                </div>
+                <div class="col">
+                    <p class="textoInputs">Parentesco:</p>
+                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                        <option selected class="subtitulo">Elige una opción</option>
+                        <option value="1" class="subtitulo">Padre</option>
+                        <option value="2" class="subtitulo">Madre</option>
+                        <option value="3" class="subtitulo">Hermano</option>
+                        <option value="4" class="subtitulo">Hermana</option>
+                        <option value="5" class="subtitulo">Tio</option>
+                        <option value="6" class="subtitulo">Tia</option>
+                        <option value="7" class="subtitulo">Abuelo</option>
+                        <option value="8" class="subtitulo">Abuela</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <p class="textoInputs">Grado de estudios:</p>
+                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                        <option selected class="subtitulo">Elige una opción</option>
+                        <option value="1" class="subtitulo">Primaria</option>
+                        <option value="2" class="subtitulo">Secundaria</option>
+                        <option value="3" class="subtitulo">Bachillerato</option>
+                        <option value="4" class="subtitulo">Universidad</option>
+                        <option value="5" class="subtitulo">Postgrado</option>
+                    </select>                    
+                </div>
+            </div>
+                <div class="col-5 mt-4">
+                    <p class="textoInputs">Nombre completo:</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
+                </div>
+                <div class="col-1 mt-4">
+                    <p class="textoInputs">Edad:</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                </div>
+                <div class="col mt-4">
+                    <p class="textoInputs">Parentesco:</p>
+                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                        <option selected class="subtitulo">Elige una opción</option>
+                        <option value="1" class="subtitulo">Padre</option>
+                        <option value="2" class="subtitulo">Madre</option>
+                        <option value="3" class="subtitulo">Hermano</option>
+                        <option value="4" class="subtitulo">Hermana</option>
+                        <option value="5" class="subtitulo">Tio</option>
+                        <option value="6" class="subtitulo">Tia</option>
+                        <option value="7" class="subtitulo">Abuelo</option>
+                        <option value="8" class="subtitulo">Abuela</option>
+                    </select>
+                </div>
+                <div class="col mt-4">
+                    <p class="textoInputs">Grado de estudios:</p>
+                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
+                        <option selected class="subtitulo">Elige una opción</option>
+                        <option value="1" class="subtitulo">Primaria</option>
+                        <option value="2" class="subtitulo">Secundaria</option>
+                        <option value="3" class="subtitulo">Bachillerato</option>
+                        <option value="4" class="subtitulo">Universidad</option>
+                        <option value="5" class="subtitulo">Postgrado</option>
+                    </select>                    
+                </div>
+            </div>
+            
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+            <button class="btn btn-outline-primary hBtn mt-3 estiloBoton">Guardar</button>
+        </div>
+    </div>
+
+    <footer id="footer"></footer>
+    <script src="../javaScript.js/funcionamiento.js"></script>
+</body>
+</html>

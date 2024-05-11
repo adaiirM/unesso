@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Datos personales</title>
+</head>
+<body>
+    <nav id="nav"></nav>
+    <div class="container mt-3 ">
+        <div class="row" >
+            <ol class="colorFondo breadcrumb bread-primary ">
+                <a href="../html/menuAlumno.html" style="text-decoration: none;">
+                    <button class="btn camino" id="botonInicio" >Inicios</button>
+                </a>
+                <a href="../html/menuSolicitarBeca.html" style="text-decoration: none;">
+                    <button class="btn camino" id="botonInicio" >Solicitar beca colegiatura</button>
+                </a>
+                <a href="../html/PanelDatosPersonales.html" style="text-decoration: none;">
+                    <button class="btn btn-primary camino localizacion" >Datos personales</button>  
+                </a> 
+            </ol>
+        </div>
+    </div>
+<section>
+
+    <h1 class="titulo ps-5 mb-2 mt-2" style="font: bold; font-weight: 660;">MIS DATOS</h1>
+    <div class="row ps-5 pe-5">
+        <div class="col-4 rounded colorFondo m-2 p-4">
+            <h3 style="color: #6366F1;">Información general</h3>
+                <div class="col-md-12 pt-2">
+                        <p class="textoInputs">Nombre Completo</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="Ingrese el nombre completo del alumno">
+                </div>
+                    <div class="col-md-12 pt-3">
+                        <p class="textoInputs">Carrera</p>
+                    <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example" >
+                        <option selected class="subtitulo">Elige una opción</option>
+                        <option value="1">Ingeniería Forestal</option>
+                        <option value="2">Licenciatura en Ciencias Ambientales</option>
+                        <option value="3">Ingeniería de Desarrollo de Software y Sistemas Inteligentes</option>
+                        <option value="3">Licenciatura en Biología</option>
+                        <option value="3">Licenciatra en Administración Turística</option>
+                    </select>
+                </div>
+                <div class="col-12 pt-3">
+                    <p class="textoInputs">Semestre</p>
+                    <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                        <option selected class="subtitulo">Elige una opción</option>
+                        <option value="1" class="subtitulo">Primero</option>
+                        <option value="2" class="subtitulo">Segundo</option>
+                        <option value="3" class="subtitulo">Cuarto</option>
+                        <option value="3" class="subtitulo">Quinto</option>
+                        <option value="3" class="subtitulo">Sexto</option>
+                        <option value="3" class="subtitulo">Séptimo</option>
+                        <option value="3" class="subtitulo">Octavo</option>
+                        <option value="3" class="subtitulo">Noveno</option>
+                        <option value="3" class="subtitulo">Décimo</option>
+                    </select>
+                </div>
+                <div class="col-md-12 pt-3">
+                        <p class="textoInputs">Estado Civil</p>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 48%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                                <p class="subtitulo">Soltero</p>
+                            </div>
+                        </div>
+                        <div style="width: 48%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                                <p class="subtitulo">Casado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 pt-3">
+                        <p class="textoInputs">¿Tienes los recursos económicos necesarios para tus actividades académicas?</p>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 48%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault1">
+                                <p class="subtitulo">Si</p>
+                            </div>
+                        </div>
+                        <div style="width: 48%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2">
+                                <p class="subtitulo">No</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+        <div class="col rounded colorFondo m-2 p-4">
+        <h3 style="color: #6366F1; padding-bottom: 1%;">Domicilio</h3>
+        <div class="col-md-12">
+                <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
+        </div>
+        <div class="col-md-12">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault4" id="flexRadioDefault1">
+                            <p class="subtitulo">Rento cuarto</p>
+                        </div>
+                    </div>
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault4" id="flexRadioDefault2">
+                            <p class="subtitulo">Rento casa</p>
+                        </div>
+                    </div>
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault4" id="flexRadioDefault2">
+                            <p class="subtitulo">Vivo con familiares</p>
+                        </div>
+                    </div>
+                </div>
+        </div> 
+        <div class="col-md-12" style="padding-top: 2%;">
+                <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
+        </div>
+        <div class="col-md-12">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <div class="col-12">
+                            <p class="textoInputs">Estado</p>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opción</option>
+                                <option value="1" class="subtitulo">Oaxaca</option>
+                                <option value="2" class="subtitulo">Puebla</option>
+                                <option value="3" class="subtitulo">Chiapas</option>
+                                <option value="3" class="subtitulo">Veracruz</option>
+                                <option value="3" class="subtitulo">Durango</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <p class="textoInputs">Municipio</p>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opción</option>
+                                <option value="1" class="subtitulo">Ixtlan de Júarez</option>
+                                <option value="2" class="subtitulo">Tamazulapam Mie</option>
+                                <option value="3" class="subtitulo">Guelatao</option>
+                                <option value="3" class="subtitulo">Villa Alta</option>
+                                <option value="3" class="subtitulo">Tlahui</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%; padding-top: 2%;">
+                        <div class="col-12">
+                            <p class="textoInputs">Localidad</p>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option value="1" class="subtitulo">Localidad 1</option>
+                                <option value="2" class="subtitulo">Localidad 2</option>
+                                <option value="3" class="subtitulo">Localidad 3</option>
+                                <option value="4" class="subtitulo">Localidad 4</option>
+                                <option value="5" class="subtitulo">Localidad 5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="width: 48%; padding-top: 2%;">
+                        <div class="form-check">
+                            <p class="textoInputs">Colonia o Barrio</p>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option value="1" class="subtitulo">San Francisco</option>
+                                <option value="2" class="subtitulo">La Asunción</option>
+                                <option value="3" class="subtitulo">Santo Tomas</option>
+                                <option value="3" class="subtitulo">Colonia 4</option>
+                                <option value="3" class="subtitulo">Colonia 6</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%; padding-top: 2%;">
+                        <div class="col-12">
+                            <p class="textoInputs">Calle</p>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option value="1" class="subtitulo">Calle 1</option>
+                                <option value="2" class="subtitulo">Calle 2</option>
+                                <option value="3" class="subtitulo">Calle 3</option>
+                                <option value="3" class="subtitulo">Calle 4</option>
+                                <option value="3" class="subtitulo">Calle 5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="width: 48%; padding-top: 2%;">
+                        <div class="form-check">
+                            <p class="textoInputs">Número</p>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option value="1" class="subtitulo">654</option>
+                                <option value="2" class="subtitulo">655</option>
+                                <option value="3" class="subtitulo">545</option>
+                                <option value="3" class="subtitulo">845</option>
+                                <option value="3" class="subtitulo">555</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="width: 48%; padding-top: 2%;">
+                        <div class="form-check">
+                            <p class="textoInputs">Código Postal<p/>
+                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                <option value="1" class="subtitulo">78546</option>
+                                <option value="2" class="subtitulo">45523</option>
+                                <option value="3" class="subtitulo">45712</option>
+                                <option value="3" class="subtitulo">54451</option>
+                                <option value="3" class="subtitulo">44545</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-top: 1%;">
+                    <div style="width: 70%;">
+                        <p class="textoInputs">Nombre de la casa de huéspedes o propietario</p>
+                        <input type="text" class="form-control estiloInputs" style="width: 100%;" id="inputNombre" placeholder="">
+                    </div>
+                </div>
+        </div> 
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row ms-5 me-5 colorFondo rounded p-3 mt-2 mb-2">
+        <h3 style="color: #6366F1;">Gastos e ingresos</h3>
+        <div class="row">
+            <div class="col mt-3 me-5" style="margin-right: 200%; padding-right: -50%;">
+                <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
+                <p class="subtitulo">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
+                <input type="text" class="form-control estiloInputs" style="width: 100%;"  id="inputNombre" placeholder="">
+            </div>
+            <div class="col mt-3">
+                <p class="textoInputs">¿Dependes económicamente?</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 50%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                <p class="subtitulo">Si</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="width: 50%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                <p class="subtitulo">No</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="line mx-auto mt-5" style="width: 80%;"></div>
+        <div class="row">
+            <div class="col mt-3">
+                <p class="textoInputs">Nombre de la persona de la cuál dependes económicamente:</p>
+                <input type="text" class="form-control estiloInputs" style="width: 47%;"  id="inputNombre" placeholder="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-3">
+                <p class="textoInputs">El trabajo de quien dependes es:</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault1"><p class="subtitulo">Temporal</p></label>
+                        </div>
+                    </div>
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2"><p class="subtitulo">Permanente</p></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mt-3">
+                <p class="textoInputs">Indica su ocupación:</p>
+                <input type="text" class="form-control estiloInputs" style="width: 47%;"  id="inputNombre" placeholder="">
+            </div>
+        </div>
+        <div class="line mx-auto mt-5" style="width: 80%;"></div>
+        <div class="row">
+            <div class="col mt-3">
+                <p class="textoInputs">¿Solicitas beca alimentaria?</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                <p class="subtitulo">Si</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="width: 80%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                <p class="subtitulo">No</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+
+<section>
+    <div class="row ps-5 pe-5">
+        <div class="col-6 rounded colorFondo m-2 p-4">
+            <h3 style="color: #6366F1;">Transporte</h3>
+            <div class="col-md-12 pt-3">
+                <p class="textoInputs">¿Llevas automóvil o motocicleta cotidianamente a la universidad?</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault19" id="flexRadioDefault1">
+                            <p class="subtitulo">Si</p>
+                        </div>
+                    </div>
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault19" id="flexRadioDefault2">
+                            <p class="subtitulo">No</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-8">
+                    <p class="textoInputs">Selecciona tu tipo de vehículo:</p>
+                    <select class="form-select estiloInputs" style="width: 70%;" aria-label="Default select example">
+                        <option value="1">Motocicleta</option>
+                        <option value="2">Automovil</option>
+                    </select>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidad?</p>
+                    <div class="col-md-12">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="width: 48%;">
+                                <div class="form-check" style="margin-bottom: 30px;">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <p class="subtitulo">Microbus</p>
+                                    </label>
+                                </div>
+                                <div class="form-check" style="margin-bottom: 30px;">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        <p class="subtitulo">Automóvil de amigos</p>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        <p class="subtitulo">Bicicleta</p>
+                                    </label>
+                                </div>
+                            </div>                            
+                            <div style="width: 48%;">
+                                <div class="form-check" style="margin-bottom: 30px;">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <p class="subtitulo">Mototaxi</p>
+                                    </label>
+                                  </div>
+                                  <div class="form-check" style="margin-bottom: 30px;">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        <p class="subtitulo">Caminando</p>
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        <p class="subtitulo">Automovil Familiar</p>
+                                    </label>
+                                  </div>
+                            </div>
+                            <div style="width: 48%;">
+                                <div class="form-check" style="margin-bottom: 30px;">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <p class="subtitulo">Colectivo</p>
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        <p class="subtitulo">Taxi</p>
+                                    </label>
+                                  </div>
+                            </div>
+                        </div>
+                </div> 
+                </div>
+        </div>
+
+        <div class="col rounded colorFondo m-2 p-4">
+            <h3 style="color: #6366F1; padding-bottom: 2%;">Información complementaria</h3>
+            <div class="col-md-12" style="color: #6366F1; ">
+                    <p class="textoInputs">¿Eres hijo o nieto de comunero de Ixtlán de Juárez?</p>
+            </div>
+            <div class="col-md-12">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 48%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault20" id="flexRadioDefault20">
+                                <label class="form-check-label" for="flexRadioDefault20">
+                                    <p class="subtitulo">Si</p>
+                                </label>
+                            </div>
+                        </div>
+                        <div style="width: 40%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault20" id="flexRadioDefault21">
+                                <label class="form-check-label" for="flexRadioDefault21">
+                                    <p class="subtitulo">No</p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            </div> 
+        <div class="col-md-12" style="color: #6366F1; padding-top: 3%;">
+            <p class="textoInputs">¿Utilizas teléfono celular en la universidad?</p>
+        </div>
+        <div class="col-md-12">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault21" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                <p class="subtitulo">Si</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="width: 40%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault21" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                <p class="subtitulo">No</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        </div> 
+        <div class="col-md-12" style="color: #6366F1; padding-top: 3%;">
+            <p class="textoInputs">¿Tienes computadora personal y/o portátil?</p>
+        </div>
+        <div class="col-md-12">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 50%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault22" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                <p class="subtitulo">Si</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="width: 40%;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault22" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                <p class="subtitulo">No</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        </div> 
+            <div style="display: flex; justify-content: space-between; padding-top: 3%;">
+                <div style="width: 90%;">
+                    <p class="textoInputs">Además del idioma español, ¿qué otro idioma, lenguaje o dialecto hablas?</p>
+                    <input type="text" class="form-control estiloInputs" style="width: 100%;"  id="inputNombre" placeholder="">
+                </div>
+            </div>
+            </div> 
+        </div>
+    </div>
+</section>
+
+<footer id="footer"><footer/>
+    <script src="../javaScript.js/funcionamiento.js"></script>
+</body>
+</html>
