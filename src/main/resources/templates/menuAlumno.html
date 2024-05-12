@@ -10,15 +10,16 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <title>Menu alumno</title>
 </head>
-<body>
-    <nav id="nav"></nav>
+<body class="body-start">
+     <header  th:insert="fragments/navAlumnos.html :: menu-nav">
+    </header>
        
-    <section>
+    <section class="d-none d-sm-block">
         <div class="container text-center">
-            <div class="col" style="height: 340px; margin-top: 50px;">
+            <div class="row" style="height: 340px; margin-top: 50px;">
                 <figure class="text-center">
                     <blockquote class="blockquote">
-                    <p class="titulo">Bienvenido Emmanuel</p>
+                    <p class="titulo">Bienvenid@ Emmanuel</p>
                     </blockquote>
                     <figcaption class="blockquote-footer">
                         <p>¡Recuerda que tienes hasta el día 10 de octubre a las <b>23:59:59</b> para realizar tu solicitud!</p>
@@ -30,7 +31,7 @@
                     </div>
                     <div class="col d-flex justify-content-center align-items-center flex-column me-5">
                         <div class="vstack gap-1 col-md-5 d-flex justify-content-center">
-                        <a href="menuSolicitarBeca.html">
+                        <a th:href="@{/alumno/menuSolicitar}">
                             <button type="button" class="btnMenuAlumno btn-secondary mt-4 me-10 mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Haz clic aquí para solicitar una beca de colegiatura">
                                 <p class="letraBotonA">Solicitar beca colegiatura</p>
                                 <div class="letraBotonB">Haz clic para solicitar la beca colegiatura</div>
@@ -42,7 +43,7 @@
             </div>
         </div>
     </section>
-    <footer id="footer"><footer/>
+        <footer th:insert="fragments/footer.html :: footer"></footer>
     <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>
