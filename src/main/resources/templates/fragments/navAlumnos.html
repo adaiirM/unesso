@@ -9,19 +9,22 @@
     <title>Document</title>
 </head>
 <nav th:fragment="menu-nav">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#" style="color: #4F46E5; font-weight: bold;">BECSIS</a>
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/img/INESIS.png}" alt="INESIS" class="img-fluid" style="max-height: 70px;">
+                <span class="navbar-brand"  style="color: #4F46E5; font-weight: bold;"> INESIS </span>
+            </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> 
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="../html/menuSolicitarBeca.html">Beca colegiatura</a>
+                    <a class="nav-link" aria-current="page" href="../html/menuSolicitarBeca.html">Estudio Socioeconomico</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="../html/lineamientos.html">Lineamientos</a>
+                    <a class="nav-link" aria-current="page" th:href="@{/lineamientos}">Lineamientos</a>                    
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,7 +36,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="../html/inicioSesion.html"><p class="letraNav">Cerrar sesion</p></a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}"><p class="letraNav">Cerrar sesion</p></a></li>
                     </ul>
               </li>
             </ul>
@@ -79,16 +82,15 @@
                             <p class="textoInputs" style="color: #4F46E5;">Nombre: </p>
                         </div>
                         <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            Luis Alberto Hernandez Ramirez
-                        </div>
-                        
+                            <p><span th:text="${alumnoSesion.nombre}"/> <span th:text="${alumnoSesion.apellidoP}"/> <span th:text="${alumnoSesion.apellidoM}"/></p>
+                        </div>                        
                     </div>
                     <div class="row mt-3">
                         <div class="col-2">
                             <p class="textoInputs" style="color: #4F46E5;">Carrera: </p>
                         </div>
                         <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            Licenciatura en Informática
+                            <span th:text="${alumnoSesion.catGrupo.catCarrera.carrera}"/>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -96,7 +98,7 @@
                             <p class="textoInputs" style="color: #4F46E5;">Semestre: </p>
                         </div>
                         <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            10º
+                            <span th:text="${alumnoSesion.catGrupo.catSemestre.nombreSemestre}"/>
                         </div>
                     </div>
                 </div>

@@ -24,8 +24,8 @@ public class Alumno {
 	private InfoVivienda infoVivienda;
 	
 	@OneToOne
-	@JoinColumn(name="idTutor")
-	private Tutor tutor;
+	@JoinColumn(name="idTutorEconomico")
+	private TutorEconomico tutorEconomico;
 	
 	@OneToOne
 	@JoinColumn(name="idCatEstadoCivil")
@@ -34,11 +34,7 @@ public class Alumno {
 	@OneToOne
 	@JoinColumn(name="idFamilia")
 	private Familia familia;
-	
-	@OneToOne
-	@JoinColumn(name="idIngresosFamiliar")
-	private IngresoFamiliar ingresoFamiliar;
-	
+
 	@OneToOne
 	@JoinColumn(name="idUsuario")
 	private Usuario usuario;
@@ -97,12 +93,12 @@ public class Alumno {
 		this.infoVivienda = infoVivienda;
 	}
 
-	public Tutor getTutor() {
-		return tutor;
+	public TutorEconomico getTutor() {
+		return tutorEconomico;
 	}
 
-	public void setTutor(Tutor tutor) {
-		this.tutor = tutor;
+	public void setTutor(TutorEconomico tutor) {
+		this.tutorEconomico = tutor;
 	}
 
 	public CatEstadoCivil getCatEstadoCivil() {
@@ -121,13 +117,6 @@ public class Alumno {
 		this.familia = familia;
 	}
 
-	public IngresoFamiliar getIngresoFamiliar() {
-		return ingresoFamiliar;
-	}
-
-	public void setIngresoFamiliar(IngresoFamiliar ingresoFamiliar) {
-		this.ingresoFamiliar = ingresoFamiliar;
-	}
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -252,16 +241,13 @@ public class Alumno {
 	@Override
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", domicilio=" + domicilio + ", infoVivienda=" + infoVivienda
-				+ ", tutor=" + tutor + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia
-				+ ", ingresoFamiliar=" + ingresoFamiliar + ", usuario=" + usuario + ", catGrupo=" + catGrupo
-				+ ", matricula=" + matricula + ", nombre=" + nombre + ", apellidoP=" + apellidoP + ", apellidoM="
-				+ apellidoM + ", telefono=" + telefono + ", curp=" + curp + ", recursosSuficientes="
-				+ recursosSuficientes + ", solicitaBecaAlimenticia=" + solicitaBecaAlimenticia + ", gastoMensual="
-				+ gastoMensual + ", dependeEconomicamente=" + dependeEconomicamente + ", familiarComunero="
-				+ familiarComunero + ", observaciones=" + observaciones + ", idioma=" + idioma + "]";
+				+ ", tutor=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia + ", usuario="
+				+ usuario + ", catGrupo=" + catGrupo + ", matricula=" + matricula + ", nombre=" + nombre
+				+ ", apellidoP=" + apellidoP + ", apellidoM=" + apellidoM + ", telefono=" + telefono + ", curp=" + curp
+				+ ", recursosSuficientes=" + recursosSuficientes + ", solicitaBecaAlimenticia="
+				+ solicitaBecaAlimenticia + ", gastoMensual=" + gastoMensual + ", dependeEconomicamente="
+				+ dependeEconomicamente + ", familiarComunero=" + familiarComunero + ", observaciones=" + observaciones
+				+ ", idioma=" + idioma + "]";
 	}
-	
-	
-	
 
 }

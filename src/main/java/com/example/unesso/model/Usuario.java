@@ -21,7 +21,7 @@ public class Usuario {
 	
 	private String correo;
 	
-	private String contrasenia;
+	private String contraseña;
 	
 	private Boolean estatus;
 
@@ -51,11 +51,11 @@ public class Usuario {
 	}
 
 	public String getPassword() {
-		return contrasenia;
+		return contraseña;
 	}
 
 	public void setPassword(String password) {
-		this.contrasenia = password;
+		this.contraseña = password;
 	}
 
 	public Boolean getStatus() {
@@ -68,7 +68,8 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "User [idUser=" + idUsuario + ", catRol=" + catRol + ", username=" + correo + ", password=" + contrasenia
+		return "User [idUser=" + idUsuario + ", catRol=" + catRol + ", username=" + correo + ", password=" + contraseña
+				
 				+ ", status=" + estatus + "]";
 	}
 	

@@ -25,8 +25,6 @@ public class CatLocalidad {
 	 
 	private String nombreLocalidad;
 
-
-	
 	
 	public Integer getIdCatLocalidad() {
 		return idCatLocalidad;

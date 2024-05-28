@@ -21,22 +21,23 @@
         <div class="row" >
             <ol class="p-1 colorFondo breadcrumb bread-primary ">
                 <a href="menuAlumno.html" style="text-decoration: none;">
-                    <button href="#" class="btn camino" id="botonInicio" >Inicio</button>
+                    <a th:href="@{/}" class="btn camino" id="botonInicio" >Inicio</a>
                 </a>
-                <button href="#" class="btn btn-primary camino localizacion" >Solicitar beca colegiatura</button>   
+                <button href="#" class="btn btn-primary camino localizacion" >Solicitar</button>   
             </ol>
         </div>
     </div>
-    <div class="d-none d-sm-block container">
-		 <div class="">
-        <a class="btn apartadosBtn titulo hBtn" href="../html/PanelDatosPersonales.html" role="button">MIS DATOS</a>
-        <a class="btn apartadosBtn titulo hBtn" href="../html/miTutor.html" role="button">MI TUTOR</a>
-        <a class="btn apartadosBtn titulo hBtn" href="../html/becaMiFamilia.html" role="button">MI FAMILIA</a>
-        <a class="btn apartadosBtn titulo hBtn" href="../html/MisGastos.html" role="button" style="line-height: 1.5;" >GASTOS E <br>INGRESOS</a>
-            <a class="btn btn-outline-primary hBtn mt-3  estiloBoton" style="margin-left: 17cm;" role="button">Solicitar beca</a>
-    </div>
-    
-	</div>
+
+	    <div class="divApartados">
+        	<a class="btn apartadosBtn titulo hBtn" href="../html/PanelDatosPersonales.html" role="button">MIS DATOS</a>
+	        <a class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/formMiTutor}" role="button">MI TUTOR</a>
+	        <a class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/formMiFamilia}" role="button">MI FAMILIA</a>
+	        <a class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/formMisGastos}" role="button" style="line-height: 1.5;" >GASTOS E <br>INGRESOS</a>
+	    </div>
+	    <a class="btn btn-outline-primary hBtn mt-3  estiloBoton" style="margin-left: 17cm;" role="button">Solicitar beca</a>
+	    
+   
+        
    
         <footer th:insert="fragments/footer.html :: footer"></footer>
 

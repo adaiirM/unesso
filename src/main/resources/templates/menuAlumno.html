@@ -14,12 +14,12 @@
      <header  th:insert="fragments/navAlumnos.html :: menu-nav">
     </header>
        
-    <section class="d-none d-sm-block">
+     <section>
         <div class="container text-center">
-            <div class="row" style="height: 340px; margin-top: 50px;">
+            <div class="col" style="height: 340px; margin-top: 50px;">
                 <figure class="text-center">
                     <blockquote class="blockquote">
-                    <p class="titulo">Bienvenid@ Emmanuel</p>
+                    <p class="titulo">Bienvenid@ <span th:text="${alumnoSesion.nombre}"></span></p>
                     </blockquote>
                     <figcaption class="blockquote-footer">
                         <p>¡Recuerda que tienes hasta el día 10 de octubre a las <b>23:59:59</b> para realizar tu solicitud!</p>
@@ -33,7 +33,7 @@
                         <div class="vstack gap-1 col-md-5 d-flex justify-content-center">
                         <a th:href="@{/alumno/menuSolicitar}">
                             <button type="button" class="btnMenuAlumno btn-secondary mt-4 me-10 mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Haz clic aquí para solicitar una beca de colegiatura">
-                                <p class="letraBotonA">Solicitar beca colegiatura</p>
+                                <p class="letraBotonA">Formulario Estudio Socioeconomico</p>
                                 <div class="letraBotonB">Haz clic para solicitar la beca colegiatura</div>
                             </button>
                         </a>

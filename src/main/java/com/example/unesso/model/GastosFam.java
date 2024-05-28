@@ -33,7 +33,7 @@ public class GastosFam {
 	
 	private Double gastoOtros;
 	
-	
+
 
 	public Integer getIdGastosFam() {
 		return idGastosFam;

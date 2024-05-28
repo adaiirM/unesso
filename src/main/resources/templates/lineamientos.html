@@ -16,14 +16,15 @@
 
 </head>
 <body>
-    <nav id="nav"></nav>
+     <header  th:insert="fragments/navAlumnos.html :: menu-nav">
+    </header>
 
     <div class="container m-7 " style="margin-top: 1cm;" >
         <div class="row" >
             <ol class="p-1 colorFondo breadcrumb bread-primary ">
               
-                <a href="menuAlumno.html" style="text-decoration: none;">
-                    <button href="#" class="btn camino" id="botonInicio" >Inicio</button>
+                <a th:href="@{/}"  style="text-decoration: none;">
+                    <button class="btn camino" id="botonInicio" >Inicio</button>
                 </a>
                 
                 <button href="#" class="btn btn-primary camino localizacion" >Lineamientos</button>   
@@ -55,7 +56,7 @@
     
     
 
-    <footer id="footer"></footer>
+    <footer th:insert="fragments/footer.html :: footer"></footer>
 
     <script src="../javaScript.js/funcionamiento.js"></script>
 

@@ -1,5 +1,6 @@
 package com.example.unesso.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,13 +10,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tutor")
-public class Tutor {
+@Table(name="tutorEconomico")
+public class TutorEconomico {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer idTutor;
+	private Integer idTutorEconomico;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="idDomicilio")
 	private Domicilio domicilio;
 	
@@ -27,21 +28,24 @@ public class Tutor {
 	@JoinColumn(name="idCatParentesco")
 	private CatParentesco catParentesco;
 	
-	private String nombreTutor;
+	@OneToOne
+	@JoinColumn(name="idCatOcupacion")
+	private CatOcupacion catOcupacion;
+	
+	private String nombreTutorEconomico;
 	
 	private String telefono;
 	
 	private String correo;
 	
 	private Boolean trabajadorSuneo;
-	
 
-	public Integer getIdTutor() {
-		return idTutor;
+	public Integer getIdTutorEconomico() {
+		return idTutorEconomico;
 	}
 
-	public void setIdTutor(Integer idTutor) {
-		this.idTutor = idTutor;
+	public void setIdTutorEconomico(Integer idTutorEconomico) {
+		this.idTutorEconomico = idTutorEconomico;
 	}
 
 	public Domicilio getDomicilio() {
@@ -68,12 +72,20 @@ public class Tutor {
 		this.catParentesco = catParentesco;
 	}
 
-	public String getNombreTutor() {
-		return nombreTutor;
+	public CatOcupacion getCatOcupacion() {
+		return catOcupacion;
 	}
 
-	public void setNombreTutor(String nombreTutor) {
-		this.nombreTutor = nombreTutor;
+	public void setCatOcupacion(CatOcupacion catOcupacion) {
+		this.catOcupacion = catOcupacion;
+	}
+
+	public String getNombreTutorEconomico() {
+		return nombreTutorEconomico;
+	}
+
+	public void setNombreTutorEconomico(String nombreTutorEconomico) {
+		this.nombreTutorEconomico = nombreTutorEconomico;
 	}
 
 	public String getTelefono() {
@@ -102,11 +114,9 @@ public class Tutor {
 
 	@Override
 	public String toString() {
-		return "Tutor [idTutor=" + idTutor + ", domicilio=" + domicilio + ", catSituacionTrabajo=" + catSituacionTrabajo
-				+ ", catParentesco=" + catParentesco + ", nombreTutor=" + nombreTutor + ", telefono=" + telefono
-				+ ", correo=" + correo + ", trabajadorSuneo=" + trabajadorSuneo + "]";
-	} 
-	
-	
-	
+		return "TutorEconomico [idTutorEconomico=" + idTutorEconomico + ", domicilio=" + domicilio
+				+ ", catSituacionTrabajo=" + catSituacionTrabajo + ", catParentesco=" + catParentesco
+				+ ", catOcupacion=" + catOcupacion + ", nombreTutorEconomico=" + nombreTutorEconomico + ", telefono="
+				+ telefono + ", correo=" + correo + ", trabajadorSuneo=" + trabajadorSuneo + "]";
+	}
 }

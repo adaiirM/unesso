@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -15,7 +16,7 @@ public class IngresoFamiliar {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idIngresosFamiliar;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="idFamilia")
 	private Familia familia;
 	
@@ -25,7 +26,7 @@ public class IngresoFamiliar {
 	
 	@OneToOne
 	@JoinColumn(name="idCatOcupacion")
-	private CatOcupacion idCatOcupacion;
+	private CatOcupacion catOcupacion;
 	
 	private String nombrePersona;
 	
@@ -58,12 +59,12 @@ public class IngresoFamiliar {
 		this.catParentesco = catParentesco;
 	}
 
-	public CatOcupacion getIdCatOcupacion() {
-		return idCatOcupacion;
+	public CatOcupacion getCatOcupacion() {
+		return catOcupacion;
 	}
 
-	public void setIdCatOcupacion(CatOcupacion idCatOcupacion) {
-		this.idCatOcupacion = idCatOcupacion;
+	public void setIdCatOcupacion(CatOcupacion catOcupacion) {
+		this.catOcupacion = catOcupacion;
 	}
 
 	public String getNombrePersona() {
@@ -93,7 +94,7 @@ public class IngresoFamiliar {
 	@Override
 	public String toString() {
 		return "IngresosFamilia [idIngresosFamilia=" + idIngresosFamiliar + ", familia=" + familia + ", catParentesco="
-				+ catParentesco + ", idCatOcupacion=" + idCatOcupacion + ", nombrePersona=" + nombrePersona
+				+ catParentesco + ", catOcupacion=" + catOcupacion + ", nombrePersona=" + nombrePersona
 				+ ", ingresoBruto=" + ingresoBruto + ", ingresoNeto=" + ingresoNeto + "]";
 	}
 	

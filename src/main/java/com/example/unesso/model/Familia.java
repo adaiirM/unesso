@@ -1,10 +1,15 @@
 package com.example.unesso.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -26,6 +31,9 @@ public class Familia {
 	@OneToOne
 	@JoinColumn(name="idInfoFamilia")
 	private InfoFamilia infoFamilia;
+	
+	@OneToMany(mappedBy = "familia", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IngresoFamiliar> ingresoFamiliar = new ArrayList<>();
 	
 	@OneToOne
 	@JoinColumn(name="idViviendaFamilia")
@@ -112,14 +120,26 @@ public class Familia {
 	public void setNumPersonasDependen(Integer numPersonasDependen) {
 		this.numPersonasDependen = numPersonasDependen;
 	}
+	
+	public List<IngresoFamiliar> getIngresoFamiliar() {
+		return ingresoFamiliar;
+	}
+
+	public void setIngresoFamiliar(List<IngresoFamiliar> ingresoFamiliar) {
+		this.ingresoFamiliar = ingresoFamiliar;
+	}
 
 	@Override
 	public String toString() {
 		return "Familia [idFamilia=" + idFamilia + ", domicilio=" + domicilio + ", gastosFam=" + gastosFam
-				+ ", infoFamilia=" + infoFamilia + ", viviendaFamilia=" + viviendaFamilia + ", telefono=" + telefono
-				+ ", ingresoMensualPromedio=" + ingresoMensualPromedio + ", numPersonasAportan=" + numPersonasAportan
-				+ ", numPersonasDependen=" + numPersonasDependen + "]";
+				+ ", infoFamilia=" + infoFamilia + ", ingresoFamiliar=" + ingresoFamiliar + ", viviendaFamilia="
+				+ viviendaFamilia + ", telefono=" + telefono + ", ingresoMensualPromedio=" + ingresoMensualPromedio
+				+ ", numPersonasAportan=" + numPersonasAportan + ", numPersonasDependen=" + numPersonasDependen + "]";
 	}
+	
+	
+
+
 	
 	
 	

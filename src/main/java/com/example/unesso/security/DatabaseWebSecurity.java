@@ -16,7 +16,7 @@ public class DatabaseWebSecurity {
 	@Bean
 	UserDetailsManager userCustom(DataSource dataSource) {
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-		users.setUsersByUsernameQuery("select correo, contrasenia, estatus from usuario where correo = BINARY ?");
+		users.setUsersByUsernameQuery("select correo, contraseña, estatus from usuario where correo = BINARY ?");
 		users.setAuthoritiesByUsernameQuery("select u.correo, r.nombrerol from usuario as u, catrol as r where u.idCatRol = r.idCatRol and u.correo = BINARY ?");
 		return users;
 	}
