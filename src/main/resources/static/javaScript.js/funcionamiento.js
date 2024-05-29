@@ -174,7 +174,7 @@ function generarPersonas() {
 	for (let i = 0; i < numPersonas; i++) {
 		let opcionesParentesco = '';
         parentescos.forEach(catParentesco => {
-            opcionesParentesco += `<option value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
+            opcionesParentesco += `<option th:value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
         });
 		var newElement = `
         <div class="rounded" style="display:flex; border: 1px solid #6C757D; padding-bottom: 10px;">
