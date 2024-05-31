@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.CatEscolaridadRepository;
 import com.example.unesso.repository.GastosFamRepository;
-import com.example.unesso.services.GastosFamService;
+import com.example.unesso.services.IGastosFamService;
 
 @Service
 @Primary
-public class GastosFamServiceJPA implements GastosFamService {
+public class GastosFamServiceJPA implements IGastosFamService {
 	@Autowired
 	private GastosFamRepository gastosFamRepo;
 

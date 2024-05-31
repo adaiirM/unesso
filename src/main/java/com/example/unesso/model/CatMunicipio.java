@@ -8,8 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Table
-@Entity(name="catMunicipio")
+@Entity
+@Table(name="catMunicipio")
 public class CatMunicipio {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
