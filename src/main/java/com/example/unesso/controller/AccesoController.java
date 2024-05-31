@@ -44,7 +44,7 @@ public class AccesoController {
 		Usuario u = serviceUsuario.buscarPorCorreo(correo);
 		u.setPassword("{noop}"+contraseñaNueva2);
 		u = serviceUsuario.guardarUsuario(u);
-		
+		System.out.println(u);
 		return "redirect:/";
 	}
 }
