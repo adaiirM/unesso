@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.CatEscolaridadRepository;
 import com.example.unesso.repository.CatRolRepository;
-import com.example.unesso.services.CatRolService;
+import com.example.unesso.services.ICatRolService;
 
 @Service
 @Primary
-public class CatRolServiceJPA implements CatRolService {
+public class CatRolServiceJPA implements ICatRolService {
 	@Autowired
 	private CatRolRepository catRolRepo;
 	

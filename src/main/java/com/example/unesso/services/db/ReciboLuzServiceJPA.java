@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.ReciboLuzRepository;
-import com.example.unesso.services.ReciboLuzService;
+import com.example.unesso.services.IReciboLuzService;
 
 @Service
 @Primary
-public class ReciboLuzServiceJPA implements ReciboLuzService {
+public class ReciboLuzServiceJPA implements IReciboLuzService {
 	@Autowired
 	private ReciboLuzRepository reciboLuzRepo;
 	

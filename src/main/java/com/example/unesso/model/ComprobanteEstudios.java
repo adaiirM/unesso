@@ -15,9 +15,6 @@ public class ComprobanteEstudios {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idComprobanteEstudios;
 	
-	@OneToOne
-	@JoinColumn(name="idHermanos")
-	private Hermanos hermanos;
 	
 	private String nombreComprobante;
 
@@ -30,13 +27,6 @@ public class ComprobanteEstudios {
 		this.idComprobanteEstudios = idComprobanteEstudios;
 	}
 
-	public Hermanos getHermanos() {
-		return hermanos;
-	}
-
-	public void setHermanos(Hermanos hermanos) {
-		this.hermanos = hermanos;
-	}
 
 	public String getNombreComprobante() {
 		return nombreComprobante;
@@ -48,7 +38,7 @@ public class ComprobanteEstudios {
 
 	@Override
 	public String toString() {
-		return "ComprobanteEstudios [idComprobanteEstudios=" + idComprobanteEstudios + ", hermanos=" + hermanos
+		return "ComprobanteEstudios [idComprobanteEstudios=" + idComprobanteEstudios 
 				+ ", nombreComprobante=" + nombreComprobante + "]";
 	}
 	

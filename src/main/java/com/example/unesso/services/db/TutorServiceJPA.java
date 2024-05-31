@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.TutorRepository;
-import com.example.unesso.services.TutorService;
+import com.example.unesso.services.ITutorService;
 
 @Service
 @Primary
-public class TutorServiceJPA implements TutorService {
+public class TutorServiceJPA implements ITutorService {
 	@Autowired
 	private TutorRepository tutorRepo;
 	
