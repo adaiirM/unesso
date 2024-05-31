@@ -226,4 +226,13 @@ function generarPersonas() {
         container.innerHTML += newElement;
    	}
     
+    fetch('/api/productos')
+    .then(response => response.json())
+    .then(data => {
+        // Hacer algo con los datos obtenidos, por ejemplo, mostrarlos en la página web
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error al obtener los datos de productos:', error);
+    });
 };

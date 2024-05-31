@@ -47,23 +47,27 @@
     <!-- Ventana modal -->
     <div id="modal" class="modal ">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title mx-auto" style="color: #4F46E5;">Cambiar contraseña</h2>
-                </div>
-                <div class="modal-body">
-                    <p class="textoInputs" style="color: #4F46E5;">Contraseña actual</p>
-                    <input type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                    <p class="textoInputs mt-5" style="color: #4F46E5;">Contraseña nueva</p>
-                    <input type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                    <p class="textoInputs mt-5" style="color: #4F46E5;">Contraseña nueva</p>
-                    <input type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                </div>
-                <div class="modal-footer mx-auto">
-                    <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
-                    <button type="button" class="btn btn-success">Guardar cambios</button>
-                </div>
-            </div>
+			<div class="modal-content">
+				<form th:action="@{/cambiarContraseña}" method="POST">
+
+	                <div class="modal-header">
+	                    <h2 class="modal-title mx-auto" style="color: #4F46E5;">Cambiar contraseña</h2>
+	                </div>
+	                <div class="modal-body">
+						
+	                    <p class="textoInputs" style="color: #4F46E5;">Contraseña actual</p>
+	                    <input id="contraseñaActual" name="contraseñaActual" type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+	                    <p class="textoInputs mt-5" style="color: #4F46E5;">Contraseña nueva</p>
+	                    <input id="contraseñaNueva1" name="contraseñaNueva1" type="text"  class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+	                    <p class="textoInputs mt-5" style="color: #4F46E5;">Contraseña nueva</p>
+	                    <input id="contraseñaNueva2" name="contraseñaNueva2" type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+	                </div>
+	                <div class="modal-footer mx-auto">
+	                    <button type="button" class="btn btn-danger" onclick="cerrarModal()">Cancelar</button>
+	                    <button type="submit" class="btn btn-success">Guardar cambios</button>
+	                </div>
+				</form>
+			</div>
         </div>
     </div>
 

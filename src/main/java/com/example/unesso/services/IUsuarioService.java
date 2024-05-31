@@ -7,4 +7,5 @@ import com.example.unesso.model.Usuario;
  */
 public interface IUsuarioService {
 	Usuario buscarPorCorreo(String correo);
+	Usuario guardarUsuario(Usuario usuario);
 }

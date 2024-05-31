@@ -18,5 +18,10 @@ public class UsuarioServiceJPA implements IUsuarioService {
 	public Usuario buscarPorCorreo(String correo) {
 		return usuarioRepo.getByCorreo(correo);
 	}
+
+	@Override
+	public Usuario guardarUsuario(Usuario usuario) {
+		return usuarioRepo.save(usuario);
+	}
 	
 }
