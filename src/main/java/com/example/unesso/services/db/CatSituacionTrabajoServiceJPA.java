@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.CatSituacionTrabajoRepository;
-import com.example.unesso.services.ICatSituacionTrabajoService;
+import com.example.unesso.services.CatSituacionTrabajoService;
 
 @Service
 @Primary
-public class CatSituacionTrabajoServiceJPA implements ICatSituacionTrabajoService {
+public class CatSituacionTrabajoServiceJPA implements CatSituacionTrabajoService {
 	@Autowired
 	private CatSituacionTrabajoRepository catSituacionTrabajoRepo;
 }

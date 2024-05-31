@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.IngresoFamiliarRepository;
-import com.example.unesso.services.IIngresoFamiliarService;
+import com.example.unesso.services.IngresoFamiliarService;
 
 @Service
 @Primary
-public class IngresoFamiliarServiceJPA implements IIngresoFamiliarService {
+public class IngresoFamiliarServiceJPA implements IngresoFamiliarService {
 	@Autowired
 	private IngresoFamiliarRepository ingresoFamiliarRepo;
 	

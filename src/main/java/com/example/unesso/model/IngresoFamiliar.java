@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -14,12 +13,11 @@ import jakarta.persistence.Table;
 public class IngresoFamiliar {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer idIngresoFamiliar;
+	private Integer idIngresosFamiliar;
 	
-	@ManyToOne
-    @JoinColumn(name = "idFamilia")
-    private Familia familia;
-	
+	@OneToOne
+	@JoinColumn(name="idFamilia")
+	private Familia familia;
 	
 	@OneToOne
 	@JoinColumn(name="idCatParentesco")
@@ -27,9 +25,7 @@ public class IngresoFamiliar {
 	
 	@OneToOne
 	@JoinColumn(name="idCatOcupacion")
-	private CatOcupacion catOcupacion;
-	
-	
+	private CatOcupacion idCatOcupacion;
 	
 	private String nombrePersona;
 	
@@ -39,11 +35,11 @@ public class IngresoFamiliar {
 	
 
 	public Integer getIdIngresosFamilia() {
-		return idIngresoFamiliar;
+		return idIngresosFamiliar;
 	}
 
 	public void setIdIngresosFamilia(Integer idIngresosFamilia) {
-		this.idIngresoFamiliar = idIngresosFamilia;
+		this.idIngresosFamiliar = idIngresosFamilia;
 	}
 
 	public Familia getFamilia() {
@@ -63,11 +59,11 @@ public class IngresoFamiliar {
 	}
 
 	public CatOcupacion getIdCatOcupacion() {
-		return catOcupacion;
+		return idCatOcupacion;
 	}
 
 	public void setIdCatOcupacion(CatOcupacion idCatOcupacion) {
-		this.catOcupacion = idCatOcupacion;
+		this.idCatOcupacion = idCatOcupacion;
 	}
 
 	public String getNombrePersona() {
@@ -94,5 +90,14 @@ public class IngresoFamiliar {
 		this.ingresoNeto = ingresoNeto;
 	}
 
+	@Override
+	public String toString() {
+		return "IngresosFamilia [idIngresosFamilia=" + idIngresosFamiliar + ", familia=" + familia + ", catParentesco="
+				+ catParentesco + ", idCatOcupacion=" + idCatOcupacion + ", nombrePersona=" + nombrePersona
+				+ ", ingresoBruto=" + ingresoBruto + ", ingresoNeto=" + ingresoNeto + "]";
+	}
 	
+	
+	
+
 }

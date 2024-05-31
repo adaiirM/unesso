@@ -13,7 +13,7 @@ public class CatSituacionViviendaFamiliar {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idCatSituacionViviendaFamiliar;
 	
-	private String nombreSituacionViviendaFamiliar;
+	private String nombreSituacionViviendaFam;
 	
 
 	public Integer getIdCatSituacionViviendaFamiliar() {
@@ -25,18 +25,18 @@ public class CatSituacionViviendaFamiliar {
 	}
 
 	public String getNombreSituacionViviendaFam() {
-		return nombreSituacionViviendaFamiliar;
+		return nombreSituacionViviendaFam;
 	}
 
 	public void setNombreSituacionViviendaFam(String nombreSituacionViviendaFam) {
-		this.nombreSituacionViviendaFamiliar = nombreSituacionViviendaFam;
+		this.nombreSituacionViviendaFam = nombreSituacionViviendaFam;
 	}
 
 	
 	@Override
 	public String toString() {
 		return "CatSituacionViviendaFamiliar [idCatSituacionViviendaFamiliar=" + idCatSituacionViviendaFamiliar
-				+ ", nombreSituacionViviendaFam=" + nombreSituacionViviendaFamiliar + "]";
+				+ ", nombreSituacionViviendaFam=" + nombreSituacionViviendaFam + "]";
 	}
 
 	

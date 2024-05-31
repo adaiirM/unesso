@@ -1,24 +1,16 @@
 package com.example.unesso.services.db;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.example.unesso.model.CatMaterialVivienda;
 import com.example.unesso.repository.CatMaterialViviendaRepository;
-import com.example.unesso.services.ICatMaterialViviendaService;
+import com.example.unesso.services.CatMaterialViviendaService;
 
 @Service
 @Primary
-public class CatMaterialViviendaServiceJPA implements ICatMaterialViviendaService {
+public class CatMaterialViviendaServiceJPA implements CatMaterialViviendaService {
 	@Autowired
 	private CatMaterialViviendaRepository catMaterialViviendaRepo;
-
-	@Override
-	public List<CatMaterialVivienda> buscarTodas() {
-		return catMaterialViviendaRepo.findAll();
-	}
 	
 }
