@@ -5,12 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="mediosEstudios")
+@Table(name="mediosEstudio")
 public class MediosEstudios {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -20,15 +19,14 @@ public class MediosEstudios {
 	@JoinColumn(name="idCatMedios")
 	private CatMedios catMedios;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="idAlumno")
 	private Alumno alumno;
 	
-	/*
 	@OneToOne
 	@JoinColumn(name="idCatInternet")
 	private CatInternet catInternet;
-	*/
+
 	
 	
 	public Integer getIdMediosEstudio() {
@@ -54,7 +52,7 @@ public class MediosEstudios {
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
-	/*
+
 	public CatInternet getCatInternet() {
 		return catInternet;
 	}
@@ -62,12 +60,11 @@ public class MediosEstudios {
 	public void setCatInternet(CatInternet catInternet) {
 		this.catInternet = catInternet;
 	}
-	*/
 
 	@Override
 	public String toString() {
 		return "MediosEstudio [idMediosEstudio=" + idMediosEstudios + ", catMedios=" + catMedios + ", alumno=" + alumno
-				+ "]";
+				+ ", catInternet=" + catInternet + "]";
 	}
 	
 	

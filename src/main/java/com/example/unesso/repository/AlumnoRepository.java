@@ -5,10 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.unesso.model.Alumno;
 
-/**
- * Esta clase realiza operaciones CRUD en la entidad alumno de la Base de datos unesso
- */
+@Description("Esta clase realiza operaciones CRUD en la entidad alumno de la Base de datos unesso") 
 public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
-	Alumno findByUsuario_IdUsuario(Integer idUsuario);
 
 }

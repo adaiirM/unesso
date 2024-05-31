@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.CatEscolaridadRepository;
 import com.example.unesso.repository.ComprobanteEstudiosRepository;
-import com.example.unesso.services.IComprobanteEstudiosService;
+import com.example.unesso.services.ComprobanteEstudiosService;
 
 @Service
 @Primary
-public class ComprobanteEstudiosServiceJPA implements IComprobanteEstudiosService{
+public class ComprobanteEstudiosServiceJPA implements ComprobanteEstudiosService{
 	@Autowired
 	private ComprobanteEstudiosRepository comprobanteEstudiosRepo;
 }

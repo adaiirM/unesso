@@ -6,8 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name="catMaterialVivienda")
+@Table
+@Entity(name="catMaterialVivienda")
 public class CatMaterialVivienda {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

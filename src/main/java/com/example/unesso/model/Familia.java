@@ -1,17 +1,10 @@
 package com.example.unesso.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -22,33 +15,21 @@ public class Familia {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idFamilia;
 	
-	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="idDomicilio")
 	private Domicilio domicilio;
 	
-	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="idGastosFam")
 	private GastosFam gastosFam;
 	
-	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="idInfoFamilia")
 	private InfoFamilia infoFamilia;
 	
-	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="idViviendaFamiliar")
+	@JoinColumn(name="idViviendaFamilia")
 	private ViviendaFamiliar viviendaFamilia;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "familia", cascade = CascadeType.ALL,  orphanRemoval = false)
-	private List<Hermanos> hermanos;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "familia", cascade = CascadeType.ALL,  orphanRemoval = false)
-	private List<IngresoFamiliar> ingresoFamiliar;
 	
 	private String telefono;
 	
@@ -131,30 +112,18 @@ public class Familia {
 	public void setNumPersonasDependen(Integer numPersonasDependen) {
 		this.numPersonasDependen = numPersonasDependen;
 	}
-	
 
-	public List<Hermanos> getHermanos() {
-		return hermanos;
-	}
-
-	public void setHermanos(List<Hermanos> hermanos) {
-		this.hermanos = hermanos;
-	}
-
-	public List<IngresoFamiliar> getIngresoFamiliar() {
-		return ingresoFamiliar;
-	}
-
-	public void setIngresoFamiliar(List<IngresoFamiliar> ingresoFamiliar) {
-		this.ingresoFamiliar = ingresoFamiliar;
-	}
-
-	
 	@Override
 	public String toString() {
-		return "Familia [idFamilia=" + idFamilia  + ", telefono=" + telefono + ", ingresoMensualPromedio="
-				+ ingresoMensualPromedio + ", numPersonasAportan=" + numPersonasAportan + ", numPersonasDependen="
-				+ numPersonasDependen + "]";
+		return "Familia [idFamilia=" + idFamilia + ", domicilio=" + domicilio + ", gastosFam=" + gastosFam
+				+ ", infoFamilia=" + infoFamilia + ", viviendaFamilia=" + viviendaFamilia + ", telefono=" + telefono
+				+ ", ingresoMensualPromedio=" + ingresoMensualPromedio + ", numPersonasAportan=" + numPersonasAportan
+				+ ", numPersonasDependen=" + numPersonasDependen + "]";
 	}
+	
+	
+	
+	
+	
 
 }

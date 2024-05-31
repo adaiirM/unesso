@@ -5,11 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.unesso.model.Usuario;
 
-/**
- * "Esta clase realiza operaciones CRUD en la entidad user de la Base de datos unesso
- */
+@Description("Esta clase realiza operaciones CRUD en la entidad user de la Base de datos unesso") 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-	//Busca en la base de datos el usuario por el correo  
-	Usuario findByCorreo(String correo);
 
 }
