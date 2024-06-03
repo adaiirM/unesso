@@ -5,23 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Beca mi familia</title>
 </head>
+
 <body>
     <nav id="nav"></nav>
     <div class="container mt-3 ">
         <div class="row" >
             <ol class="colorFondo breadcrumb bread-primary ">
-                <a href="./menuAlumno.html"><button class="btn camino" id="botonInicio" >Inicio</button></a>
-                <a href="./menuSolicitarBeca.html" style="text-decoration: none;"><button class="btn camino" id="botonSolicitar"> Menu</button></a>
+                <a href="../html/menuAlumno.html"><button class="btn camino" id="botonInicio" >Inicio</button></a>
+                <a href="../html/menuSolicitarBeca.html" style="text-decoration: none;"><button class="btn camino" id="botonSolicitar"> Solicitar beca colegiatura</button></a>
                 <button class="btn btn-primary camino localizacion">Mi familia</button>   
             </ol>
         </div>
     </div>
-        <h1 class="titulo ps-5" style="font: bold; font-weight: 660;">MI FAMILIA</h1>
-        <div class="row ms-5 me-5">
+    
+   
+    
+       <h1 class="titulo ps-5" style="font: bold; font-weight: 660;">MI FAMILIA</h1>
+       <form th:action="@{/alumno/saveMiFamilia}" method="post" th:object="${formMiFamilia}" id="myForm"  enctype="multipart/form-data">
+		   <!-- RECORDATORIO -->
+		   <!-- Los siguientes atributos no se deben mover: -->
+		   <!-- 
+				1- Los elementos que tengan el sufijo " th:elemento ". Ej: th:value, th:field th:name 
+				2- id=" "
+				3- Value=" "
+			-->
+		   
+		   <!-- Estos datos son importantes para realizar operaciones y obtener los datos de la BD  -->
+		   <!-- No se mostraran en la vistan, no deben de eliminarse -->
+		   
+		   <input hidden id="idAlumno"  value="alumno.idAlumno" name="alumno.idAlumno" th:field="*{alumno.idAlumno}">
+		   <input hidden id="idTutor"   value="tutor.idTutor" name="tutor.idTutor" th:field="*{tutor.idTutor}">
+		   <input hidden id="tutor.idDomicilio"  value="tutor.domicilio.idDomicilio" name="tutor.domicilio.idDomicilio" th:field="*{tutor.domicilio.idDomicilio}">
+		   <input hidden id="idLocalidad"   value="domicilio.catLocalidad.idCatLocalidad" name="domicilio.catLocalidad.idCatLocalidad" th:field="*{domicilio.catLocalidad.idCatLocalidad}">
+		   <input hidden id="idDomicilio" value="domicilio.idDomicilio" name="domicilio.idDomicilio" th:field="*{domicilio.idDomicilio}">
+		   <input hidden id="idFamilia" value="familia.idFamilia" name="familia.idFamilia" th:field="*{familia.idFamilia}">
+		   <input hidden id="idInfoFamilia" value="infoFamilia.idInfoFamilia"  name="infoFamilia.idInfoFamilia" th:field="*{infoFamilia.idInfoFamilia}">
+		   <input hidden id="idViviendaFamiliar" value="viviendaFamiliar.idViviendaFamilia" name="viviendaFamiliar.idViviendaFamilia" th:field="*{viviendaFamiliar.idViviendaFamilia}">
+		   
+		   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+		   
+		    <!--
+		    <input id="idCatLocalidad"  name="domicilio.catLocalidad.idCatLocalidad"  th:field="*{domicilio.catLocalidad.idCatLocalidad}" >
+		    -->
+		   
+		    <div class="row ms-5 me-5">
             <div class="col-15 p-3 rounded colorFondo">
                 <h3 style="color: #6366F1;">Domicilio</h3>
                 <div class="mt-4" style="color: #6366F1;">
@@ -35,59 +68,42 @@
                 </div> 
                 <div class="row mt-4">
                     <div class="col">
-                        <p class="textoInputs">Estado</p>
-                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Estado 1</option>
-                            <option value="2" class="subtitulo">Estado 2</option>
-                            <option value="3" class="subtitulo">Estado 3</option>
+						<p class="textoInputs">Estado</p>
+                        <select name="catEstado" id="catEstado" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option class="subtitulo">Elige una opción</option>
+                            <option 
+		                      th:each="estado : ${catEstado}" 
+		                      th:value="${estado.idCatEstado}" 
+		                      th:text="${estado.nombreEstado}">
+							</option>
                         </select>
                     </div>
                     <div class="col">
                         <p class="textoInputs">Región</p>
-                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Region 1</option>
-                            <option value="2" class="subtitulo">Region 2</option>
-                            <option value="3" class="subtitulo">Region 3</option>
-                        </select>
+                        <input type="text"  id="region" name="region" class="form-control estiloInputs subtitulo" style="width: 96%;" aria-label="Default select example">
                     </div>
                     <div class="col">
                         <p class="textoInputs">Colonia o barrio</p>
-                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Colonia o barrio 1</option>
-                            <option value="2" class="subtitulo">Colonia o barrio 2</option>
-                            <option value="3" class="subtitulo">Colonia o barrio 3</option>
-                        </select>
+                        <input type="text" value=""  id="coloia" name="colonia" class="form-control estiloInputs subtitulo" style="width: 96%;" aria-label="Default select example">
+                      
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col">
                         <p class="textoInputs">Distrito</p>
-                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Distrito 1</option>
-                            <option value="2" class="subtitulo">Distrito 2</option>
-                            <option value="3" class="subtitulo">Distrito 3</option>
-                        </select>
+                        <input  type="text" value=""  id="region" name="region" class="form-control estiloInputs subtitulo" style="width: 96%;" aria-label="Default select example">
+                        
                     </div>
                     <div class="col">
                         <p class="textoInputs">Municipio</p>
-                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Municipio 1</option>
-                            <option value="2" class="subtitulo">Municipio 2</option>
-                            <option value="3" class="subtitulo">Municipio 3</option>
+                        <select name="catMunicipio" id="catMunicipio"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option class="subtitulo" value="">Elige una opción</option>
                         </select>
                     </div>
                     <div class="col">
                         <p class="textoInputs">Localidad</p>
-                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Localidad 1</option>
-                            <option value="2" class="subtitulo">Localidad 2</option>
-                            <option value="3" class="subtitulo">Localidad 3</option>
+                        <select name="domicilio.catLocalidad.idCatLocalidad" id="catLocalidad" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option value="">Elige una opción</option>
                         </select>
                     </div>
                 </div>            
@@ -99,7 +115,8 @@
                 <h3 style="color: #6366F1;">Contacto</h3>
                 <div>
                     <p class="textoInputs mt-4">Teléfono</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTelefono" placeholder="Ingrese su numero de telefono">
+                    <input th:field="*{familia.telefono}" name="familia.telefono" type="text" 
+                    class="estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTel" placeholder="Ingrese su numero de telefono">
                 </div>
             </div>
             <div class="col rounded colorFondo ms-3 p-3">
@@ -108,13 +125,13 @@
                         <h3 style="color: #6366F1;">Grados de escolaridad</h3>
                         <div>
                             <p class="textoInputs mt-4">Escolaridad del padre</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected>Elige una opción</option>
-                                <option value="1" class="subtitulo">Primaria</option>
-                                <option value="2" class="subtitulo">Secundaria</option>
-                                <option value="3" class="subtitulo">Bachillerato</option>
-                                <option value="3" class="subtitulo">Licenciatura</option>
-                                <option value="3" class="subtitulo">Postgrado</option>
+                            <select  id="catEscolaridadPadre"  th:field="*{infoFamilia.escolaridadPadre.idCatEscolaridad}" name="infoFamilia.escolaridadPadre.idCatEscolaridad" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                 <option value="">Elige una opción</option>
+                                <option 
+			                      th:each="escolaridad : ${catEscolaridad}" 
+			                      th:value="${escolaridad.idCatEscolaridad}" 
+			                      th:text="${escolaridad.nombreEscolaridad}">
+								</option>
                             </select>
                         </div>
                     </div>
@@ -122,13 +139,13 @@
                         <h3 style="color: #F5F5F5;">Grados de escolaridad</h3>
                         <div class="mt-4">
                             <p class="textoInputs">Escolaridad de la madre</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected>Elige una opción</option>
-                                <option value="1" class="subtitulo">Primaria</option>
-                                <option value="2" class="subtitulo">Secundaria</option>
-                                <option value="3" class="subtitulo">Bachillerato</option>
-                                <option value="3" class="subtitulo">Licenciatura</option>
-                                <option value="3" class="subtitulo">Postgrado</option>
+                            <select id="catEscolaridadMadre" th:field="*{infoFamilia.escolaridadMadre.idCatEscolaridad}" name="infoFamilia.escolaridadMadre.idCatEscolaridad" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option value="" >Elige una opción</option>
+                                <option 
+			                      th:each="escolaridad : ${catEscolaridad}" 
+			                      th:value="${escolaridad.idCatEscolaridad}" 
+			                      th:text="${escolaridad.nombreEscolaridad}">
+								</option>
                             </select>
                         </div>
                     </div>
@@ -143,62 +160,39 @@
                     <div class="col">
                         <div>
                             <p class="textoInputs">La casa donde tu familia es:</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opcion</option>
-                                <option value="1" class="subtitulo">Propia</option>
-                                <option value="2" class="subtitulo">Alquilada</option>
-                                <option value="3" class="subtitulo">Otra</option>
+                            <select id="catSituacionvivienda" th:field="*{viviendaFamiliar.catSituacionViviendaFamiliar.idCatSituacionViviendaFamiliar}"  name="viviendaFamiliar.catSituacionViviendaFamiliar.idCatSituacionViviendaFamiliar" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                
+                                <option value="" class="subtitulo">Elige una opción</option>
+                                <option 
+			                      th:each="catSitVivienFam : ${catSituacionViviendaFam}" 
+			                      th:value="${catSitVivienFam.idCatSituacionViviendaFamiliar}" 
+			                      th:text="${catSitVivienFam.nombreSituacionViviendaFam}" 
+			                      class="subtitulo">
+								</option>
                             </select>
                         </div>
                         <div class="mt-4">
                             <p class="textoInputs">Material de construcción:</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opcion</option>
-                                <option value="1" class="subtitulo">Mamposteria</option>
-                                <option value="2" class="subtitulo">Madera</option>
-                                <option value="3" class="subtitulo">Lamina</option>
-                                <option value="2" class="subtitulo">Concreto</option>
-                                <option value="3" class="subtitulo">Otros</option>
+                            <select id="catMaterialVivienda" th:field="*{viviendaFamiliar.catMaterialVivienda.idCatMaterialVivienda}" name="viviendaFamiliar.catMaterialVivienda.idCatMaterialVivienda" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option value="" class="subtitulo">Elige una opción</option>
+                                <option 
+			                      th:each="catMaterial : ${catMaterialVivienda}" 
+			                      th:value="${catMaterial.idCatMaterialVivienda}" 
+			                      th:text="${catMaterial.nombreMaterialVivienda}" 
+			                      class="subtitulo">
+								</option>
                             </select>
                         </div>
                         <div class="mt-4">
                             <p class="textoInputs">¿Con qué servicios cuenta la vivienda?</p>
-                            <div class="row">
-                                <div class="col me-2">
+                            <div class="row" th:each="grupoCatServicios, catServiciosStatus : ${catServicios}">
+                                <div class="col me-2" th:each="servicio, servicioStatus : ${grupoCatServicios}">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="agua">
-                                        <label class="form-check-label subtitulo" for="agua">
-                                          Agua
+                                        <input class="form-check-input" type="checkbox"  th:value="${servicio.idCatServicios}" th:field="*{serviciosVivienda}" name="serviciosVivienda">
+                                        <label class="form-check-label subtitulo" for="checkbox${servicio.idCatServicios}">
+                                        	<p class="subtitulo" th:text="${servicio.nombreServicios}"></p>
                                         </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="telefono" >
-                                        <label class="form-check-label subtitulo" for="telefono">
-                                          Teléfono 
-                                        </label>
-                                      </div>
-                                </div>
-                                <div class="col me-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="luz">
-                                        <label class="form-check-label subtitulo" for="luz">
-                                          Luz
-                                        </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="otros" >
-                                        <label class="form-check-label subtitulo" for="otros">
-                                          Otros
-                                        </label>
-                                      </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="drenaje">
-                                        <label class="form-check-label subtitulo" for="drenaje">
-                                          Drenaje
-                                        </label>
-                                      </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -207,23 +201,45 @@
                     <div class="col">
                         <div>
                             <p class="textoInputs">Tipo de vivienda:</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opcion</option>
-                                <option value="1" class="subtitulo">Casa sola</option>
-                                <option value="2" class="subtitulo">Condominio</option>
-                                <option value="3" class="subtitulo">Vecindad</option>
-                                <option value="3" class="subtitulo">Departamento</option>
+                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+                            th:field="*{viviendaFamiliar.catTipoVivienda.idCatTipoVivienda}"  name="viviendaFamiliar.catTipoVivienda.idCatTipoVivienda">
+                                <option value="" class="subtitulo">Elige una opción</option>
+                                <option 
+			                      th:each="catTipoVivienda : ${catTipoVivienda}" 
+			                      th:value="${catTipoVivienda.idCatTipoVivienda}" 
+			                      th:text="${catTipoVivienda.nombreTipoVivienda}" 
+			                      class="subtitulo">
+								</option>
                             </select>
+                            
                         </div>
                         <div class="mt-4">
                             <p class="textoInputs">¿Cuántas personas habitan en la vivienda?</p>
-                            <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="Numero personas">
+                            <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="Numero personas"
+                            th:field="*{viviendaFamiliar.numPersonasHabitan}" name="viviendaFamiliar.numPersonasHabitan">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col rounded colorFondo ms-3 p-3">
                 <h3 style="color: #6366F1;">Información complementaria </h3>
+                 <div class="mt-4">
+                    <p class="textoInputs">Medios para estudiar en casa</p>
+                	<div class="mt-4">
+						<div  class="row" th:each="medios, catMediosStatus : ${catMedios}" >
+						 
+							    <div class="col me-2"  th:each="medio, mediosStatus : ${medios}">	             
+									<div class="form-check" >
+						                <input class="form-check-input" type="checkbox" th:field="*{mediosEstudios}" th:name="mediosEstudios" th:value="${medio.getIdCatMedios()}">
+						                <label class="form-check-label" for="checkbox${medio.idCatMedios}">
+						                    <p class="subtitulo" th:text="${medio.nombreMedios}"></p>
+						                </label>
+							        </div>
+							    </div>
+						    </div>
+						</div>       
+                	</div>
+                
                 <div class="mt-4">
                     <p class="textoInputs">¿Cuentas con acceso a internet?</p>
                     <div class="row">
@@ -277,197 +293,337 @@
 </div>
         <div class="row ms-5 me-5 colorFondo rounded p-3">
             <h3 style="color: #6366F1;">Hermanos</h3>
-            <div class="row">
+            <div class="row" >
                 <div class="col mt-3">
                     <p class="textoInputs">¿Cuántos hermanos tienes?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNumHermano" placeholder="">
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="numHermano" placeholder=""
+                     yh:field="*{infoFamilia.numHermanos}" name="infoFamilia.numHermanos">
                 </div>
                 <div class="col mt-3">
-                    <p class="textoInputs">¿Cuántos están estudiando?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputEst" placeholder="">
-                </div>
+				    <p class="textoInputs">¿Cuántos están estudiando?</p>
+				    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" 
+				     th:field="*{infoFamilia.hermanosEstudiando}" name="infoFamilia.hermanosEstudiando" id="numHermanosEstudiando" placeholder="">
+				</div>
                 <div class="col mt-3">
                     <p class="textoInputs">¿Cuántos dejaron de estudiar?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNum" placeholder="">
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" 
+                     th:field="*{infoFamilia.hermanosDejoEstudio}" name="infoFamilia.hermanosDejoEstudio" id="inputNum" placeholder="">
                 </div>
                 <div class="col mt-3">
                     <p class="textoInputs">¿Cuántos tienen licenciatura?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputLicHermano" placeholder="">
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" 
+                     th:field="*{infoFamilia.hermanosLicenciatura}" name="infoFamilia.hermanosLicenciatura" id="inputLicHermano" placeholder="">
                 </div>
             </div>
             <div class="row mt-3">
-                <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row mt-2">
-                    <div class="col-3">
-                        <p class="textoInputs">Nombre completo:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
-                    </div>
-                    <div class="col-1">
-                        <p class="textoInputs">Edad:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="">
-                    </div>
-                    
-                    <div class="col-2">
-                        <p class="textoInputs">Grado de estudios:</p>
-                        <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Primaria</option>
-                            <option value="2" class="subtitulo">Secundaria</option>
-                            <option value="3" class="subtitulo">Bachillerato</option>
-                            <option value="4" class="subtitulo">Universidad</option>
-                            <option value="5" class="subtitulo">Postgrado</option>
-                        </select>                    
-                    </div>
-                    <div class="col-3">
-                        <p class="textoInputs">Nombre de su instituciónes:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputInst" placeholder="">
-                    </div>
-                    <div class="col" >
-                        <p class="textoInputs">Adjuntar comprobante:</p>
-                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
-                    </div>
-                <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row mt-2">
-                    <div class="col-3">
-                        <p class="textoInputs">Nombre completo:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
-                    </div>
-                    <div class="col-1">
-                        <p class="textoInputs">Edad:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                    </div>
-                    
-                    <div class="col-2">
-                        <p class="textoInputs">Grado de estudios:</p>
-                        <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Primaria</option>
-                            <option value="2" class="subtitulo">Secundaria</option>
-                            <option value="3" class="subtitulo">Bachillerato</option>
-                            <option value="4" class="subtitulo">Universidad</option>
-                            <option value="5" class="subtitulo">Postgrado</option>
-                        </select>                    
-                    </div>
-                    <div class="col-3">
-                        <p class="textoInputs">Nombre de su instituciónes:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputInst" placeholder="">
-                    </div>
-                    <div class="col" >
-                        <p class="textoInputs">Subir comprobante:</p>
-                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
-                    </div>
-                    <div class="col-3 mt-4">
-                        <p class="textoInputs">Nombre completo:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
-                    </div>
-                    <div class="col-1 mt-4">
-                        <p class="textoInputs">Edad:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="">
-                    </div>
-                    
-                    <div class="col-2 mt-4">
-                        <p class="textoInputs">Grado de estudios:</p>
-                        <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                            <option selected class="subtitulo">Elige una opción</option>
-                            <option value="1" class="subtitulo">Primaria</option>
-                            <option value="2" class="subtitulo">Secundaria</option>
-                            <option value="3" class="subtitulo">Bachillerato</option>
-                            <option value="4" class="subtitulo">Universidad</option>
-                            <option value="5" class="subtitulo">Postgrado</option>
-                        </select>                    
-                    </div>
-                    <div class="col-3 mt-4">
-                        <p class="textoInputs">Nombre de su instituciónes:</p>
-                        <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputInst" placeholder="">
-                    </div>
-                    <div class="col mt-4">
-                        <p class="textoInputs">Subir comprobante:</p>
-                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
-                    </div>
-                </div>
-            </div>
-        <div class="line mx-auto mt-5" style="width: 68%;"></div>
-            <h3 style="color: #6366F1;" class="mt-4">Personas dependientes</h3>
-            <div class="mt-2">
-                <p class="textoInputs">Además de ti y tus padres, ¿Cuántas personas dependen económicamente de tu ingreso familiar ?</p>
-                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 20%;" id="inputNombre" placeholder="">
-            </div>
-        <p class="textoInputs mt-3">Personas que dependen económicamente:</p>
-            <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row">
-                <div class="col-5">
-                    <p class="textoInputs">Nombre completo:</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
-                </div>
-                <div class="col-1">
-                    <p class="textoInputs">Edad:</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                </div>
-                <div class="col">
-                    <p class="textoInputs">Parentesco:</p>
-                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                        <option selected class="subtitulo">Elige una opción</option>
-                        <option value="1" class="subtitulo">Padre</option>
-                        <option value="2" class="subtitulo">Madre</option>
-                        <option value="3" class="subtitulo">Hermano</option>
-                        <option value="4" class="subtitulo">Hermana</option>
-                        <option value="5" class="subtitulo">Tio</option>
-                        <option value="6" class="subtitulo">Tia</option>
-                        <option value="7" class="subtitulo">Abuelo</option>
-                        <option value="8" class="subtitulo">Abuela</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <p class="textoInputs">Grado de estudios:</p>
-                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                        <option selected class="subtitulo">Elige una opción</option>
-                        <option value="1" class="subtitulo">Primaria</option>
-                        <option value="2" class="subtitulo">Secundaria</option>
-                        <option value="3" class="subtitulo">Bachillerato</option>
-                        <option value="4" class="subtitulo">Universidad</option>
-                        <option value="5" class="subtitulo">Postgrado</option>
-                    </select>                    
-                </div>
-            </div>
-                <div class="col-5 mt-4">
-                    <p class="textoInputs">Nombre completo:</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreDep" placeholder="Ingrese el nombre de persona dependiente ">
-                </div>
-                <div class="col-1 mt-4">
-                    <p class="textoInputs">Edad:</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                </div>
-                <div class="col mt-4">
-                    <p class="textoInputs">Parentesco:</p>
-                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                        <option selected class="subtitulo">Elige una opción</option>
-                        <option value="1" class="subtitulo">Padre</option>
-                        <option value="2" class="subtitulo">Madre</option>
-                        <option value="3" class="subtitulo">Hermano</option>
-                        <option value="4" class="subtitulo">Hermana</option>
-                        <option value="5" class="subtitulo">Tio</option>
-                        <option value="6" class="subtitulo">Tia</option>
-                        <option value="7" class="subtitulo">Abuelo</option>
-                        <option value="8" class="subtitulo">Abuela</option>
-                    </select>
-                </div>
-                <div class="col mt-4">
-                    <p class="textoInputs">Grado de estudios:</p>
-                    <select class="form-select estiloInputs" style="width: 104%;" aria-label="Default select example">
-                        <option selected class="subtitulo">Elige una opción</option>
-                        <option value="1" class="subtitulo">Primaria</option>
-                        <option value="2" class="subtitulo">Secundaria</option>
-                        <option value="3" class="subtitulo">Bachillerato</option>
-                        <option value="4" class="subtitulo">Universidad</option>
-                        <option value="5" class="subtitulo">Postgrado</option>
-                    </select>                    
-                </div>
-            </div>
-            
-        </div>
-        <div class="d-flex justify-content-center mt-5">
-            <button class="btn btn-outline-primary hBtn mt-3 estiloBoton">Guardar</button>
-        </div>
-    </div>
+				             
+					<tr th:each="hermano, itemStat : ${formMiFamilia.hermanos}">
+						 <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row mt-2">      
+							<td>
+							    <input hidden th:field="*{hermanos[__${itemStat.index}__].idHermanos}" th:name="|hermanos[${itemStat.index}].idHermanos|" th:value="${hermano.getIdHermanos()}"/>
+							</td>
+							<div class="col-3">
+							    <p class="textoInputs">Nombre completo:</p>
+							    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
+								th:field="*{hermanos[__${itemStat.index}__].nombreHermanos}" th:name="|hermanos[${itemStat.index}].nombreHermanos|" th:value="${hermano.getNombreHermanos()}"/>
+							</div>
+							<div class="col-1">
+							    <p class="textoInputs">Edad:</p>
+							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
+							    th:field="*{hermanos[__${itemStat.index}__].edad}" th:name="|hermanos[${itemStat.index}].edad|" th:value="${hermano.getEdad()}"/>
+							</div>
+							
+							<div class="col-2">
+							    <p class="textoInputs">Grado de estudios:</p>
+							    <select  id="catEscolaridadPadre" name="infoFamilia.escolaridadPadre" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+							     th:field="*{hermanos[__${itemStat.index}__].grado}" th:name="|hermanos[${itemStat.index}].grado|"
+							    >
+							         <option value="">Elige una opción</option>
+							        <option 
+							          th:each="escolaridad : ${catEscolaridad}" 
+							          th:value="${escolaridad.nombreEscolaridad}" 
+							          th:text="${escolaridad.nombreEscolaridad}">
+									</option>
+							    </select>                  
+							</div>
+							
+							<div class="col-3">
+							    <p class="textoInputs">Nombre de su institución:</p>
+							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
+							    th:field="*{hermanos[__${itemStat.index}__].nombreEscuela}" th:name="|hermanos[${itemStat.index}].nombreEscuela|" th:value="${hermano.getNombreEscuela()}"/>
+							</div>
+							
+							<div class="col-3">
+							    <p class="textoInputs">Tipo de Comprobante de estudios:</p>
+							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
+							    th:field="*{hermanos[__${itemStat.index}__].nombreTipoComprobante}" th:name="|hermanos[${itemStat.index}].nombreTipoComprobante|" th:value="${hermano.getNombreTipoComprobante()}"/>
+							</div>
+							
+							<!-- A esta sección no se le debe mover nada, Esteticamente no se ve bien porque se esta probando su fucnionamiento
+							
+							 -->
+							
+							<div class="col">
+					            <p class="textoInputs">Adjuntar comprobante:</p>
+					          
+					        </div>
+					         <input hidden id="rutaArchivoComprobante" th:value="${hermano.getRutaArchivoComprobante()}" th:name="|hermanos[${itemStat.index}__].rutaArchivoComprobante|"  th:field="*{hermanos[__${itemStat.index}__].rutaArchivoComprobante}">
+					          <div class="file-select" id="src-file1" th:if="${hermano.getRutaArchivoComprobante() == null || hermano.getRutaArchivoComprobante().isEmpty()}">
+					                <input type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName(this, ${itemStat.index})|">
+					                <input class="no-border"  th:id="'nombreArchivo-' + ${itemStat.index}">
+					          </div>
+					          <div th:if="${hermano.getRutaArchivoComprobante() != null && !hermano.getRutaArchivoComprobante().isEmpty()}">
+					                <input class="no-border" th:value="${hermano.getNombreArchivoOriginal()}" th:field="*{hermanos[__${itemStat.index}__].nombreArchivoOriginal}"
+					                 th:name="|hermanos[${itemStat.index}__].nombreArchivoOriginal|"  th:id="'nombreArchivo2-' + ${itemStat.index}">
+					              
+					                <input type="file"  name="file" aria-label="Archivo" th:onchange="|updateFileName2(this, ${itemStat.index})|">
+					          </div>
+					          
+					          <!-- ............................................................... -->
+						
+						 </div>
+						 
+					</tr>	
+                   
+              
+      	    <div class="line mx-auto mt-5" style="width: 68%;"></div>
+	            <h3 style="color: #6366F1;" class="mt-4">Personas dependientes</h3>
+	            <div class="mt-2">
+	                <p class="textoInputs">Además de ti y tus padres, ¿Cuántas personas dependen económicamente de tu ingreso familiar ?</p>
+	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 20%;" 
+	                name="" id="inputPersonasDependientes" placeholder="">
+	            </div>
+			   
+		   </div>
+		   
+			 
+	            
+	        </div>
+	        <div class="d-flex justify-content-center mt-5">
+	            <button id="submitButton" type="submit" class="btn btn-primary">Guardar</button>  
+	        </div>
+	        <button type="button" onclick="validarCampos()">Validar Campos</button>
+    
+	    </div>
+	   </form>
 
     <footer id="footer"></footer>
-    <script src="../static/javaScript.js/funcionamiento.js"></script>
+    <script src="../javaScript.js/funcionamiento.js"></script>
+     <script type="text/javascript">
+		 /*<![CDATA[*/
+		    function updateFileName1(input, index) {
+		        var fileName = input.files[0].name;
+		        var fileNameDisplay = document.getElementById('fileNameDisplay_' + index);
+		        fileNameDisplay.value = fileName;
+		        console.log("El archivo es: " + fileName);
+		    }
+		    
+		/*]]>*/
+		 function updateFileName(input, index) {
+			    var fileName = input.files[0].name;
+			    document.getElementById('nombreArchivo-' + index).value = fileName;
+			}
+			function updateFileName2(input, index) {
+			    var fileName = input.files[0].name;
+			    document.getElementById('nombreArchivo2-' + index).value = fileName;
+			}
+			
+			
+	    $(document).ready(function () {
+			
+		    //Obtener idMunicipio
+	        
+	        
+	        	//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
+	            $('#catEstado').change(function() {
+			            var estado = $(this).val();
+	    				console.log('Selected Estado:', estado);
+	    				
+			            $.ajax({
+			                url: '/direccion/municipiosById/' + estado,
+			                type: 'GET',
+			                success: function(data) {
+			                    var municipioSelect = $('#catMunicipio');
+			                    municipioSelect.empty();
+			                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+			                    $.each(data, function(index, municipio) {
+			                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+			                    });
+			                }
+			            });
+			            
+			        });
+			        
+			        //Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
+			        $('#catMunicipio').change(function() {
+			            var municipio = $(this).val();
+			            
+	    				console.log('Selected municipio:', municipio);
+	    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+			            $.ajax({
+			                url: '/direccion/localidadesById/' + municipio,
+			                type: 'GET',
+			                success: function(data) {
+			                    var municipioSelect = $('#catLocalidad');
+			                    municipioSelect.empty();
+			                    console.log(data);
+			                    municipioSelect.append('<option value="">Elige una opción</option>');
+			                    $.each(data, function(index, localidad) {
+									console.log(data.idCatLocalidad);
+			                        municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+			                    	
+			                    });
+			                }
+			            });
+			        });
+			        
+			        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+			        $('#catLocalidad').change(function() {
+			            var localidad = $(this).val();
+	    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+			            $.ajax({
+			                url: '/direccion/codigoPostalById/' + localidad,
+			                type: 'GET',
+			                success: function(data) {
+					            // Se establece el valor del campo #codigoPostal con el valor obtenido
+					            $('#codigoPostal').val(data.numeroCodigoPostal);
+					        }
+			            });
+			        });
+			        
+			      
+			       
+			        
+			      var idGrupoAlumno = $('#idGrupo');
+			      console.log("id de grupo: "+ idGrupoAlumno.val());
+				  var idGrupo = parseInt(idGrupoAlumno.val());
+			     
+				//Se establece automaticamente la carrera con la que fue registrado el alumno
+	            $.ajax({
+	            url: '/carrera/carreraByIdGrupo/' + idGrupo,
+	            type: 'GET',
+	            success: function (data) {
+		           idCarrea= data.idCatCarrera;
+		           $('#carrera').val(idCarrea);
+		           console.log("id de municipio: "+idGrupo);
+		        }
+		        });
+		        
+			     
+				//Se establece automaticamente el semestre con la que fue registrado el alumno
+	            $.ajax({
+	            url: '/carrera/semestreByIdGrupo/' + idGrupo,
+	            type: 'GET',
+	            success: function (data) {
+		           idSemestre= data.idCatSemestre;
+		           $('#semestre').val(idSemestre);
+		           console.log("id de municipio: "+idGrupo);
+		        }
+		        });
+			        
+	            
+	            
+	    var idLocalidad = $('#idLocalidad');
+        var idCatLocalidad = idLocalidad.val(); // Obtener el valor de #idCatLocalidad 
+        if(idCatLocalidad != "" || idCatLocalidad != null){
+	    //Obtener idMunicipio
+	    $.ajax({
+	        url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
+	        type: 'GET',
+	        success: function(data) {
+	            var idMunicipio = data.idCatMunicipio;
+	            console.log("id de municipio: " + idMunicipio);
+	
+	            //Obtener idEstado
+	            $.ajax({
+	                url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
+	                type: 'GET',
+	                success: function(data) {
+	                    var idEstado = data.idCatEstado;
+	                    $('#catEstado').val(idEstado);
+	                    console.log("id de estado: " + idEstado);
+	
+	                    //Obtener municipios por id de estado
+	                    $.ajax({
+	                        url: '/direccion/municipiosById/' + idEstado,
+	                        type: 'GET',
+	                        success: function(data) {
+	                            var municipioSelect = $('#catMunicipio');
+	                            municipioSelect.empty();
+	                            municipioSelect.append('<option value="">Elige una opción</option>');
+	                            $.each(data, function(index, municipio) {
+	                                municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+	                            });
+	                            municipioSelect.val(idMunicipio);
+	                            
+	                            //Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+					            $.ajax({
+					                url: '/direccion/localidadesById/' + idMunicipio,
+					                type: 'GET',
+					                success: function(data) {
+					                    var loSelect = $('#catLocalidad');
+					                    loSelect.empty();
+					                    console.log(data);
+					                    loSelect.append('<option value="">Elige una opción</option>');
+					                    $.each(data, function(index, localidad) {
+											console.log(data.idCatLocalidad);
+					                        loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+					                    	
+					                    });
+					                    loSelect.val(idCatLocalidad);
+					                     //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+									      
+						    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+								            $.ajax({
+								                url: '/direccion/codigoPostalById/' + idCatLocalidad,
+								                type: 'GET',
+								                success: function(data) {
+										            // Se establece el valor del campo #codigoPostal con el valor obtenido
+										            $('#codigoPostal').val(data.numeroCodigoPostal);
+										        }
+								            });
+					                }
+					            });
+	                            
+	                        },
+	                        error: function(error) {
+	                            console.error("Error en la solicitud AJAX:", error);
+	                        }
+	                    });
+	                },
+	                error: function(error) {
+	                    console.error("Error en la solicitud AJAX:", error);
+	                }
+	            });
+	        },
+	        error: function(error) {
+	            console.error("Error en la solicitud AJAX:", error);
+	        }
+	    });
+	}
+	
+        
+			
+       });
+       document.addEventListener('DOMContentLoaded', () => {
+	      document.querySelectorAll('input[type=text]').forEach( node => node.addEventListener('keypress', e => {
+	        if(e.keyCode == 13) {
+	          e.preventDefault();
+	        }
+	      }))
+	   });
+	   function validarCampos() {
+		    // Obtener el valor seleccionado del campo catEstado
+		    var estadoSeleccionado = document.getElementById("catEstado").value;
+		    
+		    // Verificar si el valor seleccionado es igual a "Elige una opción" (valor por defecto)
+		    if (estadoSeleccionado === "Elige una opción") {
+		        // Si el valor es igual al valor por defecto, mostrar un mensaje de error o tomar alguna acción adecuada
+		        alert("Por favor, selecciona un estado.");
+		        return; // Detener la ejecución de la función si la validación falla
+		    }
+		    
+		}
+    </script>
 </body>
 </html>

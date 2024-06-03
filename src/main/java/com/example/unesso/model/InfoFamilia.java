@@ -25,11 +25,11 @@ public class InfoFamilia {
 	
 	@OneToOne
 	@JoinColumn(name="escolaridadPadre")
-	private CatEscolaridad catEscolaridadPadre;
+	private CatEscolaridad escolaridadPadre;
 	
 	@OneToOne
 	@JoinColumn(name="escolaridadMadre")
-	private CatEscolaridad catEscolaridadMadre;
+	private CatEscolaridad escolaridadMadre;
 	
 
 	public Integer getIdInfoFamilia() {
@@ -72,33 +72,27 @@ public class InfoFamilia {
 		this.hermanosLicenciatura = hermanosLicenciatura;
 	}
 
-	public CatEscolaridad getCatEscolaridadPadre() {
-		return catEscolaridadPadre;
+	public CatEscolaridad getEscolaridadPadre() {
+		return escolaridadPadre;
 	}
 
-	public void setCatEscolaridadPadre(CatEscolaridad catEscolaridadPadre) {
-		this.catEscolaridadPadre = catEscolaridadPadre;
+	public void setEscolaridadPadre(CatEscolaridad catEscolaridadPadre) {
+		this.escolaridadPadre = catEscolaridadPadre;
 	}
 
-	public CatEscolaridad getCatEscolaridadMadre() {
-		return catEscolaridadMadre;
+	public CatEscolaridad getEscolaridadMadre() {
+		return escolaridadMadre;
 	}
 
-	public void setCatEscolaridadMadre(CatEscolaridad catEscolaridadMadre) {
-		this.catEscolaridadMadre = catEscolaridadMadre;
+	public void setEscolaridadMadre(CatEscolaridad catEscolaridadMadre) {
+		this.escolaridadMadre = catEscolaridadMadre;
 	}
 
 	@Override
 	public String toString() {
 		return "InfoFamilia [idInfoFamilia=" + idInfoFamilia + ", numHermanos=" + numHermanos + ", hermanosEstudiando="
 				+ hermanosEstudiando + ", hermanosDejoEstudio=" + hermanosDejoEstudio + ", hermanosLicenciatura="
-				+ hermanosLicenciatura + ", catEscolaridadPadre=" + catEscolaridadPadre + ", catEscolaridadMadre="
-				+ catEscolaridadMadre + "]";
-	}
-	
-	
-	
-	
-	
-	
+				+ hermanosLicenciatura + ", catEscolaridadPadre=" + escolaridadPadre + ", catEscolaridadMadre="
+				+ escolaridadMadre + "]";
+	}	
 }
