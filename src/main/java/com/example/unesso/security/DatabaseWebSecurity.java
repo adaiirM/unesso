@@ -25,6 +25,7 @@ public class DatabaseWebSecurity {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/css/", "/img/").permitAll()
+                .requestMatchers("/hermanos/guardar").permitAll() 
                 //.requestMatchers("/").permitAll()
                 //.requestMatchers("/admin/").hasAnyAuthority("ADMINISTRADOR") 
                 .anyRequest().authenticated());
