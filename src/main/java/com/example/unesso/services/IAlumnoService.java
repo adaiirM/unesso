@@ -8,4 +8,5 @@ import com.example.unesso.model.Usuario;
  */
 public interface IAlumnoService {
 	Alumno buscarPorUsuario(Usuario usuario);
+	void guardarAlumno(Alumno alumno);
 }

@@ -64,7 +64,6 @@ public class AlumnoController {
 	
 	@Autowired
 	public ICatOcupacionService serviceOcupacion;
-
 	
 	@Autowired 
 	public ITutorEconomicoService serviceTutorEconomico;
@@ -92,17 +91,26 @@ public class AlumnoController {
 	}
 	
 	@GetMapping("/formMiTutor")
-	public String formularioTutor(Model model) {
+	public String formularioTutor(Authentication auth, Model model) {
+		
+		TutorEconomico tutorEconomico = new TutorEconomico();
+		Alumno a = obtenerAlumnoSesion(auth);
+		
+		if(a.getTutorEconomico() != null) {
+			tutorEconomico = serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
+		}
+		
 		List<CatEstado> listEstado = serviceEstado.listEstados();
 		List<CatOcupacion> listOcupacion = serviceOcupacion.listaOcupaciones();
-		model.addAttribute("tutorEconomico", new TutorEconomico());
+		
+		model.addAttribute("tutorEconomico", tutorEconomico);
 		model.addAttribute("estados", listEstado);
 		model.addAttribute("ocupaciones", listOcupacion);
 		return "alumno/formMiTutor";
 	}
 	
 	@PostMapping("/guardarTutor")
-	public String guardarDom(TutorEconomico tutor, BindingResult result) {
+	public String guardarDom(Authentication auth, TutorEconomico tutor, BindingResult result) {
 		/*if(result.hasErrors()) {
 			for (ObjectError error: result.getAllErrors()){
 				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
@@ -111,11 +119,17 @@ public class AlumnoController {
 			return "alumno/formTutor";
 		}*/
 		
-		System.out.println(tutor.getCatOcupacion());
+		//Recuperar datos de sesion para conocer el alumno de la sesión
+		Alumno a = obtenerAlumnoSesion(auth);
 		
-		//Recuperar datos de sesion para conocer el registro del alumno y asignarle el id de tutor al alumno
 		
+		//Guardar tutor en la base de datos
 		serviceTutorEconomico.guardarTutor(tutor);
+		
+		//Asignar el tutor al alumno
+		a.setTutorEconomico(tutor);
+		serviceAlumno.guardarAlumno(a);
+	
 		return "alumno/formMiTutor";
 	}
 	
@@ -143,5 +157,12 @@ public class AlumnoController {
 			System.out.println(a);
 			model.addAttribute("alumnoSesion", a);
 		}
+	}
+	
+	private Alumno obtenerAlumnoSesion(Authentication auth) {
+		String correo = auth.getName();
+		Usuario u = serviceUsuario.buscarPorCorreo(correo);
+		return serviceAlumno.buscarPorUsuario(u);
+
 	}
 }

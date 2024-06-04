@@ -1,13 +1,11 @@
 package com.example.unesso.services.db;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.unesso.model.Alumno;
-import com.example.unesso.model.CatEstado;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.repository.AlumnoRepository;
 import com.example.unesso.services.IAlumnoService;
@@ -27,6 +25,11 @@ public class AlumnoServiceJPA implements  IAlumnoService {
 		}
 		return null;*/
 		return alumnoRepo.findByUsuario(usuario);
+	}
+
+	@Override
+	public void guardarAlumno(Alumno alumno) {
+		alumnoRepo.save(alumno);
 	}
 
 }

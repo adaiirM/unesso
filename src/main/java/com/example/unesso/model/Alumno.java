@@ -93,12 +93,12 @@ public class Alumno {
 		this.infoVivienda = infoVivienda;
 	}
 
-	public TutorEconomico getTutor() {
+	public TutorEconomico getTutorEconomico() {
 		return tutorEconomico;
 	}
 
-	public void setTutor(TutorEconomico tutor) {
-		this.tutorEconomico = tutor;
+	public void setTutorEconomico(TutorEconomico tutorEconomico) {
+		this.tutorEconomico = tutorEconomico;
 	}
 
 	public CatEstadoCivil getCatEstadoCivil() {
@@ -241,7 +241,7 @@ public class Alumno {
 	@Override
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", domicilio=" + domicilio + ", infoVivienda=" + infoVivienda
-				+ ", tutor=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia + ", usuario="
+				+ ", tutorEconomico=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia + ", usuario="
 				+ usuario + ", catGrupo=" + catGrupo + ", matricula=" + matricula + ", nombre=" + nombre
 				+ ", apellidoP=" + apellidoP + ", apellidoM=" + apellidoM + ", telefono=" + telefono + ", curp=" + curp
 				+ ", recursosSuficientes=" + recursosSuficientes + ", solicitaBecaAlimenticia="

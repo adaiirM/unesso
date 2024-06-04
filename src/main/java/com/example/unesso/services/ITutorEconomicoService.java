@@ -7,4 +7,5 @@ import com.example.unesso.model.TutorEconomico;
  */
 public interface ITutorEconomicoService {
 	TutorEconomico guardarTutor(TutorEconomico tutor);
+	TutorEconomico obtenerPorId(Integer idTutor);
 }
