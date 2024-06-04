@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.unesso.model.Alumno;
 import com.example.unesso.model.CatParentesco;
@@ -38,7 +39,7 @@ public class AccesoController {
     }
 	
 	@PostMapping("/cambiarContraseña")
-	public String cambiarContraseña(Authentication auth, HttpSession sesion, String contraseñaActual, String contraseñaNueva2) {
+	public String cambiarContraseña(Authentication auth, HttpSession sesion,@RequestParam("contraseñaNueva2") String contraseñaNueva2) {
 		String correo = auth.getName();
 
 		Usuario u = serviceUsuario.buscarPorCorreo(correo);

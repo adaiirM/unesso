@@ -67,12 +67,12 @@ public class GastosFam {
 		this.gastoRenta = gastoRenta;
 	}
 
-	public Double getGastoServicio() {
+	public Double getGastoServicios() {
 		return gastoServicios;
 	}
 
-	public void setGastoServicio(Double gastoServicio) {
-		this.gastoServicios = gastoServicio;
+	public void setGastoServicios(Double gastoServicios) {
+		this.gastoServicios = gastoServicios;
 	}
 
 	public Double getGastoEscolares() {
@@ -110,13 +110,8 @@ public class GastosFam {
 	@Override
 	public String toString() {
 		return "GastosFam [idGastosFam=" + idGastosFam + ", reciboLuz=" + reciboLuz + ", gastosAlimentacion="
-				+ gastosAlimentacion + ", gastoRenta=" + gastoRenta + ", gastoServicio=" + gastoServicios
+				+ gastosAlimentacion + ", gastoRenta=" + gastoRenta + ", gastoServicios=" + gastoServicios
 				+ ", gastoEscolares=" + gastoEscolares + ", gastoRopa=" + gastoRopa + ", gastoTransporte="
 				+ gastoTransporte + ", gastoOtros=" + gastoOtros + "]";
 	}
-	
-	
-	
-	
-
 }
