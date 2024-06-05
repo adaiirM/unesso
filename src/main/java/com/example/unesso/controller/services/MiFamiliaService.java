@@ -366,7 +366,9 @@ public class MiFamiliaService {
 				System.out.println("No insertado");
 			}
 		}
-		
+		if(alumnoDatos.getCatInternet().getIdCatInternet() != null) {
+			alumno.setCatInternet(alumnoDatos.getCatInternet());
+		}
 		alumno.setFamilia(familia);
 		alumnoService.guardar(alumno);
 	}
