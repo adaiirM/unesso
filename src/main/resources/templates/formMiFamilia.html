@@ -111,7 +111,7 @@
         </div>
 
         <div class="row ms-5 me-5 mb-3 mt-3">
-            <div class="col-4 p-3 rounded colorFondo ">
+            <div class="col-sm-5 p-3 col-lg-5 rounded colorFondo mb-3">
                 <h3 style="color: #6366F1;">Contacto</h3>
                 <div>
                     <p class="textoInputs mt-4">Teléfono</p>
@@ -119,9 +119,9 @@
                     class="estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTel" placeholder="Ingrese su numero de telefono">
                 </div>
             </div>
-            <div class="col rounded colorFondo ms-3 p-3">
+            <div class="col-12 col-sm-7 col-lg-7 rounded colorFondo  p-3 mb-3">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12">
                         <h3 style="color: #6366F1;">Grados de escolaridad</h3>
                         <div>
                             <p class="textoInputs mt-4">Escolaridad del padre</p>
@@ -153,8 +153,8 @@
             </div>
         </div>
 
-        <div class="row ms-5 mb-3 mt-2 me-5">
-            <div class="col-8 rounded colorFondo p-3">
+        <div class="row ms-5 mb-3 me-5">
+            <div class="col-12 rounded colorFondo p-3">
                 <h3 style="color: #6366F1;">Vivienda</h3>
                 <div class="row mt-4">
                     <div class="col">
@@ -186,7 +186,7 @@
                         <div class="mt-4">
                             <p class="textoInputs">¿Con qué servicios cuenta la vivienda?</p>
                             <div class="row" th:each="grupoCatServicios, catServiciosStatus : ${catServicios}">
-                                <div class="col me-2" th:each="servicio, servicioStatus : ${grupoCatServicios}">
+                                <div class="col-7 me-2" th:each="servicio, servicioStatus : ${grupoCatServicios}">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"  th:value="${servicio.idCatServicios}" th:field="*{serviciosVivienda}" name="serviciosVivienda">
                                         <label class="form-check-label subtitulo" for="checkbox${servicio.idCatServicios}">
@@ -221,14 +221,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col rounded colorFondo ms-3 p-3">
+            <div class="row rounded colorFondo mt-3 p-3 ms-1">
                 <h3 style="color: #6366F1;">Información complementaria </h3>
-                 <div class="mt-4">
+                 <div class="mt-4 col">
                     <p class="textoInputs">Medios para estudiar en casa</p>
-                	<div class="mt-4">
 						<div  class="row" th:each="medios, catMediosStatus : ${catMedios}" >
-						 
-							    <div class="col me-2"  th:each="medio, mediosStatus : ${medios}">	             
+							    <div class="col-12 col-md-6"  th:each="medio, mediosStatus : ${medios}">	             
 									<div class="form-check" >
 						                <input class="form-check-input" type="checkbox" th:field="*{mediosEstudios}" th:name="mediosEstudios" th:value="${medio.getIdCatMedios()}">
 						                <label class="form-check-label" for="checkbox${medio.idCatMedios}">
@@ -237,26 +235,23 @@
 							        </div>
 							    </div>
 						    </div>
-						</div>       
                 	</div>
                 
-                <div class="mt-4">
+                <div class="mt-4 col">
                     <p class="textoInputs">¿Cuentas con acceso a internet?</p>
                     <div class="row">
-                        <div class="col">
-                            <div class="mt-3">
+                        <div class="col-12 col-md-6">
                                 <input type="radio" class="input-outline-primary ms-4" id="internetSi" name="internet" style="color: #6366F1;">
                                 <label for="domicilioSi" style="color: #6366F1;" class="me-5">Si</label>
                                 <input type="radio" class="input-outline-primary" id="internetNo" name="internet" style="color: #6366F1;">
                                 <label for="domicilioNo" style="color: #6366F1;">No</label>
-                            </div> 
                         </div>
                     </div>
                 </div>
-                <div class="mt-4">
+                <div class="mt-4 col">
                     <p class="textoInputs">Tipo de conexión</p>
                     <div class="row">
-                        <div class="col me-2">
+                        <div class="col-6 me-2">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="agua">
                                     <label class="form-check-label subtitulo" for="agua">
@@ -318,22 +313,22 @@
             <div class="row mt-3">
 				             
 					<tr th:each="hermano, itemStat : ${formMiFamilia.hermanos}">
-						 <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded p-3 row mt-2">      
+						 <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2">      
 							<td>
 							    <input hidden th:field="*{hermanos[__${itemStat.index}__].idHermanos}" th:name="|hermanos[${itemStat.index}].idHermanos|" th:value="${hermano.getIdHermanos()}"/>
 							</td>
-							<div class="col-3">
+							<div class="col-12 col-sm-8 mt-3 col-lg-4 col-xl-4">
 							    <p class="textoInputs">Nombre completo:</p>
 							    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
 								th:field="*{hermanos[__${itemStat.index}__].nombreHermanos}" th:name="|hermanos[${itemStat.index}].nombreHermanos|" th:value="${hermano.getNombreHermanos()}"/>
 							</div>
-							<div class="col-1">
+							<div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-1">
 							    <p class="textoInputs">Edad:</p>
 							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
 							    th:field="*{hermanos[__${itemStat.index}__].edad}" th:name="|hermanos[${itemStat.index}].edad|" th:value="${hermano.getEdad()}"/>
 							</div>
 							
-							<div class="col-2">
+							<div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-2">
 							    <p class="textoInputs">Grado de estudios:</p>
 							    <select  id="catEscolaridadPadre" name="infoFamilia.escolaridadPadre" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
 							     th:field="*{hermanos[__${itemStat.index}__].grado}" th:name="|hermanos[${itemStat.index}].grado|"
@@ -347,13 +342,13 @@
 							    </select>                  
 							</div>
 							
-							<div class="col-3">
+							<div class="col-12 col-sm-8 col-lg-6 mt-3 col-xl-3">
 							    <p class="textoInputs">Nombre de su institución:</p>
 							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
 							    th:field="*{hermanos[__${itemStat.index}__].nombreEscuela}" th:name="|hermanos[${itemStat.index}].nombreEscuela|" th:value="${hermano.getNombreEscuela()}"/>
 							</div>
 							
-							<div class="col-3">
+							<div class="col-12 mt-3 col-lg-6 col-xl-2">
 							    <p class="textoInputs">Tipo de Comprobante de estudios:</p>
 							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
 							    th:field="*{hermanos[__${itemStat.index}__].nombreTipoComprobante}" th:name="|hermanos[${itemStat.index}].nombreTipoComprobante|" th:value="${hermano.getNombreTipoComprobante()}"/>
@@ -400,7 +395,7 @@
 	            
 	        </div>
 	        <div class="d-flex justify-content-center mt-5">
-	            <button id="submitButton" type="submit" class="btn btn-primary">Guardar</button>  
+	            <button id="submitButton" type="submit" class="btn btn-outline-primary hBtn mt-3 estiloBoton">Guardar</button>  
 	        </div>
 	        <button type="button" onclick="validarCampos()">Validar Campos</button>
     
