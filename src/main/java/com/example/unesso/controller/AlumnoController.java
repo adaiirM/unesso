@@ -87,6 +87,9 @@ public class AlumnoController {
 	@Autowired
 	private ICatServiciosService catServiciosService;
 	
+	@Autowired
+	private ICatInternetService catInternetService;
+	
 	
 	
 	//Relizara las operaciones CRUD para el fromulario de miFamilia
@@ -130,6 +133,7 @@ public class AlumnoController {
 		 model.addAttribute("catPerentesco",catParentescoService.buscarTodos());
 		 model.addAttribute("catSituacionViviendaUni", catSituacionViviendaUniService.buscarTodas());
 		 model.addAttribute("catOcupacion",catOcupacionService.buscarTodas());
+	        model.addAttribute("catInternet",catInternetService.buscarTodos());
 		 
 		 //Lista de catMediosTransporte
 		 List<CatMediosTransporte> mediosTransporte =  catMediosTransporteService.buscarTodos();
