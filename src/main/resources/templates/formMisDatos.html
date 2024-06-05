@@ -71,7 +71,7 @@
 							   
 						</div>
 	                </div>
-	                    <div class="col-md-12 pt-3">
+	                    <div class="col-12 pt-3">
 		                  
 		                    <label  class="textoInputs">Carrera </label>
 		                   	<input readonly type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreCarrera">
@@ -92,11 +92,13 @@
 	                        <div style="width: 48%;" th:each="estadoCivil : ${estadosCiviles}">
 	                            <input th:field="*{alumno.catEstadoCivil.idCatEstadoCivil}"  name="alumno.catEstadoCivil.idCatEstadoCivil" class="form-check-input" type="radio" th:value="${estadoCivil.idCatEstadoCivil} ">
 	                            <label class="form-check-label" >
-				                    <p class="subtitulo" th:text="${estadoCivil.nombreEstadoCivil}"></p>
+				                    <p class="subtitulo" th:text="${estadoCivil.nombreEstadoCivil}">Soltero</p>
 				                </label>
 	                        </div> 
 	                    </div>
+						
 	                </div>
+					
 	                <div class="col-md-12 pt-3">
 					    <p class="textoInputs">¿Tienes los recursos económicos necesarios para tus actividades académicas?</p>
 					    <!-- ********************************************************************* -->
@@ -175,7 +177,7 @@
 			                       class="form-check-input situacion-radio" 
 			                       type="radio" />
 			                <label class="form-check-label" for="situacion${catSituacion.idCatSituacionVivienda}">
-			                    <p class="subtitulo" th:text="${catSituacion.nombreSituacionVivienda}"></p>
+			                    <p class="subtitulo" th:text="${catSituacion.nombreSituacionVivienda}">Rento Cuarto</p>
 			                </label>
 			            </div>
 			        </div>
@@ -188,9 +190,8 @@
 			<div id="infoViviendaUniversitaria">
 				
 			<!-- ********************************************************************* -->
-			
-			    <div style="display: flex; justify-content: space-between; padding-top: 1%;">
-			        <div style="width: 70%;">
+			<div class="col-md-12 col-xs-1  d-flex" style="padding-top: 2%;">
+			        <div class="col-4 p-2" style="width: 34%;">
 			            <p class="textoInputs">Nombre de la casa de huéspedes o propietario</p>
 			            <input name="infoVivienda.nombreCasero" 
 			                   th:field="*{infoVivienda.nombreCasero}" 
@@ -201,9 +202,7 @@
 			                   id="inputNombreCasero" 
 			                   placeholder="">
 			        </div>
-			    </div>
-			    <div style="display: flex; justify-content: space-between; padding-top: 1%;">
-			        <div style="width: 25%;">
+			        <div class="col-4 p-2" style="width: 34%;">
 			            <p class="textoInputs">¿Con cuantas personas compartes renta?</p>
 			            <input name="infoVivienda.numComparteVivienda" 
 			                   th:field="*{infoVivienda.numComparteVivienda}" 
@@ -214,8 +213,8 @@
 			                   id="inputNombre" 
 			                   placeholder="">
 			        </div>
-			        <div style="width: 45%;">
-			            <p class="textoInputs">¿Cuanto pagas de renta?</p>
+			        <div class="col-4 p-2 " style="width: 34%;">
+			            <p class="textoInputs">¿Cuanto paga usted de renta mensual?</p>
 			            <input name="infoVivienda.pagoRenta" 
 			                   th:field="*{infoVivienda.pagoRenta}" 
 			                   value="" 
@@ -225,9 +224,8 @@
 			                   id="inputNombre" 
 			                   placeholder="">
 			        </div>
-			    </div>
+				</div>
 			</div>
-
 			
 	        <div class="col-md-12" style="padding-top: 2%;">
 	                <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
