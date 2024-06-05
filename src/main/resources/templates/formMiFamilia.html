@@ -256,36 +256,17 @@
                 <div class="mt-4">
                     <p class="textoInputs">Tipo de conexión</p>
                     <div class="row">
-                        <div class="col me-2">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="agua">
-                                    <label class="form-check-label subtitulo" for="agua">
-                                      Cable
-                                    </label>
-                                </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="telefono" >
-                                    <label class="form-check-label subtitulo" for="telefono">
-                                      Satelite 
-                                    </label>
-                                  </div>
-                            </div>
-                            <div class="col me-2">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="luz">
-                                    <label class="form-check-label subtitulo" for="luz">
-                                      WiFi
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="otros" >
-                                    <label class="form-check-label subtitulo" for="otros">
-                                        DLS
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+                        name="alumno.catInternet.idCatInternet" th:field="*{alumno.catInternet.idCatInternet}">
+                            <option value="" class="subtitulo">Elige una opción</option>
+                            <option 
+		                      th:each="internet : ${catInternet}" 
+		                      th:value="${internet.idCatInternet}" 
+		                      th:text="${internet.nombreInternet}">
+							</option>
+                        </select>
                     </div>
+                </div>
                 </div>
             </div>
         
