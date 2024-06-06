@@ -1,9 +1,9 @@
 package com.example.unesso.services;
 
+import java.util.List;
 
-/**
- * Description: Interfaz que define operaciones relacionadas con la gestión de CatMedios en el sistema.
- */
+import com.example.unesso.model.CatMedios;
+
 public interface CatMediosService {
-
+	List<CatMedios> buscraTodos();
 }

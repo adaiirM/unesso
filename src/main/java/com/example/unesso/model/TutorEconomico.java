@@ -9,11 +9,11 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tutor")
-public class Tutor {
+@Table(name="tutorEconomico")
+public class TutorEconomico {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer idTutor;
+	private Integer idTutorEconomico;
 	
 	@OneToOne
 	@JoinColumn(name="idDomicilio")
@@ -27,7 +27,7 @@ public class Tutor {
 	@JoinColumn(name="idCatParentesco")
 	private CatParentesco catParentesco;
 	
-	private String nombreTutor;
+	private String nombreTutorEconomico;
 	
 	private String telefono;
 	
@@ -37,11 +37,11 @@ public class Tutor {
 	
 
 	public Integer getIdTutor() {
-		return idTutor;
+		return idTutorEconomico;
 	}
 
 	public void setIdTutor(Integer idTutor) {
-		this.idTutor = idTutor;
+		this.idTutorEconomico = idTutor;
 	}
 
 	public Domicilio getDomicilio() {
@@ -68,12 +68,12 @@ public class Tutor {
 		this.catParentesco = catParentesco;
 	}
 
-	public String getNombreTutor() {
-		return nombreTutor;
+	public String getNombreTutorEconomico() {
+		return nombreTutorEconomico;
 	}
 
-	public void setNombreTutor(String nombreTutor) {
-		this.nombreTutor = nombreTutor;
+	public void setNombreTutorEconomico(String nombreTutor) {
+		this.nombreTutorEconomico = nombreTutor;
 	}
 
 	public String getTelefono() {
@@ -102,8 +102,8 @@ public class Tutor {
 
 	@Override
 	public String toString() {
-		return "Tutor [idTutor=" + idTutor + ", domicilio=" + domicilio + ", catSituacionTrabajo=" + catSituacionTrabajo
-				+ ", catParentesco=" + catParentesco + ", nombreTutor=" + nombreTutor + ", telefono=" + telefono
+		return "Tutor [idTutor=" + idTutorEconomico + ", domicilio=" + domicilio + ", catSituacionTrabajo=" + catSituacionTrabajo
+				+ ", catParentesco=" + catParentesco + ", nombreTutor=" + nombreTutorEconomico + ", telefono=" + telefono
 				+ ", correo=" + correo + ", trabajadorSuneo=" + trabajadorSuneo + "]";
 	} 
 	

@@ -4,497 +4,910 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>    <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{/css/style.css}">
+    
+	<!-- Cargar jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
     <title>Datos personales</title>
 </head>
 <body>
-    <nav id="nav"></nav>
-    <div class="container mt-3 ">
-        <div class="row" >
-            <ol class="colorFondo breadcrumb bread-primary ">
-                <a href="menuAlumno.html" style="text-decoration: none;">
-                    <button class="btn camino" id="botonInicio" >Inicios</button>
-                </a>
-                <a href="menuSolicitarBeca.html" style="text-decoration: none;">
-                    <button class="btn camino" id="botonInicio" >Menu</button>
-                </a>
-                <a href="#" style="text-decoration: none;">
-                    <button class="btn btn-primary camino localizacion" >Datos personales</button>  
-                </a> 
-            </ol>
-        </div>
-    </div>
-<section>
-
-    <h1 class="titulo ps-5 mb-2 mt-2" style="font: bold; font-weight: 660;">MIS DATOS</h1>
-    <div class="row ps-5 pe-5">
-        <div class="col-4 rounded colorFondo m-2 p-4">
-            <h3 style="color: #6366F1;">Información general</h3>
-                <div class="col-md-12 pt-2">
-                        <p class="textoInputs">Nombre Completo</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="Ingrese el nombre completo del alumno">
-                </div>
-                    <div class="col-md-12 pt-3">
-                        <p class="textoInputs">Carrera</p>
-                    <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example" >
-                        <option selected class="subtitulo">Elige una opción</option>
-                        <option value="1">Ingeniería Forestal</option>
-                        <option value="2">Licenciatura en Ciencias Ambientales</option>
-                        <option value="3">Ingeniería de Desarrollo de Software y Sistemas Inteligentes</option>
-                        <option value="3">Licenciatura en Biología</option>
-                        <option value="3">Licenciatra en Administración Turística</option>
-                    </select>
-                </div>
-                <div class="col-12 pt-3">
-                    <p class="textoInputs">Semestre</p>
-                    <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                        <option selected class="subtitulo">Elige una opción</option>
-                        <option value="1" class="subtitulo">Primero</option>
-                        <option value="2" class="subtitulo">Segundo</option>
-                        <option value="3" class="subtitulo">Cuarto</option>
-                        <option value="3" class="subtitulo">Quinto</option>
-                        <option value="3" class="subtitulo">Sexto</option>
-                        <option value="3" class="subtitulo">Séptimo</option>
-                        <option value="3" class="subtitulo">Octavo</option>
-                        <option value="3" class="subtitulo">Noveno</option>
-                        <option value="3" class="subtitulo">Décimo</option>
-                    </select>
-                </div>
-                <div class="col-md-12 pt-3">
-                        <p class="textoInputs">Estado Civil</p>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="width: 48%;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-                                <p class="subtitulo">Soltero</p>
-                            </div>
-                        </div>
-                        <div style="width: 48%;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-                                <p class="subtitulo">Casado</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 pt-3">
-                        <p class="textoInputs">¿Tienes los recursos económicos necesarios para tus actividades académicas?</p>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="width: 48%;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault1">
-                                <p class="subtitulo">Si</p>
-                            </div>
-                        </div>
-                        <div style="width: 48%;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2">
+	<header>
+		<div class="container mt-3 ">
+	        <div class="row" >
+	            <ol class="colorFondo breadcrumb bread-primary ">
+	                <a href="menuAlumno.html" style="text-decoration: none;">
+	                    <button class="btn camino" id="botonInicio" >Inicios</button>
+	                </a>
+	                <a href="menuSolicitarBeca.html" style="text-decoration: none;">
+	                    <button class="btn camino" id="botonInicio" >Menu</button>
+	                </a>
+	                <a href="PanelDatosPersonales.html" style="text-decoration: none;">
+	                    <button class="btn btn-primary camino localizacion" >Datos personales</button>  
+	                </a> 
+	            </ol>
+	        </div>
+    	</div>
+	</header>
+    <form th:action="@{/alumno/saveMisDatos}" method="post" th:object="${formMisDatos}" id="myForm" name="myForm">
+		
+		<!-- RECORDATORIO -->
+		<!-- Los siguientes atributos no se deben mover: -->
+		<!-- 
+			1- Los elementos que tengan el sufuji " th:elemento ". Ej: th:value, th:field th:name 
+			2- id=" "
+			3- Value=" "
+		 -->
+		
+		
+		<!-- Estos datos son importantes para realizar operaciones y obtener los datos de la BD  -->
+		<!-- No se mostraran en la vistan, no deben de eliminarse -->
+   		<input hidden id="idGrupo" value="alumno.catGrupo.idCatGrupo" th:field="*{alumno.catGrupo.idCatGrupo}" name="alumno.catGrupo.idCatGrupo" >
+   		<input hidden id="idCatLocalidad" value=""  name="alumno.domicilio.catLocalidad.idCatLocalidad"  th:field="*{alumno.domicilio.catLocalidad.idCatLocalidad}" >
+   		<input hidden id="alumno.dom"   name="alumno.domicilio.idDomicilio" th:field="*{alumno.domicilio.idDomicilio}">
+   		<input hidden id="alumno.idAlumno"   name="alumno.domicilio.idCatLocalidad" th:field="*{alumno.idAlumno}">
+		<input hidden id="alumno.nombre" value="alumno.nombre" name="alumno.nombre" th:field="*{alumno.nombre}">
+		<input hidden id="alumno.apellidoM" value="alumno.apellidoM"  name="alumno.apellidoM" th:field="*{alumno.apellidoM}">
+		<input hidden id="alumno.apellidoP" value="alumno.apellidoP" name="alumno.apellidoP" th:field="*{alumno.apellidoP}">
+		<input hidden id="alumno.matricula"   name="alumno.matricula" th:field="*{alumno.matricula}">
+		<input hidden id="alumno.telefono"  name="alumno.telefono" th:field="*{alumno.telefono}">
+		<input hidden id="alumno.curp"  name="alumno.curp" th:field="*{alumno.curp}">
+		<input hidden id="alumno.infoVivienda"  name="infoVivienda.idInfoVivienda" th:field="*{infoVivienda.idInfoVivienda}">
+		<input hidden id="alumno.usuario.idUser" value="alumno.usuario.idUser"  name="alumno.usuario.idUser" th:field="*{alumno.usuario.idUser}">
+		<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<section>
+	    <h1 class="titulo ps-5 mb-4 mt-2 fw-bold fs-1">MIS DATOS</h1>
+		<!--Informacion general-->
+	    <div class="container-auto row">
+	        <div class="col-10 col-xs-2 col-sm-12 col-md-11 col-xl-4  rounded colorFondo p-4 m-2 ms-4 me-4">
+	            <h3 style="color: #6366F1;">Información general</h3>
+	                <div class="col-md-12 pt-2">
+	                    <p class="textoInputs">Nombre Completo</p>
+	                    <input readonly type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreCompleto" >
+	               		<div id="resultField">
+							   
+						</div>
+	                </div>
+	                    <div class="col-12 pt-3">
+		                  
+		                    <label  class="textoInputs">Carrera </label>
+		                   	<input readonly type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreCarrera">
+							
+	                	</div>
+	                <div class="col-12 pt-3">
+	                    <p class="textoInputs">Semestre</p>
+	                    <input readonly type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreSemestre">
+	                </div>
+	                <div class="col-md-12 pt-3">
+	                    <p class="textoInputs">Estado Civil</p>
+	                    
+	                    <!-- ********************************************************************* -->
+	                    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+	                    <!-- ********************************************************************* -->
+	                    <div id="estadoCivilError" class="error" style="display: none;">*Debes seleccionar tu estado civil</div>
+	                    <div style="display: flex; justify-content: space-between;">
+	                        <div style="width: 48%;" th:each="estadoCivil : ${estadosCiviles}">
+	                            <input th:field="*{alumno.catEstadoCivil.idCatEstadoCivil}"  name="alumno.catEstadoCivil.idCatEstadoCivil" class="form-check-input" type="radio" th:value="${estadoCivil.idCatEstadoCivil} ">
+	                            <label class="form-check-label" >
+				                    <p class="subtitulo" th:text="${estadoCivil.nombreEstadoCivil}">Soltero</p>
+				                </label>
+	                        </div> 
+	                    </div>
+						
+	                </div>
+					
+	                <div class="col-md-12 pt-3">
+					    <p class="textoInputs">¿Tienes los recursos económicos necesarios para tus actividades académicas?</p>
+					    <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="recursosEconomicosError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
+					    <div style="display: flex; justify-content: space-between;">
+					        <div style="width: 48%;">
+					            <div class="form-check">
+					                <input class="form-check-input" type="radio" th:field="*{alumno.recursosSuficientes}" name="alumno.recursosSuficientes" id="flexRadioDefault1" value="1">
+					                <p class="subtitulo">Si</p>
+					            </div>
+					        </div>
+					        <div style="width: 48%;">
+					            <div class="form-check">
+					                <input class="form-check-input" type="radio" th:field="*{alumno.recursosSuficientes}" name="alumno.recursosSuficientes" id="flexRadioDefault2" value="0">
+					                <p class="subtitulo">No</p>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					
+					 <div class="col mt-3">
+		                <p class="textoInputs">¿Solicitas beca alimentaria?</p>
+		                
+		                <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					   	
+					   	<div id="solicitaBecaAlimenticiaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+		                
+		                <!-- ********************************************************************* -->
+		               
+		                <div style="display: flex; justify-content: space-between;">
+		                    <div style="width: 48%;">
+		                        <div class="form-check">
+		                            <input value="1" class="form-check-input" th:field="*{alumno.solicitaBecaAlimenticia}" type="radio" name="alumno.solicitaBecaAlimenticia" id="flexRadioDefault100">
+		                            <label   class="form-check-label" for="flexRadioDefault1" >
+		                                <p class="subtitulo">Si</p>
+		                            </label>
+		                        </div>
+		                    </div>
+		                    <div style="width: 80%;">
+		                        <div class="form-check">
+		                            <input name="alumno.solicitaBecaAlimenticia" th:field="*{alumno.solicitaBecaAlimenticia}" value="0" class="form-check-input" type="radio"  id="flexRadioDefault100">
+		                            <label class="form-check-label" for="flexRadioDefault2">
+		                                <p class="subtitulo">No</p>
+		                            </label>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+					
+					
+	        </div>
+	    <!--Domicilio-->
+	        <div class="col-10 col-xs-2 col-sm-1 col-md-11 col-xl-7 rounded colorFondo m-2 p-4 ms-4">
+	        <h3 style="color: #6366F1; padding-bottom: 1%;">Domicilio</h3>
+	        <div class="col-md-12">
+	            <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
+	            
+	            <!-- ********************************************************************* -->
+				<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+				
+				<div id="situacionViviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+	         	
+	         	<!-- ********************************************************************* -->
+	        </div>
+	        <div class="col-md-12">
+			    <div style="display: flex; justify-content: space-between;">
+			        <div style="width: 48%;" th:each="catSituacion: ${catSituacionViviendaUni}">
+			            <div class="form-check">
+			                <input id="situacion${catSituacion.idCatSituacionVivienda}" 
+			                       name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda" 
+			                       th:field="*{infoVivienda.catSituacionVivienda.idCatSituacionVivienda}" 
+			                       th:value="${catSituacion.idCatSituacionVivienda}" 
+			                       class="form-check-input situacion-radio" 
+			                       type="radio" />
+			                <label class="form-check-label" for="situacion${catSituacion.idCatSituacionVivienda}">
+			                    <p class="subtitulo" th:text="${catSituacion.nombreSituacionVivienda}">Rento Cuarto</p>
+			                </label>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			
+			<!-- ********************************************************************* -->
+			<!-- ESTE DIV AGRUPA LOS ELEMENTOS QUE SE MOSTRARAN U OCULTARAN EN BASE A UN CAMPO  -->
+			
+			<div id="infoViviendaUniversitaria">
+				
+			<!-- ********************************************************************* -->
+			<div class="col-md-12 col-xs-1  d-flex" style="padding-top: 2%;">
+			        <div class="col-4 p-2" style="width: 34%;">
+			            <p class="textoInputs">Nombre de la casa de huéspedes o propietario</p>
+			            <input name="infoVivienda.nombreCasero" 
+			                   th:field="*{infoVivienda.nombreCasero}" 
+			                   value="" 
+			                   type="text" 
+			                   class="form-control estiloInputs" 
+			                   style="width: 100%;" 
+			                   id="inputNombreCasero" 
+			                   placeholder="">
+			        </div>
+			        <div class="col-4 p-2" style="width: 34%;">
+			            <p class="textoInputs">¿Con cuantas personas compartes renta?</p>
+			            <input name="infoVivienda.numComparteVivienda" 
+			                   th:field="*{infoVivienda.numComparteVivienda}" 
+			                   value="" 
+			                   type="text" 
+			                   class="form-control estiloInputs" 
+			                   style="width: 100%;" 
+			                   id="inputNombre" 
+			                   placeholder="">
+			        </div>
+			        <div class="col-4 p-2 " style="width: 34%;">
+			            <p class="textoInputs">¿Cuanto paga usted de renta mensual?</p>
+			            <input name="infoVivienda.pagoRenta" 
+			                   th:field="*{infoVivienda.pagoRenta}" 
+			                   value="" 
+			                   type="text" 
+			                   class="form-control estiloInputs" 
+			                   style="width: 100%;" 
+			                   id="inputNombre" 
+			                   placeholder="">
+			        </div>
+				</div>
+			</div>
+			
+	        <div class="col-md-12" style="padding-top: 2%;">
+	                <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
+	        </div>
+	        <div class="col-md-12">
+	                <div style="display: flex; justify-content: space-between;">
+	                    <div style="width: 48%;">
+	                        <div class="col-12">
+	                            <p class="textoInputs">Estado</p>
+	                            <select name="catEstado" id="catEstado" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                    <option class="subtitulo">Elige una opción</option>
+                                    <option 
+				                      th:each="estado : ${catEstado}" 
+				                      th:value="${estado.idCatEstado}" 
+				                      th:text="${estado.nombreEstado}">
+									</option>
+                                </select>
+	                        </div>
+	                    </div>
+	                    <div style="width: 48%;">
+	                        <div class="form-check">
+	                            <p class="textoInputs">Municipio</p>
+                                    <select name="catMunicipio" id="catMunicipio"  class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                                        <option class="subtitulo" value="">Elige una opción</option>
+                                    </select>
+		                    </div>
+		                </div>
+	                </div>
+	                <div style="display: flex; justify-content: space-between;">
+	                    <div style="width: 48%; padding-top: 2%;">
+	                        <div class="col-12">
+	                            <p class="textoInputs">Localidad</p>
+	                            <select id="catLocalidad" name="domicilio.catLocalidad.idCatLocalidad" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+	                                <option value="">Elige una opción</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div style="width: 48%; padding-top: 2%;">
+	                        <div class="form-check">
+	                            <p class="textoInputs">Colonia o Barrio</p>
+	                            <input id="numeroDomicilio" name="domicilio.coloniaBarrio" th:field="*{domicilio.coloniaBarrio}" class="form-control estiloInputs" style="width: 100%;" aria-label="Default select example" placeholder="Ingresa el nombre de tu Colonia o Barrio">
+	                                
+	                        </div>
+	                    </div>
+	                </div>
+	                <div style="display: flex; justify-content: space-between;">
+	                    <div style="width: 48%; padding-top: 2%;">
+	                        <div class="col-12">
+	                            <p class="textoInputs">Calle</p>
+	                            <input  id="calleDomicilio" name="domicilio.calle" th:field="*{domicilio.calle}" class="form-control estiloInputs" style="width: 100%;" aria-label="Default select example" placeholder="Ingresa el nombre de tu calle">
+	                                
+	                        </div>
+	                    </div>
+	                    <div style="width: 48%; padding-top: 2%;">
+	                        <div class="form-check">
+	                            <p class="textoInputs">Número</p>
+	                            <input  id="numeroDomicilio" name="domicilio.numero" th:field="*{domicilio.numero}" class="form-control estiloInputs" style="width: 100%;" aria-label="Default select example" placeholder="Ingresa el número de tu calle">
+	                               
+	                        </div>
+	                    </div>
+	                    <div style="width: 48%; padding-top: 2%;">
+	                        <div class="form-check">
+	                            <p class="textoInputs">Código Postal<p/>
+	                            <input  id="codigoPostal" name="domicilio.catCodigoPostal.idCatCodigoPostal" type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="Ingresa tu CP">
+	               
+	                        </div>
+	                    </div>
+	                </div>
+	               
+	        </div> 
+	        </div>
+	    </div>
+	</section>
+	
+	
+	<section>
+	    <div class="container-auto row ">
+			<!--Transporte-->
+	        <div class="col-10 col-xs-2 col-sm-1 col-md-11 col-xl-5 rounded colorFondo m-2 p-4 ms-4">
+	            <h3 style="color: #6366F1;">Transporte</h3>
+	           
+	            <div class="col-md-12 pt-3">
+	                <p class="textoInputs">¿Llevas automóvil o motocicleta cotidianamente a la universidad?</p>
+	                <!-- ********************************************************************* -->
+				    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+				
+	                <div id="transporteError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+	                
+	                <!-- ********************************************************************* -->
+	                 
+	                <div style="display: flex; justify-content: space-between;">
+				        <div style="width: 48%;">
+				            <div class="form-check">
+				                <input th:field="*{alumno.tieneVehiculo}" name="alumno.tieneVehiculo" value="1" class="form-check-input" type="radio"  id="llevaAutoSi">
+				                <label>Si</label>
+				            </div>
+				        </div>
+				        <div style="width: 48%;">
+				            <div class="form-check">
+				                <input checked th:field="*{alumno.tieneVehiculo}" name="alumno.tieneVehiculo" value="0" class="form-check-input" type="radio"  id="llevaAutoNo">
+				                <label >No</label>
+				            </div>
+				        </div>
+				    </div>
+	            </div>
+	            <div >
+					
+					<!-- ********************************************************************* -->
+					<!-- ESTE DIV AGRUPA LOS ELEMENTOS QUE SE MOSTRARAN U OCULTARAN EN BASE A UN CAMPO  -->
+					<div id="infoTransporteAlumno" style="display: block;">
+						
+					<!-- ********************************************************************* --> 
+					
+						<div class="col-8">
+		                    <p class="textoInputs">Selecciona tu tipo de vehículo:</p>
+		                    <select th:field="*{transporte.catTipoTransporte.idCatTipoTransporte}" name="transporte.catTipoTransporte.idCatTipoTransporte" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+			                      <option value="" class="subtitulo">Elige una opción</option>
+			                      <option 
+			                      th:each="catTipoTransporte : ${catTipoTransporte}" 
+			                      th:value="${catTipoTransporte.idCatTipoTransporte}" 
+			                      th:text="${catTipoTransporte.nombreTipoTransporte}">
+								  </option>
+			                </select>
+			                
+		                </div>
+		                <div class="col-md-12 mt-3" style="display: flex; justify-content: space-between;">
+							<div class="form-group">
+							    <label for="marca">Marca:</label>
+							    <input type="text" class="form-control" id="marca"  th:field="*{transporte.marca}" name="transporte.marca" style="width: 80%;">
+							</div>
+							
+							<div class="form-group">
+							    <label for="modelo">Modelo:</label>
+								<input type="text" class="form-control" id="modelo"  th:field="*{transporte.modelo}" name="transporte.modelo" style="width: 80%;">
+							</div>
+								
+							<div class="form-group">
+							    <label for="anio">Año:</label>
+							    <input th:field="*{transporte.anio}" type="text" class="form-control" id="anio" name="transporte.anio" style="width: 80%;">
+							</div>	
+						</div>
+					</div>
+				</div>    
+	                <div class="col-md-12 mt-3">
+	                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidad?</p>
+	                    
+	                    <!-- ********************************************************************* -->
+				        <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+				
+	                  	<div id="mediosError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+	                    
+	                    <!-- ********************************************************************* -->
+	                    
+	                    <div class="col-md-12">
+								
+								<div th:each="grupoTransporte, grupoStatus : ${gruposTransporte}" style="display: flex; justify-content: space-between;">
+								    <div style="width: 48%;" th:each="transporte, transporteStatus : ${grupoTransporte}">
+								        <div class="form-check" style="margin-bottom: 30px;">
+								  
+								             <div class="form-check" style="margin-bottom: 30px;">
+								                <input class="form-check-input" type="checkbox" th:field="*{mediosTraslado}" name="mediosTraslado" th:value="${transporte.idCatMediosTransporte}">
+								                <label class="form-check-label" for="checkbox${transporte.idCatMediosTransporte}">
+								                    <p class="subtitulo" th:text="${transporte.nombreMediosTransporte}"></p>
+								                </label>
+								            </div>
+								        </div>
+								    </div>
+								</div>
+	                	</div> 
+	                </div>
+	        </div>
+	   		<!--  Informacion complementario-->
+	        <div class="col-10 col-xs-4 col-sm-1 col-md-11 col-xl-6 rounded colorFondo m-2 p-4 ms-4">
+	            <h3 style="color: #6366F1; padding-bottom: 2%;">Información complementaria</h3>
+	            <div class="col-md-12" style="color: #6366F1; ">
+	                 <p class="textoInputs">¿Eres hijo o nieto de comunero de Ixtlán de Juárez?</p>
+	                 
+	                 <!-- ********************************************************************* -->
+				     <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+					 
+					 <div id="hijoComuneroError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+	        	     
+	        	     <!-- ********************************************************************* -->
+	            </div>
+	            <div class="col-md-12">
+	                    <div style="display: flex; justify-content: space-between;">
+	                        <div style="width: 48%;">
+	                            <div class="form-check">
+	                                <input value="1" th:field="*{alumno.familiarComunero}" name="alumno.familiarComunero" class="form-check-input" type="radio"  id="flexRadioDefault20">
+	                                <p class="subtitulo">Si</p>
+	                            </div>
+	                        </div>
+	                        <div style="width: 40%;">
+	                            <div class="form-check">
+	                                <input th:field="*{alumno.familiarComunero}" name="alumno.familiarComunero" value="0" class="form-check-input" type="radio" id="flexRadioDefault21">
+	                                <p class="subtitulo">No</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	            </div> 
+	        <div class="col-md-12" style="color: #6366F1; padding-top: 3%;">
+	            <p class="textoInputs">¿Utilizas teléfono celular en la universidad?</p>
+	        </div>
+	        
+	        <!-- ********************************************************************* -->
+		    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+					 
+	        <div id="utilizaTelefonoError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+	        
+	        <!-- ********************************************************************* -->
+	        <div class="col-md-12">
+	                <div style="display: flex; justify-content: space-between;">
+	                    <div style="width: 48%;">
+	                        <div class="form-check">
+	                            <input  th:field="*{alumno.tieneTelefono}" name="alumno.tieneTelefono" class="form-check-input" type="radio"  id="flexRadioDefault22" value="1">
+	                                <p class="subtitulo">Si</p>
+	                        </div>
+	                    </div>
+	                    <div style="width: 40%;">
+	                        <div class="form-check">
+	                            <input th:field="*{alumno.tieneTelefono}" name="alumno.tieneTelefono" value="0" class="form-check-input" type="radio"  id="flexRadioDefault23">
                                 <p class="subtitulo">No</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    
-        <div class="col rounded colorFondo m-2 p-4">
-        <h3 style="color: #6366F1; padding-bottom: 1%;">Domicilio</h3>
-        <div class="col-md-12">
-                <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
-        </div>
-        <div class="col-md-12">
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault4" id="flexRadioDefault1">
-                            <p class="subtitulo">Rento cuarto</p>
-                        </div>
-                    </div>
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault4" id="flexRadioDefault2">
-                            <p class="subtitulo">Rento casa</p>
-                        </div>
-                    </div>
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault4" id="flexRadioDefault2">
-                            <p class="subtitulo">Vivo con familiares</p>
-                        </div>
-                    </div>
-                </div>
-        </div> 
-        <div class="col-md-12" style="padding-top: 2%;">
-                <p class="textoInputs">Marque la opción que mejor describa tu situación de vivienda:</p>
-        </div>
-        <div class="col-md-12">
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%;">
-                        <div class="col-12">
-                            <p class="textoInputs">Estado</p>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-                                <option value="1" class="subtitulo">Oaxaca</option>
-                                <option value="2" class="subtitulo">Puebla</option>
-                                <option value="3" class="subtitulo">Chiapas</option>
-                                <option value="3" class="subtitulo">Veracruz</option>
-                                <option value="3" class="subtitulo">Durango</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <p class="textoInputs">Municipio</p>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-                                <option value="1" class="subtitulo">Ixtlan de Júarez</option>
-                                <option value="2" class="subtitulo">Tamazulapam Mie</option>
-                                <option value="3" class="subtitulo">Guelatao</option>
-                                <option value="3" class="subtitulo">Villa Alta</option>
-                                <option value="3" class="subtitulo">Tlahui</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%; padding-top: 2%;">
-                        <div class="col-12">
-                            <p class="textoInputs">Localidad</p>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option value="1" class="subtitulo">Localidad 1</option>
-                                <option value="2" class="subtitulo">Localidad 2</option>
-                                <option value="3" class="subtitulo">Localidad 3</option>
-                                <option value="4" class="subtitulo">Localidad 4</option>
-                                <option value="5" class="subtitulo">Localidad 5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="width: 48%; padding-top: 2%;">
-                        <div class="form-check">
-                            <p class="textoInputs">Colonia o Barrio</p>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option value="1" class="subtitulo">San Francisco</option>
-                                <option value="2" class="subtitulo">La Asunción</option>
-                                <option value="3" class="subtitulo">Santo Tomas</option>
-                                <option value="3" class="subtitulo">Colonia 4</option>
-                                <option value="3" class="subtitulo">Colonia 6</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%; padding-top: 2%;">
-                        <div class="col-12">
-                            <p class="textoInputs">Calle</p>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option value="1" class="subtitulo">Calle 1</option>
-                                <option value="2" class="subtitulo">Calle 2</option>
-                                <option value="3" class="subtitulo">Calle 3</option>
-                                <option value="3" class="subtitulo">Calle 4</option>
-                                <option value="3" class="subtitulo">Calle 5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="width: 48%; padding-top: 2%;">
-                        <div class="form-check">
-                            <p class="textoInputs">Número</p>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option value="1" class="subtitulo">654</option>
-                                <option value="2" class="subtitulo">655</option>
-                                <option value="3" class="subtitulo">545</option>
-                                <option value="3" class="subtitulo">845</option>
-                                <option value="3" class="subtitulo">555</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="width: 48%; padding-top: 2%;">
-                        <div class="form-check">
-                            <p class="textoInputs">Código Postal<p/>
-                            <select class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                                <option value="1" class="subtitulo">78546</option>
-                                <option value="2" class="subtitulo">45523</option>
-                                <option value="3" class="subtitulo">45712</option>
-                                <option value="3" class="subtitulo">54451</option>
-                                <option value="3" class="subtitulo">44545</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding-top: 1%;">
-                    <div style="width: 70%;">
-                        <p class="textoInputs">Nombre de la casa de huéspedes o propietario</p>
-                        <input type="text" class="form-control estiloInputs" style="width: 100%;" id="inputNombre" placeholder="">
-                    </div>
-                </div>
-        </div> 
-        </div>
-    </div>
-</section>
+	                        </div>
+	                    </div>
+	                </div>
+	        </div> 
+	        <div class="col-md-12" style="color: #6366F1; padding-top: 3%;">
+	            <p class="textoInputs">¿Tienes computadora personal y/o portátil?</p>
+	        </div>
+	        
+	        <!-- ********************************************************************* -->
+		    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+				
+	        <div id="tieneComputadoraError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+	        
+	        <!-- ********************************************************************* -->
+	        
+	        <div class="col-md-12">
+	                <div style="display: flex; justify-content: space-between;">
+	                    <div style="width: 50%;">
+	                        <div class="form-check">
+	                            <input th:field="*{alumno.tieneComputadora}" name="alumno.tieneComputadora" value="1" class="form-check-input" type="radio"  id="flexRadioDefault24">
+	                            <p class="subtitulo">Si</p>
+	                        </div>
+	                    </div>
+	                    <div style="width: 40%;">
+	                        <div class="form-check">
+	                            <input th:field="*{alumno.tieneComputadora}" name="alumno.tieneComputadora" value="0" class="form-check-input" type="radio"  id="flexRadioDefault25">
+	                            <p class="subtitulo">No</p>
+	                        </div>
+	                    </div>
+	                </div>
+	        </div> 
+	            <div style="display: flex; justify-content: space-between; padding-top: 3%;">
+	                <div style="width: 90%;">
+	                    <p class="textoInputs">Además del idioma español, ¿qué otro idioma, lenguaje o dialecto hablas?</p>
+	                    <input th:field="*{alumno.idioma}" name="alumno.idioma" type="text" class="form-control estiloInputs" style="width: 100%;"  id="inputIdioma" placeholder="">
+	                </div>
+	            </div>
+	            </div> 
+	        </div>
+	    </div>
+	</section>
+	<div class="d-flex justify-content-end mt-5">      
+		<button type="submit"  class="btn btn-primary">Enviar Datos</button>	
+		<button id="validar" type="button" class="btn btn-primary" >Validar Campos</button>			       
+	</div>
+</form>
 
-<section>
-    <div class="row ms-5 me-5 colorFondo rounded p-3 mt-2 mb-2">
-        <h3 style="color: #6366F1;">Gastos e ingresos</h3>
-        <div class="row">
-            <div class="col mt-3 me-5" style="margin-right: 200%; padding-right: -50%;">
-                <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
-                <p class="subtitulo">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
-                <input type="text" class="form-control estiloInputs" style="width: 100%;"  id="inputNombre" placeholder="">
-            </div>
-            <div class="col mt-3">
-                <p class="textoInputs">¿Dependes económicamente?</p>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 50%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                <p class="subtitulo">Si</p>
-                            </label>
-                        </div>
-                    </div>
-                    <div style="width: 50%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                <p class="subtitulo">No</p>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="line mx-auto mt-5" style="width: 80%;"></div>
-        <div class="row">
-            <div class="col mt-3">
-                <p class="textoInputs">Nombre de la persona de la cuál dependes económicamente:</p>
-                <input type="text" class="form-control estiloInputs" style="width: 47%;"  id="inputNombre" placeholder="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col mt-3">
-                <p class="textoInputs">El trabajo de quien dependes es:</p>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault1"><p class="subtitulo">Temporal</p></label>
-                        </div>
-                    </div>
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2"><p class="subtitulo">Permanente</p></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mt-3">
-                <p class="textoInputs">Indica su ocupación:</p>
-                <input type="text" class="form-control estiloInputs" style="width: 47%;"  id="inputNombre" placeholder="">
-            </div>
-        </div>
-        <div class="line mx-auto mt-5" style="width: 80%;"></div>
-        <div class="row">
-            <div class="col mt-3">
-                <p class="textoInputs">¿Solicitas beca alimentaria?</p>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                <p class="subtitulo">Si</p>
-                            </label>
-                        </div>
-                    </div>
-                    <div style="width: 80%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                <p class="subtitulo">No</p>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-</section>
-
-
-
-<section>
-    <div class="row ps-5 pe-5">
-        <div class="col-6 rounded colorFondo m-2 p-4">
-            <h3 style="color: #6366F1;">Transporte</h3>
-            <div class="col-md-12 pt-3">
-                <p class="textoInputs">¿Llevas automóvil o motocicleta cotidianamente a la universidad?</p>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault19" id="flexRadioDefault1">
-                            <p class="subtitulo">Si</p>
-                        </div>
-                    </div>
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault19" id="flexRadioDefault2">
-                            <p class="subtitulo">No</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div class="col-8">
-                    <p class="textoInputs">Selecciona tu tipo de vehículo:</p>
-                    <select class="form-select estiloInputs" style="width: 70%;" aria-label="Default select example">
-                        <option value="1">Motocicleta</option>
-                        <option value="2">Automovil</option>
-                    </select>
-                </div>
-                <div class="col-md-12 mt-3">
-                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidad?</p>
-                    <div class="col-md-12">
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="width: 48%;">
-                                <div class="form-check" style="margin-bottom: 30px;">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        <p class="subtitulo">Microbus</p>
-                                    </label>
-                                </div>
-                                <div class="form-check" style="margin-bottom: 30px;">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        <p class="subtitulo">Automóvil de amigos</p>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        <p class="subtitulo">Bicicleta</p>
-                                    </label>
-                                </div>
-                            </div>                            
-                            <div style="width: 48%;">
-                                <div class="form-check" style="margin-bottom: 30px;">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        <p class="subtitulo">Mototaxi</p>
-                                    </label>
-                                  </div>
-                                  <div class="form-check" style="margin-bottom: 30px;">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        <p class="subtitulo">Caminando</p>
-                                    </label>
-                                  </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        <p class="subtitulo">Automovil Familiar</p>
-                                    </label>
-                                  </div>
-                            </div>
-                            <div style="width: 48%;">
-                                <div class="form-check" style="margin-bottom: 30px;">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        <p class="subtitulo">Colectivo</p>
-                                    </label>
-                                  </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        <p class="subtitulo">Taxi</p>
-                                    </label>
-                                  </div>
-                            </div>
-                        </div>
-                </div> 
-                </div>
-        </div>
-
-        <div class="col rounded colorFondo m-2 p-4">
-            <h3 style="color: #6366F1; padding-bottom: 2%;">Información complementaria</h3>
-            <div class="col-md-12" style="color: #6366F1; ">
-                    <p class="textoInputs">¿Eres hijo o nieto de comunero de Ixtlán de Juárez?</p>
-            </div>
-            <div class="col-md-12">
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="width: 48%;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault20" id="flexRadioDefault20">
-                                <label class="form-check-label" for="flexRadioDefault20">
-                                    <p class="subtitulo">Si</p>
-                                </label>
-                            </div>
-                        </div>
-                        <div style="width: 40%;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault20" id="flexRadioDefault21">
-                                <label class="form-check-label" for="flexRadioDefault21">
-                                    <p class="subtitulo">No</p>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-            </div> 
-        <div class="col-md-12" style="color: #6366F1; padding-top: 3%;">
-            <p class="textoInputs">¿Utilizas teléfono celular en la universidad?</p>
-        </div>
-        <div class="col-md-12">
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 48%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault21" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                <p class="subtitulo">Si</p>
-                            </label>
-                        </div>
-                    </div>
-                    <div style="width: 40%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault21" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                <p class="subtitulo">No</p>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-        </div> 
-        <div class="col-md-12" style="color: #6366F1; padding-top: 3%;">
-            <p class="textoInputs">¿Tienes computadora personal y/o portátil?</p>
-        </div>
-        <div class="col-md-12">
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="width: 50%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault22" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                <p class="subtitulo">Si</p>
-                            </label>
-                        </div>
-                    </div>
-                    <div style="width: 40%;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault22" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                <p class="subtitulo">No</p>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-        </div> 
-            <div style="display: flex; justify-content: space-between; padding-top: 3%;">
-                <div style="width: 90%;">
-                    <p class="textoInputs">Además del idioma español, ¿qué otro idioma, lenguaje o dialecto hablas?</p>
-                    <input type="text" class="form-control estiloInputs" style="width: 100%;"  id="inputNombre" placeholder="">
-                </div>
-            </div>
-            </div> 
-        </div>
-    </div>
-</section>
 
 <footer id="footer"></footer>
-    <script src="../static/javaScript.js/funcionamiento.js"></script>
+    <script src="../javaScript.js/funcionamiento.js"></script>
+    <script type="text/javascript">
+	    $(document).ready(function () {
+			
+        
+        	//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
+            $('#catEstado').change(function() {
+		            var estado = $(this).val();
+    				console.log('Selected Estado:', estado);
+    				
+		            $.ajax({
+		                url: '/direccion/municipiosById/' + estado,
+		                type: 'GET',
+		                success: function(data) {
+		                    var municipioSelect = $('#catMunicipio');
+		                    municipioSelect.empty();
+		                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+		                    $.each(data, function(index, municipio) {
+		                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+		                    });
+		                }
+		            });
+		            
+		        });
+		        
+		        //Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
+		        $('#catMunicipio').change(function() {
+		            var municipio = $(this).val();
+		            
+    				console.log('Selected municipio:', municipio);
+    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+		            $.ajax({
+		                url: '/direccion/localidadesById/' + municipio,
+		                type: 'GET',
+		                success: function(data) {
+		                    var municipioSelect = $('#catLocalidad');
+		                    municipioSelect.empty();
+		                    console.log(data);
+		                    municipioSelect.append('<option value="">Elige una opción</option>');
+		                    $.each(data, function(index, localidad) {
+								console.log(data.idCatLocalidad);
+		                        municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+		                    	
+		                    });
+		                }
+		            });
+		        });
+		        
+		        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+		        $('#catLocalidad').change(function() {
+		            var localidad = $(this).val();
+    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+		            $.ajax({
+		                url: '/direccion/codigoPostalById/' + localidad,
+		                type: 'GET',
+		                success: function(data) {
+				            // Se establece el valor del campo #codigoPostal con el valor obtenido
+				            $('#codigoPostal').val(data.numeroCodigoPostal);
+				        }
+		            });
+		        });
+		        
+		    
+		    //Se obtienen y settean los datos de carrera, grupo y nombre del alumno
+		    //Se optiene el idGrupo con el que fue registrado el alumno    
+			var idGrupoAlumno = $('#idGrupo');
+			console.log("id de grupo: "+ idGrupoAlumno.val());
+			var idGrupo = parseInt(idGrupoAlumno.val());
+		     
+			//Se establece automaticamente la carrera con la que fue registrado el alumno
+            $.ajax({
+            url: '/carrera/carreraByIdGrupo/' + idGrupo,
+            type: 'GET',
+            success: function (data) {
+	           var nombre = data.carrera;
+	           $('#inputNombreCarrera').val(nombre);
+	        }
+	        });
+	        		     
+			//Se establece automaticamente el semestre con la que fue registrado el alumno
+            $.ajax({
+            url: '/carrera/semestreByIdGrupo/' + idGrupo,
+            type: 'GET',
+            success: function (data) {
+	           $('#inputNombreSemestre').val(data.nombreSemestre);
+	         
+	        }
+	        });
+	        
+	        
+	        
+	        //Se recuperan y establecen los datos de estado, municipio y localidad que regsitro el alumno
+		    //Estos valores se buscan por medio del id de localidad  
+		    //Se obtiene los datos haciendo una consulta a los metodos de DomicilioController  
+            var idLocalidad = $('#idCatLocalidad');
+	        var idCatLocalidad = idLocalidad.val(); // Obtener el valor de #idCatLocalidad 
+	        if(idCatLocalidad != "" || idCatLocalidad != null) {	
+				    //Obtener Municipio por idLocalidad
+				    $.ajax({
+				        url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
+				        type: 'GET',
+				        success: function(data) {
+				            var idMunicipio = data.idCatMunicipio;
+				            console.log("id de municipio: " + idMunicipio);
+				
+				            //Obtener idMunicipio
+				            $.ajax({
+				                url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
+				                type: 'GET',
+				                success: function(data) {
+				                    var idEstado = data.idCatEstado;
+				                    $('#catEstado').val(idEstado);
+				                    console.log("id de estado: " + idEstado);
+				
+				                    //Obtener estado por id de municipio
+				                    $.ajax({
+				                        url: '/direccion/municipiosById/' + idEstado,
+				                        type: 'GET',
+				                        success: function(data) {
+				                            var municipioSelect = $('#catMunicipio');
+				                            municipioSelect.empty();
+				                            municipioSelect.append('<option value="">Elige una opción</option>');
+				                            $.each(data, function(index, municipio) {
+				                                municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+				                            });
+				                            municipioSelect.val(idMunicipio);
+				                            
+				                            //Se obtiene la localidad por el id de municipio
+								            $.ajax({
+								                url: '/direccion/localidadesById/' + idMunicipio,
+								                type: 'GET',
+								                success: function(data) {
+								                    var loSelect = $('#catLocalidad');
+								                    loSelect.empty();
+								                    console.log(data);
+								                    loSelect.append('<option value="">Elige una opción</option>');
+								                    $.each(data, function(index, localidad) {
+														console.log(data.idCatLocalidad);
+								                        loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+								                    	
+								                    });
+								                    loSelect.val(idCatLocalidad);
+								                     //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+												      
+									    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+											            $.ajax({
+											                url: '/direccion/codigoPostalById/' + idCatLocalidad,
+											                type: 'GET',
+											                success: function(data) {
+													            // Se establece el valor del campo #codigoPostal con el valor obtenido
+													            $('#codigoPostal').val(data.numeroCodigoPostal);
+													        }
+											            });
+								                }
+								            });
+				                            
+				                        },
+				                        error: function(error) {
+				                            console.error("Error en la solicitud AJAX:", error);
+				                        }
+				                    });
+				                },
+				                error: function(error) {
+				                    console.error("Error en la solicitud AJAX:", error);
+				                }
+				            });
+				        },
+				        error: function(error) {
+				            console.error("Error en la solicitud AJAX:", error);
+				        }
+				    });
+			}
+			
+			
+
+			//Si el alumno lleva transporte a la univesidad:
+			var radioTransporteSi = document.getElementById("llevaAutoSi");
+			var radioTransporteNo = document.getElementById("llevaAutoNo");
+			
+			 if (radioTransporteSi.checked) {
+			    infoTransporteAlumno.style.display = "block";
+			 }
+			
+			
+			//****************************************************************
+			//Si el usuario selecciona que si lleva transporte se mostraran los campos para registrar
+			//los datos del transporte
+			function actualizarEstadoInicialTransporte() {
+			    if (radioTransporteSi.checked) {
+			        infoTransporteAlumno.style.display = "block";
+			    } else {
+			        infoTransporteAlumno.style.display = "none";
+			    }
+			}
+			//Se ejecuta la función 
+			actualizarEstadoInicialTransporte();
+			
+			//Cada que cambie el estado se mostrara u ocultara los campos
+			radioTransporteSi.addEventListener("change", function() {
+			    actualizarEstadoInicialTransporte();
+			});
+			
+			radioTransporteNo.addEventListener("change", function() {
+			    actualizarEstadoInicialTransporte();
+			});
+			//****************************************************************
+			var infoViviendaUniversitaria = document.getElementById("infoViviendaUniversitaria");
+		    var radios = document.querySelectorAll(".situacion-radio");
+		
+			//Si el valor es diferente del id = 3 se mostraran  los campos de texto, de lo contrario se ocultaran
+		    function actualizarEstado() {
+		        var selectedRadio = document.querySelector(".situacion-radio:checked");
+		        if (selectedRadio && selectedRadio.value == "3") { 
+		            infoViviendaUniversitaria.style.display = "none";
+		        } else {
+		            infoViviendaUniversitaria.style.display = "block";
+		        }
+		    }
+		
+		    // Inicializar el estado al cargar la página
+		    actualizarEstado();
+		
+		    // Añadir eventos a los botones de radio
+		    radios.forEach(function(radio) {
+		        radio.addEventListener("change", actualizarEstado);
+		    });
+
+			
+			
+			//****************************************************************
+			//Esta función se encarga de verificar que el formulario se envie solo cuando se oprime el boton de guardar
+			document.addEventListener('keydown', function(event) {
+		        if (event.key === 'Enter') {
+		            event.preventDefault();
+		            // Si el elemento enfocado es el botón de enviar, entonces envía el formulario
+		            if (document.activeElement.id === 'submitButton') {
+		                document.getElementById('myForm').submit();
+		            }
+		        }
+		    });
+		    //****************************************************************
+		    
+		    // Obtener los valores de los campos
+		    var nombreAlumno = $('#alumno.nombre');
+	        var valNombre = idLocalidad.val();
+	        var apellidoMat = $('#alumno.apellidoM');
+	        var valApellidoM = apellidoMat.val();
+	        var apellidoPat = $('#alumno.apellidoP');
+	        var valApellidoP = apellidoMat.val();
+		    
+		    var concatenatedValue = valNombre + ' ' + valApellidoM + ' ' + valApellidoP;
+		    $('#inputNombreCompleto').val(concatenatedValue);
+		    
+		     //****************************************************************
+		     //Validación del formulario
+		    $("#validar").click(function () {
+				
+				$("#myForm").validate({
+					
+			        /*
+			        rules: {
+						
+			          "inputNombreCasero": {
+			            customRequired: true // Give it a custom name
+			          }
+			        },
+			        messages: {
+			          "inputNombreCasero": {
+			            customRequired: "Ingresa el dato solicitado"
+			          }
+			        },
+			        // Extend validation methods
+			        customMethods: {
+			          customRequired: function(value) {
+			            return value !== "";
+			          }
+			        }
+					,*/
+				    rules: {
+				      "alumno.idioma" : {
+				        required: true
+				      }
+				    },
+				    
+				    messages : {
+					   "alumno.idioma": {
+					    required: "*Llena el campo solicitado"
+					  }
+					}
+					
+		        });
+				
+					
+				let enviar= true;
+				if ($('input[name="alumno.catEstadoCivil.idCatEstadoCivil"]').is(":checked")) {
+				    
+				    $("#estadoCivilError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#estadoCivilError");
+				}
+				if ($('input[name="alumno.recursosSuficientes"]').is(":checked")) {
+				    
+				    $("#recursosEconomicosError").hide();
+				} else {
+					enviar = false;
+					showErrorAndScroll("#recursosEconomicosError");
+				}
+				
+				if ($('input[name="alumno.solicitaBecaAlimenticia"]').is(":checked")) {
+				    
+				    $("#solicitaBecaAlimenticiaError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#solicitaBecaAlimenticiaError");
+				}
+			
+				
+				
+			    if ($('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]').is(":checked")) {
+			        let valorSeleccionado = $('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]:checked').val();
+			        $("#situacionViviendaError").hide();
+			        console.log("El valor seleccionado es " + valorSeleccionado);
+			        if (valorSeleccionado != 3) {
+			            console.log("Validando");
+			            // Hacer que el campo sea requerido
+			            console.log("Validando");
+				        // Add the custom validation rule
+				        /*
+				        $("#inputNombreCasero").rules("add", {
+				          customRequired: true
+				        });
+				        */
+			        } else {
+			            // Remove the custom validation rule
+       					//$("#inputNombreCasero").rules("remove", "customRequired");
+			        }
+			    } else {
+			        enviar = false;
+			        showErrorAndScroll("#situacionViviendaError");
+			    }
+				
+
+				
+				if ($('input[name="alumno.tieneVehiculo"]').is(":checked")) {
+				    
+				    $("#transporteError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#transporteError");
+				}
+				
+				if ($('input[name="alumno.familiarComunero"]').is(":checked")) {
+				    
+				    $("#hijoComuneroError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#hijoComuneroError");
+				}
+				
+				if ($('input[name="alumno.tieneTelefono"]').is(":checked")) {
+				    $("#utilizaTelefonoError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#utilizaTelefonoError");
+				}
+				
+				if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
+				    $("#tieneComputadoraError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#tieneComputadoraError");
+				}
+				
+				if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
+				    $("#tieneComputadoraError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#tieneComputadoraError");
+				}
+				
+				if ($('input[name="mediosTraslado"]').is(":checked")) {
+				    $("#mediosError").hide();
+				} else {
+					enviar = false;
+                    showErrorAndScroll("#mediosError");
+				}
+				
+				
+				if(enviar == true){
+					$("#myForm").submit();
+				}
+				
+				 
+				
+			});
+			function showErrorAndScroll(errorElement) {
+			    enviar = false;
+			    $(errorElement).show();
+			    /*
+			    $('html, body').animate({
+			        scrollTop: $(errorElement).offset().top - 20
+			    }, 400);
+			    */
+			    setTimeout(function() {
+			        $(errorElement).fadeOut();
+			    }, 5000);
+			}
+		    
+			
+	});
+    </script>
 </body>
 </html>
