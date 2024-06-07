@@ -18,6 +18,7 @@ import com.example.unesso.model.Alumno;
 import com.example.unesso.model.CatEstado;
 import com.example.unesso.model.CatOcupacion;
 import com.example.unesso.model.CatParentesco;
+import com.example.unesso.model.Domicilio;
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
@@ -29,6 +30,7 @@ import com.example.unesso.services.ICatOcupacionService;
 import com.example.unesso.services.ICatParentescoService;
 import com.example.unesso.services.ICatSituacionViviendaFamiliarService;
 import com.example.unesso.services.ICatTipoViviendaService;
+import com.example.unesso.services.IDomicilioService;
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
 
@@ -68,6 +70,9 @@ public class AlumnoController {
 	@Autowired 
 	public ITutorEconomicoService serviceTutorEconomico;
 	
+	@Autowired
+	public IDomicilioService serviceDomicilio;
+	
 	@GetMapping("/menuSolicitar")
 	public String menuSolicitar() {
 		return "alumno/menuSolicitarBeca";
@@ -98,6 +103,8 @@ public class AlumnoController {
 		
 		if(a.getTutorEconomico() != null) {
 			tutorEconomico = serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
+			System.out.println(tutorEconomico.toString());
+			//System.out.println(tutorEconomico.getDomicilio().getCatLocalidad().getCatMunicipio().getCatEstado().getIdCatEstado());
 		}
 		
 		List<CatEstado> listEstado = serviceEstado.listEstados();
@@ -121,16 +128,30 @@ public class AlumnoController {
 		
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
-		
-		
-		//Guardar tutor en la base de datos
-		serviceTutorEconomico.guardarTutor(tutor);
-		
-		//Asignar el tutor al alumno
-		a.setTutorEconomico(tutor);
-		serviceAlumno.guardarAlumno(a);
-	
-		return "alumno/formMiTutor";
+
+		if(a.getTutorEconomico() != null) {
+			System.out.println("Tutor del formulario: " + tutor);
+			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
+			System.out.println("Tutor de la base de datos: " + t.toString());
+			Domicilio dAntiguo = serviceDomicilio.buscarPorId(a.getTutorEconomico().getDomicilio().getIdDomicilio());
+			Domicilio d = tutor.getDomicilio();
+			d.setIdDomicilio(dAntiguo.getIdDomicilio());
+			tutor.setIdTutorEconomico(t.getIdTutorEconomico());
+			tutor.setDomicilio(d);
+			
+			t = tutor;
+			//System.out.println(d.toString());
+			//System.out.println(t.toString());
+			serviceDomicilio.guardarDomicilio(d);
+
+			serviceTutorEconomico.guardarTutor(t);
+		}else {
+			a.setTutorEconomico(tutor);
+			serviceTutorEconomico.guardarTutor(tutor);
+			serviceAlumno.guardarAlumno(a);
+		}
+
+		return "alumno/menuSolicitarBeca";
 	}
 	
 	@PostMapping("/guardarGastos")

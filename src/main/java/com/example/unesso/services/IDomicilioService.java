@@ -1,7 +1,5 @@
 package com.example.unesso.services;
 
-import java.util.Optional;
-
 import com.example.unesso.model.CatCodigoPostal;
 import com.example.unesso.model.CatLocalidad;
 import com.example.unesso.model.Domicilio;
@@ -12,4 +10,5 @@ import com.example.unesso.model.Domicilio;
 public interface IDomicilioService {
 	Domicilio guardarDomicilio(Domicilio domicilio);
 	CatCodigoPostal buscarPorLocalidad(CatLocalidad catLocalidad);
+	Domicilio buscarPorId(Integer id);
 }

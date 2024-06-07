@@ -32,4 +32,14 @@ public class DomicilioServiceJPA implements IDomicilioService {
 		}
 		return null;
 	}
+
+	@Override
+	public Domicilio buscarPorId(Integer id) {
+		Optional<Domicilio> op = domicilioRepo.findById(id);
+		System.out.println(op);
+		if(op.isPresent()) {
+			return op.get();
+		}
+		return null;
+	}
 }

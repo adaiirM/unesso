@@ -16,7 +16,7 @@ public class TutorEconomico {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idTutorEconomico;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idDomicilio")
 	private Domicilio domicilio;
 	

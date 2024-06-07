@@ -74,9 +74,9 @@
             <div class="mt-4" style="color: #6366F1;">
                 <p class="textoInputs">¿Es trabajador de la UNSIJ o SUNEO?</p>
                 <div class="mt-3">
-                    <input type="radio" class="input-outline-primary ms-4" id="apoyoSi" name="trabajadorSuneo" value="si" style="color: #6366F1;">
+                    <input type="radio" class="input-outline-primary ms-4" th:field="*{trabajadorSuneo}" id="apoyoSi" name="trabajadorSuneo" value="1" style="color: #6366F1;">
                     <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
-                    <input type="radio" class="input-outline-primary" id="aopyoNo" name="trabajadorSuneo" value="no" style="color: #6366F1;">
+                    <input type="radio" class="input-outline-primary" th:field="*{trabajadorSuneo}" id="apoyoNo" name="trabajadorSuneo" value="0" style="color: #6366F1;">
                     <label for="apoyoNo" style="color:#6C757D;" class="mb-5">No</label>
                 </div>
             </div>
@@ -100,10 +100,9 @@
                     <div class="row">
                         <div class="col">
                             <p class="textoInputs">Estado</p>
-							<!--							th:field="*{domicilio.catLocalidad.catMunicipio.catEstado.catIdEstado}" -->
-                        <select id="selectEstados"onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-								<option th:each="estado : ${estados}" th:value="${estado.idCatEstado}" th:text="${estado.nombreEstado}"  class="subtitulo"></option>
+							<!--							 -->
+                        <select id="selectEstados"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+								<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
                             </select>
                         </div>
                         <div class="col">
@@ -118,7 +117,7 @@
                         <div class="col">
                             <p class="textoInputs">Localidad</p>
 							<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
-                            <select id="selectLocalidades" </select> name="domicilio.catLocalidad" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <select id="selectLocalidades" name="domicilio.catLocalidad" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
                                 <option  selected class="subtitulo">Elige una opción</option>
                             </select>
                         </div>
