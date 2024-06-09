@@ -66,6 +66,11 @@ public class Alumno {
 	@JoinColumn(name="idCatInternet")
 	private CatInternet catInternet;
 	
+	@OneToOne
+	@JoinColumn(name="idEstadoFormularios")
+	private EstadoFormularios estadoFormularios;
+	
+	
 	private String matricula;
 	
 	private String nombre;
@@ -446,6 +451,30 @@ public class Alumno {
 
 	public void setIdioma(String idioma) {
 		this.idioma = idioma;
+	}
+
+	
+	
+	public TutorEconomico getTutorEconomico() {
+		return tutorEconomico;
+	}
+
+
+
+	public void setTutorEconomico(TutorEconomico tutorEconomico) {
+		this.tutorEconomico = tutorEconomico;
+	}
+
+
+
+	public EstadoFormularios getEstadoFormularios() {
+		return estadoFormularios;
+	}
+
+
+
+	public void setEstadoFormularios(EstadoFormularios estadoFormularios) {
+		this.estadoFormularios = estadoFormularios;
 	}
 
 

@@ -31,6 +31,8 @@ public class MisDatosService {
     private IMediosTrasladoService mediosTrasladoService;
     @Autowired
     private IUsuarioService usuarioService;
+    @Autowired
+	private IEstadoFormulariosService estadoFormulariosService ;
 
     public FormMisDatos getMisDatos(Authentication authentication) {
         
@@ -58,6 +60,12 @@ public class MisDatosService {
 		List<Integer> arrayIdMediosTraslado = new ArrayList<>();
 		Domicilio domicilio = new Domicilio();
 		CatSituacionVivienda catSituacionVivienda = new CatSituacionVivienda() ;
+		EstadoFormularios estadoFormularios = new EstadoFormularios();
+		
+		if(alumno.getEstadoFormularios() != null) {
+			estadoFormularios = alumno.getEstadoFormularios();
+			formMisDatos.setEstadoFormularios(estadoFormularios);
+		}
 		
 		if(alumno.getDomicilio() != null) {
 			domicilio = alumno.getDomicilio();
@@ -88,16 +96,20 @@ public class MisDatosService {
     			InfoVivienda infoVivienda = new InfoVivienda();
     			Transporte transporte = new Transporte();
     			Alumno alumno = new Alumno();
+    			Alumno alumnoRegistradoDB = new Alumno();
     			List<Integer> arrayIdMediosTraslado = new ArrayList<>();
     			List<MediosTraslado> arrayMediosTraslado = new ArrayList<>();
     			Domicilio domicilio = new Domicilio();
+    			EstadoFormularios estadoFormularios = new EstadoFormularios();
     			
     			//Se inicializan
+    			
     			alumno= datos.getAlumno();	
     			infoVivienda = datos.getInfoVivienda();
     			transporte= datos.getTransporte();
     			arrayIdMediosTraslado = datos.getMediosTraslado();
     			domicilio = datos.getDomicilio();
+    			estadoFormularios = datos.getEstadoFormularios();
     			
     			// Registro/actualización de datos
     			
@@ -155,6 +167,22 @@ public class MisDatosService {
     			}
     			
     			
+    			if(alumno.getIdioma() == " " || alumno.getIdioma() == "") {
+    				alumno.setIdioma(null);
+    			}
+    			
+    			
+    			if(estadoFormularios.getFormMisDatos() != null) {
+    				Integer idAlumno = datos.getAlumno().getIdAlumno();
+    				alumnoRegistradoDB = alumnoService.buscarAlumnoPorIdUsuario(idAlumno);
+    				EstadoFormularios formMisDatos = alumnoRegistradoDB.getEstadoFormularios();
+    				System.out.println("El estado del fromulario a insertar es: " + estadoFormularios.getFormMisDatos());
+    				
+    				alumno.setEstadoFormularios(estadoFormularios);
+    				
+    				
+    			}
+    			
     			if(datos.getAlumno() != null) {	
     				
     				alumno = alumnoService.guardar(alumno);
@@ -175,7 +203,7 @@ public class MisDatosService {
     					    boolean encontrado = false;
     					
     					    for (MediosTraslado medioTrasladoLista : arrayMediosTraslado) {
-    					        if (medioTraslado.getIdMediosTraslado() == medioTrasladoLista.getIdMediosTraslado()) {
+    					        if (medioTraslado.getCatMediosTransporte().getIdCatMediosTransporte() == medioTrasladoLista.getCatMediosTransporte().getIdCatMediosTransporte()) {
     					            encontrado = true;
     					            break;
     					        }
@@ -191,7 +219,7 @@ public class MisDatosService {
     					    boolean encontrado = false;
     					
     					    for (MediosTraslado medioTraslado : mediosTraslado) {
-    					        if ( medioTrasladoLista.getIdMediosTraslado() == medioTraslado.getIdMediosTraslado()) {
+    					        if ( medioTrasladoLista.getCatMediosTransporte().getIdCatMediosTransporte() == medioTraslado.getCatMediosTransporte().getIdCatMediosTransporte()) {
     					            encontrado = true;
     					            break;
     					        }

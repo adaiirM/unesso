@@ -103,6 +103,7 @@ public class AlumnoController {
     @PostMapping("/saveMisDatos")
     public String saveDatosPersonales(FormMisDatos datos, Authentication authentication, RedirectAttributes attributes) {
         misDatosService.saveDatosPersonales(datos, authentication);
+        
         return "menuSolicitarBeca";
     }
 

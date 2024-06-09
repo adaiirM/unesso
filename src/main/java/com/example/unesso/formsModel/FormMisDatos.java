@@ -7,6 +7,7 @@ import com.example.unesso.model.Alumno;
 import com.example.unesso.model.CatSituacionVivienda;
 import com.example.unesso.model.Transporte;
 import com.example.unesso.model.Domicilio;
+import com.example.unesso.model.EstadoFormularios;
 import com.example.unesso.model.Hermanos;
 import com.example.unesso.model.InfoVivienda;
 import com.example.unesso.model.MediosTraslado;
@@ -25,6 +26,7 @@ public class FormMisDatos {
 	private Transporte transporte;
 	private InfoVivienda infoVivienda;
 	private CatSituacionVivienda catSituacionVivinda;
+	private EstadoFormularios estadoFormularios;
 	
 	//Medos get y set
 	public Alumno getAlumno() {
@@ -78,7 +80,17 @@ public class FormMisDatos {
 	}
 	public void setCatSituacionVivinda(CatSituacionVivienda catSituacionVivinda) {
 		this.catSituacionVivinda = catSituacionVivinda;
+	}	
+	
+	
+	public EstadoFormularios getEstadoFormularios() {
+		return estadoFormularios;
 	}
+	public void setEstadoFormularios(EstadoFormularios estadoFormularios) {
+		this.estadoFormularios = estadoFormularios;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "FormMisDatos [alumno=" + alumno + ", domicilio=" + domicilio + ", tutor=" + tutor + ", mediosTraslado="

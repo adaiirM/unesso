@@ -49,7 +49,7 @@
    		<input hidden id="idGrupo" value="alumno.catGrupo.idCatGrupo" th:field="*{alumno.catGrupo.idCatGrupo}" name="alumno.catGrupo.idCatGrupo" >
    		<input hidden id="idCatLocalidad" value=""  name="alumno.domicilio.catLocalidad.idCatLocalidad"  th:field="*{alumno.domicilio.catLocalidad.idCatLocalidad}" >
    		<input hidden id="alumno.dom"   name="alumno.domicilio.idDomicilio" th:field="*{alumno.domicilio.idDomicilio}">
-   		<input hidden id="alumno.idAlumno"   name="alumno.domicilio.idCatLocalidad" th:field="*{alumno.idAlumno}">
+   		<input hidden id="idAlumno"  value="alumno.idAlumno" name="alumno.idAlumno" th:field="*{alumno.idAlumno}">
 		<input hidden id="alumno.nombre" value="alumno.nombre" name="alumno.nombre" th:field="*{alumno.nombre}">
 		<input hidden id="alumno.apellidoM" value="alumno.apellidoM"  name="alumno.apellidoM" th:field="*{alumno.apellidoM}">
 		<input hidden id="alumno.apellidoP" value="alumno.apellidoP" name="alumno.apellidoP" th:field="*{alumno.apellidoP}">
@@ -58,6 +58,8 @@
 		<input hidden id="alumno.curp"  name="alumno.curp" th:field="*{alumno.curp}">
 		<input hidden id="alumno.infoVivienda"  name="infoVivienda.idInfoVivienda" th:field="*{infoVivienda.idInfoVivienda}">
 		<input hidden id="alumno.usuario.idUser" value="alumno.usuario.idUser"  name="alumno.usuario.idUser" th:field="*{alumno.usuario.idUser}">
+		<input hidden id="estadoFormularios.formMisDatos" value="estadoFormularios.formMisDatos"  name="estadoFormularios.formMisDatos" th:field="*{estadoFormularios.formMisDatos}">
+		<input hidden id="estadoFormularios.idEstadoFormularios" value="estadoFormularios.idEstadoFormularios"  name="estadoFormularios.idEstadoFormularios" th:field="*{estadoFormularios.idEstadoFormularios}">
 		<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	
 	<section>
@@ -196,6 +198,10 @@
 			    <div style="display: flex; justify-content: space-between; padding-top: 1%;">
 			        <div style="width: 70%;">
 			            <p class="textoInputs">Nombre de la casa de huéspedes o propietario</p>
+			            <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="nombreCaseroError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
 			            <input name="infoVivienda.nombreCasero" 
 			                   th:field="*{infoVivienda.nombreCasero}" 
 			                   value="" 
@@ -209,6 +215,10 @@
 			    <div style="display: flex; justify-content: space-between; padding-top: 1%;">
 			        <div style="width: 25%;">
 			            <p class="textoInputs">¿Con cuantas personas compartes renta?</p>
+			            <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="numComparteViviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
 			            <input name="infoVivienda.numComparteVivienda" 
 			                   th:field="*{infoVivienda.numComparteVivienda}" 
 			                   value="" 
@@ -220,6 +230,10 @@
 			        </div>
 			        <div style="width: 45%;">
 			            <p class="textoInputs">¿Cuanto pagas de renta?</p>
+			            <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="pagoRentaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
 			            <input name="infoVivienda.pagoRenta" 
 			                   th:field="*{infoVivienda.pagoRenta}" 
 			                   value="" 
@@ -499,9 +513,17 @@
 	        </div>
 	    </div>
 	</section>
-	<div class="d-flex justify-content-end mt-5">      
+	<div class="d-flex justify-content-end mt-5">   
+		<!--   
 		<button type="submit"  class="btn btn-primary">Enviar Datos</button>	
-		<button id="validar" type="button" class="btn btn-primary" >Validar Campos</button>			       
+		<button id="validar" type="button" class="btn btn-primary" >Validar Campos</button>	
+		-->
+		
+		
+    	<button type="button" id="guardar" class="btn btn-primary">Guardar</button>
+
+	    <!-- Botón para enviar con validaciones -->
+	    <button type="button" id="validar" class="btn btn-primary">Enviar</button>		       
 	</div>
 </form>
 
@@ -761,161 +783,204 @@
 		    $('#inputNombreCompleto').val(concatenatedValue);
 		    
 		     //****************************************************************
-		     //Validación del formulario
-		    $("#validar").click(function () {
-				
-				$("#myForm").validate({
-					
-			        /*
-			        rules: {
-						
-			          "inputNombreCasero": {
-			            customRequired: true // Give it a custom name
-			          }
-			        },
-			        messages: {
-			          "inputNombreCasero": {
-			            customRequired: "Ingresa el dato solicitado"
-			          }
-			        },
-			        // Extend validation methods
-			        customMethods: {
-			          customRequired: function(value) {
-			            return value !== "";
-			          }
-			        }
-					,*/
-				    rules: {
-				      "alumno.idioma" : {
-				        required: true
-				      }
-				    },
-				    
-				    messages : {
-					   "alumno.idioma": {
-					    required: "*Llena el campo solicitado"
-					  }
+		     
+		    // Configuración de la validación
+		    var validator = $("#myForm").validate({
+		        rules: {
+		            "alumno.idioma": {
+		                required: true
+		            },
+		            "domicilio.coloniaBarrio":{
+						required: true
+					},
+					"domicilio.calle":{
+						required: true
+					},
+					"domicilio.numero":{
+						required: true
 					}
-					
-		        });
+		        },
+		        messages: {
+		            "alumno.idioma": {
+		                required: "*Llena el campo solicitado"
+		            },
+		            "domicilio.coloniaBarrio": {
+		                required: "*Llena el campo solicitado"
+		            },
+		            "domicilio.calle": {
+		                required: "*Llena el campo solicitado"
+		            },
+		            "domicilio.numero": {
+		                required: "*Llena el campo solicitado"
+		            }
+		            
+		        },
+		        errorPlacement: function(error, element) {
+		            error.insertAfter(element);
+		            // Mostrar el mensaje de error durante 10 segundos
+		            setTimeout(function() {
+		                error.fadeOut(500, function() {
+		                    $(this).remove();
+		                });
+		            }, 5000);
+		        }
+		    });
+		
+		    // Botón de guardado (sin validación)
+		    $("#guardar").click(function() {
+		        // Desactivar temporalmente la validación
+		        validator.settings.ignore = "*";
+		        $("#myForm").submit();
+		        // Reactivar la validación para el próximo uso
+		        validator.settings.ignore = [];
+		    });
+		
+		    // Botón de envío con validación
+		    $("#validar").click(function(event) {
+		        event.preventDefault(); // Evita el envío del formulario por defecto
+		
+		        // Validación adicional
+		        let enviar = true;
+		
+		        if ($('input[name="alumno.catEstadoCivil.idCatEstadoCivil"]').is(":checked")) {
+		            $("#estadoCivilError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#estadoCivilError");
+		        }
+		
+		        if ($('input[name="alumno.recursosSuficientes"]').is(":checked")) {
+		            $("#recursosEconomicosError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#recursosEconomicosError");
+		        }
+		
+		        if ($('input[name="alumno.solicitaBecaAlimenticia"]').is(":checked")) {
+		            $("#solicitaBecaAlimenticiaError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#solicitaBecaAlimenticiaError");
+		        }
+		
+		        if ($('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]').is(":checked")) {
+		            let valorSeleccionado = $('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]:checked').val();
+		            $("#situacionViviendaError").hide();
+		            if (valorSeleccionado != 3) {
+		                // Validar campos adicionales si es necesario
+		                if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
+		                    enviar = false;
+		                    showErrorAndScroll("#nombreCaseroError");
+		                }
+		                if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
+		                    enviar = false;
+		                    showErrorAndScroll("#numComparteViviendaError");
+		                }
+		                if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
+		                    enviar = false;
+		                    showErrorAndScroll("#pagoRentaError");
+		                }
+		            }
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#situacionViviendaError");
+		        }
+		
+		        if ($('input[name="alumno.tieneVehiculo"]').is(":checked")) {
+		            $("#transporteError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#transporteError");
+		        }
+		
+		        if ($('input[name="alumno.familiarComunero"]').is(":checked")) {
+		            $("#hijoComuneroError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#hijoComuneroError");
+		        }
+		
+		        if ($('input[name="alumno.tieneTelefono"]').is(":checked")) {
+		            $("#utilizaTelefonoError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#utilizaTelefonoError");
+		        }
+		
+		        if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
+		            $("#tieneComputadoraError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#tieneComputadoraError");
+		        }
+		
+		        if ($('input[name="mediosTraslado"]').is(":checked")) {
+		            $("#mediosError").hide();
+		        } else {
+		            enviar = false;
+		            showErrorAndScroll("#mediosError");
+		        }
+		
+		        // Verificar si las validaciones de jQuery Validate pasan
+		       if ($("#myForm").valid() && enviar) {
+				    var idAlumno = $('#idAlumno').val();
+				    console.log("id de alumno: " + idAlumno);
+				    var idAlumnoInt = parseInt(idAlumno);
 				
-					
-				let enviar= true;
-				if ($('input[name="alumno.catEstadoCivil.idCatEstadoCivil"]').is(":checked")) {
-				    
-				    $("#estadoCivilError").hide();
+				    var url = "/formulario/marcarFormularioRealizado/" + idAlumnoInt;
+				
+				    // Realiza la solicitud GET
+				    $.ajax({
+				        url: url,
+				        method: "GET",
+				        success: function(response) {
+				            // Manejar la respuesta del servidor
+				            if (response.success) {
+				                // Enviar el formulario
+				                $("#myForm").submit();
+				            } else {
+				                // Manejar el caso en que la inserción en la base de datos falle
+				                console.error("Error al marcar el formulario como realizado.");
+				            }
+				        },
+				        error: function(xhr, status, error) {
+				            console.error("Error en la solicitud Ajax: " + error);
+				        }
+				    });
 				} else {
-					enviar = false;
-                    showErrorAndScroll("#estadoCivilError");
+				    console.error("El ID del alumno no es válido.");
 				}
-				if ($('input[name="alumno.recursosSuficientes"]').is(":checked")) {
-				    
-				    $("#recursosEconomicosError").hide();
-				} else {
-					enviar = false;
-					showErrorAndScroll("#recursosEconomicosError");
-				}
-				
-				if ($('input[name="alumno.solicitaBecaAlimenticia"]').is(":checked")) {
-				    
-				    $("#solicitaBecaAlimenticiaError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#solicitaBecaAlimenticiaError");
-				}
-			
-				
-				
-			    if ($('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]').is(":checked")) {
-			        let valorSeleccionado = $('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]:checked').val();
-			        $("#situacionViviendaError").hide();
-			        console.log("El valor seleccionado es " + valorSeleccionado);
-			        if (valorSeleccionado != 3) {
-			            console.log("Validando");
-			            // Hacer que el campo sea requerido
-			            console.log("Validando");
-				        // Add the custom validation rule
-				        /*
-				        $("#inputNombreCasero").rules("add", {
-				          customRequired: true
-				        });
-				        */
-			        } else {
-			            // Remove the custom validation rule
-       					//$("#inputNombreCasero").rules("remove", "customRequired");
-			        }
-			    } else {
-			        enviar = false;
-			        showErrorAndScroll("#situacionViviendaError");
-			    }
-				
-
-				
-				if ($('input[name="alumno.tieneVehiculo"]').is(":checked")) {
-				    
-				    $("#transporteError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#transporteError");
-				}
-				
-				if ($('input[name="alumno.familiarComunero"]').is(":checked")) {
-				    
-				    $("#hijoComuneroError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#hijoComuneroError");
-				}
-				
-				if ($('input[name="alumno.tieneTelefono"]').is(":checked")) {
-				    $("#utilizaTelefonoError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#utilizaTelefonoError");
-				}
-				
-				if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
-				    $("#tieneComputadoraError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#tieneComputadoraError");
-				}
-				
-				if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
-				    $("#tieneComputadoraError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#tieneComputadoraError");
-				}
-				
-				if ($('input[name="mediosTraslado"]').is(":checked")) {
-				    $("#mediosError").hide();
-				} else {
-					enviar = false;
-                    showErrorAndScroll("#mediosError");
-				}
-				
-				
-				if(enviar == true){
-					$("#myForm").submit();
-				}
-				
-				 
-				
-			});
+		    });
+		    
+		
 			function showErrorAndScroll(errorElement) {
-			    enviar = false;
 			    $(errorElement).show();
-			    /*
-			    $('html, body').animate({
-			        scrollTop: $(errorElement).offset().top - 20
-			    }, 400);
-			    */
 			    setTimeout(function() {
 			        $(errorElement).fadeOut();
 			    }, 5000);
 			}
-		    
+			
+			function validarViviendaAlumno(){
+				// Validar campos adicionales si es necesario
+                if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
+                    enviar = false;
+                    showErrorAndScroll("#nombreCaseroError");
+                }
+                if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
+                    enviar = false;
+                    showErrorAndScroll("#numComparteViviendaError");
+                }
+                if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
+                    enviar = false;
+                    showErrorAndScroll("#pagoRentaError");
+                }
+			}
+			
+			function actualizarEstadoFormMisDatos() {
+			    var idAlumno = $('#alumno.idAlumno').val();
+			    console.log("ID Alumno:", idAlumno);
+			    
+		    }
 			
 	});
     </script>

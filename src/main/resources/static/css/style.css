@@ -338,3 +338,11 @@ footer hr {
 #tablaSolicitudes th, #tablaSolicitudes td {
     background-color: #F5F5F5; 
 }
+
+
+
+/*MENSAJE DE ERROR*/
+.error {
+    color: red;
+    font-size: 1em;
+}

@@ -10,5 +10,6 @@ import com.example.unesso.model.Alumno;
  */
 public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
 	Alumno findByUsuario_IdUsuario(Integer idUsuario);
+	Alumno findByIdAlumno(Integer idAlumno);
 
 }
