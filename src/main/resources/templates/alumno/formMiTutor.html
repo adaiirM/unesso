@@ -8,6 +8,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     
+    <!-- Incluye jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluye jQuery Validate -->
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 	
@@ -80,89 +90,92 @@
             </div>
 
             <div class="col-10 col-xs-2 col-sm-10 col-md-9 col-xl-6  rounded colorFondo m-2 p-4 ms-4">
-                <h3 style="color: #6366F1;">Información general</h3>
+                <h3 style="color: #6366F1;">Domicilio</h3>
                 <p class="subtitulo">Indica la dirección de la persona de quien se depende económicamente, si éste es el caso, o de lo contrario, a la persona que se pueda localizar para aclaraciones.</p>
                 <div class="mt-1" style="color: #6366F1;" >
                     <p>¿El domicilio de tu tutor coincide con el que te encuentras actualmente?</p>
                     <div class="mt-1" style="margin-left: 1cm;">
-                        <input type="radio" class="input-outline-primary " id="apoyoSi" name="domicilio" style="color: #6366F1;">
+                        <input type="radio" class="input-outline-primary " id="apoyoSi" name="domicilio" value="1" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
-                        <input type="radio" class="input-outline-primary" id="aopyoNo" name="domicilio" style="color: #6366F1;">
+                        <input type="radio" class="input-outline-primary" id="aopyoNo" name="domicilio" value="0" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoNo" style="color:#6C757D;" class="me-5">No</label>
-                    </div><br>
+                    </div><br> 
                 </div>
-				
-                <div class="ps-4 pe-4">
-                    <div class="row">
-                        <div class="col">
-                            <p class="textoInputs">Estado</p>
-							<!--							 -->
-		                    <select id="selectEstados" th:field="*{domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-								<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
-		                    </select>
-                        </div>
-                        <div class="col">
-                            <p class="textoInputs">Municipio</p>
-							<!--th:field="*{domicilio.catLocalidad.catMunicipio.catIdMunicipio}"-->
-                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidad()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col">
-                            <p class="textoInputs">Localidad</p>
-							<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
-                            <select id="selectLocalidades"  name="domicilio.catLocalidad"  onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option  selected class="subtitulo">Elige una opción</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <p class="textoInputs">Colonia o barrio</p>
-                            <select name="domicilio.coloniaBarrio" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-                                <option value="1" class="subtitulo">Colonia o barrio 1</option>
-                                <option value="2" class="subtitulo">Colonia o barrio 2</option>
-                                <option value="3" class="subtitulo">Colonia o barrio 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col">
-                            <p class="textoInputs">Distrito</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-                                <option value="1" class="subtitulo">Distrito 1</option>
-                                <option value="2" class="subtitulo">Distrito 2</option>
-                                <option value="3" class="subtitulo">Distrito 3</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <p class="textoInputs">Región</p>
-                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-                                <option selected class="subtitulo">Elige una opción</option>
-                                <option value="1" class="subtitulo">Región 1</option>
-                                <option value="2" class="subtitulo">Región 2</option>
-                                <option value="3" class="subtitulo">Región 3</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row ms-3 mt-4 me-3">
-                    <div class="col">
-                        <label>Calle</label>
-                        <input th:field="*{domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="domicilio.calle" placeholder="Nombre de la calle">
-                    </div>
-                    <div class="col">
-                        <label>Numero</label>
-                        <input th:field="*{domicilio.numero}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="numero" name="domicilio.numero" placeholder="Número">
-                    </div>
-                    <div class="col">
-                        <label>Codigo postal</label>
-                        <input th:field="*{domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="cp" placeholder="">
-                    </div>
-                </div>
+                
+				<div id="contentDomicilio">
+					 <div class="ps-4 pe-4">
+	                    <div class="row">
+	                        <div class="col">
+	                            <p class="textoInputs">Estado</p>
+								<!--							 -->
+			                    <select id="selectEstados" th:field="*{domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
+			                    </select>
+	                        </div>
+	                        <div class="col">
+	                            <p class="textoInputs">Municipio</p>
+								<!--th:field="*{domicilio.catLocalidad.catMunicipio.catIdMunicipio}"-->
+	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidad()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="row mt-4">
+	                        <div class="col">
+	                            <p class="textoInputs">Localidad</p>
+								<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
+	                            <select id="selectLocalidades"  name="domicilio.catLocalidad"  onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option  selected class="subtitulo">Elige una opción</option>
+	                            </select>
+	                        </div>
+	                        <div class="col">
+	                            <p class="textoInputs">Colonia o barrio</p>
+	                            <select name="domicilio.coloniaBarrio" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Colonia o barrio 1</option>
+	                                <option value="2" class="subtitulo">Colonia o barrio 2</option>
+	                                <option value="3" class="subtitulo">Colonia o barrio 3</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="row mt-4">
+	                        <div class="col">
+	                            <p class="textoInputs">Distrito</p>
+	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Distrito 1</option>
+	                                <option value="2" class="subtitulo">Distrito 2</option>
+	                                <option value="3" class="subtitulo">Distrito 3</option>
+	                            </select>
+	                        </div>
+	                        <div class="col">
+	                            <p class="textoInputs">Región</p>
+	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Región 1</option>
+	                                <option value="2" class="subtitulo">Región 2</option>
+	                                <option value="3" class="subtitulo">Región 3</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="row ms-3 mt-4 me-3">
+	                    <div class="col">
+	                        <label>Calle</label>
+	                        <input th:field="*{domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="domicilio.calle" placeholder="Nombre de la calle">
+	                    </div>
+	                    <div class="col">
+	                        <label>Numero</label>
+	                        <input th:field="*{domicilio.numero}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="numero" name="domicilio.numero" placeholder="Número">
+	                    </div>
+	                    <div class="col">
+	                        <label>Codigo postal</label>
+	                        <input th:field="*{domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="cp" placeholder="">
+	                    </div>
+	                </div>
+				</div>
+               
          	</div>
          	
          	<!--GASTOS E INGRESOS-->
@@ -236,9 +249,22 @@
 	</form>
        
     <footer th:insert="fragments/footer.html :: footer"/>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script>
+		function toggleContent() {
+            var content = document.getElementById('contentDomicilio');
+            var radios = document.getElementsByName('domicilio');
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked && radios[i].value === '1') {
+                    content.classList.add('hidden');
+                } else if (radios[i].checked && radios[i].value === '0') {
+                    content.classList.remove('hidden');
+                }
+            }
+        }
+	</script>
+    
+    
     <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>

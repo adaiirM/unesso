@@ -341,14 +341,14 @@ footer hr {
 }
 
 
-form label {
+.formCambiarContraseña label {
 	width: 100%;
 	float: left;
 	display: inline-block;
 	font-weight: bold;
 	margin-bottom: 5px;
 }
-form label.error {
+.formCambiarContraseña label.error {
 	float: left;
 	color: red;
 	font-weight: normal;
