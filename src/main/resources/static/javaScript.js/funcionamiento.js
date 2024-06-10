@@ -67,6 +67,7 @@ function limitarLongitud(event) {
 
 function obtenerMunicipios(){
 	var select = document.getElementById('selectEstados');
+	var selectLocalidad = document.getElementById('selectLocalidades')
 	select.addEventListener('change',
 	  function(){
 	    //var selectedOption = this.options[select.selectedIndex];
@@ -74,9 +75,10 @@ function obtenerMunicipios(){
 	    $.ajax({
 	        url: '/domicilio/obtenerMunicipiosPorEstado',
 	        type: 'GET',
-	        data: { estadoId: selectIndex},
+	        data: { estadoId: selectIndex + 1},
 	        success: function(data) {
 	            actualizarSelectMunicipios(data);
+	            selectLocalidad.innerHTML = "";
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -134,7 +136,7 @@ function actualizarSelectLocalidad(localidades) {
 function obtenerCodigoPostal(){
 	var select = document.getElementById('selectLocalidades');
 	//console.log(select.value);
-	select.addEventListener('change',
+	select.addEventListener('input',
 	  function(){
 	    //var selectedOption = this.options[select.selectedIndex];
 	    selectIndex = select.value;
@@ -236,3 +238,42 @@ function generarPersonas() {
         console.error('Error al obtener los datos de productos:', error);
     });
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+	  
+	var selectLocalidad = document.getElementById('selectLocalidades');
+	var selectMunicipios = document.getElementById('selectMunicipios');
+
+	let idCatEstado = document.getElementById('idCatEstado').value;
+	let idCatMunicipio = document.getElementById('idCatMunicipio').value;
+	let idCatLocalidad = document.getElementById('idCatLocalidad').value;
+	
+	 $.ajax({
+        url: '/domicilio/obtenerMunicipiosPorEstado',
+        type: 'GET',
+        data: { estadoId: idCatEstado},
+        success: function(data) {
+            actualizarSelectMunicipios(data);
+            selectMunicipios.value = idCatMunicipio;
+            selectLocalidad.innerHTML = "";
+            
+            $.ajax({
+		        url: '/domicilio/obtenerLocalidadesPorMunicipio',
+		        type: 'GET',
+		        data: { municipioId: idCatMunicipio},
+		        success: function(data) {
+		            actualizarSelectLocalidad(data);
+		            selectLocalidad.value = idCatLocalidad;
+		        },
+		        error: function(xhr, status, error) {
+		            console.error(error);
+		        }
+		    });
+            
+        },
+        error: function(xhr, status, error) {
+            console.log("Error" + error);
+            console.error(error);
+        }
+	    });
+});
