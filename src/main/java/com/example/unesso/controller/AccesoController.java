@@ -1,19 +1,14 @@
 package com.example.unesso.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.unesso.model.Alumno;
-import com.example.unesso.model.CatParentesco;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.services.IUsuarioService;
 
@@ -47,5 +42,15 @@ public class AccesoController {
 		u = serviceUsuario.guardarUsuario(u);
 		System.out.println(u);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/validarContraseñaActual")
+	@ResponseBody
+	public boolean validarContraseñaActual(Authentication auth, @RequestParam("contraseñaActual") String contraseñaActual) {
+		String correo = auth.getName();
+		Usuario u = serviceUsuario.buscarPorCorreo(correo);
+		System.out.println("Usuario a cambiar contraseña: " + u.toString());
+		contraseñaActual = "{noop}"+contraseñaActual;
+		return contraseñaActual.equals(u.getPassword());
 	}
 }

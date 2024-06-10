@@ -339,3 +339,19 @@ footer hr {
 #tablaSolicitudes th, #tablaSolicitudes td {
     background-color: #F5F5F5; 
 }
+
+
+form label {
+	width: 100%;
+	float: left;
+	display: inline-block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+form label.error {
+	float: left;
+	color: red;
+	font-weight: normal;
+	padding-left: .5em;
+	vertical-align: top;
+}
