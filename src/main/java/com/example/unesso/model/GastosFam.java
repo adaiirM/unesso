@@ -1,5 +1,6 @@
 package com.example.unesso.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,7 @@ public class GastosFam {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idGastosFam;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idReciboLuz")
 	private ReciboLuz reciboLuz;
 	

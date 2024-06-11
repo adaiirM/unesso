@@ -31,6 +31,7 @@ import com.example.unesso.services.ICatParentescoService;
 import com.example.unesso.services.ICatSituacionViviendaFamiliarService;
 import com.example.unesso.services.ICatTipoViviendaService;
 import com.example.unesso.services.IDomicilioService;
+import com.example.unesso.services.IFamiliaService;
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
 
@@ -72,6 +73,9 @@ public class AlumnoController {
 	
 	@Autowired
 	public IDomicilioService serviceDomicilio;
+	
+	@Autowired
+	public IFamiliaService serviceFamilia;
 	
 	@GetMapping("/menuSolicitar")
 	public String menuSolicitar() {
@@ -131,19 +135,27 @@ public class AlumnoController {
 
 		if(a.getTutorEconomico() != null) {
 			System.out.println("Tutor del formulario: " + tutor);
+			
+			//Obtener el tutor de la base de datos mediante el id dentro del alumno
 			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
 			System.out.println("Tutor de la base de datos: " + t.toString());
-			Domicilio dAntiguo = serviceDomicilio.buscarPorId(a.getTutorEconomico().getDomicilio().getIdDomicilio());
-			Domicilio d = tutor.getDomicilio();
-			d.setIdDomicilio(dAntiguo.getIdDomicilio());
-			tutor.setIdTutorEconomico(t.getIdTutorEconomico());
-			tutor.setDomicilio(d);
 			
+			//Crear domicilio que almacena el domicilio de la base de datos
+			Domicilio dommicilioBD = serviceDomicilio.buscarPorId(a.getTutorEconomico().getDomicilio().getIdDomicilio());
+			
+			//Crear objeto de domicilio para almacenar el domicilio proveniente del formulario
+			Domicilio domicilioFormulario = tutor.getDomicilio();
+			
+			//Asignar al domiclio del formulario el id del domiclio de la base de datos
+			domicilioFormulario.setIdDomicilio(dommicilioBD.getIdDomicilio());
+			
+			//Asignar el id del tutor y el objeto del domicilio
+			tutor.setIdTutorEconomico(t.getIdTutorEconomico());
+			tutor.setDomicilio(domicilioFormulario);
+			
+			//Guardara en la bd
 			t = tutor;
-			//System.out.println(d.toString());
-			//System.out.println(t.toString());
-			serviceDomicilio.guardarDomicilio(d);
-
+			serviceDomicilio.guardarDomicilio(domicilioFormulario);
 			serviceTutorEconomico.guardarTutor(t);
 		}else {
 			a.setTutorEconomico(tutor);
@@ -155,10 +167,30 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/guardarGastos")
-	public String guardarGastos(Familia familia) {
+	public String guardarGastos(Authentication auth, Familia familia) {
 		System.out.println(familia.toString());
+		//Recuperar datos de sesion para conocer el alumno de la sesión
+		Alumno a = obtenerAlumnoSesion(auth);
+		
+		if(a.getFamilia() != null) {
+			Familia f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+			familia.setIdFamilia(f.getIdFamilia());
+			
+			f = familia;
+			serviceFamilia.guardarFamilia(f);
+			
+			System.out.println(f);
+		} else {
+			a.setFamilia(familia);
+			serviceFamilia.guardarFamilia(familia);
+			serviceAlumno.guardarAlumno(a);
+		}
+		
+		
 		return "alumno/formMisGastos";
 	}
+	
+
 	
 	@ModelAttribute
 	public void setGenericos(Authentication auth, HttpSession sesion, Model model) {

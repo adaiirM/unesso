@@ -26,7 +26,6 @@ public class DomicilioServiceJPA implements IDomicilioService {
 	@Override
 	public CatCodigoPostal buscarPorLocalidad(CatLocalidad catLocalidad) {
 		Optional<CatCodigoPostal> op = domicilioRepo.findByCatLocalidad(catLocalidad);
-		System.out.println(op);
 		if(op.isPresent()) {
 			return op.get();
 		}
@@ -36,7 +35,6 @@ public class DomicilioServiceJPA implements IDomicilioService {
 	@Override
 	public Domicilio buscarPorId(Integer id) {
 		Optional<Domicilio> op = domicilioRepo.findById(id);
-		System.out.println(op);
 		if(op.isPresent()) {
 			return op.get();
 		}

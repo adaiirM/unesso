@@ -24,7 +24,7 @@ public class Familia {
 	@JoinColumn(name="idDomicilio")
 	private Domicilio domicilio;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idGastosFam")
 	private GastosFam gastosFam;
 	
@@ -36,8 +36,8 @@ public class Familia {
     private List<IngresoFamiliar> ingresoFamiliar = new ArrayList<>();
 	
 	@OneToOne
-	@JoinColumn(name="idViviendaFamilia")
-	private ViviendaFamiliar viviendaFamilia;
+	@JoinColumn(name="idViviendaFamiliar")
+	private ViviendaFamiliar viviendaFamiliar;
 	
 	private String telefono;
 	
@@ -81,12 +81,12 @@ public class Familia {
 		this.infoFamilia = infoFamilia;
 	}
 
-	public ViviendaFamiliar getViviendaFamilia() {
-		return viviendaFamilia;
+	public ViviendaFamiliar getViviendaFamiliar() {
+		return viviendaFamiliar;
 	}
 
-	public void setViviendaFamilia(ViviendaFamiliar viviendaFamilia) {
-		this.viviendaFamilia = viviendaFamilia;
+	public void setViviendaFamiliar(ViviendaFamiliar viviendaFamiliar) {
+		this.viviendaFamiliar = viviendaFamiliar;
 	}
 
 	public String getTelefono() {
@@ -133,7 +133,7 @@ public class Familia {
 	public String toString() {
 		return "Familia [idFamilia=" + idFamilia + ", domicilio=" + domicilio + ", gastosFam=" + gastosFam
 				+ ", infoFamilia=" + infoFamilia + ", ingresoFamiliar=" + ingresoFamiliar + ", viviendaFamilia="
-				+ viviendaFamilia + ", telefono=" + telefono + ", ingresoMensualPromedio=" + ingresoMensualPromedio
+				+ viviendaFamiliar + ", telefono=" + telefono + ", ingresoMensualPromedio=" + ingresoMensualPromedio
 				+ ", numPersonasAportan=" + numPersonasAportan + ", numPersonasDependen=" + numPersonasDependen + "]";
 	}
 	
