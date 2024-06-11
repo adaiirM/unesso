@@ -40,7 +40,42 @@
     </div>
 	<form th:action="@{/alumno/guardarTutor}" th:object="${tutorEconomico}" method="post">
 		<h1 class="titulo" style="text-align:left; margin-left: 1.6cm;">DEPENDIENTE ECONOMICO</h1>
-        <p class="subtitulo m-4">Datos del padre, madre o tutor o familiar más cercano (preferiblemente, del que se depende económicamente) </p>
+
+		<div class="row justify-content-center">
+	        <div class="col-10 col-xs-2 col-sm-10 col-md-10 col-xl-11 col-lg-10 rounded colorFondo p-4">
+	            <h3 style="color: #6366F1;">Gastos e ingresos</h3>
+	            <div class="row">
+	                <div class="col-12 mt-3">
+	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
+	                    <p class="subtitulo" style="text-align: justify;">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
+	                    <input type="text" class="form-control estiloInputs" style="width: 5em;"  id="inputNombre" placeholder="">
+	                </div>
+	                <div class="col-12 mt-3">
+	                    <p class="textoInputs">¿Dependes económicamente?</p>
+	                    <div class="d-flex">
+	                        <div style="width: 100%;">
+	                            <div class="form-check">
+	                                <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
+	                                <label class="form-check-label" for="flexRadioDefault1">
+	                                    <p class="subtitulo">Si</p>
+	                                </label>
+	                            </div>
+	                        </div>
+	                        <div style="width: 100%;">
+	                            <div class="form-check">
+	                                <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
+	                                <label class="form-check-label" for="flexRadioDefault2">
+	                                    <p class="subtitulo">No</p>
+	                                </label>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div><br>
+		
+        <p class="subtitulo m-4 " >Datos del padre, madre o tutor o familiar más cercano (preferiblemente, del que se depende económicamente) </p>
         <div class="container-auto row justify-content-center" >
             <div class="col-10 col-xs-2 col-sm-10 col-md-9 col-xl-5  rounded colorFondo m-2 p-4 ms-4">
                 <h3 style="color: #6366F1;">Información general</h3>
