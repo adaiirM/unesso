@@ -95,13 +95,13 @@ public class AlumnoController {
 	public String formularioMisGastos(Model model) {
 		Familia f = new Familia();
 		f.setIngresoFamiliar(new ArrayList<>());
+
 		model.addAttribute("familia", f);
 		return "alumno/formMisGastos";
 	}
 	
 	@GetMapping("/formMiTutor")
 	public String formularioTutor(Authentication auth, Model model) {
-		
 		TutorEconomico tutorEconomico = new TutorEconomico();
 		Alumno a = obtenerAlumnoSesion(auth);
 		
@@ -117,11 +117,12 @@ public class AlumnoController {
 		model.addAttribute("tutorEconomico", tutorEconomico);
 		model.addAttribute("estados", listEstado);
 		model.addAttribute("ocupaciones", listOcupacion);
+		model.addAttribute("alumno", a);
 		return "alumno/formMiTutor";
 	}
 	
 	@PostMapping("/guardarTutor")
-	public String guardarDom(Authentication auth, TutorEconomico tutor, BindingResult result) {
+	public String guardarDom(Authentication auth, TutorEconomico tutor, Alumno alumno, BindingResult result) {
 		/*if(result.hasErrors()) {
 			for (ObjectError error: result.getAllErrors()){
 				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
@@ -129,10 +130,10 @@ public class AlumnoController {
 			
 			return "alumno/formTutor";
 		}*/
-		
+		System.out.println(alumno.toString());
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
-
+		a.setGastoMensual(alumno.getGastoMensual());
 		if(a.getTutorEconomico() != null) {
 			System.out.println("Tutor del formulario: " + tutor);
 			

@@ -39,8 +39,11 @@
         </div>	
     </div>
 	<form th:action="@{/alumno/guardarTutor}" th:object="${tutorEconomico}" method="post">
+		
+		<input type="hidden" th:object="${alumno}">
+		
 		<h1 class="titulo" style="text-align:left; margin-left: 1.6cm;">DEPENDIENTE ECONOMICO</h1>
-
+		
 		<div class="row justify-content-center">
 	        <div class="col-10 col-xs-2 col-sm-10 col-md-10 col-xl-11 col-lg-10 rounded colorFondo p-4">
 	            <h3 style="color: #6366F1;">Gastos e ingresos</h3>
@@ -48,7 +51,7 @@
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
 	                    <p class="subtitulo" style="text-align: justify;">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
-	                    <input type="text" class="form-control estiloInputs" style="width: 5em;"  id="inputNombre" placeholder="">
+	                    <input type="text" class="form-control estiloInputs" style="width: 5em;"   id="gastoMensual" name="gastoMensual"  placeholder="">
 	                </div>
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿Dependes económicamente?</p>
