@@ -38,10 +38,8 @@
             </ol>
         </div>	
     </div>
-	<form th:action="@{/alumno/guardarTutor}" th:object="${tutorEconomico}" method="post">
-		
-		<input type="hidden" th:object="${alumno}">
-		
+	<form th:action="@{/alumno/guardarTutor}" th:object="${alumno}" method="post">
+				
 		<h1 class="titulo" style="text-align:left; margin-left: 1.6cm;">DEPENDIENTE ECONOMICO</h1>
 		
 		<div class="row justify-content-center">
@@ -51,28 +49,28 @@
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
 	                    <p class="subtitulo" style="text-align: justify;">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
-	                    <input type="text" class="form-control estiloInputs" style="width: 5em;"   id="gastoMensual" name="gastoMensual"  placeholder="">
+	                    <input type="text" class="form-control estiloInputs" style="width: 5em;" id="gastoMensual" name="gastoMensual" th:field="*{gastoMensual}"  placeholder="">
 	                </div>
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿Dependes económicamente?</p>
-	                    <div class="d-flex">
-	                        <div style="width: 100%;">
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
-	                                <label class="form-check-label" for="flexRadioDefault1">
-	                                    <p class="subtitulo">Si</p>
-	                                </label>
-	                            </div>
-	                        </div>
-	                        <div style="width: 100%;">
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
-	                                <label class="form-check-label" for="flexRadioDefault2">
-	                                    <p class="subtitulo">No</p>
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
+	                   <div class="d-flex">
+						    <div style="width: 100%;">
+						        <div class="form-check">
+						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input" name="dependeEconomicamente" id="flexRadioDefault1" value="1">
+						            <label class="form-check-label" for="flexRadioDefault1">
+						                <p class="subtitulo">Si</p>
+						            </label>
+						        </div>
+						    </div>
+						    <div style="width: 100%;">
+						        <div class="form-check">
+						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input"  name="dependeEconomicamente" id="flexRadioDefault2" value="0">
+						            <label class="form-check-label" for="flexRadioDefault2">
+						                <p class="subtitulo">No</p>
+						            </label>
+						        </div>
+						    </div>
+						</div>
 	                </div>
 	            </div>
 	        </div>
@@ -84,12 +82,12 @@
                 <h3 style="color: #6366F1;">Información general</h3>
                 <div class="col-12">
                     <p class="textoInputs">Nombre Completo</p>
-                    <input th:field="*{nombreTutorEconomico}" class="estiloInputs rounded" style="width: 100%;" type="text" id="nombreTutor" name="nombreTutorEconomico" placeholder="Ingrese el nombre completo">
+                    <input th:field="*{tutorEconomico.nombreTutorEconomico}" class="estiloInputs rounded" style="width: 100%;" type="text" id="nombreTutor" name="tutorEconomico.nombreTutorEconomico" placeholder="Ingrese el nombre completo">
                 </div>
                 
                 <div class="col-12 pt-3">
                     <p class="textoInputs">Parentesco</p>
-                    <select th:field="*{catParentesco.idCatParentesco}" id="catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                    <select th:field="*{tutorEconomico.catParentesco.idCatParentesco}" id="catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
 						<option class="subtitulo"
 							th:each="catParentesco : ${parentescos}" 
 							th:value="${catParentesco.idCatParentesco}" 
@@ -102,26 +100,26 @@
 	                <div class="d-flex">
 	                    <div style="width: 100%;" class="me-4">
 	                        <p class="textoInputs">Correo electronico</p>
-	                        <input th:field="*{correo}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="correo" name="correo" placeholder="Ingrese su correo electronico">
+	                        <input th:field="*{tutorEconomico.correo}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="correo" name="tutorEconomico.correo" placeholder="Ingrese su correo electronico">
 	                    </div>
 	                    <div style="width: 100%;">
 	                        <p class="textoInputs">Telefono</p>
-	                        <input th:field="*{telefono}" class="form-control estiloInputs rounded" style="width: 100%;" type="number" id="telefono" oninput="limitarLongitud(event)" name="telefono" min="0" placeholder="Ingrese N° Telefono">
+	                        <input th:field="*{tutorEconomico.telefono}" class="form-control estiloInputs rounded" style="width: 100%;" type="number" id="telefono" oninput="limitarLongitud(event)" name="tutorEconomico.telefono" min="0" placeholder="Ingrese N° Telefono">
 	                    </div>
 	                </div>
 	            </div>
 	            <div class="col mt-3">
 	                <p class="textoInputs">Indica su ocupación:</p>
-	                 <select th:field="*{catOcupacion.idCatOcupacion}" id="catOcupacion" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+	                 <select th:field="*{tutorEconomico.catOcupacion.idCatOcupacion}" id="catOcupacion" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
 						<option th:each="catOcupacion : ${ocupaciones}" th:value="${catOcupacion.idCatOcupacion}" th:text="${catOcupacion.nombreOcupacion}" class="subtitulo"></option>
 	                </select>
 	            </div>
 	            <div class="mt-4" style="color: #6366F1;">
 	                <p class="textoInputs">¿Es trabajador de la UNSIJ o SUNEO?</p>
 	                <div class="mt-3">
-	                    <input type="radio" class="input-outline-primary ms-4" th:field="*{trabajadorSuneo}" id="apoyoSi" name="trabajadorSuneo" value="1" style="color: #6366F1;">
+	                    <input type="radio" class="input-outline-primary ms-4" th:field="*{tutorEconomico.trabajadorSuneo}" id="apoyoSi" name="tutorEconomico.trabajadorSuneo" value="1" style="color: #6366F1;">
 	                    <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
-	                    <input type="radio" class="input-outline-primary" th:field="*{trabajadorSuneo}" id="apoyoNo" name="trabajadorSuneo" value="0" style="color: #6366F1;">
+	                    <input type="radio" class="input-outline-primary" th:field="*{tutorEconomico.trabajadorSuneo}" id="apoyoNo" name="tutorEconomico.trabajadorSuneo" value="0" style="color: #6366F1;">
 	                    <label for="apoyoNo" style="color:#6C757D;" class="mb-5">No</label>
 	                </div>
 	            </div>
@@ -146,7 +144,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Estado</p>
 								<!--							 -->
-			                    <select id="selectEstados" th:field="*{domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
 									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
 			                    </select>
 	                        </div>
@@ -162,7 +160,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Localidad</p>
 								<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
-	                            <select id="selectLocalidades"  name="domicilio.catLocalidad"  onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                            <select id="selectLocalidades"  name="tutorEconomico.domicilio.catLocalidad"  onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
 	                                <option  selected class="subtitulo">Elige una opción</option>
 	                            </select>
 	                        </div>
@@ -201,88 +199,29 @@
 	                <div class="row ms-3 mt-4 me-3">
 	                    <div class="col">
 	                        <label>Calle</label>
-	                        <input th:field="*{domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="domicilio.calle" placeholder="Nombre de la calle">
+	                        <input th:field="*{tutorEconomico.domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="tutorEconomico.domicilio.calle" placeholder="Nombre de la calle">
 	                    </div>
 	                    <div class="col">
 	                        <label>Numero</label>
-	                        <input th:field="*{domicilio.numero}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="numero" name="domicilio.numero" placeholder="Número">
+	                        <input th:field="*{tutorEconomico.domicilio.numero}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="numero" name="tutorEconomico.domicilio.numero" placeholder="Número">
 	                    </div>
 	                    <div class="col">
 	                        <label>Codigo postal</label>
-	                        <input th:field="*{domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="cp" placeholder="">
+	                        <input th:field="*{tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="cp" placeholder="">
 	                    </div>
 	                </div>
 				</div>
                
          	</div>
-         	
-         	<!--GASTOS E INGRESOS-->
-            <div class="col-10 col-xs-2 col-sm-12 col-md-12 col-xl-11 col-lg-11 rounded colorFondo m-2 p-4 ms-4">
-	            <h3 style="color: #6366F1;">Gastos e ingresos</h3>
-	            <div class="row-auto">
-	                <div class="col-12 mt-3 me-5" style="margin-right: 200%; padding-right: -50%;">
-	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
-	                    <p class="subtitulo">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
-	                    <input type="text" class="form-control estiloInputs" style="width: 50%;"  id="inputNombre" placeholder="">
-	                </div>
-	                <div class="col-12 mt-3">
-	                    <p class="textoInputs">¿Dependes económicamente?</p>
-	                    <div style="display: flex; justify-content: space-between;">
-	                        <div style="width: 100%;">
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
-	                                <label class="form-check-label" for="flexRadioDefault1">
-	                                    <p class="subtitulo">Si</p>
-	                                </label>
-	                            </div>
-	                        </div>
-	                        <div style="width: 100%;">
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="radio" name="flexRadioDefault88" id="flexRadioDefault2">
-	                                <label class="form-check-label" for="flexRadioDefault2">
-	                                    <p class="subtitulo">No</p>
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="line mx-auto mt-5" style="width: 80%;"></div>
-	            <div class="row-auto">
-	                <div class="col-12 mt-3">
-	                    <p class="textoInputs">Nombre de la persona de la cuál dependes económicamente:</p>
-	                    <input type="text" class="form-control estiloInputs" style="width: 50%;"  id="inputNombre" placeholder="">
-	                </div>
-	            </div>
-	            <div class="row-auto">
-	                <div class="col-12 mt-3">
-	                    <p class="textoInputs">El trabajo de quien dependes es:</p>
-	                    <div style="display: flex; justify-content: space-between;">
-	                        <div style="width: 100%;">
-	                            <div class="col-12 form-check">
-	                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-	                                <label class="form-check-label" for="flexRadioDefault1"><p class="subtitulo">Temporal</p></label>
-	                            </div>
-	                        </div>
-	                        <div style="width: 100%;">
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
-	                                <label class="form-check-label" for="flexRadioDefault2"><p class="subtitulo">Permanente</p></label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-            	</div>
-            </div>
          
         <div class="d-flex justify-content-center mt-5">
  			<button class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5" type="submit" role="button">Guardar</button>
             <button class="btn btn-outline-success mt-3 ">Enviar</button>
     	</div>
     	
-    	<input type="hidden" id="idCatEstado" th:value="*{domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
-    	<input type="hidden" id="idCatMunicipio" th:value="*{domicilio.catLocalidad.catMunicipio.idCatMunicipio}"/>
-    	<input type="hidden" id="idCatLocalidad" th:value="*{domicilio.catLocalidad.idCatLocalidad}"/>
+    	<input type="hidden" id="idCatEstado" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
+    	<input type="hidden" id="idCatMunicipio" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.idCatMunicipio}"/>
+    	<input type="hidden" id="idCatLocalidad" th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}"/>
 
 	</form>
        

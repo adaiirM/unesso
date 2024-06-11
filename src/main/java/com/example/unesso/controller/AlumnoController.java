@@ -122,7 +122,7 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/guardarTutor")
-	public String guardarDom(Authentication auth, TutorEconomico tutor, Alumno alumno, BindingResult result) {
+	public String guardarDom(Authentication auth, Alumno alumno, BindingResult result) {
 		/*if(result.hasErrors()) {
 			for (ObjectError error: result.getAllErrors()){
 				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
@@ -130,12 +130,14 @@ public class AlumnoController {
 			
 			return "alumno/formTutor";
 		}*/
-		System.out.println(alumno.toString());
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
 		a.setGastoMensual(alumno.getGastoMensual());
+		a.setDependeEconomicamente(alumno.getDependeEconomicamente());
+		System.out.println("Datos del alumno de la sesion: " + alumno.toString());
+
 		if(a.getTutorEconomico() != null) {
-			System.out.println("Tutor del formulario: " + tutor);
+			System.out.println("Tutor del formulario: " + alumno.getTutorEconomico());
 			
 			//Obtener el tutor de la base de datos mediante el id dentro del alumno
 			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
@@ -145,22 +147,23 @@ public class AlumnoController {
 			Domicilio dommicilioBD = serviceDomicilio.buscarPorId(a.getTutorEconomico().getDomicilio().getIdDomicilio());
 			
 			//Crear objeto de domicilio para almacenar el domicilio proveniente del formulario
-			Domicilio domicilioFormulario = tutor.getDomicilio();
+			Domicilio domicilioFormulario = alumno.getTutorEconomico().getDomicilio();
 			
 			//Asignar al domiclio del formulario el id del domiclio de la base de datos
 			domicilioFormulario.setIdDomicilio(dommicilioBD.getIdDomicilio());
 			
 			//Asignar el id del tutor y el objeto del domicilio
-			tutor.setIdTutorEconomico(t.getIdTutorEconomico());
-			tutor.setDomicilio(domicilioFormulario);
+			alumno.getTutorEconomico().setIdTutorEconomico(t.getIdTutorEconomico());
+			alumno.getTutorEconomico().setDomicilio(domicilioFormulario);
 			
 			//Guardara en la bd
-			t = tutor;
+			t = alumno.getTutorEconomico();
 			serviceDomicilio.guardarDomicilio(domicilioFormulario);
 			serviceTutorEconomico.guardarTutor(t);
 		}else {
-			a.setTutorEconomico(tutor);
-			serviceTutorEconomico.guardarTutor(tutor);
+			System.out.println("---------------------------------Entra----------------------------------");
+			a.setTutorEconomico(alumno.getTutorEconomico());
+			serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());
 			serviceAlumno.guardarAlumno(a);
 		}
 
