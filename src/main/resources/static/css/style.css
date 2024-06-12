@@ -355,3 +355,10 @@ footer hr {
 	padding-left: .5em;
 	vertical-align: top;
 }
+
+ /* Estilos personalizados para los mensajes de error */
+label.error {
+    color: red; /* Cambia el color del texto del mensaje de error */
+    font-weight:500; /* Hace que el texto sea en negrita */
+    margin-top: 5px; /* Agrega un margen superior */
+}

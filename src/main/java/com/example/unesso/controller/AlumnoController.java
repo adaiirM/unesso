@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.unesso.model.Alumno;
 import com.example.unesso.model.CatEstado;
 import com.example.unesso.model.CatOcupacion;
 import com.example.unesso.model.CatParentesco;
 import com.example.unesso.model.Domicilio;
+import com.example.unesso.model.EstadoFormularios;
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
@@ -31,6 +35,7 @@ import com.example.unesso.services.ICatParentescoService;
 import com.example.unesso.services.ICatSituacionViviendaFamiliarService;
 import com.example.unesso.services.ICatTipoViviendaService;
 import com.example.unesso.services.IDomicilioService;
+import com.example.unesso.services.IEstadoFormulariosService;
 import com.example.unesso.services.IFamiliaService;
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
@@ -40,6 +45,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping(value="/alumno")
 public class AlumnoController {
+	
+	@Value("${inesis.ruta.recibosLuz}")
+	private String rutaRecibosLuz;
 	
 	@Autowired
 	private ICatParentescoService serviceParentesco;
@@ -77,25 +85,29 @@ public class AlumnoController {
 	@Autowired
 	public IFamiliaService serviceFamilia;
 	
+	@Autowired
+	public IEstadoFormulariosService serviceEstadoFormularios;
+	
 	@GetMapping("/menuSolicitar")
-	public String menuSolicitar() {
+	public String menuSolicitar(Authentication auth, Model model) {
+		Alumno a = obtenerAlumnoSesion(auth);
+		model.addAttribute("estadoFormularios", a.getEstadoFormularios());
 		return "alumno/menuSolicitarBeca";
 	}
 	
-	@GetMapping("/formMiFamilia")
-	public String formularioFamilia(Model model) {
-		model.addAttribute("escolaridades", serviceEscolaridad.listarEscolaridades());
-		model.addAttribute("situacionViviendaFamiliar", serviceSituacionViviendaFamiliar.listarSituacionviviendafamiliar());
-		model.addAttribute("tipoVivienda", serviceTipoVivienda.listarTipoVivienda());
-		model.addAttribute("materialVivienda", serviceMaterialVivienda.listarMaterialVivienda());
-		return "alumno/formMiFamilia";
-	}
-	
 	@GetMapping("/formMisGastos")
-	public String formularioMisGastos(Model model) {
+	public String formularioMisGastos(Authentication auth, Model model) {
+		Alumno a = obtenerAlumnoSesion(auth);
 		Familia f = new Familia();
-		f.setIngresoFamiliar(new ArrayList<>());
-
+		System.out.println("Entra");
+		if(a.getFamilia() != null) {
+			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+		} else {
+			f.setIngresoFamiliar(new ArrayList<>());
+		}
+		
+		System.out.println("Datos de familia a enviar a la bd: " + f);
+		
 		model.addAttribute("familia", f);
 		return "alumno/formMisGastos";
 	}
@@ -122,7 +134,7 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/guardarTutor")
-	public String guardarDom(Authentication auth, Alumno alumno, BindingResult result) {
+	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
 		/*if(result.hasErrors()) {
 			for (ObjectError error: result.getAllErrors()){
 				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
@@ -135,7 +147,8 @@ public class AlumnoController {
 		a.setGastoMensual(alumno.getGastoMensual());
 		a.setDependeEconomicamente(alumno.getDependeEconomicamente());
 		System.out.println("Datos del alumno de la sesion: " + alumno.toString());
-
+		System.out.println("Accion: " + accion);
+		
 		if(a.getTutorEconomico() != null) {
 			System.out.println("Tutor del formulario: " + alumno.getTutorEconomico());
 			
@@ -166,29 +179,31 @@ public class AlumnoController {
 			serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());
 			serviceAlumno.guardarAlumno(a);
 		}
+		
+		if(accion.equals("enviar")) {
+			if(a.getEstadoFormularios() == null) {
+				EstadoFormularios ef = new EstadoFormularios();
+				ef.setFormDependienteEconomico(true);
+				EstadoFormularios e = serviceEstadoFormularios.guardarEstadoFormularios(ef);
+				a.setEstadoFormularios(e);
+				serviceAlumno.guardarAlumno(a);
+			} else {
+				a.getEstadoFormularios().setFormDependienteEconomico(true);
+				serviceAlumno.guardarAlumno(a);
+			}
+		}
 
 		return "alumno/menuSolicitarBeca";
 	}
 	
 	@PostMapping("/guardarGastos")
-	public String guardarGastos(Authentication auth, Familia familia) {
+	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart) {
 		System.out.println(familia.toString());
+		System.out.print(multiPart);
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
 		
-		if(a.getFamilia() != null) {
-			Familia f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
-			familia.setIdFamilia(f.getIdFamilia());
-			
-			f = familia;
-			serviceFamilia.guardarFamilia(f);
-			
-			System.out.println(f);
-		} else {
-			a.setFamilia(familia);
-			serviceFamilia.guardarFamilia(familia);
-			serviceAlumno.guardarAlumno(a);
-		}
+		
 		
 		
 		return "alumno/formMisGastos";

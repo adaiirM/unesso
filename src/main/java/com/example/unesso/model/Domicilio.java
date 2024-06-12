@@ -19,7 +19,7 @@ public class Domicilio {
 	
 	private String calle;
 	
-	private Integer numero;
+	private String numero;
 
 	@OneToOne
 	@JoinColumn(name="idCatLocalidad")
@@ -57,11 +57,11 @@ public class Domicilio {
 		this.calle = calle;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

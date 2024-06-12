@@ -1,5 +1,6 @@
  package com.example.unesso.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,6 +43,10 @@ public class Alumno {
 	@OneToOne
 	@JoinColumn(name="idCatGrupo")
 	private CatGrupo catGrupo;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "idEstadoFormularios")
+	private EstadoFormularios estadoFormularios;
 	
 	private String matricula;
 	
@@ -238,16 +243,23 @@ public class Alumno {
 		this.idioma = idioma;
 	}
 
+	public EstadoFormularios getEstadoFormularios() {
+		return estadoFormularios;
+	}
+
+	public void setEstadoFormularios(EstadoFormularios estadoFormularios) {
+		this.estadoFormularios = estadoFormularios;
+	}
+
 	@Override
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", domicilio=" + domicilio + ", infoVivienda=" + infoVivienda
-				+ ", tutorEconomico=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia + ", usuario="
-				+ usuario + ", catGrupo=" + catGrupo + ", matricula=" + matricula + ", nombre=" + nombre
-				+ ", apellidoP=" + apellidoP + ", apellidoM=" + apellidoM + ", telefono=" + telefono + ", curp=" + curp
-				+ ", recursosSuficientes=" + recursosSuficientes + ", solicitaBecaAlimenticia="
-				+ solicitaBecaAlimenticia + ", gastoMensual=" + gastoMensual + ", dependeEconomicamente="
-				+ dependeEconomicamente + ", familiarComunero=" + familiarComunero + ", observaciones=" + observaciones
-				+ ", idioma=" + idioma + "]";
+				+ ", tutorEconomico=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia
+				+ ", usuario=" + usuario + ", catGrupo=" + catGrupo + ", estadoFormularios=" + estadoFormularios
+				+ ", matricula=" + matricula + ", nombre=" + nombre + ", apellidoP=" + apellidoP + ", apellidoM="
+				+ apellidoM + ", telefono=" + telefono + ", curp=" + curp + ", recursosSuficientes="
+				+ recursosSuficientes + ", solicitaBecaAlimenticia=" + solicitaBecaAlimenticia + ", gastoMensual="
+				+ gastoMensual + ", dependeEconomicamente=" + dependeEconomicamente + ", familiarComunero="
+				+ familiarComunero + ", observaciones=" + observaciones + ", idioma=" + idioma + "]";
 	}
-
 }

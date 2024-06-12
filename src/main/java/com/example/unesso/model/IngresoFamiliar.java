@@ -35,70 +35,98 @@ public class IngresoFamiliar {
 	private Double ingresoNeto;
 	
 
-	public Integer getIdIngresosFamilia() {
+	
+	public Integer getIdIngresosFamiliar() {
 		return idIngresosFamiliar;
 	}
 
-	public void setIdIngresosFamilia(Integer idIngresosFamilia) {
-		this.idIngresosFamiliar = idIngresosFamilia;
+
+
+	public void setIdIngresosFamiliar(Integer idIngresosFamiliar) {
+		this.idIngresosFamiliar = idIngresosFamiliar;
 	}
+
+
 
 	public Familia getFamilia() {
 		return familia;
 	}
 
+
+
 	public void setFamilia(Familia familia) {
 		this.familia = familia;
 	}
+
+
 
 	public CatParentesco getCatParentesco() {
 		return catParentesco;
 	}
 
+
+
 	public void setCatParentesco(CatParentesco catParentesco) {
 		this.catParentesco = catParentesco;
 	}
+
+
 
 	public CatOcupacion getCatOcupacion() {
 		return catOcupacion;
 	}
 
-	public void setIdCatOcupacion(CatOcupacion catOcupacion) {
+
+
+	public void setCatOcupacion(CatOcupacion catOcupacion) {
 		this.catOcupacion = catOcupacion;
 	}
+
+
 
 	public String getNombrePersona() {
 		return nombrePersona;
 	}
 
+
+
 	public void setNombrePersona(String nombrePersona) {
 		this.nombrePersona = nombrePersona;
 	}
+
+
 
 	public Double getIngresoBruto() {
 		return ingresoBruto;
 	}
 
+
+
 	public void setIngresoBruto(Double ingresoBruto) {
 		this.ingresoBruto = ingresoBruto;
 	}
+
+
 
 	public Double getIngresoNeto() {
 		return ingresoNeto;
 	}
 
+
+
 	public void setIngresoNeto(Double ingresoNeto) {
 		this.ingresoNeto = ingresoNeto;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "IngresosFamilia [idIngresosFamilia=" + idIngresosFamiliar + ", familia=" + familia + ", catParentesco="
+		return "IngresoFamiliar [idIngresosFamiliar=" + idIngresosFamiliar + ", catParentesco="
 				+ catParentesco + ", catOcupacion=" + catOcupacion + ", nombrePersona=" + nombrePersona
 				+ ", ingresoBruto=" + ingresoBruto + ", ingresoNeto=" + ingresoNeto + "]";
 	}
 	
 	
 	
-
 }
