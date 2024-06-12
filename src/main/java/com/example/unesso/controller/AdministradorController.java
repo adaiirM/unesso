@@ -30,4 +30,8 @@ public class AdministradorController {
     public String fechas(){
         return "/administrarFecha";
     }
+    @GetMapping("/agregarAlumno")
+    public String agregarAlumno(){
+        return "/formAgregarAlumno";
+    }
 }

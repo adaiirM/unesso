@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <title>Agregar Alumnos</title>
 </head>
 <body>
-    <nav id="navAdministrador"></nav>
+    <nav th:insert="navAdministrador.html"></nav>
     <div class="container m-7 mt-3">
         <div class="row">
             <ol class="p-1 colorFondo breadcrumb bread-primary ">
@@ -72,10 +72,10 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="carreraSelect" class="ms-1" style="color: #6366F1;">
+                                <label for="semestreSelect" class="ms-1" style="color: #6366F1;">
                                     Semestre
                                 </label>
-                                <select id="carreraSelect" name="opciones" class="col-1 text-start estiloInputs" style="width: 100%;">
+                                <select id="semestreSelect" name="opciones" class="col-1 text-start estiloInputs" style="width: 100%;">
                                     <option value="opcion1" class="textoInputs">Primero</option>
                                     <option value="opcion2" class="textoInputs">Segundo</option>
                                     <option value="opcion3" class="textoInputs">Tercero</option>
@@ -115,7 +115,7 @@
             </div>
     </div>
 
-    <footer id="footer"></footer>
+    <footer th:insert="footer.html"></footer>
     <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>
