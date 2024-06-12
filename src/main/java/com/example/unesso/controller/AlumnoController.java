@@ -1,6 +1,11 @@
 package com.example.unesso.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +107,21 @@ public class AlumnoController {
 		System.out.println("Entra");
 		if(a.getFamilia() != null) {
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+			// Obtener la fecha del objeto
+	        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
+	        
+	        // Convertir Date a LocalDate
+	        LocalDate localDate = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        	
+	        // Formatear LocalDate a yyyy-MM-dd
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        String fechaFormateadaI = localDate.format(formatter);
+			System.out.println(fechaFormateadaI); 
+			//String fechaFormateadaF = formatoDeseado.format(f.getGastosFam().getReciboLuz().getPeriodoFin());
+			//System.out.println(fechaFormateadaI); 
+			
+			model.addAttribute("fechaFormateadaI", fechaFormateadaI);
+			//model.addAttribute("fechaFormateadaF", fechaFormateadaF);
 		} else {
 			f.setIngresoFamiliar(new ArrayList<>());
 		}

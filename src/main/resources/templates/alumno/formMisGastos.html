@@ -125,7 +125,8 @@
 							<div class="col">
 								<p class="textoInputs">Nombre del titular de los recibos de luz:</p>
 								<input type="text" class="form-control estiloInputs rounded" style="width: 80%;"
-								id="titular" name="gastosFam.reciboLuz.titular"  placeholder="Nombre completo del titular">
+								id="titular" name="gastosFam.reciboLuz.titular"  placeholder="Nombre completo del titular"
+								th:field="*{gastosFam.reciboLuz.titular}">
 							</div>
 							<div class="col-sm-12">
 								<br>
@@ -134,14 +135,14 @@
 				
 							<div class="col-sm-6">
 								<p class="textoInputs" style="color: #6C757D;">Fecha inicial</p>
-								<input type="date" id="periodoInicio" name="periodoInicio" class="form-control estiloInputs rounded" style="width: 50%;">
-								<input type="hidden" id="periodoInicioHidden" name="gastosFam.reciboLuz.periodoInicio">
+								<input  th:value="${fechaFormateadaI}" type="date" id="periodoInicio" name="periodoInicio" class="form-control estiloInputs rounded" style="width: 50%;" >
+								<input th:value="${fechaFormateadaI}" type="text" id="periodoInicioHidden" name="gastosFam.reciboLuz.periodoInicio">
 							</div>
 
 							<div class="col-sm-6">
 								<p class="textoInputs" style="color: #6C757D;">Fecha final</p>
-								<input type="date" id="periodoFin" name="periodoFin" class="form-control estiloInputs rounded" style="width: 50%;">
-								<input type="hidden" id="periodoFinHidden" name="gastosFam.reciboLuz.periodoFin">
+								<input th:field="*{gastosFam.reciboLuz.periodoFin}" type="date" id="periodoFin" name="periodoFin" class="form-control estiloInputs rounded" style="width: 50%;">
+								<input th:value="${fechaFormateadaF}" type="text" id="periodoFinHidden" name="gastosFam.reciboLuz.periodoFin">
 							</div>
 
 							<div class="col-sm-6 mt-3">
@@ -151,7 +152,7 @@
 
 							<div class="col-sm-6 mt-3">
 								<p class="textoInputs" style="color: #6C757D;">Pago mensual promedio</p>
-								<input type="text" id="pagoPromedioMes" name="gastosFam.reciboLuz.pagoPromedioMes" class="form-control estiloInputs rounded" style="width: 50%;" readonly>
+								<input th:field="*{gastosFam.reciboLuz.pagoPromedioMes}" type="text" id="pagoPromedioMes" name="gastosFam.reciboLuz.pagoPromedioMes" class="form-control estiloInputs rounded" style="width: 50%;" readonly>
 							</div>
 
 							<div class="col">
@@ -171,45 +172,45 @@
 								<div class="col-4 pe-4">
 									<div class="row">
 										<p class="fontPoppins" style="color: #6C757D;">Alimentación:</p>
-										<input type="text" id="gastosAlimentacion" name="gastosFam.gastosAlimentacion" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastosAlimentacion}" type="number" id="gastosAlimentacion" name="gastosFam.gastosAlimentacion" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
 									</div>
 
 									<div class="row mt-3">
 										<p class="fontPoppins" style="color: #6C757D;">Renta:</p>
-										<input type="text" id="gastoRenta" name="gastosFam.gastoRenta" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastoRenta}" type="number" id="gastoRenta" name="gastosFam.gastoRenta" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
 									</div>
 
 									<div class="row mt-3">
 										<p class="fontPoppins" style="color: #6C757D;">Otros:</p>
-										<input type="text" id="gastoOtros" name="gastosFam.gastoOtros" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastoOtros}" type="number" id="gastoOtros" name="gastosFam.gastoOtros" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
 									</div>
 								</div>
 								<div class="col-4 pe-4">
 									<div class="row">
 										<p class="fontPoppins" style="color: #6C757D;">Escolares:</p>
-										<input type="text" id="gastoEscolares" name="gastosFam.gastoEscolares" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastoEscolares}" type="number" id="gastoEscolares" name="gastosFam.gastoEscolares" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
 									</div>
 
 									<div class="row mt-3">
 										<p class="fontPoppins" style="color: #6C757D;">Ropa:</p>
-										<input type="text" id="gastoRopa" name="gastosFam.gastoRopa" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastoRopa}" type="number" id="gastoRopa" name="gastosFam.gastoRopa" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
 									</div>
 								</div>
 								<div class="col-4">
 
 									<div class="row">
 										<p class="fontPoppins" style="color: #6C757D;">Transporte:</p>
-										<input type="text" id="gastoTransporte" name="gastosFam.gastoTransporte" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastoTransporte}" type="number" id="gastoTransporte" name="gastosFam.gastoTransporte" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
 									</div>
 
 									<div class="row mt-3">
 										<p class="font-family" style="color: #6C757D;">Servicios:</p>
-										<input type="text" id="gastoServicio" name="gastosFam.gastoServicio" class="form-control estiloInputs rounded sum-input" style="width: 100%;">
+										<input th:field="*{gastosFam.gastoServicios}" type="number" id="gastoServicios" name="gastosFam.gastoServicios" class="form-control estiloInputs rounded sumInput" style="width: 100%;" readonly>
 									</div>
 								</div>
 							</div>
 							<div>
-								<p class="fontPoppins mt-3 textoInputs">Pago mensual promedio: $<span style="color: #6C757D;"></span></p>
+								<p class="fontPoppins mt-3 textoInputs">Total: $<span id="sumTotal"  style="color: #6C757D;"></span></p>
 							</div>
 						</div>
 					</div>
@@ -257,6 +258,10 @@
 
             // Colocar el resultado en el segundo input
             document.getElementById('pagoPromedioMes').value = result;
+            
+            document.getElementById('gastoServicios').value = result;
+            
+            suma();
         });
         
        document.getElementById('periodoInicio').addEventListener('change', function() {
@@ -300,6 +305,29 @@
 	        return nuevaFecha;
 	    }
 	    
+	    document.addEventListener('DOMContentLoaded', function() {
+		    suma();
+		});
+		
+		function suma(){
+			const inputs = document.querySelectorAll('.sumInput');
+		    const totalSpan = document.getElementById('sumTotal');
+		
+		    function updateSum() {
+		        let sum = 0;
+		        inputs.forEach(input => {
+		            sum += parseFloat(input.value) || 0;
+		        });
+		        totalSpan.textContent = sum.toFixed(2);
+		    }
+		
+		    inputs.forEach(input => {
+		        input.addEventListener('input', updateSum);
+		    });
+		
+		    updateSum(); // Inicializa la suma al cargar la página
+		}
+			    
 	    // Método personalizado para validar la selección de archivo
             $.validator.addMethod("fileRequired", function (value, element) {
                 return element.files.length > 0;
