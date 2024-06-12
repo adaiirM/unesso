@@ -9,7 +9,7 @@
     <title>Menu administrador</title>
 </head>
 <body>
-    <nav id="navAdministrador" ></nav>
+    <nav th:insert="navAdministrador.html"></nav>
     <main>
         <h1 class="titulo" style="text-align: center; color: #6366F1; font-family: poppins; size: 40px; line-height: 60px; margin-top: 1.3cm;">Bienvenido Administrador</h1>
         <img src="../img/menuAdmin.png" style="width: 35%; height: 35%; margin-left:33.8%;" class="img-fluid" alt="">
@@ -32,7 +32,7 @@
     </main>
     
 
-    <footer id="footer"></footer>
+    <footer th:insert="footer.html"></footer>
     <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>
