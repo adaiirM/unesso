@@ -10,23 +10,27 @@
 </head>
 <body>
 
-    <nav id="navAdministrador"></nav>
-    
-    <div class="container m-7 " style="margin-top: 1cm;" >
-        <div class="row" >
-            <ol class="p-1 colorFondo breadcrumb bread-primary ">
-                <a  href="menuAdministrador.html" style="text-decoration: none;">
-                    <button class="btn camino" >Inicio</button>
-                </a>
-                <a href="administrarFecha.html" style="text-decoration: none;">
-                    <button class="btn btn-primary camino" style="background-color: #4F46E5; ">Fechas</button>   
-                </a>
-            </ol>
-        </div>
+<nav id="navAdministrador"></nav>
+
+
+<div class="container mt-3 ps-5" >
+    <div class="row" >
+        <ol class="p-1 colorFondo breadcrumb bread-primary ">
+            <a href="menuAdministrador.html" style="text-decoration: none;">
+                <button  class="btn camino" >Inicio</button>
+            </a>
+            <a href="administrarFecha.html" style="text-decoration: none;">
+                <button href="#" class="btn btn-primary camino" style="background-color: #4F46E5; ">Fechas</button>
+            </a>
+        </ol>
     </div>
-    <main>
-        <h1 class="titulo" style="text-align: center; color: #6366F1; font-family: poppins; size: 40px; line-height: 60px;">Administrar fechas</h1>
-        <p style="text-align: center; color: #6366F1; font-family: poppins; size: 19px; line-height: 18px;">Se asignan fechas por carrera para  abrir y cerrar la convocatoria de la beca</p>
+</div>
+
+
+<main class="">
+    <h1 class="titulo text-center fontPoppins colorMorado titulo">Administrar fechas</h1>
+    <p  class="text-center fontPoppins colorMorado">Se asignan fechas por carrera para  abrir y cerrar la convocatoria de la beca</p>
+    <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col-auto">
                 <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">Forestal</button></a>
@@ -52,75 +56,79 @@
                 <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">M. Ciencias en Gestión Ambiental</button></a>
             </div>
         </div>
+    </div>
 
-        <div style="width:13cm;; height:11cm; background-color:#6366F1; border-radius: 3%; margin-left:13cm;">
-            <div class="fecha" style="margin-top: 15px;"><br>
-                <h3 class="fontPoppins" style="color:#F5F5F5; text-align: center;">Fecha inicio</h3><br>
-                <div style="display: flex;">
-                    <div style="display: flex; flex-direction: column; margin-left:2.4cm;">
-                        <label for="dia" style="color: #ffffff; margin-bottom: 5px;">Día</label>
-                        <input style="color: #6C757D; width:1.2cm; margin-bottom: 10px;" type="number" id="dia" name="dia" min="1" max="31" value="1">
-                    </div>
-                    <div style="display: flex; flex-direction: column; margin-left:2.2cm;">
-                        <label for="mes" style="color: #ffffff; margin-bottom: 5px;">Mes</label>
-                        <select style="color: #6C757D; margin-bottom: 10px; width:1.4cm; height:0.8cm;" id="mes" name="mes">
-                            <option value="enero">01</option>
-                            <option value="febrero">02</option>
-                            <option value="marzo">03</option>
-                            <option value="abril">04</option>
-                            <option value="mayo">05</option>
-                            <option value="junio">06</option>
-                            <option value="julio">07</option>
-                            <option value="agosto">08</option>
-                            <option value="septiembre">09</option>
-                            <option value="octubre">10</option>
-                            <option value="noviembre">11</option>
-                            <option value="diciembre">12</option>
-                        </select>
-                    </div>
-                    <div style="display: flex; flex-direction: column; margin-left:1.8cm;">
-                        <label for="año" style="color: #ffffff; margin-bottom: 5px;">Año</label>
-                        <input style="color: #6C757D; width: 1.5cm;" type="number" id="año" name="año" min="2024" max="2099" value="2024">
-                    </div>
+    <div class="container container-custom rounded mt-5 w-75 w-md-100 w-lg-25" style="background-color:#6366F1;">
+        <div class="fecha">
+            <h3 class="fontPoppins text-center text-white pt-2" >Fecha inicio</h3>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
+                    <label for="dia" class="text-white" style="text-align: center;">Día</label>
+                    <input type="number" class="form-control text-secondary" id="dia" name="dia" min="1" max="31" value="1">
                 </div>
-            </div><br>
-            <div class="fecha">
-                <h3 class="fontPoppins" style="color: #F5F5F5; text-align: center;">Fecha límite</h3><br>
-                <div style="display: flex;">
-                    <div style="display: flex; flex-direction: column; margin-left:2.4cm;">
-                        <label for="dia" style="color: #ffffff; margin-bottom: 5px;">Día</label>
-                        <input style="color: #6C757D; width:1.2cm; margin-bottom: 10px;" type="number" id="dia" name="dia" min="1" max="31" value="1">
-                    </div>
-                    <div style="display: flex; flex-direction: column; margin-left:2.2cm;">
-                        <label for="mes" style="color: #ffffff; margin-bottom: 5px;">Mes</label>
-                        <select style="color: #6C757D; margin-bottom: 10px; width:1.4cm; height:0.8cm;" id="mes" name="mes">
-                            <option value="enero">01</option>
-                            <option value="febrero">02</option>
-                            <option value="marzo">03</option>
-                            <option value="abril">04</option>
-                            <option value="mayo">05</option>
-                            <option value="junio">06</option>
-                            <option value="julio">07</option>
-                            <option value="agosto">08</option>
-                            <option value="septiembre">09</option>
-                            <option value="octubre">10</option>
-                            <option value="noviembre">11</option>
-                            <option value="diciembre">12</option>
-                        </select>
-                    </div>
-                    <div style="display: flex; flex-direction: column; margin-left:1.8cm;">
-                        <label for="año" style="color: #ffffff; margin-bottom: 5px;">Año</label>
-                        <input style="color: #6C757D; width: 1.5cm;" type="number" id="año" name="año" min="2024" max="2099" value="2024">
-                        <div class="d-grid gap-2 col-6 mx-auto mt-4">
-                            <button  style="margin-left:-5cm; background-color: #ffffff; width:150px; font-size: 20px;; color:#6366F1;" class="btn btn-outline-primary fontPoppins" type="button">Aceptar</button>
-                        </div>
-                    </div>
+                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30" >
+                    <label for="mes" class="text-white">Mes</label>
+                    <select class="form-select text-secondary" id="mes" name="mes">
+                        <option value="enero">01</option>
+                        <option value="febrero">02</option>
+                        <option value="marzo">03</option>
+                        <option value="abril">04</option>
+                        <option value="mayo">05</option>
+                        <option value="junio">06</option>
+                        <option value="julio">07</option>
+                        <option value="agosto">08</option>
+                        <option value="septiembre">09</option>
+                        <option value="octubre">10</option>
+                        <option value="noviembre">11</option>
+                        <option value="diciembre">12</option>
+                    </select>
                 </div>
-      </div>
+                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
+                    <label for="año" class="text-white">Año</label>
+                    <input type="number" class="form-control text-secondary" id="año" name="año" min="2024" max="2099" value="2024">
+                </div>
+            </div>
+        </div>
+        <div class="fecha mt-4">
+            <h3 class="fontPoppins text-center text-white">Fecha límite</h3>
+            <div class="row mt-3 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
+                    <label for="dia-limite" class="text-white">Día</label>
+                    <input type="number" class="form-control text-secondary" id="dia-limite" name="dia-limite" min="1" max="31" value="1">
+                </div>
+                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
+                    <label for="mes-limite" class="text-white">Mes</label>
+                    <select class="form-select text-secondary" id="mes-limite" name="mes-limite">
+                        <option value="enero">01</option>
+                        <option value="febrero">02</option>
+                        <option value="marzo">03</option>
+                        <option value="abril">04</option>
+                        <option value="mayo">05</option>
+                        <option value="junio">06</option>
+                        <option value="julio">07</option>
+                        <option value="agosto">08</option>
+                        <option value="septiembre">09</option>
+                        <option value="octubre">10</option>
+                        <option value="noviembre">11</option>
+                        <option value="diciembre">12</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
+                    <label for="año-limite" class="text-white">Año</label>
+                    <input type="number" class="form-control text-secondary" id="año-limite" name="año-limite" min="2024" max="2099" value="2024">
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-auto mb-4">
+                    <button type="button" class="btn btn-primary fontPoppins" style="background-color: #ffffff; color: #6366F1;">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    </main>
-    
-    <footer id="footer"></footer>
-    <script src="../javaScript.js/funcionamiento.js"></script>
+</main>
+
+<footer id="footer"></footer>
+<script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>

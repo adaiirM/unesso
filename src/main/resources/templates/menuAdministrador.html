@@ -11,23 +11,31 @@
 <body>
     <nav th:insert="navAdministrador.html"></nav>
     <main>
-        <h1 class="titulo" style="text-align: center; color: #6366F1; font-family: poppins; size: 40px; line-height: 60px; margin-top: 1.3cm;">Bienvenido Administrador</h1>
+        <h1 class="titulo ps-5 mb-4 mt-2 fs-1 text-center">Bienvenido Administrador</h1>
         <img src="../img/menuAdmin.png" style="width: 35%; height: 35%; margin-left:33.8%;" class="img-fluid" alt="">
-        <div class="row justify-content-md-center mt-5">
-            <div class="col-auto">
-                <a href="../html/todasSolicitudes.html"><button type="button" class="btn btn-outline-primary cboton titulo" style="font-size: 20px;">Todas las solicitudes</button></a>
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-auto">
+                    <a th:href="@{/administrador/estudiosSocieconomicos}">
+                        <button type="button" class="btn btn-outline-primary cboton titulo">Estudios socioeconómicos</button>
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a th:href="@{/administrador/solicitudesRevisadas}">
+                        <button type="button" class="btn btn-outline-primary cboton titulo">Revisados</button>
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a th:href="@{/administrador/alumnos}">
+                        <button type="button" class="btn btn-outline-primary cboton titulo">Alumnos</button>
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a th:href="@{/administrador/fechas}">
+                        <button type="button" class="btn btn-outline-primary cboton titulo">Fechas</button>
+                    </a>
+                </div>
             </div>
-            
-            <div class="col-auto">
-                <a href="../html/exportarSolicitudes.html"><button type="button" class="btn btn-outline-primary cboton titulo" style="font-size: 20px;">Finalizados</button></a>
-            </div>
-            <div class="col-auto">
-                <a href="../html/administrarAlumno.html"><button type="button" class="btn btn-outline-primary cboton titulo">Alumnos</button></a>
-            </div>
-            <div class="col-auto">
-                <a href="administrarFecha.html"><button type="button" class="btn btn-outline-primary cboton titulo">Fechas</button></a>
-            </div>
-
         </div>
     </main>
     
