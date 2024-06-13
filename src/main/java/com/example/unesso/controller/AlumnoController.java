@@ -1,5 +1,8 @@
 package com.example.unesso.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -202,15 +205,34 @@ public class AlumnoController {
 	public String formularioMisGastos(Authentication auth, Model model) {
 		Alumno a = obtenerAlumnoSesion(auth);
 		Familia f = new Familia();
-		System.out.println("Entra");
+		System.out.println("Ob: " + a.getObservaciones());
 		if(a.getFamilia() != null) {
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+			// Obtener la fecha del objeto
+	        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
+	        Date fechaF = f.getGastosFam().getReciboLuz().getPeriodoFin();
+
+	        // Convertir Date a LocalDate
+	        LocalDate localDateI = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        LocalDate localDateF = fechaF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+	        // Formatear LocalDate a yyyy-MM-dd
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        String fechaFormateadaI = localDateI.format(formatter);
+	        String fechaFormateadaF = localDateF.format(formatter);
+			System.out.println(fechaFormateadaI); 
+
+				
+			
+			model.addAttribute("fechaFormateadaI", fechaFormateadaI);
+			model.addAttribute("fechaFormateadaF", fechaFormateadaF);
+			
 		} else {
 			f.setIngresoFamiliar(new ArrayList<>());
 		}
 		
-		System.out.println("Datos de familia a enviar a la bd: " + f);
-		
+		model.addAttribute(""
+				+ "", a.getObservaciones());
 		model.addAttribute("familia", f);
 		return "alumno/formMisGastos";
 	}
@@ -300,17 +322,29 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/guardarGastos")
-	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart) {
+	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
+			@RequestParam("observaciones") String observacones) {
 		System.out.println(familia.toString());
+		System.out.println(observacones);
+		
 		System.out.print(multiPart);
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
+		a.setObservaciones(observacones);
+		serviceAlumno.guardarAlumno(a);
 		
+		if(a.getFamilia() != null) {
+			familia.setIdFamilia(a.getFamilia().getIdFamilia());
+			serviceFamilia.guardarFamilia(familia);
+		} else {
+			Familia f = serviceFamilia.guardarFamilia(familia);
+			a.setFamilia(f);
+			serviceAlumno.guardarAlumno(a);
+		}
 		
-		
-		
-		return "redirect:/alumno/menuSolicitar";
+		return "alumno/menuSolicitarBeca";
 	}
+	
 	
 
 	
