@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+     
+     
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+
+    <title>Beca mi familia</title>
+</head>
+
+<body>
+    <header  th:insert="fragments/navAlumnos.html :: menu-nav"/>
+    <div class="container mt-3 ">
+        <div class="row" >
+            <ol class="colorFondo breadcrumb bread-primary ">
+                <a th:href="@{/}"><button class="btn camino" id="botonInicio" >Inicio</button></a>
+                <a th:href="@{/alumno/menuSolicitar}" style="text-decoration: none;"><button class="btn camino" id="botonSolicitar"> Solicitar beca colegiatura</button></a>
+                <button class="btn btn-primary camino localizacion">Mi familia</button>   
+            </ol>
+        </div>
+    </div>
+    
+   
+    
+       <h1 class="titulo ps-5" style="font: bold; font-weight: 660;">MI FAMILIA</h1>
+       <form th:action="@{/alumno/saveMiFamilia}" method="post" th:object="${formMiFamilia}" id="myForm"  enctype="multipart/form-data">
+		   <!-- RECORDATORIO -->
+		   <!-- Los siguientes atributos no se deben mover: -->
+		   <!-- 
+				1- Los elementos que tengan el sufijo " th:elemento ". Ej: th:value, th:field th:name 
+				2- id=" "
+				3- Value=" "
+			-->
+		   
+		   <!-- Estos datos son importantes para realizar operaciones y obtener los datos de la BD  -->
+		   <!-- No se mostraran en la vistan, no deben de eliminarse -->
+		   
+		   <input hidden id="idAlumno"  value="alumno.idAlumno" name="alumno.idAlumno" th:field="*{alumno.idAlumno}">
+		   <input hidden id="idTutor"   value="tutorEconomico.idTutorEconomico" name="tutorEconomico.idTutorEconomico" th:field="*{tutorEconomico.idTutorEconomico}">
+		   <input hidden id="idLocalidadTutor"   value="tutorEconomico.domicilio.catLocalidad.idCatLocalidad" name="tutorEconomico.domicilio.catLocalidad.idCatLocalidad" th:field="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}">
+		   <input hidden id="idLocalidad"   value="familia.domicilio.catLocalidad.idCatLocalidad" name="familia.domicilio.catLocalidad.idCatLocalidad" th:field="*{familia.domicilio.catLocalidad.idCatLocalidad}">
+		   <input hidden id="idDomicilio" value="domicilio.idDomicilio" name="domicilio.idDomicilio" th:field="*{domicilio.idDomicilio}">
+		   <input hidden id="idFamilia" value="familia.idFamilia" name="familia.idFamilia" th:field="*{familia.idFamilia}">
+		   <input hidden id="idInfoFamilia" value="infoFamilia.idInfoFamilia"  name="infoFamilia.idInfoFamilia" th:field="*{infoFamilia.idInfoFamilia}">
+		   <input hidden id="idViviendaFamiliar" value="viviendaFamiliar.idViviendaFamilia" name="viviendaFamiliar.idViviendaFamilia" th:field="*{viviendaFamiliar.idViviendaFamilia}">
+		   
+		   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+		   
+		    <!--
+		    <input id="idCatLocalidad"  name="domicilio.catLocalidad.idCatLocalidad"  th:field="*{domicilio.catLocalidad.idCatLocalidad}" >
+		    -->
+		   
+		    <div class="row ms-5 me-5">
+            <div class="col-15 p-3 rounded colorFondo">
+                <h3 style="color: #6366F1;">Domicilio</h3>
+                <div class="mt-4" style="color: #6366F1;">
+                    ¿El domicilio de tu tutor coincide con el que te encuentras actualmente?
+                </div>
+                <!-- ********************************************************************* -->
+			    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+			    <div id="domicilioError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+			    <!-- ********************************************************************* -->
+                <div class="mt-3">
+                    <input type="radio" class="input-outline-primary ms-4" id="domicilioSi" style="color: #6366F1;" name="familia.esViviendaTutor" th:field="*{familia.esViviendaTutor}" value="1">
+                    <label for="domicilioSi" style="color: #6366F1;" class="me-5">Si</label>
+                    <input type="radio" class="input-outline-primary" id="domicilioNo" style="color: #6366F1;"name="familia.esViviendaTutor" th:field="*{familia.esViviendaTutor}" value="0">
+                    <label for="domicilioNo" style="color: #6366F1;">No</label>
+                </div> 
+                <div class="row mt-4">
+                    <div class="col">
+						<p class="textoInputs">Estado</p>
+                        <select name="catEstado" id="catEstado" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option class="subtitulo" value="">Elige una opción</option>
+                            <option 
+		                      th:each="estado : ${catEstado}" 
+		                      th:value="${estado.idCatEstado}" 
+		                      th:text="${estado.nombreEstado}">
+							</option>
+                        </select>
+                        <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="estadoError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Región</p>
+                        <input type="text"  id="region" name="region" class="form-control estiloInputs subtitulo" style="width: 96%;" aria-label="Default select example">
+                    	<!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="regionError" class="error" style="display: none;">*Campo obligatorio</div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Colonia o barrio</p>
+                        <input type="text" value=""  id="colonia" name="colonia" class="form-control estiloInputs subtitulo" style="width: 96%;" aria-label="Default select example">
+                      	<!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="coloniaError" class="error" style="display: none;">*Campo obligatorio </div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <p class="textoInputs">Distrito</p>
+                        <input  type="text" value=""  id="distrito" name="distrito" class="form-control estiloInputs subtitulo" style="width: 96%;" aria-label="Default select example">
+                        <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="distritoError" class="error" style="display: none;">*CampoObligatorio</div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Municipio</p>
+                        <select name="catMunicipio" id="catMunicipio"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option class="subtitulo" value="">Elige una opción</option>
+                        </select>
+                        <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="municipioError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                    <div class="col">
+                        <p class="textoInputs">Localidad</p>
+                        <select name="domicilio.catLocalidad.idCatLocalidad" id="catLocalidad" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                            <option value="">Elige una opción</option>
+                        </select>
+                        <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="localidadError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                </div>            
+            </div>
+        </div>
+
+        <div class="row ms-5 me-5 mb-3 mt-3">
+            <div class="col-sm-5 p-3 col-lg-5 rounded colorFondo mb-3">
+                <h3 style="color: #6366F1;">Contacto</h3>
+                <div>
+                    <p class="textoInputs mt-4">Teléfono</p>
+                    <input th:field="*{familia.telefono}" name="familia.telefono" type="text" 
+                    class="estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTel" placeholder="Ingrese su numero de telefono">
+               		<!-- ********************************************************************* -->
+				    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+				    <div id="telefonoError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+				    <!-- ********************************************************************* -->
+                </div>
+            </div>
+            <div class="col-12 col-sm-7 col-lg-7 rounded colorFondo  p-3 mb-3">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 style="color: #6366F1;">Grados de escolaridad</h3>
+                        <div>
+                            <p class="textoInputs mt-4">Escolaridad del padre</p>
+                            <select  id="catEscolaridadPadre"  th:field="*{infoFamilia.escolaridadPadre.idCatEscolaridad}" name="infoFamilia.escolaridadPadre.idCatEscolaridad" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                 <option value="">Elige una opción</option>
+                                <option 
+			                      th:each="escolaridad : ${catEscolaridad}" 
+			                      th:value="${escolaridad.idCatEscolaridad}" 
+			                      th:text="${escolaridad.nombreEscolaridad}">
+								</option>
+                            </select>
+                        </div>
+                        <!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="escolaridadPadreError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
+                    </div>
+                    <div class="col">
+                        <h3 style="color: #F5F5F5;">Grados de escolaridad</h3>
+                        <div class="mt-4">
+                            <p class="textoInputs">Escolaridad de la madre</p>
+                            <select id="catEscolaridadMadre" th:field="*{infoFamilia.escolaridadMadre.idCatEscolaridad}" name="infoFamilia.escolaridadMadre.idCatEscolaridad" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option value="" >Elige una opción</option>
+                                <option 
+			                      th:each="escolaridad : ${catEscolaridad}" 
+			                      th:value="${escolaridad.idCatEscolaridad}" 
+			                      th:text="${escolaridad.nombreEscolaridad}">
+								</option>
+                            </select>
+                            <!-- ********************************************************************* -->
+						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+						    <div id="escolaridadMadreError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+						    <!-- ********************************************************************* -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ms-5 mb-3 me-5">
+            <div class="col-12 rounded colorFondo p-3">
+                <h3 style="color: #6366F1;">Vivienda</h3>
+                <div class="row mt-4">
+                    <div class="col">
+                        <div>
+                            <p class="textoInputs">La casa donde tu familia es:</p>
+                            <select id="catSituacionvivienda" th:field="*{viviendaFamiliar.catSituacionViviendaFamiliar.idCatSituacionViviendaFamiliar}"  name="viviendaFamiliar.catSituacionViviendaFamiliar.idCatSituacionViviendaFamiliar" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                
+                                <option value="" class="subtitulo">Elige una opción</option>
+                                <option 
+			                      th:each="catSitVivienFam : ${catSituacionViviendaFam}" 
+			                      th:value="${catSitVivienFam.idCatSituacionViviendaFamiliar}" 
+			                      th:text="${catSitVivienFam.nombreSituacionViviendaFamiliar}" 
+			                      class="subtitulo">
+								</option>
+                            </select>
+                            <!-- ********************************************************************* -->
+						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+						    <div id="viviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+						    <!-- ********************************************************************* -->
+                        </div>
+                        <div class="mt-4">
+                            <p class="textoInputs">Material de construcción:</p>
+                            <select id="catMaterialVivienda" th:field="*{viviendaFamiliar.catMaterialVivienda.idCatMaterialVivienda}" name="viviendaFamiliar.catMaterialVivienda.idCatMaterialVivienda" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+                                <option value="" class="subtitulo">Elige una opción</option>
+                                <option 
+			                      th:each="catMaterial : ${catMaterialVivienda}" 
+			                      th:value="${catMaterial.idCatMaterialVivienda}" 
+			                      th:text="${catMaterial.nombreMaterialVivienda}" 
+			                      class="subtitulo">
+								</option>
+                            </select>
+                            <!-- ********************************************************************* -->
+						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+						    <div id="materialError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+						    <!-- ********************************************************************* -->
+                        </div>
+                        <div class="mt-4">
+                            <p class="textoInputs">¿Con qué servicios cuenta la vivienda?</p>
+                            <div class="row" th:each="grupoCatServicios, catServiciosStatus : ${catServicios}">
+                                <div class="col-7 me-2" th:each="servicio, servicioStatus : ${grupoCatServicios}">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"  th:value="${servicio.idCatServicios}" th:field="*{serviciosVivienda}" name="serviciosVivienda">
+                                        <label class="form-check-label subtitulo" for="checkbox${servicio.idCatServicios}">
+                                        	<p class="subtitulo" th:text="${servicio.nombreServicios}"></p>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ********************************************************************* -->
+						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+						    <div id="serviciosError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+						    <!-- ********************************************************************* -->
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div>
+                            <p class="textoInputs">Tipo de vivienda:</p>
+                            <select id="catTipoVivienda"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+                            th:field="*{viviendaFamiliar.catTipoVivienda.idCatTipoVivienda}"  name="viviendaFamiliar.catTipoVivienda.idCatTipoVivienda">
+                                <option value="" class="subtitulo">Elige una opción</option>
+                                <option 
+			                      th:each="catTipoVivienda : ${catTipoVivienda}" 
+			                      th:value="${catTipoVivienda.idCatTipoVivienda}" 
+			                      th:text="${catTipoVivienda.nombreTipoVivienda}" 
+			                      class="subtitulo">
+								</option>
+                            </select>
+                            <!-- ********************************************************************* -->
+						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+						    <div id="tipoViviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+						    <!-- ********************************************************************* -->
+                            
+                        </div>
+                        <div class="mt-4">
+                            <p class="textoInputs">¿Cuántas personas habitan en la vivienda?</p>
+                            <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="Numero personas"
+                            th:field="*{viviendaFamiliar.numPersonasHabitan}" name="viviendaFamiliar.numPersonasHabitan">
+                       		<!-- ********************************************************************* -->
+						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+						    <div id="personasViviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+						    <!-- ********************************************************************* -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row rounded colorFondo mt-3 p-3 ms-1">
+                <h3 style="color: #6366F1;">Información complementaria </h3>
+                 <div class="mt-4 col">
+                    <p class="textoInputs">Medios para estudiar en casa</p>
+						<div  class="row" th:each="medios, catMediosStatus : ${catMedios}" >
+							    <div class="col-12 col-md-6"  th:each="medio, mediosStatus : ${medios}">	             
+									<div class="form-check" >
+						                <input class="form-check-input" type="checkbox" th:field="*{mediosEstudios}" th:name="mediosEstudios" th:value="${medio.getIdCatMedios()}">
+						                <label class="form-check-label" for="checkbox${medio.idCatMedios}">
+						                    <p class="subtitulo" th:text="${medio.nombreMedios}"></p>
+						                </label>
+							        </div>
+							    </div>
+						    </div>
+						<!-- ********************************************************************* -->
+					    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					    <div id="mediosEstudioError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					    <!-- ********************************************************************* -->
+                	</div>
+                
+                <div class="mt-4 col">
+                    <p class="textoInputs">¿Cuentas con acceso a internet?</p>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                                <input type="radio" class="input-outline-primary ms-4" id="internetSi"  style="color: #6366F1;" th:field="*{alumno.tieneInternet}" name="alumno.tieneInternet" value="1">
+                                <label for="internetSi" style="color: #6366F1;" class="me-5">Si</label>
+                                <input type="radio" class="input-outline-primary" id="internetNo"  style="color: #6366F1;" th:field="*{alumno.tieneInternet}" name="alumno.tieneInternet" value="0">
+                                <label for="domicilioNo" style="color: #6366F1;">No</label>
+                        </div>
+                    </div>
+                    <!-- ********************************************************************* -->
+				    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+				    <div id="accesoInternetError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+				    <!-- ********************************************************************* -->
+                </div>
+                <div class="mt-4 col" id="tipoConexionContainer" style="display: none;">
+                    <p class="textoInputs">Tipo de conexión</p>
+                    <div class="row">
+						 <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+                          id="catInternet" name="alumno.catInternet.idCatInternet" th:field="*{alumno.catInternet.idCatInternet}">
+                            <option value="" class="subtitulo">Elige una opción</option>
+                            <option 
+		                      th:each="internet : ${catInternet}" 
+		                      th:value="${internet.idCatInternet}" 
+		                      th:text="${internet.nombreInternet}">
+							</option>
+                        </select>
+                        
+                    </div>
+                    <!-- ********************************************************************* -->
+				    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+				    <div id="tipoConexionError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+				    <!-- ********************************************************************* -->
+                </div>
+            </div>
+        </div>
+        
+    
+</div>
+        <div class="row ms-5 me-5 colorFondo rounded p-3">
+            <h3 style="color: #6366F1;">Hermanos</h3>
+            <div class="row" >
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos hermanos tienes?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="numHermano" placeholder=""
+                     th:field="*{infoFamilia.numHermanos}" name="infoFamilia.numHermanos">
+                     
+                </div>
+                <div class="col mt-3">
+				    <p class="textoInputs">¿Cuántos están estudiando?</p>
+				    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" 
+				     th:field="*{infoFamilia.hermanosEstudiando}" name="infoFamilia.hermanosEstudiando" id="numHermanosEstudiando" 
+				     placeholder="" >
+					
+				</div>
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos dejaron de estudiar?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" 
+                     th:field="*{infoFamilia.hermanosDejoEstudio}" name="infoFamilia.hermanosDejoEstudio" id="inputNum" placeholder="">
+                </div>
+                <div class="col mt-3">
+                    <p class="textoInputs">¿Cuántos tienen licenciatura?</p>
+                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" 
+                     th:field="*{infoFamilia.hermanosLicenciatura}" name="infoFamilia.hermanosLicenciatura" id="inputLicHermano" placeholder="">
+                </div>
+            </div>
+            <div class="row mt-3">
+				             
+					<tr th:each="hermano, itemStat : ${formMiFamilia.hermanos}">
+						 <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2 hermano-item">      
+							<td>
+							    <input hidden th:field="*{hermanos[__${itemStat.index}__].idHermanos}" th:name="|hermanos[${itemStat.index}].idHermanos|" th:value="${hermano.getIdHermanos()}"/>
+							</td>
+							<div class="col-12 col-sm-8 mt-3 col-lg-4 col-xl-4">
+							    <p class="textoInputs">Nombre completo:</p>
+							    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
+								th:field="*{hermanos[__${itemStat.index}__].nombreHermanos}" th:name="|hermanos[${itemStat.index}].nombreHermanos|" th:value="${hermano.getNombreHermanos()}"
+								th:id="'nombreHermano' + ${itemStat.index}"/>
+								<div th:id="'nombreError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
+							</div>
+							<div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-1">
+							    <p class="textoInputs">Edad:</p>
+							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
+							    th:field="*{hermanos[__${itemStat.index}__].edad}" th:name="|hermanos[${itemStat.index}].edad|" th:value="${hermano.getEdad()}"
+							    th:id="'edadHermano' + ${itemStat.index}"/>
+								<div th:id="'edadError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese la edad.</div>
+							</div>
+							
+							<div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-2">
+							    <p class="textoInputs">Grado de estudios:</p>
+							    <select  id="catEscolaridadPadre" name="infoFamilia.escolaridadPadre" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+							     th:field="*{hermanos[__${itemStat.index}__].grado}" th:name="|hermanos[${itemStat.index}].grado|" th:id="'gradoHermano' + ${itemStat.index}"
+							    >
+							         <option value="">Elige una opción</option>
+							        <option 
+							          th:each="escolaridad : ${catEscolaridad}" 
+							          th:value="${escolaridad.nombreEscolaridad}" 
+							          th:text="${escolaridad.nombreEscolaridad}">
+									</option>
+							    </select>  
+							    <div th:id="'gradoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, seleccione una escolaridad.</div>                
+							</div>
+							
+							<div class="col-12 col-sm-8 col-lg-6 mt-3 col-xl-3">
+							    <p class="textoInputs">Nombre de su institución:</p>
+							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
+							    th:field="*{hermanos[__${itemStat.index}__].nombreEscuela}" th:name="|hermanos[${itemStat.index}].nombreEscuela|" th:value="${hermano.getNombreEscuela()}"
+							    th:id="'institucionHermano' + ${itemStat.index}"/>
+								<div th:id="'institucionError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
+							</div>
+							
+							<div class="col-12 mt-3 col-lg-6 col-xl-2">
+							    <p class="textoInputs">Tipo de Comprobante de estudios:</p>
+							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
+							    th:field="*{hermanos[__${itemStat.index}__].nombreTipoComprobante}" th:name="|hermanos[${itemStat.index}].nombreTipoComprobante|"
+							    th:value="${hermano.getNombreTipoComprobante()}" th:id="'comprobanteHermano' + ${itemStat.index}"/>
+								<div th:id="'comprobanteError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese el nombre del comprobante.</div>
+							</div>
+							
+							<!-- A esta sección no se le debe mover nada, Esteticamente no se ve bien porque se esta probando su fucnionamiento
+							
+							 -->
+							
+							<div class="col">
+					            <p class="textoInputs">Adjuntar comprobante:</p>
+					          
+					        </div>
+					        <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
+								<input hidden th:value="${hermano.getRutaArchivoComprobante()}" th:name="|hermanos[${itemStat.index}__].rutaArchivoComprobante|"  th:field="*{hermanos[__${itemStat.index}__].rutaArchivoComprobante}">
+					          <div class="file-select" id="src-file1" th:if="${hermano.getRutaArchivoComprobante() == null || hermano.getRutaArchivoComprobante().isEmpty()}">
+					                <label for="file-upload" class="custom-file-upload">
+								    <i class="fa fa-cloud-upload">Subir Comprobante</i> 
+									</label>
+									<input id="file-upload" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName(this, ${itemStat.index})|"/>
+									
+					                <input class="no-border"  th:id="'nombreArchivo-' + ${itemStat.index}">
+					         		<div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
+					          </div>
+					          <div th:if="${hermano.getRutaArchivoComprobante() != null && !hermano.getRutaArchivoComprobante().isEmpty()}">
+					             
+					         		<label for="file-upload" class="custom-file-upload">
+								    <i class="fa fa-cloud-upload">Subir Comprobante</i> 
+									</label>
+									<input id="file-upload" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName2(this, ${itemStat.index})|"/>
+					         		<input class="no-border" th:value="${hermano.getNombreArchivoOriginal()}" th:field="*{hermanos[__${itemStat.index}__].nombreArchivoOriginal}"
+					                 th:name="|hermanos[${itemStat.index}__].nombreArchivoOriginal|"  th:id="'nombreArchivo2-' + ${itemStat.index}">
+					              	<div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
+					          </div>
+					          
+					         	
+							</div>
+					         
+					          
+					          <!-- ............................................................... -->
+						
+						 </div>
+						 
+					</tr>	
+                   
+              
+      	    <div class="line mx-auto mt-5" style="width: 68%;"></div>
+	            <h3 style="color: #6366F1;" class="mt-4">Personas dependientes</h3>
+	            <div class="mt-2">
+	                <p class="textoInputs">Además de ti y tus padres, ¿Cuántas personas dependen económicamente de tu ingreso familiar ?</p>
+	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 20%;" 
+	                name="familia.numPersonasDependen" th:field="*{familia.numPersonasDependen}" id="inputPersonasDependientes" placeholder="">
+	            </div>
+			   
+		   </div>
+		   
+			 
+	            
+	        </div>
+	        <div class="d-flex justify-content-center mt-5">
+				<!--
+	            <button id="submitButton" type="submit" class="btn btn-outline-primary hBtn mt-3 estiloBoton">Guardar</button>  
+	       		-->
+	       		<button type="button" id="guardar" class="btn btn-primary">Guardar</button>
+		
+			    <!-- Botón para enviar con validaciones -->
+			    <button type="button" id="validar" class="btn btn-primary">Enviar</button>	
+	        </div>
+    
+	    </div>
+	   </form>
+
+    <footer th:insert="fragments/footer.html :: footer"/>
+    
+    <script src="../javaScript.js/funcionamiento.js"></script>
+     <script type="text/javascript">
+		 /*<![CDATA[*/
+		    function updateFileName1(input, index) {
+		        var fileName = input.files[0].name;
+		        var fileNameDisplay = document.getElementById('fileNameDisplay_' + index);
+		        fileNameDisplay.value = fileName;
+		        console.log("El archivo es: " + fileName);
+		    }
+		    
+		/*]]>*/
+		 function updateFileName(input, index) {
+			    var fileName = input.files[0].name;
+			    document.getElementById('nombreArchivo-' + index).value = fileName;
+			}
+			function updateFileName2(input, index) {
+			    var fileName = input.files[0].name;
+			    document.getElementById('nombreArchivo2-' + index).value = fileName;
+			}
+	    
+	    document.getElementById('numHermanosEstudiando').addEventListener('input', function() {
+            actualizarHermanos(this.value);
+        });
+
+        function actualizarHermanos(value) {
+            var numeroHermanos = parseInt(value, 10);
+            var hermanoItems = document.getElementsByClassName('hermano-item');
+
+            for (var i = 0; i < hermanoItems.length; i++) {
+                if (!isNaN(numeroHermanos) && numeroHermanos > 0 && i < numeroHermanos) {
+                    hermanoItems[i].style.display = 'block';
+                } else {
+                    hermanoItems[i].style.display = 'none';
+                }
+            }
+        }
+
+        // Función para mostrar inicialmente el hermano si ya hay un valor en el campo
+        function inicializarHermano() {
+            var numHermanosEstudiando = document.getElementById('numHermanosEstudiando');
+            actualizarHermanos(numHermanosEstudiando.value);
+        }
+
+        // Llamar a la función para inicializar cuando la página se carga
+        window.onload = inicializarHermano;
+			
+	    $(document).ready(function () {
+			var hermanoItems = document.getElementsByClassName('hermano-item');
+	        for (var i = 0; i < hermanoItems.length; i++) {
+	            console.log(i);
+	        }
+
+
+			
+		    //Obtener idMunicipio
+	        
+	        
+	        	//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
+	            $('#catEstado').change(function() {
+			            var estado = $(this).val();
+	    				console.log('Selected Estado:', estado);
+	    				
+			            $.ajax({
+			                url: '/direccion/municipiosById/' + estado,
+			                type: 'GET',
+			                success: function(data) {
+			                    var municipioSelect = $('#catMunicipio');
+			                    municipioSelect.empty();
+			                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+			                    $.each(data, function(index, municipio) {
+			                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+			                    });
+			                }
+			            });
+			            
+			        });
+			        
+			        //Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
+			        $('#catMunicipio').change(function() {
+			            var municipio = $(this).val();
+			            
+	    				console.log('Selected municipio:', municipio);
+	    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+			            $.ajax({
+			                url: '/direccion/localidadesById/' + municipio,
+			                type: 'GET',
+			                success: function(data) {
+			                    var municipioSelect = $('#catLocalidad');
+			                    municipioSelect.empty();
+			                    console.log(data);
+			                    municipioSelect.append('<option value="">Elige una opción</option>');
+			                    $.each(data, function(index, localidad) {
+									console.log(data.idCatLocalidad);
+			                        municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+			                    	
+			                    });
+			                }
+			            });
+			        });
+			        
+			        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+			        $('#catLocalidad').change(function() {
+			            var localidad = $(this).val();
+	    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+			            $.ajax({
+			                url: '/direccion/codigoPostalById/' + localidad,
+			                type: 'GET',
+			                success: function(data) {
+					            // Se establece el valor del campo #codigoPostal con el valor obtenido
+					            $('#codigoPostal').val(data.numeroCodigoPostal);
+					        }
+			            });
+			        });
+			
+		    
+			        
+	            
+	            
+	    // Obtener referencias a los elementos de radio
+		   $('#domicilioSi').change(function() {
+		        // Check if the checkbox is checked
+		        if ($('#domicilioSi').is(':checked')) {
+		            // If checked, get the value of #idLocalidadTutor
+		            var idLocalidad = $('#idLocalidadTutor');
+		            var idCatLocalidad = idLocalidad.val();
+		
+		            console.log("El campo 'Si' está seleccionado");
+		            setLocalidad(idCatLocalidad);
+		        } else {
+		            // If not checked, get the value of #idLocalidad
+		            var idLocalidad = $('#idLocalidad');
+		            var idCatLocalidad = idLocalidad.val();
+		
+		            setLocalidad(idCatLocalidad);
+		        }
+		    });
+		
+		    // Obtener el valor de #idLocalidad
+		    var idLocalidad = $('#idLocalidad');
+		    var idCatLocalidad = idLocalidad.val();
+		
+		    // Verificar si idCatLocalidad tiene un valor
+		    if (idCatLocalidad && idCatLocalidad.trim() !== "") {
+		        // Obtener idMunicipio
+		        setLocalidad(idCatLocalidad);
+		    }
+	
+		// Referencias a los elementos
+	    const internetSi = document.getElementById("internetSi");
+	    const internetNo = document.getElementById("internetNo");
+	    const tipoConexionContainer = document.getElementById("tipoConexionContainer");
+	
+	    // Función para mostrar u ocultar el contenedor del tipo de conexión
+	    function toggleTipoConexion() {
+	        if (internetSi.checked) {
+	            tipoConexionContainer.style.display = "block";
+	        } else {
+	            tipoConexionContainer.style.display = "none";
+	        }
+	    }
+	
+	    // Añadir eventos a los radio buttons
+	    internetSi.addEventListener("change", toggleTipoConexion);
+	    internetNo.addEventListener("change", toggleTipoConexion);
+	
+	    // Ocultar el contenedor por defecto
+	    toggleTipoConexion();
+	    
+	    
+	    
+	    
+	    
+	     // Configuración de la validación
+	     
+		    var validator = $("#myForm").validate({
+		        rules: {
+		            "infoFamilia.numHermanos": {
+		                required: true
+		            },
+		            "infoFamilia.hermanosEstudiando": {
+		                required: true
+		            },
+		            "infoFamilia.hermanosDejoEstudio": {
+		                required: true
+		            },
+		            "infoFamilia.hermanosLicenciatura": {
+		                required: true
+		            }
+		            
+		        },
+		        messages: {
+		            "infoFamilia.numHermanos": {
+		                required: "*Llena el campo solicitado"
+		            },
+		            "infoFamilia.hermanosEstudiando": {
+		                required: "*Llena el campo solicitado"
+		            },
+		            "infoFamilia.hermanosDejoEstudio": {
+		                required: "*Llena el campo solicitado"
+		            },
+		            "infoFamilia.hermanosLicenciatura": {
+		                required: "*Llena el campo solicitado"
+		            }
+		            
+		        },
+		        errorPlacement: function(error, element) {
+		            error.insertAfter(element);
+		            // Mostrar el mensaje de error durante 10 segundos
+		            setTimeout(function() {
+		                error.fadeOut(500, function() {
+		                    $(this).remove();
+		                });
+		            }, 5000);
+		        }
+		    });
+		    
+		
+		    // Botón de guardado (sin validación)
+		    $("#guardar").click(function() {
+		        // Desactivar temporalmente la validación
+		        validator.settings.ignore = "*";
+		        $("#myForm").submit();
+		        // Reactivar la validación para el próximo uso
+		        validator.settings.ignore = [];
+		    });
+		
+		    // Botón de envío con validación
+		    $("#validar").click(function(event) {
+	            event.preventDefault(); // Evita el envío del formulario por defecto
+	
+	            var isValid = true;
+	
+	            // Validación de radio buttons
+	            var domicilioSi = document.getElementById('domicilioSi');
+	            var domicilioNo = document.getElementById('domicilioNo');
+	            var domicilioError = document.getElementById('domicilioError');
+	            if (!domicilioSi.checked && !domicilioNo.checked) {
+	                domicilioError.style.display = 'block';
+	                isValid = false;
+	            } else {
+	                domicilioError.style.display = 'none';
+	            }
+	            
+	            var serviciosError = document.getElementById('serviciosError');
+	            if ($('input[name="serviciosVivienda"]').is(":checked")) {
+		           serviciosError.style.display = 'none';
+		        } else {
+		            isValid = false;
+		            serviciosError.style.display = 'block';
+		        }
+		        
+		        var internetError = document.getElementById('accesoInternetError');
+		        
+		        if ($('input[name="alumno.tieneInternet"]').is(":checked")) {
+		            internetError.style.display = 'none';
+		            
+		            var campoElement = document.getElementById('catInternet');
+			        var errorElement = document.getElementById('tipoConexionError');
+			
+			        if (campoElement.value === '') {
+			            errorElement.style.display = 'block';
+			            isValid = false;
+			        } else {
+			            errorElement.style.display = 'none';
+			        }
+		            
+		        } else {
+		            isValid = false;
+		            internetError.style.display = 'block';
+		        }
+	            
+	
+	            // Validación de campos de texto y select
+	            var fieldsToValidate = [
+	                { id: 'catEstado', errorId: 'estadoError', type: 'select' },
+	                { id: 'region', errorId: 'regionError', type: 'text' },
+	                { id: 'colonia', errorId: 'coloniaError', type: 'text' },
+	                { id: 'distrito', errorId: 'distritoError', type: 'text' },
+	                { id: 'catMunicipio', errorId: 'municipioError', type: 'select' },
+	                { id: 'catLocalidad', errorId: 'localidadError', type: 'select' },
+	                { id: 'inputTel', errorId: 'telefonoError' },
+		            { id: 'catEscolaridadPadre', errorId: 'escolaridadPadreError', type: 'select' },
+		            { id: 'catEscolaridadMadre', errorId: 'escolaridadMadreError', type: 'select' },
+		            { id: 'catSituacionvivienda', errorId: 'viviendaError', type: 'select' },
+		            { id: 'catMaterialVivienda', errorId: 'materialError', type: 'select' },
+		            { id: 'catTipoVivienda', errorId: 'tipoViviendaError', type: 'select' },
+		            { id: 'inputNombre', errorId: 'personasViviendaError' }
+	            ];
+	
+	            fieldsToValidate.forEach(function(field) {
+	                var fieldElement = document.getElementById(field.id);
+	                var errorElement = document.getElementById(field.errorId);
+	
+	                if (field.type === 'select' && fieldElement.value === '') {
+	                    errorElement.style.display = 'block';
+	                    isValid = false;
+	                } else if (field.type === 'text' && fieldElement.value.trim() === '') {
+	                    errorElement.style.display = 'block';
+	                    isValid = false;
+	                } else {
+	                    errorElement.style.display = 'none';
+	                }
+	            });
+	            
+	       
+		    
+		     const numHermanosEstudiando = document.getElementById('numHermanosEstudiando').value;
+
+    for (let i = 0; i < numHermanosEstudiando; i++) {
+        // Nombre validation
+        const nombreField = document.getElementById('nombreHermano' + i);
+        const nombreError = document.getElementById('nombreError' + i);
+        if (nombreField.value.trim() === '') {
+            nombreError.style.display = 'block';
+            isValid = false;
+        } else {
+            nombreError.style.display = 'none';
+        }
+
+        // Edad validation
+        const edadField = document.getElementById('edadHermano' + i);
+        const edadError = document.getElementById('edadError' + i);
+        if (edadField.value.trim() === '') {
+            edadError.style.display = 'block';
+            isValid = false;
+        } else {
+            edadError.style.display = 'none';
+        }
+
+        // Grado validation
+        const gradoField = document.getElementById('gradoHermano' + i);
+        const gradoError = document.getElementById('gradoError' + i);
+        if (gradoField.value.trim() === '') {
+            gradoError.style.display = 'block';
+            isValid = false;
+        } else {
+            gradoError.style.display = 'none';
+        }
+
+        // Institucion validation
+        const institucionField = document.getElementById('institucionHermano' + i);
+        const institucionError = document.getElementById('institucionError' + i);
+        if (institucionField.value.trim() === '') {
+            institucionError.style.display = 'block';
+            isValid = false;
+        } else {
+            institucionError.style.display = 'none';
+        }
+
+        // Comprobante validation
+        const comprobanteField = document.getElementById('comprobanteHermano' + i);
+        const comprobanteError = document.getElementById('comprobanteError' + i);
+        if (comprobanteField.value.trim() === '') {
+            comprobanteError.style.display = 'block';
+            isValid = false;
+        } else {
+            comprobanteError.style.display = 'none';
+        }
+
+        // Archivo validation
+        const archivoError = document.getElementById('nombreArchivoError' + i);
+        const archivoField = document.getElementById('nombreArchivo-' + i) || document.getElementById('nombreArchivo2-' + i);
+        if (!archivoField.value.trim()) {
+            archivoError.style.display = 'block';
+            isValid = false;
+        } else {
+            archivoError.style.display = 'none';
+        }
+    }
+	            
+	            
+	            // Verificar si todas las validaciones pasan
+	            if ($("#myForm").valid() && isValid) {
+				    var idAlumno = $('#idAlumno').val();
+				    console.log("id de alumno: " + idAlumno);
+				    var idAlumnoInt = parseInt(idAlumno);
+				
+				    var url = "/formulario/marcarMiFamiliaRealizado/" + idAlumnoInt;
+				
+				    // Realiza la solicitud GET
+				    $.ajax({
+				        url: url,
+				        method: "GET",
+				        success: function(response) {
+				            // Manejar la respuesta del servidor
+				            if (response.success) {
+				                // Enviar el formulario
+				                $("#myForm").submit();
+				            } else {
+				                // Manejar el caso en que la inserción en la base de datos falle
+				                console.error("Error al marcar el formulario como realizado.");
+				            }
+				        },
+				        error: function(xhr, status, error) {
+				            console.error("Error en la solicitud Ajax: " + error);
+				        }
+				    });
+				} else {
+				    console.error("El ID del alumno no es válido.");
+				}
+	            
+	            
+	        });
+		    
+		    
+		    function setLocalidad(idCatLocalidad){
+				 $.ajax({
+			        url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
+			        type: 'GET',
+			        success: function(data) {
+			            var idMunicipio = data.idCatMunicipio;
+			            console.log("id de municipio: " + idMunicipio);
+			
+			            //Obtener idEstado
+			            $.ajax({
+			                url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
+			                type: 'GET',
+			                success: function(data) {
+			                    var idEstado = data.idCatEstado;
+			                    $('#catEstado').val(idEstado);
+			                    console.log("id de estado: " + idEstado);
+			
+			                    //Obtener municipios por id de estado
+			                    $.ajax({
+			                        url: '/direccion/municipiosById/' + idEstado,
+			                        type: 'GET',
+			                        success: function(data) {
+			                            var municipioSelect = $('#catMunicipio');
+			                            municipioSelect.empty();
+			                            municipioSelect.append('<option value="">Elige una opción</option>');
+			                            $.each(data, function(index, municipio) {
+			                                municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+			                            });
+			                            municipioSelect.val(idMunicipio);
+			                            
+			                            //Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+							            $.ajax({
+							                url: '/direccion/localidadesById/' + idMunicipio,
+							                type: 'GET',
+							                success: function(data) {
+							                    var loSelect = $('#catLocalidad');
+							                    loSelect.empty();
+							                    console.log(data);
+							                    loSelect.append('<option value="">Elige una opción</option>');
+							                    $.each(data, function(index, localidad) {
+													console.log(data.idCatLocalidad);
+							                        loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+							                    	
+							                    });
+							                    loSelect.val(idCatLocalidad);
+							                     //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+											      
+								    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+										            $.ajax({
+										                url: '/direccion/codigoPostalById/' + idCatLocalidad,
+										                type: 'GET',
+										                success: function(data) {
+												            // Se establece el valor del campo #codigoPostal con el valor obtenido
+												            $('#codigoPostal').val(data.numeroCodigoPostal);
+												        }
+										            });
+							                }
+							            });
+			                            
+			                        },
+			                        error: function(error) {
+			                            console.error("Error en la solicitud AJAX:", error);
+			                        }
+			                    });
+			                },
+			                error: function(error) {
+			                    console.error("Error en la solicitud AJAX:", error);
+			                }
+			            });
+			        },
+			        error: function(error) {
+			            console.error("Error en la solicitud AJAX:", error);
+			        }
+			    });
+			}
+		
+	    
+	    
+        
+			
+       });
+        
+       
+       
+       
+       document.addEventListener('DOMContentLoaded', () => {
+	      document.querySelectorAll('input[type=text]').forEach( node => node.addEventListener('keypress', e => {
+	        if(e.keyCode == 13) {
+	          e.preventDefault();
+	        }
+	      }))
+	   });
+	  
+		
+		
+    </script>
+</body>
+</html>

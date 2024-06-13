@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi tutor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    
+    <!-- Incluye jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluye jQuery Validate -->
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+	
+	<header  th:insert="fragments/navAlumnos.html :: menu-nav"/>
+
+    <div class="m-5 mt-3 ">
+        <div class="row" >
+            <ol class="p-1 colorFondo breadcrumb bread-primary ">
+                <a th:href="@{/}" style="text-decoration: none;">
+                    <button class="btn camino" >Inicio</button>
+                </a>
+                <a th:href="@{/alumno/menuSolicitar}" style="text-decoration: none;">
+                    <button class="btn camino" >Estudio socioeconomico</button> 
+                </a>
+                <a style="text-decoration: none;">
+                    <button class="btn btn-primary camino" style="background-color: #4F46E5; ">Dependiente economico</button>
+                </a>   
+            </ol>
+        </div>	
+    </div>
+	<form id="formDependienteEconomico" th:action="@{/alumno/guardarTutor}" th:object="${alumno}" method="post">
+				
+		<h1 class="titulo" style="text-align:left; margin-left: 1.6cm;">DEPENDIENTE ECONOMICO</h1>
+		
+		<div class="row justify-content-center">
+	        <div class="col-10 col-xs-2 col-sm-10 col-md-10 col-xl-11 col-lg-10 rounded colorFondo p-4">
+	            <h3 style="color: #6366F1;">Gastos e ingresos</h3>
+	            <div class="row">
+	                <div class="col-12 mt-3">
+	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
+	                    <p class="subtitulo" style="text-align: justify;">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
+	                    <input type="text" class="form-control estiloInputs" style="width: 5em;" id="gastoMensual" name="gastoMensual" th:field="*{gastoMensual}"  placeholder="">
+	                </div>
+	                <div class="col-12 mt-3">
+	                    <p class="textoInputs">¿Dependes económicamente?</p>
+	                   <div class="d-flex">
+						    <div style="width: 100%;">
+						        <div class="form-check">
+						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input" name="dependeEconomicamente" id="flexRadioDefault1" value="1" checked>
+						            <label class="form-check-label" for="flexRadioDefault1">
+						                <p class="subtitulo">Si</p>
+						            </label>
+						        </div>
+						    </div>
+						    <div style="width: 100%;">
+						        <div class="form-check">
+						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input"  name="dependeEconomicamente" id="flexRadioDefault2" value="0">
+						            <label class="form-check-label" for="flexRadioDefault2">
+						                <p class="subtitulo">No</p>
+						            </label>
+						        </div>
+						    </div>
+						</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div><br>
+		
+        <p class="subtitulo m-4 " >Datos del padre, madre o tutor o familiar más cercano (preferiblemente, del que se depende económicamente) </p>
+        <div class="container-auto row justify-content-center" >
+            <div class="col-10 col-xs-2 col-sm-10 col-md-9 col-xl-5  rounded colorFondo m-2 p-4 ms-4">
+                <h3 style="color: #6366F1;">Información general</h3>
+                <div class="col-12">
+                    <p class="textoInputs">Nombre Completo</p>
+                    <input th:field="*{tutorEconomico.nombreTutorEconomico}" class="estiloInputs rounded" style="width: 100%;" type="text" id="nombreTutorEconomico" name="tutorEconomico.nombreTutorEconomico" placeholder="Ingrese el nombre completo">
+                </div>
+                
+                <div class="col-12 pt-3">
+                    <p class="textoInputs">Parentesco</p>
+                    <select th:field="*{tutorEconomico.catParentesco.idCatParentesco}" id="catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+						<option class="subtitulo"
+							th:each="catParentesco : ${parentescos}" 
+							th:value="${catParentesco.idCatParentesco}" 
+							th:text="${catParentesco.nombreParentesco}">
+						</option>
+	                </select>
+	            </div>
+	            
+	            <div class="col-12 pt-3">
+	                <div class="d-flex">
+	                    <div style="width: 100%;" class="me-4">
+	                        <p class="textoInputs">Correo electronico</p>
+	                        <input th:field="*{tutorEconomico.correo}" type="email" class="form-control estiloInputs rounded" style="width: 100%;" id="correo" name="tutorEconomico.correo" placeholder="Ingrese su correo electronico">
+	                    </div>
+	                    <div style="width: 100%;">
+	                        <p class="textoInputs">Telefono</p>
+	                        <input th:field="*{tutorEconomico.telefono}" class="form-control estiloInputs rounded" style="width: 100%;" type="number" id="telefono" oninput="limitarLongitud(event)" name="tutorEconomico.telefono" min="0" placeholder="Ingrese N° Telefono">
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col mt-3">
+	                <p class="textoInputs">Indica su ocupación:</p>
+	                 <select th:field="*{tutorEconomico.catOcupacion.idCatOcupacion}" id="catOcupacion" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+						<option th:each="catOcupacion : ${ocupaciones}" th:value="${catOcupacion.idCatOcupacion}" th:text="${catOcupacion.nombreOcupacion}" class="subtitulo"></option>
+	                </select>
+	            </div>
+	            <div class="mt-4" style="color: #6366F1;">
+	                <p class="textoInputs">¿Es trabajador de la UNSIJ o SUNEO?</p>
+	                <div class="mt-3">
+	                    <input type="radio" class="input-outline-primary ms-4" th:field="*{tutorEconomico.trabajadorSuneo}" id="apoyoSi" name="tutorEconomico.trabajadorSuneo" value="1" style="color: #6366F1;">
+	                    <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
+	                    <input type="radio" class="input-outline-primary" th:field="*{tutorEconomico.trabajadorSuneo}" id="apoyoNo" name="tutorEconomico.trabajadorSuneo" value="0" style="color: #6366F1;" checked>
+	                    <label for="apoyoNo" style="color:#6C757D;" class="mb-5">No</label>
+	                </div>
+	            </div>
+            </div>
+
+            <div class="col-10 col-xs-2 col-sm-10 col-md-9 col-xl-6  rounded colorFondo m-2 p-4 ms-4">
+                <h3 style="color: #6366F1;">Domicilio</h3>
+                <p class="subtitulo">Indica la dirección de la persona de quien se depende económicamente, si éste es el caso, o de lo contrario, a la persona que se pueda localizar para aclaraciones.</p>
+                <div class="mt-1" style="color: #6366F1;" >
+                    <p>¿El domicilio de tu tutor coincide con el que te encuentras actualmente?</p>
+                    <div class="mt-1" style="margin-left: 1cm;">
+                        <input type="radio" class="input-outline-primary " id="apoyoSi" name="domicilio" value="1" style="color: #6366F1;" onclick="toggleContent()">
+                        <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
+                        <input type="radio" class="input-outline-primary" id="aopyoNo" name="domicilio" value="0" style="color: #6366F1;" onclick="toggleContent()" checked>
+                        <label for="apoyoNo" style="color:#6C757D;" class="me-5">No</label>
+                    </div><br> 
+                </div>
+                
+				<div id="contentDomicilio">
+					 <div class="ps-4 pe-4">
+	                    <div class="row">
+	                        <div class="col">
+	                            <p class="textoInputs">Estado</p>
+								<!--							 -->
+			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
+			                    </select>
+	                        </div>
+	                        <div class="col">
+	                            <p class="textoInputs">Municipio</p>
+								<!--th:field="*{domicilio.catLocalidad.catMunicipio.catIdMunicipio}"-->
+	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidad()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="row mt-4">
+	                        <div class="col">
+	                            <p class="textoInputs">Localidad</p>
+								<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
+	                            <select id="selectLocalidades"  name="tutorEconomico.domicilio.catLocalidad"  onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option  selected class="subtitulo">Elige una opción</option>
+	                            </select>
+	                        </div>
+	                        <div class="col">
+	                            <p class="textoInputs">Colonia o barrio</p>
+	                            <select name="domicilio.coloniaBarrio" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Colonia o barrio 1</option>
+	                                <option value="2" class="subtitulo">Colonia o barrio 2</option>
+	                                <option value="3" class="subtitulo">Colonia o barrio 3</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="row mt-4">
+	                        <div class="col">
+	                            <p class="textoInputs">Distrito</p>
+	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Distrito 1</option>
+	                                <option value="2" class="subtitulo">Distrito 2</option>
+	                                <option value="3" class="subtitulo">Distrito 3</option>
+	                            </select>
+	                        </div>
+	                        <div class="col">
+	                            <p class="textoInputs">Región</p>
+	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Región 1</option>
+	                                <option value="2" class="subtitulo">Región 2</option>
+	                                <option value="3" class="subtitulo">Región 3</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="row ms-3 mt-4 me-3">
+	                    <div class="col">
+	                        <label>Calle</label>
+	                        <input th:field="*{tutorEconomico.domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="tutorEconomico.domicilio.calle" placeholder="Nombre de la calle">
+	                    </div>
+	                    <div class="col">
+	                        <label>Numero</label>
+	                        <input th:field="*{tutorEconomico.domicilio.numero}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="numero" name="tutorEconomico.domicilio.numero" placeholder="Número">
+	                    </div>
+	                    <div class="col">
+	                        <label>Codigo postal</label>
+	                        <input th:field="*{tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="cp" placeholder="">
+	                    </div>
+	                </div>
+				</div>
+               
+         	</div>
+         
+        <div class="d-flex justify-content-center mt-5">
+ 			<button class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5" type="submit" role="button" name="accion" value="guardar">Guardar</button>
+            <button class="btn btn-outline-success mt-3" type="submit" role="button" name="accion" value="enviar">Enviar</button>
+    	</div>
+    	
+    	<input type="hidden" id="idCatEstado" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
+    	<input type="hidden" id="idCatMunicipio" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.idCatMunicipio}"/>
+    	<input type="hidden" id="idCatLocalidad" th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}"/>
+
+	</form>
+       
+    <footer th:insert="fragments/footer.html :: footer"/>
+    
+    <script>
+		function toggleContent() {
+            var content = document.getElementById('contentDomicilio');
+            var radios = document.getElementsByName('domicilio');
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked && radios[i].value === '1') {
+                    content.classList.add('hidden');
+                } else if (radios[i].checked && radios[i].value === '0') {
+                    content.classList.remove('hidden');
+                }
+            }
+        }
+        
+        $(document).ready(function () {
+            // Agrega las reglas de validación
+            $("#formDependienteEconomico").validate({
+                rules: {
+					gastoMensual : {
+						required: true
+					},
+                    "tutorEconomico.nombreTutorEconomico": {
+                        required: true
+                    },
+                    "tutorEconomico.correo": {
+                        required: true,
+                        email: true
+                    },
+                    "tutorEconomico.telefono":{
+						required: true,
+                        digits: true,
+                        rangelength: [10, 10]
+					},"tutorEconomico.domicilio.calle": {
+                        required: true
+                    },
+                    "tutorEconomico.domicilio.numero": {
+						required: true
+					}
+                },
+                messages: {
+					gastoMensual : {
+						required: "Ingresa una cantidad"
+					},
+                    "tutorEconomico.nombreTutorEconomico": {
+                        required: "Por favor ingresa su nombre."
+                    },
+                    "tutorEconomico.correo": {
+                        required: "Por favor Ingrese un correo electrónico.",
+                        email: "Por favor ingrese un correo electrónico válido."
+                    },
+                    "tutorEconomico.telefono": {
+                        required: "Por favor ingrese el teléfono del tutor económico.",
+                        digits: "Por favor ingrese solo números.",
+                        rangelength: "El teléfono debe tener 10 dígitos.",
+                    },"tutorEconomico.domicilio.calle": {
+                        required: "Por favor ingresa un domicilio"
+                    },"tutorEconomico.domicilio.numero": {
+						required: "Por favor ingrese un dato, si no tiene número puede escribir s/n"
+					}
+                },
+                submitHandler: function (form, event) {
+                    // Obtenemos el valor del botón presionado
+                    const accion = $(document.activeElement).val();
+                    
+                    // Validar y enviar solo si la acción es "enviar"
+                    if (accion === 'enviar') {
+                        alert("Información enviada correctamente.");
+                        form.submit();
+                    } else {
+                        // Previene el envío si se presiona "Guardar"
+                        form.submit();
+                        alert("Información guardada correctamente.");
+                        // Puedes agregar aquí la lógica para guardar sin enviar
+                    }
+                }
+            });
+
+            // Intercepta el evento submit para el botón "Guardar"
+            $('button[name="accion"][value="guardar"]').click(function (event) {
+                // Desactiva la validación y permite el envío del formulario
+                $("#formDependienteEconomico").validate().cancelSubmit = true;
+            });
+
+            // Intercepta el evento submit para el botón "Enviar"
+            $('button[name="accion"][value="enviar"]').click(function (event) {
+                // Activa la validación
+                $("#formDependienteEconomico").validate().cancelSubmit = false;
+            });
+        });
+
+	</script>
+    
+    
+    <script src="../javaScript.js/funcionamiento.js"></script>
+</body>
+</html>
+

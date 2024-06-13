@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Gastos e ingresos</title>
+</head>
+<body > 
+    <nav id="nav"></nav>
+    
+    <div class="container m-7 " style="margin-top: 1cm;" >
+        <div class="row">
+            <ol class="p-1 colorFondo breadcrumb bread-primary ">
+                <a href="../html/menuAlumno.html" style="text-decoration: none;">
+                    <button  class="btn camino" >Inicio</button>
+                </a>
+                <a href="../html/menuSolicitarBeca.html" style="text-decoration: none;">
+                    <button  class="btn camino" >Solicitud</button>
+                </a>
+                <a href="../html/MisGastos.html" style="text-decoration: none;">
+                    <button href="#" class="btn btn-primary camino" style="background-color: #4F46E5; ">Solicitar beca colegiatura</button>
+                </a>
+                   
+            </ol>
+        </div>
+    </div>
+    <section>
+
+        <div class="container">
+
+            <div class="row">
+
+                <h1 class="fontPoppins titulo">MIS GASTOS E INGRESOS</h1>
+
+                <div style="border-bottom: 10px; padding-bottom: 10px;">
+                    <a style="font-size: 16px; color: #6C757D;">
+                        Deberás incluir TODAS las fuentes de ingreso familiar, y deberá acompañarse de comprobantes oficiales de Ingresos. En caso de no depender económicamente de otras personas, deberá presentarse comprobante oficial de Ingresos del alumno. <br>
+                        Se deberán reportar el ingreso bruto así como el ingreso neto. <br>
+                        Los datos de agua y consumo de electricidad deberán corresponder al semestre más reciente y deberán ser del domicilio del padre, madre o tutor. En el caso de no depender económicamente, deberán ser del domicilio del alumno.
+                    </a>  
+                </div>
+                    
+                <div class="rounded" style="background-color: #F5F5F5; border-bottom: 10px;">
+                    <p class="titulo textoInputs" style="font-size: 32px; padding-left: 20px; padding-top: 20px; color: #6366F1; border-left: 5px; text-align: left;">Ingresos mensuales</p>  
+
+                    <p class="fontPoppins mt-3 textoInputs" style="color: #818CF8; text-align: left; padding-left: 20px;">¿Cuántas personas aportan al gasto familiar?</p>  
+
+                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6C757D; margin-left: 20px; height: 40px;">
+
+
+                    <h2 class="titulo textoInputs" style="font-size: 32px; color: #6366F1; padding: 20px; text-align: left;" >Personas que aportan al gasto familiar:</h2> 
+
+                    <p class="fontPoppins mt-3 textoInputs" style="color: #6C757D; text-align: left; margin-left: 20px">Menciona el ingreso total mensual de cada persona que aporta al gasto de tu familia, en caso de que sus ingresos sean semanales o quincenales, deberás realizar una suma total e indicar el ingreso mensual.</p>
+
+
+                    <div class="rounded" style="display:flex; border: 1px solid #6C757D; padding-bottom: 10px;">
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Nombre completo</a>
+                            <br><br>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 260px; height: 40px;">
+                        </div>
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Parentesco</a><!-- colocar un combobox -->
+                            <br><br>
+                            <select class="form-select estiloInputs" style="width: 180px;height: 40px;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opcion</option>
+                                <option value="1" class="subtitulo">Padre</option>
+                                <option value="2" class="subtitulo">Madre</option>
+                                <option value="3" class="subtitulo">Hermano</option>
+                                <option value="4" class="subtitulo">Hermana</option>
+                                <option value="5" class="subtitulo">Tio</option>
+                                <option value="6" class="subtitulo">Tia</option>
+                                <option value="7" class="subtitulo">Abuelo</option>
+                                <option value="8" class="subtitulo">Abuela</option>
+                            </select>
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Empresa o lugar de trabajo</a>
+                            <br><br>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 250px; height: 40px;">
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Puesto o tipo de trabajo</a>
+                            <br><br>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 220px; height: 40px;">    
+                        </div>
+                    
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">IMB</a>
+                            <br>
+                            <a style="color: #6C757D; font-size: 14px;">(Ingreso mensual bruto)</a>
+                            
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 130px; height: 40px;">
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;"><!-- HACERLO LAS PEQUEÑO -->
+                            <a class="textoInputs" style="text-decoration: none;">IMN</a>
+                            <br>
+                            <a style="color: #6C757D; font-size: 14px;">(Ingreso mensual neto)</a>
+                            
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 130px; height: 40px;">
+                        </div>
+                        
+                    </div>
+                    <br>
+
+                    <div class="rounded" style="display:flex; border: 1px solid #6C757D; padding-bottom: 10px;">
+
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Nombre completo</a>
+                            <br><br>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 260px; height: 40px;">
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Parentesco</a><!-- colocar un combobox -->
+                            <br><br>
+                            <select class="form-select estiloInputs" style="width: 180px;" aria-label="Default select example">
+                                <option selected class="subtitulo">Elige una opcion</option>
+                                <option value="1" class="subtitulo">Padre</option>
+                                <option value="2" class="subtitulo">Madre</option>
+                                <option value="3" class="subtitulo">Hermano</option>
+                                <option value="4" class="subtitulo">Hermana</option>
+                                <option value="5" class="subtitulo">Tio</option>
+                                <option value="6" class="subtitulo">Tia</option>
+                                <option value="7" class="subtitulo">Abuelo</option>
+                                <option value="8" class="subtitulo">Abuela</option>
+                            </select>
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Empresa o lugar de trabajo</a>
+                            <br><br>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 250px; height: 40px;">
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">Puesto o tipo de trabajo</a>
+                            <br><br>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 220px; height: 40px;">    
+                        </div>
+                    
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;">
+                            <a class="textoInputs" style="text-decoration: none;">IMB</a>
+                            <br>
+                            <a style="color: #6C757D; font-size: 14px;">(Ingreso mensual bruto)</a>
+                            
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 130px; height: 40px;">
+                        </div>
+                        
+                        <div style="border-radius: 5px; border-color: black; margin: 6px;"><!-- HACERLO LAS PEQUEÑO -->
+                            <a class="textoInputs" style="text-decoration: none;">IMN</a>
+                            <br>
+                            <a style="color: #6C757D; font-size: 14px;">(Ingreso mensual neto)</a>
+                            
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 130px; height: 40px;">
+                        </div>
+                        
+                    </div>
+
+                    <div>
+                        <div style="border-radius: 5px; border-color: black; margin: 5px; padding-left: 940px; padding-top: 40px;">
+                            <a class="textoInputs" style="text-decoration: none;">Ingreso total:  </a>
+                            <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 210px; height: 40px;">
+                        </div>
+                    </div>
+
+
+                    <div style="border-radius: 5px; border-color: black; margin: 5px;">
+                        <a class="textoInputs" style="text-decoration: none;">¿Cuántas personas dependen de este ingreso mensual?</a>
+                        <br><br>
+                        <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 450px; height: 40px;">
+                    </div><br> 
+                       
+                </div>
+
+                <div style="padding: 15px;"></div>
+                <div class="rounded d-flex justify-content-center">
+                    <div class="rounded p-4" style="background-color:#F5F5F5;">
+
+                        <h1 class="titulo textoInputs" style="font-size: 24px; color: #6366F1;">Recibo de luz</h1><br>
+                        <a class="textoInputs" style="text-decoration: none;">Nombre del titular de los recibos de luz:</a>
+                        <br><br>
+                        <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 350px; height: 40px;"><br><br>
+
+                        <p class="textoInputs" style="text-decoration: none; justify-content:center">Pago de recibo de luz</p>
+
+                        
+                        <p class=" mt-3 textoInputs" style="color: #6C757D; text-align: center;">Pago Agosto - Septiembre</p>
+                        <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 350px; height: 40px;"><br>
+                        <div class="mt-4">
+                            <p class="textoInputs" style="color: #6C757D; text-align: center; ">Pago mensual promedio</p>
+                            <div style="margin-left: 75px;">
+                                <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 200px; height: 40px;"><br>
+                            </div>
+                        </div>
+                        <p class="textoInputs mt-3">Adjuntar luz recibo:</p>
+                        <input id="reciboLuz" type="file" class="ms-1 w-100 form-control">
+                    </div>
+
+
+                    <div class="rounded p-4 ms-3" style="background-color:  #F5F5F5;">
+
+                        <h1 class="titulo textoInputs" style="font-size: 24px; padding-left: 20px; padding-top: 20px;color: #6366F1;">Gastos mensuales</h1><br>
+
+                        <div style="padding-bottom: 10px;">
+                            <a class="textoInputs" style="text-decoration: none;">Menciona el promedio mensual, cuanto gastan tu y tu familia en:</a> 
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 50px; padding-left: 10%;">Alimentación:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px; padding-left: 10%;">
+                                </div>
+                                <div class="row mt-3">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 136px;">Renta:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px;">
+                                </div>
+                                <div class="row mt-3">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 140px;">Otros:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px;">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 51px;">Gastos escolares:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px;">
+                                </div>
+                                <div class="row mt-3">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 142px;">Ropa:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px;">
+                                </div>
+                                <div class="row">
+                                    
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 98px;">Transporte:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px;">
+                                </div>
+                                <div class="row mt-3">
+                                    <a class="fontPoppins" style="font-size: 20px; color: #6C757D; text-decoration: none; padding-right: 108px;">Servicios:  </a>
+                                    <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; height: 40px; width: 150px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="fontPoppins mt-3 textoInputs" style="color: #6C757D; text-align: center;">Pago mensual promedio</p>
+                            <div class="d-flex justify-content-center">
+                                <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 200px; height: 40px;"><br>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="colorFondo mt-4 rounded p-3">
+                    <label for="observacionesGenerales" class="ms-1 mt-3" style="color: #6366F1;">
+                        Observaciones
+                    </label>
+                    <input id="observacionesGenerales" type="text" class="ms-1 w-100 form-control" style="height: 10em;" readonly>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button href="" class="btn hBtn mt-3  estiloBoton" style="border-color: #4F46E5;">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer"></footer>
+    <script src="../javaScript.js/funcionamiento.js"></script>
+
+
+</body>
+</html>
