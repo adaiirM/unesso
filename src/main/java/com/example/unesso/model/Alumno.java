@@ -24,7 +24,7 @@ public class Alumno {
 	private InfoVivienda infoVivienda;
 	
 	@OneToOne
-	@JoinColumn(name="idTutor")
+	@JoinColumn(name="idTutorEconomico")
 	private Tutor tutor;
 	
 	@OneToOne
@@ -36,7 +36,7 @@ public class Alumno {
 	private Familia familia;
 	
 	@OneToOne
-	@JoinColumn(name="idIngresosFamiliar")
+	@JoinColumn(name="idIngresosFamilia")
 	private IngresoFamiliar ingresoFamiliar;
 	
 	@OneToOne

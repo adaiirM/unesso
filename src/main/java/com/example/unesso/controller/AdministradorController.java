@@ -1,13 +1,22 @@
 package com.example.unesso.controller;
 
+import com.example.unesso.model.Alumno;
+import com.example.unesso.services.db.AlumnoServiceJPA;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 
 @RequestMapping("/administrador")
 public class AdministradorController {
+
+    @Autowired
+    private AlumnoServiceJPA alumnoService;
+
 
     @GetMapping("/menuAdministrador")
     public String menuAdministrador() {
@@ -31,7 +40,14 @@ public class AdministradorController {
         return "/administrarFecha";
     }
     @GetMapping("/agregarAlumno")
-    public String agregarAlumno(){
+    public String agregarAlumno(Model model){
+        model.addAttribute("alumno", new Alumno());
         return "/formAgregarAlumno";
     }
+    @PostMapping("/guardarAlumno")
+    public String guardarAlumno(Alumno alumno) {
+        alumnoService.saveAlumno(alumno);
+        return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
+    }
+
 }
