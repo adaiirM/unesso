@@ -56,7 +56,10 @@ public class HomeController {
 		return "menuAlumno";
 	}
 	
-
+	@GetMapping("/comentariosSolicitud")
+	public String comentarios() {
+		return "alumno/comentarios";
+	}
 	
 	@GetMapping("/lineamientos")
 	public String lineamientos() {
