@@ -1,0 +1,47 @@
+ @media (max-width: 768px) {
+    .ocultarImagen {
+        display: none;
+    }
+}
+
+.container2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 40%;
+    background-color: white;
+    position: relative;
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
+}
+
+.pass{
+    outline: none;
+    width: auto;
+    background-color: white;
+    color: #121212;
+    border: none;
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    padding-left: .5rem;
+    box-sizing: border-box;
+	color: #6C757D;
+}
+
+.icon{
+    position: absolute;
+    height: 60%;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.icon:hover{
+    opacity: 0.8;
+}

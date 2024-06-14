@@ -1,6 +1,10 @@
 package com.example.unesso.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -36,7 +40,28 @@ import com.example.unesso.model.EstadoFormularios;
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
-import com.example.unesso.services.*;
+import com.example.unesso.services.IAlumnoService;
+import com.example.unesso.services.ICatCarreraService;
+import com.example.unesso.services.ICatEscolaridadService;
+import com.example.unesso.services.ICatEstadoCivilService;
+import com.example.unesso.services.ICatEstadoService;
+import com.example.unesso.services.ICatInternetService;
+import com.example.unesso.services.ICatMaterialViviendaService;
+import com.example.unesso.services.ICatMediosService;
+import com.example.unesso.services.ICatMediosTransporteService;
+import com.example.unesso.services.ICatOcupacionService;
+import com.example.unesso.services.ICatParentescoService;
+import com.example.unesso.services.ICatSemestreService;
+import com.example.unesso.services.ICatServiciosService;
+import com.example.unesso.services.ICatSituacionViviendaFamiliarService;
+import com.example.unesso.services.ICatSituacionViviendaService;
+import com.example.unesso.services.ICatTipoTransporteService;
+import com.example.unesso.services.ICatTipoViviendaService;
+import com.example.unesso.services.IDomicilioService;
+import com.example.unesso.services.IEstadoFormulariosService;
+import com.example.unesso.services.IFamiliaService;
+import com.example.unesso.services.ITutorEconomicoService;
+import com.example.unesso.services.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -207,15 +232,34 @@ public class AlumnoController {
 	public String formularioMisGastos(Authentication auth, Model model) {
 		Alumno a = obtenerAlumnoSesion(auth);
 		Familia f = new Familia();
-		System.out.println("Entra");
+		System.out.println("Ob: " + a.getObservaciones());
 		if(a.getFamilia() != null) {
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+			// Obtener la fecha del objeto
+	        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
+	        Date fechaF = f.getGastosFam().getReciboLuz().getPeriodoFin();
+
+	        // Convertir Date a LocalDate
+	        LocalDate localDateI = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        LocalDate localDateF = fechaF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+	        // Formatear LocalDate a yyyy-MM-dd
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        String fechaFormateadaI = localDateI.format(formatter);
+	        String fechaFormateadaF = localDateF.format(formatter);
+			System.out.println(fechaFormateadaI); 
+
+				
+			
+			model.addAttribute("fechaFormateadaI", fechaFormateadaI);
+			model.addAttribute("fechaFormateadaF", fechaFormateadaF);
+			
 		} else {
 			f.setIngresoFamiliar(new ArrayList<>());
 		}
 		
-		System.out.println("Datos de familia a enviar a la bd: " + f);
-		
+		model.addAttribute(""
+				+ "", a.getObservaciones());
 		model.addAttribute("familia", f);
 		return "alumno/formMisGastos";
 	}
@@ -305,17 +349,29 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/guardarGastos")
-	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart) {
+	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
+			@RequestParam("observaciones") String observacones) {
 		System.out.println(familia.toString());
+		System.out.println(observacones);
+		
 		System.out.print(multiPart);
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
+		a.setObservaciones(observacones);
+		serviceAlumno.guardarAlumno(a);
 		
+		if(a.getFamilia() != null) {
+			familia.setIdFamilia(a.getFamilia().getIdFamilia());
+			serviceFamilia.guardarFamilia(familia);
+		} else {
+			Familia f = serviceFamilia.guardarFamilia(familia);
+			a.setFamilia(f);
+			serviceAlumno.guardarAlumno(a);
+		}
 		
-		
-		
-		return "redirect:/alumno/menuSolicitar";
+		return "alumno/menuSolicitarBeca";
 	}
+	
 	
 
 	

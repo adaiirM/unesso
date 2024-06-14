@@ -2,6 +2,7 @@ package com.example.unesso.controller.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -103,6 +104,11 @@ public class MiFamiliaService {
 		}
 		
 		if(familia != null) {
+			if(listHermanos.isEmpty()) {
+				familia.setHermanos(new ArrayList<>());
+			}else {
+				familia.setHermanos(listHermanos);
+			}
 			formMiFamilia.setFamilia(familia);
 		}
 		
@@ -119,20 +125,8 @@ public class MiFamiliaService {
 		}
 		
 		if(!listHermanos.isEmpty()) {
-			int contador = listHermanos.size();
-			for(int i = 1 ; i <= 3 ; i++ ) {
-				if(i > contador) {
-					listHermanos.add(new Hermanos());
-				}
-			}
-			
+		
 			formMiFamilia.setHermanos(listHermanos);
-		}else {
-			for (int i = 1; i <= 3; i++) {
-		    	Hermanos hermano = new Hermanos();
-		    	System.out.println(hermano);
-		    	formMiFamilia.addHermano(hermano);
-		    }
 		}
 		
 		if(tutor != null ) {
@@ -155,6 +149,18 @@ public class MiFamiliaService {
 		
 		//Se obtiene alumno pormedio del atributo idUser de usuario
 		Alumno alumno = alumnoService.buscarAlumnoPorIdUsuario(usuario.getIdUser());
+		List<Hermanos> hermanosEnBD;
+		int tamanioArreglo = -1;
+		if(alumno.getFamilia() != null) {
+			hermanosEnBD = alumno.getFamilia().getHermanos() != null ? alumno.getFamilia().getHermanos() : new ArrayList<>();
+			System.out.println("Array con elementos: " + hermanosEnBD.size());
+			tamanioArreglo = hermanosEnBD.size();
+		}else {
+			hermanosEnBD =  new ArrayList<>();
+			System.out.println("Array vacio");
+		}
+		
+		
 		Alumno alumnoDatos = datos.getAlumno();
 		Domicilio domicilio = datos.getDomicilio();
 		System.out.println("Este es el domocilio: " + domicilio);
@@ -162,7 +168,7 @@ public class MiFamiliaService {
 		System.out.println("la familia es: " + familia);
 		InfoFamilia infoFamilia = datos.getInfoFamilia();
 		ViviendaFamiliar viviendaFamilia = datos.getViviendaFamiliar();	
-		List<Hermanos> listHermanos = new ArrayList<>();
+		List<Hermanos> listHermanos =  datos.getFamilia().getHermanos() != null ? datos.getFamilia().getHermanos() : new ArrayList<>();
 		List<Integer> mediosEstudiosId = datos.getMediosEstudios();
 		List<Integer> serviciosViviendaId = datos.getServiciosVivienda();
 		
@@ -341,41 +347,96 @@ public class MiFamiliaService {
 		familia.setInfoFamilia(infoFamilia);
 		familia.setDomicilio(domicilio);
 		familia.setViviendaFamilia(viviendaFamilia);
+		familia.setHermanos(null);
 		familia = familiaService.guardar(familia);
 		
 		
-		for(int i = 0; i < datos.getHermanos().size(); i++) {
-			Hermanos hermano = datos.getHermanos().get(i);
-			System.out.println(hermano.getNombreEscuela());
-			MultipartFile file = files[i];
-			if( hermano.getIdHermanos() != null ) {
-				if( hermano.getNombreEscuela().isEmpty() && hermano.getNombreHermanos().isEmpty() && hermano.getGrado().isEmpty()
-						&& hermano.getNombreTipoComprobante().isEmpty() ) {
-					hermanosService.eliminar(hermano);
-				}
-			}
+		int contadorArreglo = 0;
+		
+		if (!listHermanos.isEmpty()) {
 			
-			if( !hermano.getNombreEscuela().isEmpty() || !hermano.getNombreHermanos().isEmpty() || !hermano.getGrado().isEmpty()
-					|| !hermano.getNombreTipoComprobante().isEmpty() ) {
-				
-				hermano.setFamilia(familia);
-				
-				if ( !file.isEmpty() && hermano.getNombreTipoComprobante()!= null ) {
-	                String nombreArchivo = ArchiveUtils.guardarComprobanteEstudio(file, rutaComprobantes);
-	                String nombreArchivoOriginal = file.getOriginalFilename();
-	                if ( nombreArchivo != null ) {
-	                	System.out.println(nombreArchivo);
-	                	hermano.setNombreArchivoOriginal(nombreArchivoOriginal);
-	                	hermano.setRutaArchivoComprobante(nombreArchivo); // Supongamos que tienes un campo para almacenar el nombre del archivo en Hermanos
-	                }
-	            }		
-				Hermanos hermanoSave = hermanosService.guardar(hermano);
-				listHermanos.add(hermanoSave);
-				System.out.println(hermanoSave);
-			}else {
-				System.out.println("No insertado");
-			}
+			List<Integer> nuevosHermanosIds = listHermanos.stream()
+		            .map(Hermanos::getIdHermanos)
+		            .collect(Collectors.toList());
+
+		    // Identificar y eliminar los hermanos que están en la base de datos pero no en la nueva lista
+		    for (Hermanos hermanoBD : hermanosEnBD) {
+		        if (!nuevosHermanosIds.contains(hermanoBD.getIdHermanos())) {
+		            hermanosService.eliminar(hermanoBD);
+		        }
+		    }
+			
+		    for (int i = 0; i < listHermanos.size(); i++) {
+		        Hermanos hermano = listHermanos.get(i);
+		        hermano.setFamilia(familia);
+
+		        System.out.println("los hermanos son: " + hermano);
+		        MultipartFile file = files[i];
+
+		        if (hermano.getIdHermanos() != null) {
+		            // Verificar si todos los campos excepto ID son vacíos
+		            if (hermano.getNombreEscuela().isEmpty() && hermano.getNombreHermanos().isEmpty() &&
+		                    hermano.getGrado().isEmpty() && hermano.getNombreTipoComprobante().isEmpty()) {
+		                hermanosService.eliminar(hermano); // Eliminar si todos los campos excepto ID están vacíos
+		            }
+		        }
+
+		        // Verificar si al menos un campo de información relevante está presente
+		        if (hermano.getNombreEscuela() != null || hermano.getNombreHermanos() != null ||
+		                hermano.getGrado() != null || hermano.getNombreTipoComprobante() != null) {
+		            if (!hermano.getNombreEscuela().isEmpty() || !hermano.getNombreHermanos().isEmpty() ||
+		                    !hermano.getGrado().isEmpty() || !hermano.getNombreTipoComprobante().isEmpty()) {
+
+		                if (!file.isEmpty() && hermano.getNombreTipoComprobante() != null) {
+		                    // Guardar archivo de comprobante
+		                    String nombreArchivo = ArchiveUtils.guardarComprobanteEstudio(file, rutaComprobantes);
+		                    String nombreArchivoOriginal = file.getOriginalFilename();
+		                    if (nombreArchivo != null) {
+		                        System.out.println(nombreArchivo);
+		                        hermano.setNombreArchivoOriginal(nombreArchivoOriginal);
+		                        hermano.setRutaArchivoComprobante(nombreArchivo);
+		                    }
+		                }
+
+		                Boolean encontrado = false;
+
+		                // Verificar si el hermano ya existe en la base de datos por su ID
+		                if (hermano.getIdHermanos() != null) {
+		                    for (Hermanos hermanoBD : hermanosEnBD) {
+		                        if (hermano.getIdHermanos().equals(hermanoBD.getIdHermanos())) {
+		                            encontrado = true;
+		                            Hermanos hermanoSave = hermanosService.guardar(hermano);
+		                            break; // Salir del bucle una vez que se encuentra el hermano
+		                        }
+		                    }
+		                }else {
+		                	 Hermanos hermanoSave = hermanosService.guardar(hermano);
+		                }
+		           
+		                /*
+		                // Si no se encontró el hermano en la base de datos, eliminar
+		                if (!encontrado) {
+		                   
+		                    hermanosService.eliminar(hermano);
+		                }
+		                */
+
+		            } else {
+		                System.out.println("No insertado");
+		            }
+		        }
+		    }
+		} else {
+		    // Eliminar todos los hermanos en la base de datos si la lista de nuevos hermanos está vacía
+		    if (!hermanosEnBD.isEmpty()) {
+		        for (Hermanos hermanoBD : hermanosEnBD) {
+		            hermanosService.eliminar(hermanoBD);
+		        }
+		    }
 		}
+		
+		
+
 		
 		if(alumnoDatos.getTieneInternet() != null) {
 			if(alumnoDatos.getTieneInternet() == true) {
