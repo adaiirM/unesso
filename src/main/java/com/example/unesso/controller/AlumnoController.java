@@ -34,6 +34,7 @@ import com.example.unesso.model.CatServicios;
 import com.example.unesso.model.Domicilio;
 import com.example.unesso.model.EstadoFormularios;
 import com.example.unesso.model.Familia;
+import com.example.unesso.model.Hermanos;
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.services.*;
@@ -194,6 +195,7 @@ public class AlumnoController {
 	public String saveMiFamilia(@ModelAttribute FormMiFamilia datos,RedirectAttributes attributes,
 			@RequestParam("file") MultipartFile[] files, Model model, Authentication authentication) {
 		miFamiliaService.saveMiFamilia(datos, authentication, files);	
+		
 		return "redirect:/alumno/menuSolicitar";
 	}
 	
