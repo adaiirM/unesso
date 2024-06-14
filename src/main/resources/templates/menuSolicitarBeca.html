@@ -20,7 +20,7 @@
 <body>
     <nav id="nav"></nav>
 
-    <div class="container m-7 mt-5">
+    <div class="container ms-4 mt-5" style="width: 70%;">
         <div class="row" >
             <ol class="p-1 colorFondo breadcrumb bread-primary ">
                 <a href="menuAlumno.html" style="text-decoration: none;">
@@ -36,15 +36,25 @@
 	<input hidden id="dependienteEconomico" value="estadoFormularios.formDependienteEconomico" name="estadoFormularios.formDependienteEconomico" th:field="*{estadoFormularios.formDependienteEconomico}">
 	<input hidden id="miFamilia" value="estadoFormularios.formMiFamilia" name="estadoFormularios.formMiFamilia" th:field="*{estadoFormularios.formMiFamilia}">
 	<input hidden id="misGastos" value="estadoFormularios.formMisGatos" name="estadoFormularios.formMisGatos" th:field="*{estadoFormularios.formMisGatos}">
-	
-	<div class="divApartados">
-	    <a id="btnMisDatos" class="btn apartadosBtn titulo hBtn enabled" th:href="@{/alumno/misDatos}" role="button">MIS DATOS</a>
-	    <a id="btnDependiente" class="btn apartadosBtn titulo hBtn disabled" th:href="@{/alumno/formMiTutor}" role="button" style="line-height: 1.5;">DEPENDIENTE <br>ECONOMICO</a>
-	    <a id="btnMiFamilia" class="btn apartadosBtn titulo hBtn disabled" th:href="@{/alumno/miFamilia}" role="button">MI FAMILIA</a>
-	    <a id="btnMisGastos" class="btn apartadosBtn titulo hBtn disabled" th:href="@{/alumno/formMisGastos}" role="button" style="line-height: 1.5;">GASTOS E <br>INGRESOS</a>
-	</div>
-	
-	<a class="btn btn-outline-primary hBtn mt-3 estiloBoton" style="margin-left: 17cm;" role="button" th:href="@{/alumno/misDatos}">Solicitar beca</a>
+
+    <div class="row  mx-auto mt-4 mb-5" style="width: 75%;">
+        <div class="col d-flex justify-content-center">
+            <a class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/misDatos}" role="button">MIS DATOS</a>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <a style="line-height: 1.5;" class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/formMiTutor}" role="button">DEPENDIENTE <br>ECONOMICO</a>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <a class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/miFamilia}" role="button">MI FAMILIA</a>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <a class="btn apartadosBtn titulo hBtn" th:href="@{/alumno/formMisGastos}" role="button" style="line-height: 1.5;" >GASTOS E <br>INGRESOS</a>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-outline-primary hBtn mt-3  estiloBoton" role="button" th:href="@{/alumno/misDatos}">Solicitar beca</a>
+    </div>
 
     <footer id="footer"></footer>
 
