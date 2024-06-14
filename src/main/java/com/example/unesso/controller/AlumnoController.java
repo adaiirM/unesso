@@ -391,14 +391,8 @@ public class AlumnoController {
 					System.out.println(rbEnviar.toString());
 					serviceReciboLuz.guardarReciboLuz(rbEnviar);
 				}
-				
 				serviceGastosFam.guardarGastoFam(gfEnviar);
-
-			}
-			
-
-			System.out.println(a.getFamilia().getGastosFam().getReciboLuz());
-			
+			}			
 			
 			serviceFamilia.guardarFamilia(familia);
 		} else {
