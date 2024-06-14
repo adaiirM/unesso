@@ -314,7 +314,7 @@
 	                    <div style="width: 48%; padding-top: 2%;">
 	                        <div class="form-check">
 	                            <p class="textoInputs">Código Postal<p/>
-	                            <input  id="codigoPostal" name="domicilio.catCodigoPostal.idCatCodigoPostal" type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="Ingresa tu CP">
+	                            <input  id="codigoPostal" name="domicilio.catCodigoPostal.idCatCodigoPostal" type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="Ingresa tu CP" disabled>
 	               
 	                        </div>
 	                    </div>
@@ -391,7 +391,7 @@
 								
 							<div class="form-group">
 							    <label for="anio">Año:</label>
-							    <input th:field="*{transporte.anio}" type="text" class="form-control" id="anio" name="transporte.anio" style="width: 80%;">
+							    <input th:field="*{transporte.anio}"  class="form-control" id="anio" name="transporte.anio" style="width: 80%;" placeholder="Ingresa un año" type="number" min="1000" max="9999">
 							</div>	
 						</div>
 					</div>
@@ -533,7 +533,7 @@
 </form>
 
 
-<footer th:insert="fragments/footer.html :: footer"/>
+<div th:insert="~{fragments/footer.html :: footer}"></div>
     
 
 
@@ -947,10 +947,13 @@
 				            // Manejar la respuesta del servidor
 				            if (response.success) {
 				                // Enviar el formulario
+				                alert("Información enviada correctamente.");
 				                $("#myForm").submit();
 				            } else {
 				                // Manejar el caso en que la inserción en la base de datos falle
+				                alert("Información guardada correctamente.");
 				                console.error("Error al marcar el formulario como realizado.");
+				                $("#myForm").submit();
 				            }
 				        },
 				        error: function(xhr, status, error) {

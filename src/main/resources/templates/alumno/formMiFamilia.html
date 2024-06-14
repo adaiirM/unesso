@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <header  th:insert="fragments/navAlumnos.html :: menu-nav"/>
+    <div th:insert="~{fragments/navAlumnos.html :: menu-nav}"></div>
     <div class="container mt-3 ">
         <div class="row" >
             <ol class="colorFondo breadcrumb bread-primary ">
@@ -145,7 +145,8 @@
                 <div>
                     <p class="textoInputs mt-4">Teléfono</p>
                     <input th:field="*{familia.telefono}" name="familia.telefono" type="text" 
-                    class="estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTel" placeholder="Ingrese su numero de telefono">
+                    class="estiloInputs estiloInputs rounded" style="width: 100%;" id="inputTel" placeholder="Ingrese su numero de telefono"
+                    >
                		<!-- ********************************************************************* -->
 				    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
 				    <div id="telefonoError" class="error" style="display: none;">*Debes seleccionar una opción</div>
@@ -272,7 +273,7 @@
                         </div>
                         <div class="mt-4">
                             <p class="textoInputs">¿Cuántas personas habitan en la vivienda?</p>
-                            <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="Numero personas"
+                            <input type="number" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="inputNombre" placeholder="Numero personas"
                             th:field="*{viviendaFamiliar.numPersonasHabitan}" name="viviendaFamiliar.numPersonasHabitan">
                        		<!-- ********************************************************************* -->
 						    <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
@@ -345,54 +346,56 @@
             <h3 style="color: #6366F1;">Hermanos</h3>
             <div class="row" >
                 <div class="col mt-3">
-                    <p class="textoInputs">¿Cuántos hermanos tienes?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" id="numHermano" placeholder=""
-                     th:field="*{infoFamilia.numHermanos}" name="infoFamilia.numHermanos">
-                     
-                </div>
-                <div class="col mt-3">
-				    <p class="textoInputs">¿Cuántos están estudiando?</p>
-				    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" 
-				     th:field="*{infoFamilia.hermanosEstudiando}" name="infoFamilia.hermanosEstudiando" id="numHermanosEstudiando" 
-				     placeholder="" >
-					
-				</div>
-                <div class="col mt-3">
-                    <p class="textoInputs">¿Cuántos dejaron de estudiar?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" 
-                     th:field="*{infoFamilia.hermanosDejoEstudio}" name="infoFamilia.hermanosDejoEstudio" id="inputNum" placeholder="">
-                </div>
-                <div class="col mt-3">
-                    <p class="textoInputs">¿Cuántos tienen licenciatura?</p>
-                    <input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" 
-                     th:field="*{infoFamilia.hermanosLicenciatura}" name="infoFamilia.hermanosLicenciatura" id="inputLicHermano" placeholder="">
-                </div>
+			    <p class="textoInputs">¿Cuántos hermanos tienes?</p>
+			    <input type="number" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;"
+			           id="numHermano" placeholder="" th:field="*{infoFamilia.numHermanos}" name="infoFamilia.numHermanos"
+			           min="0" max="4">
+			</div>
+			<div class="col mt-3">
+			    <p class="textoInputs">¿Cuántos están estudiando?</p>
+			    <input type="number" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;"
+			           th:field="*{infoFamilia.hermanosEstudiando}" name="infoFamilia.hermanosEstudiando"
+			           id="numHermanosEstudiando" placeholder="" min="0" max="4">
+			</div>
+			<div class="col mt-3">
+			    <p class="textoInputs">¿Cuántos dejaron de estudiar?</p>
+			    <input type="number" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;"
+			           min="0" max="4" th:field="*{infoFamilia.hermanosDejoEstudio}" name="infoFamilia.hermanosDejoEstudio"
+			           id="inputNum" placeholder="">
+			</div>
+			<div class="col mt-3">
+			    <p class="textoInputs">¿Cuántos tienen licenciatura?</p>
+			    <input type="number" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;"
+			           min="0" max="4" th:field="*{infoFamilia.hermanosLicenciatura}" name="infoFamilia.hermanosLicenciatura"
+			           id="inputLicHermano" placeholder="">
+			</div>
             </div>
             <div class="row mt-3">
-				             
-					<tr th:each="hermano, itemStat : ${formMiFamilia.hermanos}">
+				 <div id="containerHermanos">
+					 <input hidden type="file" name="file"/>
+					<tr th:each="hermano, itemStat : ${formMiFamilia.familia.hermanos}">
 						 <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2 hermano-item">      
 							<td>
-							    <input hidden th:field="*{hermanos[__${itemStat.index}__].idHermanos}" th:name="|hermanos[${itemStat.index}].idHermanos|" th:value="${hermano.getIdHermanos()}"/>
+							    <input hidden th:field="*{familia.hermanos[__${itemStat.index}__].idHermanos}" th:name="|familia.hermanos[${itemStat.index}].idHermanos|" th:value="${hermano.getIdHermanos()}"/>
 							</td>
 							<div class="col-12 col-sm-8 mt-3 col-lg-4 col-xl-4">
 							    <p class="textoInputs">Nombre completo:</p>
 							    <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
-								th:field="*{hermanos[__${itemStat.index}__].nombreHermanos}" th:name="|hermanos[${itemStat.index}].nombreHermanos|" th:value="${hermano.getNombreHermanos()}"
+								th:field="*{familia.hermanos[__${itemStat.index}__].nombreHermanos}" th:name="|familia.hermanos[${itemStat.index}].nombreHermanos|" th:value="${hermano.getNombreHermanos()}"
 								th:id="'nombreHermano' + ${itemStat.index}"/>
 								<div th:id="'nombreError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
 							</div>
 							<div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-1">
 							    <p class="textoInputs">Edad:</p>
 							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
-							    th:field="*{hermanos[__${itemStat.index}__].edad}" th:name="|hermanos[${itemStat.index}].edad|" th:value="${hermano.getEdad()}"
+							    th:field="*{familia.hermanos[__${itemStat.index}__].edad}" th:name="|familia.hermanos[${itemStat.index}].edad|" th:value="${hermano.getEdad()}"
 							    th:id="'edadHermano' + ${itemStat.index}"/>
 								<div th:id="'edadError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese la edad.</div>
 							</div>
 							
 							<div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-2">
 							    <p class="textoInputs">Grado de estudios:</p>
-							    <select  id="catEscolaridadPadre" name="infoFamilia.escolaridadPadre" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
+							    <select  id="gradoHermano" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example"
 							     th:field="*{hermanos[__${itemStat.index}__].grado}" th:name="|hermanos[${itemStat.index}].grado|" th:id="'gradoHermano' + ${itemStat.index}"
 							    >
 							         <option value="">Elige una opción</option>
@@ -401,14 +404,14 @@
 							          th:value="${escolaridad.nombreEscolaridad}" 
 							          th:text="${escolaridad.nombreEscolaridad}">
 									</option>
-							    </select>  
+							    </select> 
 							    <div th:id="'gradoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, seleccione una escolaridad.</div>                
 							</div>
 							
 							<div class="col-12 col-sm-8 col-lg-6 mt-3 col-xl-3">
 							    <p class="textoInputs">Nombre de su institución:</p>
 							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
-							    th:field="*{hermanos[__${itemStat.index}__].nombreEscuela}" th:name="|hermanos[${itemStat.index}].nombreEscuela|" th:value="${hermano.getNombreEscuela()}"
+							    th:field="*{familia.hermanos[__${itemStat.index}__].nombreEscuela}" th:name="|familia.hermanos[${itemStat.index}].nombreEscuela|" th:value="${hermano.getNombreEscuela()}"
 							    th:id="'institucionHermano' + ${itemStat.index}"/>
 								<div th:id="'institucionError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
 							</div>
@@ -416,7 +419,7 @@
 							<div class="col-12 mt-3 col-lg-6 col-xl-2">
 							    <p class="textoInputs">Tipo de Comprobante de estudios:</p>
 							    <input input type="text" class="form-control estiloInputs estiloInputs rounded"  style="width: 100%;" placeholder=""
-							    th:field="*{hermanos[__${itemStat.index}__].nombreTipoComprobante}" th:name="|hermanos[${itemStat.index}].nombreTipoComprobante|"
+							    th:field="*{familia.hermanos[__${itemStat.index}__].nombreTipoComprobante}" th:name="|familia.hermanos[${itemStat.index}].nombreTipoComprobante|"
 							    th:value="${hermano.getNombreTipoComprobante()}" th:id="'comprobanteHermano' + ${itemStat.index}"/>
 								<div th:id="'comprobanteError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, ingrese el nombre del comprobante.</div>
 							</div>
@@ -430,7 +433,7 @@
 					          
 					        </div>
 					        <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
-								<input hidden th:value="${hermano.getRutaArchivoComprobante()}" th:name="|hermanos[${itemStat.index}__].rutaArchivoComprobante|"  th:field="*{hermanos[__${itemStat.index}__].rutaArchivoComprobante}">
+								<input hidden th:value="${hermano.getRutaArchivoComprobante()}" th:name="|familia.hermanos[${itemStat.index}__].rutaArchivoComprobante|"  th:field="*{familia.hermanos[__${itemStat.index}__].rutaArchivoComprobante}">
 					          <div class="file-select" id="src-file1" th:if="${hermano.getRutaArchivoComprobante() == null || hermano.getRutaArchivoComprobante().isEmpty()}">
 					                <label for="file-upload" class="custom-file-upload">
 								    <i class="fa fa-cloud-upload">Subir Comprobante</i> 
@@ -446,8 +449,8 @@
 								    <i class="fa fa-cloud-upload">Subir Comprobante</i> 
 									</label>
 									<input id="file-upload" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName2(this, ${itemStat.index})|"/>
-					         		<input class="no-border" th:value="${hermano.getNombreArchivoOriginal()}" th:field="*{hermanos[__${itemStat.index}__].nombreArchivoOriginal}"
-					                 th:name="|hermanos[${itemStat.index}__].nombreArchivoOriginal|"  th:id="'nombreArchivo2-' + ${itemStat.index}">
+					         		<input class="no-border" th:value="${hermano.getNombreArchivoOriginal()}" th:field="*{familia.hermanos[__${itemStat.index}__].nombreArchivoOriginal}"
+					                 th:name="|familia.hermanos[${itemStat.index}__].nombreArchivoOriginal|"  th:id="'nombreArchivo2-' + ${itemStat.index}">
 					              	<div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
 					          </div>
 					          
@@ -460,13 +463,15 @@
 						 </div>
 						 
 					</tr>	
+			</div>
+
                    
               
       	    <div class="line mx-auto mt-5" style="width: 68%;"></div>
 	            <h3 style="color: #6366F1;" class="mt-4">Personas dependientes</h3>
 	            <div class="mt-2">
 	                <p class="textoInputs">Además de ti y tus padres, ¿Cuántas personas dependen económicamente de tu ingreso familiar ?</p>
-	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 20%;" 
+	                <input type="number"class="form-control estiloInputs estiloInputs rounded" style="width: 20%;"  min="0"   max="5"
 	                name="familia.numPersonasDependen" th:field="*{familia.numPersonasDependen}" id="inputPersonasDependientes" placeholder="">
 	            </div>
 			   
@@ -487,8 +492,8 @@
     
 	    </div>
 	   </form>
-
-    <footer th:insert="fragments/footer.html :: footer"/>
+y
+    <div th:insert="~{fragments/footer.html :: footer}"></div>
     
     <script src="../javaScript.js/funcionamiento.js"></script>
      <script type="text/javascript">
@@ -509,34 +514,74 @@
 			    var fileName = input.files[0].name;
 			    document.getElementById('nombreArchivo2-' + index).value = fileName;
 			}
-	    
-	    document.getElementById('numHermanosEstudiando').addEventListener('input', function() {
-            actualizarHermanos(this.value);
-        });
 
-        function actualizarHermanos(value) {
-            var numeroHermanos = parseInt(value, 10);
-            var hermanoItems = document.getElementsByClassName('hermano-item');
-
-            for (var i = 0; i < hermanoItems.length; i++) {
-                if (!isNaN(numeroHermanos) && numeroHermanos > 0 && i < numeroHermanos) {
-                    hermanoItems[i].style.display = 'block';
-                } else {
-                    hermanoItems[i].style.display = 'none';
-                }
-            }
-        }
-
-        // Función para mostrar inicialmente el hermano si ya hay un valor en el campo
-        function inicializarHermano() {
-            var numHermanosEstudiando = document.getElementById('numHermanosEstudiando');
-            actualizarHermanos(numHermanosEstudiando.value);
-        }
-
-        // Llamar a la función para inicializar cuando la página se carga
-        window.onload = inicializarHermano;
+			
+			document.getElementById('numHermanosEstudiando').addEventListener('input', function() {
+	            generarHermanos(this.value);
+	        });
+			
+			    // Obtener referencias a los elementos de entrada
+		    var numHermanoInput = document.getElementById('numHermano');
+		    var numHermanosEstudiandoInput = document.getElementById('numHermanosEstudiando');
+		    var hermanosDejoEstudioInput = document.getElementById('inputNum');
+		    var hermanosLicenciaturaInput = document.getElementById('inputLicHermano');
+		
+		    // Función para validar y completar
+		    function validarYCompletar() {
+		        var numHermanos = parseInt(numHermanoInput.value) || 0;
+		        var hermanosEstudiando = parseInt(numHermanosEstudiandoInput.value) || 0;
+		        var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
+		        var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
+		
+		        var total = hermanosEstudiando + hermanosDejoEstudio + hermanosLicenciatura;
+		
+		        // Si el total es igual al número de hermanos, completar campos vacíos con 0
+		        if (total === numHermanos) {
+		            if (numHermanosEstudiandoInput.value === "") {
+		                numHermanosEstudiandoInput.value = 0;
+		            }
+		            if (hermanosDejoEstudioInput.value === "") {
+		                hermanosDejoEstudioInput.value = 0;
+		            }
+		            if (hermanosLicenciaturaInput.value === "") {
+		                hermanosLicenciaturaInput.value = 0;
+		            }
+		        }
+		
+		        // Alerta si el total es mayor que el número de hermanos
+			    if (total > numHermanos) {
+			        alert('La suma de los campos no puede ser mayor que el número de hermanos.');
+			        return false; // Indica que la validación falló
+			    }
+			
+			    return true; // Indica que la validación pasó
+		    }
+		
+		    // Agregar event listener para validar y completar al cambiar cualquier valor
+		    numHermanoInput.addEventListener('change', validarYCompletar);
+		    numHermanosEstudiandoInput.addEventListener('change', validarYCompletar);
+		    hermanosDejoEstudioInput.addEventListener('change', validarYCompletar);
+		    hermanosLicenciaturaInput.addEventListener('change', validarYCompletar);
+		
+		    // Función para inicializar valores y validar al cargar la página
+		    function inicializarYValidar() {
+		        var numHermanos = parseInt(numHermanoInput.value) || 0;
+		        var hermanosEstudiando = parseInt(numHermanosEstudiandoInput.value) || 0;
+		        var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
+		        var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
+		
+		        if (numHermanos > 0 || hermanosEstudiando > 0 || hermanosEstudiando > numHermanos || hermanosDejoEstudio > 0 || hermanosLicenciatura > 0) {
+		            validarYCompletar();
+		        }
+		    }
+		
+		    // Inicializar y validar al cargar la página
+		    window.addEventListener('load', inicializarYValidar);
 			
 	    $(document).ready(function () {
+			
+			
+			
 			var hermanoItems = document.getElementsByClassName('hermano-item');
 	        for (var i = 0; i < hermanoItems.length; i++) {
 	            console.log(i);
@@ -645,6 +690,7 @@
 	    // Función para mostrar u ocultar el contenedor del tipo de conexión
 	    function toggleTipoConexion() {
 	        if (internetSi.checked) {
+				
 	            tipoConexionContainer.style.display = "block";
 	        } else {
 	            tipoConexionContainer.style.display = "none";
@@ -728,6 +774,9 @@
 	            var domicilioError = document.getElementById('domicilioError');
 	            if (!domicilioSi.checked && !domicilioNo.checked) {
 	                domicilioError.style.display = 'block';
+	                setTimeout(function() {
+				        $(domicilioError).fadeOut();
+				    }, 5000);
 	                isValid = false;
 	            } else {
 	                domicilioError.style.display = 'none';
@@ -735,10 +784,13 @@
 	            
 	            var serviciosError = document.getElementById('serviciosError');
 	            if ($('input[name="serviciosVivienda"]').is(":checked")) {
-		           serviciosError.style.display = 'none';
+		            //domicilioError.style.display = 'block';
+					displayError(domicilioError);
+	                
 		        } else {
 		            isValid = false;
-		            serviciosError.style.display = 'block';
+		                serviciosError.style.display = 'none';
+		             
 		        }
 		        
 		        var internetError = document.getElementById('accesoInternetError');
@@ -750,7 +802,11 @@
 			        var errorElement = document.getElementById('tipoConexionError');
 			
 			        if (campoElement.value === '') {
-			            errorElement.style.display = 'block';
+			           
+			            isValid = false;
+			             setTimeout(() => {
+			                errorElement.style.display = 'block';
+			             }, 8000); 
 			            isValid = false;
 			        } else {
 			            errorElement.style.display = 'none';
@@ -777,22 +833,23 @@
 		            { id: 'catMaterialVivienda', errorId: 'materialError', type: 'select' },
 		            { id: 'catTipoVivienda', errorId: 'tipoViviendaError', type: 'select' },
 		            { id: 'inputNombre', errorId: 'personasViviendaError' }
+		            
 	            ];
 	
 	            fieldsToValidate.forEach(function(field) {
-	                var fieldElement = document.getElementById(field.id);
-	                var errorElement = document.getElementById(field.errorId);
-	
-	                if (field.type === 'select' && fieldElement.value === '') {
-	                    errorElement.style.display = 'block';
-	                    isValid = false;
-	                } else if (field.type === 'text' && fieldElement.value.trim() === '') {
-	                    errorElement.style.display = 'block';
-	                    isValid = false;
-	                } else {
-	                    errorElement.style.display = 'none';
-	                }
-	            });
+				    var fieldElement = document.getElementById(field.id);
+				    var errorElement = document.getElementById(field.errorId);
+				
+				    if (field.type === 'select' && fieldElement.value === '') {
+				        displayError(errorElement); // Mostrar error con timeout
+				        isValid = false;
+				    } else if (field.type === 'text' && fieldElement.value.trim() === '') {
+				        displayError(errorElement); // Mostrar error con timeout
+				        isValid = false;
+				    } else {
+				        errorElement.style.display = 'none';
+				    }
+				});
 	            
 	       
 		    
@@ -803,7 +860,10 @@
         const nombreField = document.getElementById('nombreHermano' + i);
         const nombreError = document.getElementById('nombreError' + i);
         if (nombreField.value.trim() === '') {
-            nombreError.style.display = 'block';
+            
+            setTimeout(() => {
+                nombreError.style.display = 'block';
+            }, 8000); 
             isValid = false;
         } else {
             nombreError.style.display = 'none';
@@ -813,7 +873,10 @@
         const edadField = document.getElementById('edadHermano' + i);
         const edadError = document.getElementById('edadError' + i);
         if (edadField.value.trim() === '') {
-            edadError.style.display = 'block';
+            
+            setTimeout(() => {
+                edadError.style.display = 'block';
+            }, 8000); 
             isValid = false;
         } else {
             edadError.style.display = 'none';
@@ -823,7 +886,10 @@
         const gradoField = document.getElementById('gradoHermano' + i);
         const gradoError = document.getElementById('gradoError' + i);
         if (gradoField.value.trim() === '') {
-            gradoError.style.display = 'block';
+            
+            setTimeout(() => {
+                gradoError.style.display = 'block';
+            }, 8000); 
             isValid = false;
         } else {
             gradoError.style.display = 'none';
@@ -833,7 +899,10 @@
         const institucionField = document.getElementById('institucionHermano' + i);
         const institucionError = document.getElementById('institucionError' + i);
         if (institucionField.value.trim() === '') {
-            institucionError.style.display = 'block';
+            
+            setTimeout(() => {
+                institucionError.style.display = 'block';
+            }, 8000); 
             isValid = false;
         } else {
             institucionError.style.display = 'none';
@@ -843,7 +912,10 @@
         const comprobanteField = document.getElementById('comprobanteHermano' + i);
         const comprobanteError = document.getElementById('comprobanteError' + i);
         if (comprobanteField.value.trim() === '') {
-            comprobanteError.style.display = 'block';
+            
+            setTimeout(() => {
+                comprobanteError.style.display = 'block';
+            }, 8000); 
             isValid = false;
         } else {
             comprobanteError.style.display = 'none';
@@ -853,7 +925,10 @@
         const archivoError = document.getElementById('nombreArchivoError' + i);
         const archivoField = document.getElementById('nombreArchivo-' + i) || document.getElementById('nombreArchivo2-' + i);
         if (!archivoField.value.trim()) {
-            archivoError.style.display = 'block';
+            
+            setTimeout(() => {
+                archivoError.style.display = 'block';
+            }, 8000); 
             isValid = false;
         } else {
             archivoError.style.display = 'none';
@@ -862,7 +937,7 @@
 	            
 	            
 	            // Verificar si todas las validaciones pasan
-	            if ($("#myForm").valid() && isValid) {
+	            if ($("#myForm").valid() && isValid && validarYCompletar()) {
 				    var idAlumno = $('#idAlumno').val();
 				    console.log("id de alumno: " + idAlumno);
 				    var idAlumnoInt = parseInt(idAlumno);
@@ -877,10 +952,13 @@
 				            // Manejar la respuesta del servidor
 				            if (response.success) {
 				                // Enviar el formulario
+				                alert("Información enviada correctamente.");
 				                $("#myForm").submit();
 				            } else {
 				                // Manejar el caso en que la inserción en la base de datos falle
+				                alert("Ups. No se ha podido actualizar correctamente tu información");
 				                console.error("Error al marcar el formulario como realizado.");
+				                $("#myForm").submit();
 				            }
 				        },
 				        error: function(xhr, status, error) {
@@ -888,7 +966,7 @@
 				        }
 				    });
 				} else {
-				    console.error("El ID del alumno no es válido.");
+				   alert("Ups. Tienes datos obligatorios sin llenar");
 				}
 	            
 	            
@@ -972,7 +1050,12 @@
 			}
 		
 	    
-	    
+	    function displayError(errorElement) {
+		    errorElement.style.display = 'block';
+		    setTimeout(function() {
+		        errorElement.style.display = 'none';
+		    }, 8000);
+		}
         
 			
        });
@@ -989,6 +1072,113 @@
 	   });
 	  
 		
+		const escolaridades = [
+            { nombreEscolaridad: 'Primaria' },
+            { nombreEscolaridad: 'Secundaria' },
+            { nombreEscolaridad: 'Bachillerato' },
+            { nombreEscolaridad: 'Tecnico' },
+            { nombreEscolaridad: 'Licenciatura' },
+            { nombreEscolaridad: 'Posgrado' }
+            
+            // Agrega más opciones según sea necesario
+        ];
+		
+		
+	function generarHermanos() {
+	    // Obtén el valor ingresado por el usuario
+	    console.log("Esta es la funcion crear más hermanos");
+	    var numHermanos = parseInt(document.getElementById('numHermanosEstudiando').value);
+	
+	    // Referencia al contenedor donde se agregarán los elementos
+	    const container = document.getElementById('containerHermanos');
+	
+	    // Limpia el contenedor antes de agregar nuevos elementos
+	    container.innerHTML = '';
+	    
+	    if(numHermanos === 0 ){
+			 var newElement = `
+				 <input hidden type="file" name="file"/>
+			 `;
+	        container.innerHTML += newElement;
+		}
+	
+	    for (let i = 0; i < numHermanos; i++) {
+	        let opcionesEscolaridad = '';
+	        escolaridades.forEach(escolaridad => {
+	            opcionesEscolaridad += `<option value="${escolaridad.nombreEscolaridad}">${escolaridad.nombreEscolaridad}</option>`;
+	        });
+	
+	        var newElement = `
+	        <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2 hermano-item">
+	            <td>
+	                <input hidden name="familia.hermanos[${i}].idHermanos"/>
+	            </td>
+	            <div class="col-12 col-sm-8 mt-3 col-lg-4 col-xl-4">
+	                <p class="textoInputs">Nombre completo:</p>
+	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
+	                name="familia.hermanos[${i}].nombreHermanos" id="nombreHermano${i}"/>
+	                <div id="nombreError${i}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
+	            </div>
+	            <div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-1">
+	                <p class="textoInputs">Edad:</p>
+	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
+	                name="familia.hermanos[${i}].edad" id="edadHermano${i}"/>
+	                <div id="edadError${i}" class="error" style="display: none;">Por favor, ingrese la edad.</div>
+	            </div>
+	            <div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-2">
+	                <p class="textoInputs">Grado de estudios:</p>
+	                <select name="familia.hermanos[${i}].grado" id="gradoHermano${i}" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                    <option value="">Elige una opción</option>
+	                    ${opcionesEscolaridad}
+	                </select>
+	                <div id="gradoError${i}" class="error" style="display: none;">Por favor, seleccione una escolaridad.</div>
+	            </div>
+	            <div class="col-12 col-sm-8 col-lg-6 mt-3 col-xl-3">
+	                <p class="textoInputs">Nombre de su institución:</p>
+	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
+	                name="familia.hermanos[${i}].nombreEscuela" id="institucionHermano${i}"/>
+	                <div id="institucionError${i}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
+	            </div>
+	            <div class="col-12 mt-3 col-lg-6 col-xl-2">
+	                <p class="textoInputs">Tipo de Comprobante de estudios:</p>
+	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
+	                name="familia.hermanos[${i}].nombreTipoComprobante" id="comprobanteHermano${i}"/>
+	                <div id="comprobanteError${i}" class="error" style="display: none;">Por favor, ingrese el nombre del comprobante.</div>
+	            </div>
+	            <div class="col">
+	                <p class="textoInputs">Adjuntar comprobante:</p>
+	            </div>
+	            <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
+	                <input hidden name="familia.hermanos[${i}].rutaArchivoComprobante"/>
+	                <div class="file-select" id="src-file1">
+	                    <label for="file-upload${i}" class="custom-file-upload">
+	                        <i class="fa fa-cloud-upload">Subir Comprobante</i>
+	                    </label>
+	                    <input id="file-upload${i}" type="file" name="file" aria-label="Archivo" onchange="updateFileName(this, ${i})"/>
+	                    <input class="no-border" id="nombreArchivo-${i}">
+	                    <div id="nombreArchivoError${i}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
+	                </div>
+	            </div>
+	        </div>
+	        `;
+	        container.innerHTML += newElement;
+	    }
+	    
+	}	
+	
+         function updateFileName(input, index) {
+            const file = input.files[0].name;
+            const allowedExtensions = /(\.pdf)$/i;
+
+            if (!allowedExtensions.exec(file)) {
+                alert('Solo se permiten archivos PDF.');
+                input.value = '';
+                document.getElementById(`nombreArchivo-${index}`).value = '';
+                return false;
+            } else {
+                document.getElementById(`nombreArchivo-${index}`).value = file;
+            }
+        }
 		
     </script>
 </body>
