@@ -33,8 +33,6 @@ public class GastosFam {
 	private Double gastoTransporte;
 	
 	private Double gastoOtros;
-	
-
 
 	public Integer getIdGastosFam() {
 		return idGastosFam;

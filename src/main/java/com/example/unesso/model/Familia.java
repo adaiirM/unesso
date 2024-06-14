@@ -28,7 +28,7 @@ public class Familia {
 	private Domicilio domicilio;
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idGastosFam")
 	private GastosFam gastosFam;
 	
@@ -150,8 +150,6 @@ public class Familia {
 	public void setIngresoFamiliar(List<IngresoFamiliar> ingresoFamiliar) {
 		this.ingresoFamiliar = ingresoFamiliar;
 	}
-
-	
 	
 	public Boolean getEsViviendaTutor() {
 		return esViviendaTutor;

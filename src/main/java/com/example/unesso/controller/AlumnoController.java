@@ -38,6 +38,8 @@ import com.example.unesso.model.CatServicios;
 import com.example.unesso.model.Domicilio;
 import com.example.unesso.model.EstadoFormularios;
 import com.example.unesso.model.Familia;
+import com.example.unesso.model.GastosFam;
+import com.example.unesso.model.ReciboLuz;
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.services.IAlumnoService;
@@ -60,6 +62,8 @@ import com.example.unesso.services.ICatTipoViviendaService;
 import com.example.unesso.services.IDomicilioService;
 import com.example.unesso.services.IEstadoFormulariosService;
 import com.example.unesso.services.IFamiliaService;
+import com.example.unesso.services.IGastosFamService;
+import com.example.unesso.services.IReciboLuzService;
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
 
@@ -164,6 +168,12 @@ public class AlumnoController {
 	
 	@Autowired
 	public IEstadoFormulariosService serviceEstadoFormularios;
+	
+	@Autowired
+	public IGastosFamService serviceGastosFam;
+	
+	@Autowired
+	IReciboLuzService serviceReciboLuz;
 	
 	//Relizara las operaciones CRUD para el fromulario de miFamilia
 	@Autowired
@@ -351,17 +361,45 @@ public class AlumnoController {
 	@PostMapping("/guardarGastos")
 	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
 			@RequestParam("observaciones") String observacones) {
-		System.out.println(familia.toString());
+		if (!multiPart.isEmpty()) {
+			System.out.print(multiPart);
+
+		}
+		
+		System.out.println("Familia del formulario: " + familia.toString());
 		System.out.println(observacones);
 		
-		System.out.print(multiPart);
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
-		a.setObservaciones(observacones);
-		serviceAlumno.guardarAlumno(a);
 		
 		if(a.getFamilia() != null) {
+			
 			familia.setIdFamilia(a.getFamilia().getIdFamilia());
+			System.out.println("Antes del if" + a.getFamilia().getIdFamilia());
+			
+			
+			if(a.getFamilia().getGastosFam() != null) {
+				GastosFam gf = serviceGastosFam.buscarPorId(a.getFamilia().getGastosFam().getIdGastosFam());
+				GastosFam gfEnviar = familia.getGastosFam();
+				gfEnviar.setIdGastosFam(gf.getIdGastosFam());
+				
+				if(a.getFamilia().getGastosFam().getReciboLuz() != null) {
+					System.out.println("Entra");
+					ReciboLuz rb = serviceReciboLuz.buscarPorId(a.getFamilia().getGastosFam().getReciboLuz().getIdReciboLuz());
+					ReciboLuz rbEnviar = familia.getGastosFam().getReciboLuz();
+					rbEnviar.setIdReciboLuz(rb.getIdReciboLuz());
+					System.out.println(rbEnviar.toString());
+					serviceReciboLuz.guardarReciboLuz(rbEnviar);
+				}
+				
+				serviceGastosFam.guardarGastoFam(gfEnviar);
+
+			}
+			
+
+			System.out.println(a.getFamilia().getGastosFam().getReciboLuz());
+			
+			
 			serviceFamilia.guardarFamilia(familia);
 		} else {
 			Familia f = serviceFamilia.guardarFamilia(familia);
@@ -369,7 +407,10 @@ public class AlumnoController {
 			serviceAlumno.guardarAlumno(a);
 		}
 		
-		return "alumno/menuSolicitarBeca";
+		a.setObservaciones(observacones);
+		serviceAlumno.guardarAlumno(a);
+		
+		return "redirect:/alumno/menuSolicitar";
 	}
 	
 	
