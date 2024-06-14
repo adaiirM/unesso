@@ -145,6 +145,7 @@
 	                            <p class="textoInputs">Estado</p>
 								<!--							 -->
 			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+									<option class="subtitulo">Elige una opción</option>
 									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
 			                    </select>
 	                        </div>
