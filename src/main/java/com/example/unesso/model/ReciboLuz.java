@@ -29,6 +29,8 @@ public class ReciboLuz {
 	
 	private String nombreArchivo;
 	
+	private String pagoBimestral;
+	
 	private Double pagoPromedioMes;
 	
 	private String rutaRecibo;
@@ -106,12 +108,20 @@ public class ReciboLuz {
 	public void setNombreOriginal(String nombreOriginal) {
 		this.nombreOriginal = nombreOriginal;
 	}
+	
+	public String getPagoBimestral() {
+		return pagoBimestral;
+	}
+
+	public void setPagoBimestral(String pagoBimestral) {
+		this.pagoBimestral = pagoBimestral;
+	}
 
 	@Override
 	public String toString() {
 		return "ReciboLuz [idReciboLuz=" + idReciboLuz + ", domicilio=" + domicilio + ", titular=" + titular
 				+ ", periodoInicio=" + periodoInicio + ", periodoFin=" + periodoFin + ", nombreArchivo=" + nombreArchivo
-				+ ", pagoPromedioMes=" + pagoPromedioMes + ", rutaRecibo=" + rutaRecibo + ", nombreOriginal="
-				+ nombreOriginal + "]";
+				+ ", pagoBimestral=" + pagoBimestral + ", pagoPromedioMes=" + pagoPromedioMes + ", rutaRecibo="
+				+ rutaRecibo + ", nombreOriginal=" + nombreOriginal + "]";
 	}
 }
