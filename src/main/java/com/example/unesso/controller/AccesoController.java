@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,10 @@ public class AccesoController {
 	private IUsuarioService serviceUsuario;
 
 	@GetMapping("/login")
-	public String login() {
+	public String login(@RequestParam(name = "error", required = false) String error, Model model) {
+		if(error != null) {
+			model.addAttribute("error", true);
+		}
 		return "formLogin";
 	}
 	
