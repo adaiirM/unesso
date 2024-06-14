@@ -165,7 +165,12 @@ public class AlumnoController {
 		
 		return "alumno/menuSolicitarBeca";
 	}
-	
+
+	@GetMapping("/comentariosSolicitud")
+	public String comentariosSolicitud(Authentication auth, Model model) {
+
+        return "alumno/comentariosSolicitud";
+    }
 	
 	
 	@GetMapping("/misDatos")
