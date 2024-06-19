@@ -173,7 +173,7 @@ public class AlumnoController {
 	public IGastosFamService serviceGastosFam;
 	
 	@Autowired
-	IReciboLuzService serviceReciboLuz;
+	public IReciboLuzService serviceReciboLuz;
 	
 	//Relizara las operaciones CRUD para el fromulario de miFamilia
 	@Autowired
