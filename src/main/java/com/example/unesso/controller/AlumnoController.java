@@ -245,24 +245,26 @@ public class AlumnoController {
 		System.out.println("Ob: " + a.getObservaciones());
 		if(a.getFamilia() != null) {
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
-			// Obtener la fecha del objeto
-	        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
-	        Date fechaF = f.getGastosFam().getReciboLuz().getPeriodoFin();
+			if(f.getGastosFam() != null) {
+				if(f.getGastosFam().getReciboLuz() != null) {
+					// Obtener la fecha del objeto
+			        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
+			        Date fechaF = f.getGastosFam().getReciboLuz().getPeriodoFin();
 
-	        // Convertir Date a LocalDate
-	        LocalDate localDateI = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	        LocalDate localDateF = fechaF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			        // Convertir Date a LocalDate
+			        LocalDate localDateI = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			        LocalDate localDateF = fechaF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-	        // Formatear LocalDate a yyyy-MM-dd
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	        String fechaFormateadaI = localDateI.format(formatter);
-	        String fechaFormateadaF = localDateF.format(formatter);
-			System.out.println(fechaFormateadaI); 
+			        // Formatear LocalDate a yyyy-MM-dd
+			        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			        String fechaFormateadaI = localDateI.format(formatter);
+			        String fechaFormateadaF = localDateF.format(formatter);
+					System.out.println(fechaFormateadaI); 
 
-				
-			
-			model.addAttribute("fechaFormateadaI", fechaFormateadaI);
-			model.addAttribute("fechaFormateadaF", fechaFormateadaF);
+					model.addAttribute("fechaFormateadaI", fechaFormateadaI);
+					model.addAttribute("fechaFormateadaF", fechaFormateadaF);
+				}
+			}
 			
 		} else {
 			f.setIngresoFamiliar(new ArrayList<>());
