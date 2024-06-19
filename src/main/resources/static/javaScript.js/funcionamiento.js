@@ -65,6 +65,15 @@ function limitarLongitud(event) {
     }
 }
 
+// Función para resetear la validación de un campo específico
+function resetFieldValidation(fieldName) {
+    var validator = $("#formDependienteEconomico").validate();
+    var field = $("[id='" + fieldName + "']");
+    validator.resetElements(field);
+    field.removeClass("error");
+    field.parent().find("label.error").remove();
+}
+
 function obtenerMunicipios(){
 	var select = document.getElementById('selectEstados');
 	var selectLocalidad = document.getElementById('selectLocalidades')
@@ -75,10 +84,15 @@ function obtenerMunicipios(){
 	    $.ajax({
 	        url: '/domicilio/obtenerMunicipiosPorEstado',
 	        type: 'GET',
-	        data: { estadoId: selectIndex + 1},
+	        data: { estadoId: selectIndex},
 	        success: function(data) {
 	            actualizarSelectMunicipios(data);
 	            selectLocalidad.innerHTML = "";
+	            actualizarInputCP("");
+	            var option = document.createElement("option");
+			        option.value = "";
+			        option.text = "Elige una opción";
+			        selectLocalidad.appendChild(option);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -90,6 +104,12 @@ function obtenerMunicipios(){
 function actualizarSelectMunicipios(municipios) {
     var selectMunicipios = document.getElementById("selectMunicipios");
     selectMunicipios.innerHTML = ""; // Limpiar la lista de municipios
+
+	var option = document.createElement("option");
+        option.value = "";
+        option.text = "Elige una opción";
+        selectMunicipios.appendChild(option);
+	
 	
     municipios.forEach(function(municipio) {
         var option = document.createElement("option");
@@ -111,7 +131,7 @@ function obtenerLocalidad(){
 	        type: 'GET',
 	        data: { municipioId: selectIndex},
 	        success: function(data) {
-	            //console.log(data);
+	            actualizarInputCP("");
 	            actualizarSelectLocalidad(data);
 	        },
 	        error: function(xhr, status, error) {
@@ -125,6 +145,11 @@ function actualizarSelectLocalidad(localidades) {
     var selectLocalidad = document.getElementById("selectLocalidades");
     selectLocalidad.innerHTML = ""; // Limpiar la lista de municipios
 	
+	var option = document.createElement("option");
+        option.value = "";
+        option.text = "Elige una opción";
+        selectLocalidad.appendChild(option);
+        
     localidades.forEach(function(localidad) {
         var option = document.createElement("option");
         option.value = localidad.idCatLocalidad;
@@ -145,7 +170,7 @@ function obtenerCodigoPostal(){
 	        type: 'GET',
 	        data: { localidadId: selectIndex},
 	        success: function(data) {
-	            actualizarInputCP(data);
+	            actualizarInputCP(data.numeroCodigoPostal);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -156,9 +181,16 @@ function obtenerCodigoPostal(){
 
 function actualizarInputCP(cp) {
     var inputCP = document.getElementById('cp');
-    console.log(cp.numeroCodigoPostal);
+    var municipio = document.getElementById("selectMunicipios");
+	var localidad = document.getElementById("selectLocalidades");
+
+    if(municipio.value === "" && localidad.value === ""){
+		inputCP.value = null;
+	}
+	
+    console.log(cp);
     inputCP.value = null;
-	inputCP.value = cp.numeroCodigoPostal;
+	inputCP.value = cp;
 }
 
 
