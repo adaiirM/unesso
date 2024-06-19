@@ -7,5 +7,5 @@ import com.example.unesso.model.Usuario;
 
 @Description("Esta clase realiza operaciones CRUD en la entidad user de la Base de datos unesso") 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-
+    Usuario findByCorreo(String correo);
 }
