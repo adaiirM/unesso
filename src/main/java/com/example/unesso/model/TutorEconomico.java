@@ -25,11 +25,11 @@ public class TutorEconomico {
 	private CatSituacionTrabajo catSituacionTrabajo;
 	
 	@OneToOne
-	@JoinColumn(name="idCatParentesco")
+	@JoinColumn(name="idCatParentesco", nullable = true)
 	private CatParentesco catParentesco;
 	
 	@OneToOne
-	@JoinColumn(name="idCatOcupacion")
+	@JoinColumn(name="idCatOcupacion", nullable = true)
 	private CatOcupacion catOcupacion;
 	
 	private String nombreTutorEconomico;

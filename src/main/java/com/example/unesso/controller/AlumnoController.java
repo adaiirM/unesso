@@ -265,6 +265,7 @@ public class AlumnoController {
 					model.addAttribute("fechaFormateadaF", fechaFormateadaF);
 				}
 			}
+
 			
 		} else {
 			f.setIngresoFamiliar(new ArrayList<>());
@@ -306,15 +307,35 @@ public class AlumnoController {
 			
 			return "alumno/formTutor";
 		}*/
+		
+		System.out.println("1. Alumno formulario: " + alumno.toString());
+		
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno a = obtenerAlumnoSesion(auth);
+		System.out.println("2. Alumno sesion: " + a.toString());
+		Alumno aPrueba = alumno;
+		
+		if(alumno.getTutorEconomico().getCatOcupacion().getIdCatOcupacion() == null) {
+			alumno.getTutorEconomico().setCatOcupacion(null);
+		}
+		
+		if(alumno.getTutorEconomico().getCatParentesco().getIdCatParentesco() == null) {
+			alumno.getTutorEconomico().setCatParentesco(null);
+		}
+		
+		if(alumno.getTutorEconomico().getDomicilio().getCatLocalidad().getIdCatLocalidad() == null) {
+			alumno.getTutorEconomico().getDomicilio().setCatLocalidad(null);
+		}
+		
+		System.out.println("3. Alumno Prueba " + aPrueba);
+		
 		a.setGastoMensual(alumno.getGastoMensual());
 		a.setDependeEconomicamente(alumno.getDependeEconomicamente());
 		System.out.println("Datos del alumno de la sesion: " + alumno.toString());
 		System.out.println("Accion: " + accion);
 		
 		if(a.getTutorEconomico() != null) {
-			System.out.println("Tutor del formulario: " + alumno.getTutorEconomico());
+			
 			
 			//Obtener el tutor de la base de datos mediante el id dentro del alumno
 			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
@@ -340,9 +361,11 @@ public class AlumnoController {
 		}else {
 			System.out.println("---------------------------------Entra----------------------------------");
 			a.setTutorEconomico(alumno.getTutorEconomico());
+
 			serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());
 			serviceAlumno.guardarAlumno(a);
 		}
+		
 		
 		if(accion.equals("enviar")) {
 			if(a.getEstadoFormularios() == null) {
@@ -352,7 +375,10 @@ public class AlumnoController {
 				a.setEstadoFormularios(e);
 				serviceAlumno.guardarAlumno(a);
 			} else {
-				a.getEstadoFormularios().setFormDependienteEconomico(true);
+				a.getEstadoFormularios().setFormDependienteEconomico(false);
+				if(a.getTutorEconomico().getCatOcupacion() != null) {
+					a.getTutorEconomico();
+				}
 				serviceAlumno.guardarAlumno(a);
 			}
 		}
