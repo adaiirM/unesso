@@ -284,7 +284,7 @@
 						        data: { estadoId: selectEstado},
 						        success: function(data) {
 
-						            actualizarSelectMunicipios(data);
+						            actualizarSelectMunicipiosDP(data);
 						            
 									var municipio = document.getElementById('selectMunicipios');
 									municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
@@ -295,7 +295,7 @@
 								        type: 'GET',
 								        data: { municipioId: selectIndex},
 								        success: function(data) {
-											actualizarSelectLocalidad(data);
+											actualizarSelectLocalidadDP(data);
 								            var localidad = document.getElementById('selectLocalidades');
 											localidad.value = domAlumno.catLocalidad.idCatLocalidad;
 											

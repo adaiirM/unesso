@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'GET',
         data: { estadoId: idCatEstado},
         success: function(data) {
-            actualizarSelectMunicipios(data);
+            actualizarSelectMunicipiosDP(data);
             selectMunicipios.value = idCatMunicipio;
             selectLocalidad.innerHTML = "";
             
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		        type: 'GET',
 		        data: { municipioId: idCatMunicipio},
 		        success: function(data) {
-		            actualizarSelectLocalidad(data);
+		            actualizarSelectLocalidadDP(data);
 		            selectLocalidad.value = idCatLocalidad;
 		        },
 		        error: function(xhr, status, error) {
