@@ -22,10 +22,7 @@ public class Transporte {
 	@JoinColumn(name="idCatTipoTransporte")
 	private CatTipoTransporte catTipoTransporte;
 	
-	@OneToOne
-	@JoinColumn(name="idAlumno")
-	private Alumno alumno;
-	
+
 	private String marca;
 	
 	private String modelo;
@@ -49,13 +46,6 @@ public class Transporte {
 		this.catTipoTransporte = catTipoTransporte;
 	}
 
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
 
 	public String getMarca() {
 		return marca;
@@ -83,11 +73,8 @@ public class Transporte {
 
 	@Override
 	public String toString() {
-		return "Transporte [idTransporte=" + idTransporte + ", catTipoTransporte=" + catTipoTransporte + ", alumno="
-				+ alumno + ", marca=" + marca + ", modelo=" + modelo + ", anio=" + anio + "]";
+		return "Transporte [idTransporte=" + idTransporte + ", catTipoTransporte=" + catTipoTransporte + ", marca=" + marca + ", modelo=" + modelo + ", anio=" + anio + "]";
 	}
 	
 	
-	
-
 }
