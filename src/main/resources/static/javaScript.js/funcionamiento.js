@@ -309,3 +309,109 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 	    });
 });
+
+
+///////////////////////////////////////////////
+
+function obtenerMunicipios(estado){
+		$.ajax({
+                url: '/direccion/municipiosById/' + estado,
+                type: 'GET',
+                success: function(data) {
+                    var municipioSelect = $('#catMunicipio');
+                    municipioSelect.empty();
+                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+                    $.each(data, function(index, municipio) {
+                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                    });
+                }
+            });
+	}
+	
+	function obtenerLocalidadesDeMunicipio(municipio){
+		 $.ajax({
+            url: '/direccion/localidadesById/' + municipio,
+            type: 'GET',
+            success: function(data) {
+                var municipioSelect = $('#catLocalidad');
+                municipioSelect.empty();
+                console.log(data);
+                municipioSelect.append('<option value="">Elige una opción</option>');
+                $.each(data, function(index, localidad) {
+					console.log(data.idCatLocalidad);
+                    municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+                	
+                });
+            }
+        });
+	}
+	
+	function obtenerCPdeLocalidad(localidad){
+		$.ajax({
+            url: '/direccion/codigoPostalById/' + localidad,
+            type: 'GET',
+            success: function(data) {
+	            // Se establece el valor del campo #codigoPostal con el valor obtenido
+	            $('#codigoPostal').val(data.numeroCodigoPostal);
+	        }
+        });
+	}
+	
+
+
+
+function actualizarSelectLocalidad(localidades) {
+    var selectLocalidad = document.getElementById("selectLocalidades");
+    selectLocalidad.innerHTML = ""; // Limpiar la lista de municipios
+	
+    localidades.forEach(function(localidad) {
+        var option = document.createElement("option");
+        option.value = localidad.idCatLocalidad;
+        option.text = localidad.nombreLocalidad;
+        selectLocalidad.appendChild(option);
+    });
+}
+
+
+//Obtener municipio al que pertenece una localidad
+async function fetchMunicipioByIdLocalidad(idLocalidad) {
+    return $.ajax({
+        url: `/direccion/municipioByIdLocalidad/${idLocalidad}`,
+        type: 'GET'
+    });
+}
+
+//Obtener el estado al que pertenece un municipio
+async function fetchEstadoByIdMunicipio(idMunicipio) {
+    return $.ajax({
+        url: `/direccion/estadoByIdMunicipio/${idMunicipio}`,
+        type: 'GET'
+    });
+}
+
+//Obtener municipios de un estado
+async function fetchMunicipiosByIdEstado(idEstado) {
+    return $.ajax({
+        url: `/direccion/municipiosById/${idEstado}`,
+        type: 'GET'
+    });
+}
+
+//Obtener localidades de un municipio
+async function fetchLocalidadesByIdMunicipio(idMunicipio) {
+    return $.ajax({
+        url: `/direccion/localidadesById/${idMunicipio}`,
+        type: 'GET'
+    });
+}
+
+//Obtener CP de una localidad
+async function fetchCodigoPostalByIdLocalidad(idLocalidad) {
+    return $.ajax({
+        url: `/direccion/codigoPostalById/${idLocalidad}`,
+        type: 'GET'
+    });
+}
+
+
+
