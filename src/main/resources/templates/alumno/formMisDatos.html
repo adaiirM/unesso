@@ -540,68 +540,31 @@
 
 
 
-
     <script src="../javaScript.js/funcionamiento.js"></script>
     <script type="text/javascript">
 	    $(document).ready(function () {
 			
         
-        	//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
+        	//Esta funcion obtiene los municipios de un estado en base al estado seleccionado
             $('#catEstado').change(function() {
 		            var estado = $(this).val();
-    				console.log('Selected Estado:', estado);
+    				obtenerMunicipios(estado)
     				
-		            $.ajax({
-		                url: '/direccion/municipiosById/' + estado,
-		                type: 'GET',
-		                success: function(data) {
-		                    var municipioSelect = $('#catMunicipio');
-		                    municipioSelect.empty();
-		                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
-		                    $.each(data, function(index, municipio) {
-		                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
-		                    });
-		                }
-		            });
-		            
-		        });
+    		});
 		        
-		        //Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
-		        $('#catMunicipio').change(function() {
-		            var municipio = $(this).val();
-		            
-    				console.log('Selected municipio:', municipio);
-    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-		            $.ajax({
-		                url: '/direccion/localidadesById/' + municipio,
-		                type: 'GET',
-		                success: function(data) {
-		                    var municipioSelect = $('#catLocalidad');
-		                    municipioSelect.empty();
-		                    console.log(data);
-		                    municipioSelect.append('<option value="">Elige una opción</option>');
-		                    $.each(data, function(index, localidad) {
-								console.log(data.idCatLocalidad);
-		                        municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
-		                    	
-		                    });
-		                }
-		            });
-		        });
+	        //Esta funcion obtiene las localidades de un municipio en base al municipio seleccionado
+	        $('#catMunicipio').change(function() {
+	            var municipio = $(this).val();
+				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+	            obtenerLocalidadesDeMunicipio(municipio);
+	        });
 		        
-		        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
-		        $('#catLocalidad').change(function() {
-		            var localidad = $(this).val();
-    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-		            $.ajax({
-		                url: '/direccion/codigoPostalById/' + localidad,
-		                type: 'GET',
-		                success: function(data) {
-				            // Se establece el valor del campo #codigoPostal con el valor obtenido
-				            $('#codigoPostal').val(data.numeroCodigoPostal);
-				        }
-		            });
-		        });
+	        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+	        $('#catLocalidad').change(function() {
+	            var localidad = $(this).val();
+				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+	            obtenerCPdeLocalidad(localidad);
+	        });
 		        
 		    
 		    //Se obtienen y settean los datos de carrera, grupo y nombre del alumno
@@ -611,108 +574,18 @@
 			var idGrupo = parseInt(idGrupoAlumno.val());
 		     
 			//Se establece automaticamente la carrera con la que fue registrado el alumno
-            $.ajax({
-            url: '/carrera/carreraByIdGrupo/' + idGrupo,
-            type: 'GET',
-            success: function (data) {
-	           var nombre = data.carrera;
-	           $('#inputNombreCarrera').val(nombre);
-	        }
-	        });
+            obtenerCarrera(idGrupo);
 	        		     
 			//Se establece automaticamente el semestre con la que fue registrado el alumno
-            $.ajax({
-            url: '/carrera/semestreByIdGrupo/' + idGrupo,
-            type: 'GET',
-            success: function (data) {
-	           $('#inputNombreSemestre').val(data.nombreSemestre);
-	         
-	        }
-	        });
+            obtenerSemestre(idGrupo);
 	        
+	        //Obtener y Setear los datos de: Estado, Municipio y localidad guardados con aterioridad
+	        const idLocalidad = $('#idCatLocalidad').val();
+    
+		    if (idLocalidad) {
+		        fetchEstadoMunicipioLocalidad(idLocalidad);
+		    }
 	        
-	        
-	        //Se recuperan y establecen los datos de estado, municipio y localidad que regsitro el alumno
-		    //Estos valores se buscan por medio del id de localidad  
-		    //Se obtiene los datos haciendo una consulta a los metodos de DomicilioController  
-            var idLocalidad = $('#idCatLocalidad');
-	        var idCatLocalidad = idLocalidad.val(); // Obtener el valor de #idCatLocalidad 
-	        if(idCatLocalidad != "" || idCatLocalidad != null) {	
-				    //Obtener Municipio por idLocalidad
-				    $.ajax({
-				        url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
-				        type: 'GET',
-				        success: function(data) {
-				            var idMunicipio = data.idCatMunicipio;
-				            console.log("id de municipio: " + idMunicipio);
-				
-				            //Obtener idMunicipio
-				            $.ajax({
-				                url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
-				                type: 'GET',
-				                success: function(data) {
-				                    var idEstado = data.idCatEstado;
-				                    $('#catEstado').val(idEstado);
-				                    console.log("id de estado: " + idEstado);
-				
-				                    //Obtener estado por id de municipio
-				                    $.ajax({
-				                        url: '/direccion/municipiosById/' + idEstado,
-				                        type: 'GET',
-				                        success: function(data) {
-				                            var municipioSelect = $('#catMunicipio');
-				                            municipioSelect.empty();
-				                            municipioSelect.append('<option value="">Elige una opción</option>');
-				                            $.each(data, function(index, municipio) {
-				                                municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
-				                            });
-				                            municipioSelect.val(idMunicipio);
-				                            
-				                            //Se obtiene la localidad por el id de municipio
-								            $.ajax({
-								                url: '/direccion/localidadesById/' + idMunicipio,
-								                type: 'GET',
-								                success: function(data) {
-								                    var loSelect = $('#catLocalidad');
-								                    loSelect.empty();
-								                    console.log(data);
-								                    loSelect.append('<option value="">Elige una opción</option>');
-								                    $.each(data, function(index, localidad) {
-														console.log(data.idCatLocalidad);
-								                        loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
-								                    	
-								                    });
-								                    loSelect.val(idCatLocalidad);
-								                     //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
-												      
-									    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-											            $.ajax({
-											                url: '/direccion/codigoPostalById/' + idCatLocalidad,
-											                type: 'GET',
-											                success: function(data) {
-													            // Se establece el valor del campo #codigoPostal con el valor obtenido
-													            $('#codigoPostal').val(data.numeroCodigoPostal);
-													        }
-											            });
-								                }
-								            });
-				                            
-				                        },
-				                        error: function(error) {
-				                            console.error("Error en la solicitud AJAX:", error);
-				                        }
-				                    });
-				                },
-				                error: function(error) {
-				                    console.error("Error en la solicitud AJAX:", error);
-				                }
-				            });
-				        },
-				        error: function(error) {
-				            console.error("Error en la solicitud AJAX:", error);
-				        }
-				    });
-			}
 			
 			
 
@@ -728,59 +601,14 @@
 			//****************************************************************
 			//Si el usuario selecciona que si lleva transporte se mostraran los campos para registrar
 			//los datos del transporte
-			function actualizarEstadoInicialTransporte() {
-			    if (radioTransporteSi.checked) {
-			        infoTransporteAlumno.style.display = "block";
-			    } else {
-			        infoTransporteAlumno.style.display = "none";
-			    }
-			}
-			//Se ejecuta la función 
-			actualizarEstadoInicialTransporte();
 			
-			//Cada que cambie el estado se mostrara u ocultara los campos
-			radioTransporteSi.addEventListener("change", function() {
-			    actualizarEstadoInicialTransporte();
-			});
-			
-			radioTransporteNo.addEventListener("change", function() {
-			    actualizarEstadoInicialTransporte();
-			});
-			//****************************************************************
-			var infoViviendaUniversitaria = document.getElementById("infoViviendaUniversitaria");
-		    var radios = document.querySelectorAll(".situacion-radio");
-		
-			//Si el valor es diferente del id = 3 se mostraran  los campos de texto, de lo contrario se ocultaran
-		    function actualizarEstado() {
-		        var selectedRadio = document.querySelector(".situacion-radio:checked");
-		        if (selectedRadio && selectedRadio.value == "3") { 
-		            infoViviendaUniversitaria.style.display = "none";
-		        } else {
-		            infoViviendaUniversitaria.style.display = "block";
-		        }
-		    }
-		
-		    // Inicializar el estado al cargar la página
-		    actualizarEstado();
-		
-		    // Añadir eventos a los botones de radio
-		    radios.forEach(function(radio) {
-		        radio.addEventListener("change", actualizarEstado);
-		    });
-
-			
+			// Llamar a la función para manejar el transporte
+			manejarTransporte();
 			
 			//****************************************************************
-			//Esta función se encarga de verificar que el formulario se envie solo cuando se oprime el boton de guardar
-			document.addEventListener('keydown', function(event) {
-		        if (event.key === 'Enter') {
-		            event.preventDefault();
-		            // Si el elemento enfocado es el botón de enviar, entonces envía el formulario
-		            if (document.activeElement.id === 'submitButton') {
-		                document.getElementById('myForm').submit();
-		            }
-		        }
-		    });
+			// Llamar a la función para manejar la vivienda universitaria
+			manejarViviendaUniversitaria();
+		
 		    //****************************************************************
 		    
 		    // Obtener los valores de los campos
@@ -797,207 +625,244 @@
 		     //****************************************************************
 		     
 		    // Configuración de la validación
-		    var validator = $("#myForm").validate({
-		        rules: {
-		            "alumno.idioma": {
-		                required: true
-		            },
-		            "domicilio.coloniaBarrio":{
-						required: true
-					},
-					"domicilio.calle":{
-						required: true
-					},
-					"domicilio.numero":{
-						required: true
-					}
-		        },
-		        messages: {
-		            "alumno.idioma": {
-		                required: "*Llena el campo solicitado"
-		            },
-		            "domicilio.coloniaBarrio": {
-		                required: "*Llena el campo solicitado"
-		            },
-		            "domicilio.calle": {
-		                required: "*Llena el campo solicitado"
-		            },
-		            "domicilio.numero": {
-		                required: "*Llena el campo solicitado"
-		            }
-		            
-		        },
-		        errorPlacement: function(error, element) {
-		            error.insertAfter(element);
-		            // Mostrar el mensaje de error durante 10 segundos
-		            setTimeout(function() {
-		                error.fadeOut(500, function() {
-		                    $(this).remove();
-		                });
-		            }, 5000);
-		        }
-		    });
-		
-		    // Botón de guardado (sin validación)
-		    $("#guardar").click(function() {
-		        // Desactivar temporalmente la validación
-		        validator.settings.ignore = "*";
-		        $("#myForm").submit();
-		        // Reactivar la validación para el próximo uso
-		        validator.settings.ignore = [];
-		    });
-		
-		    // Botón de envío con validación
-		    $("#validar").click(function(event) {
-		        event.preventDefault(); // Evita el envío del formulario por defecto
-		
-		        // Validación adicional
-		        let enviar = true;
-		
-		        if ($('input[name="alumno.catEstadoCivil.idCatEstadoCivil"]').is(":checked")) {
-		            $("#estadoCivilError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#estadoCivilError");
-		        }
-		
-		        if ($('input[name="alumno.recursosSuficientes"]').is(":checked")) {
-		            $("#recursosEconomicosError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#recursosEconomicosError");
-		        }
-		
-		        if ($('input[name="alumno.solicitaBecaAlimenticia"]').is(":checked")) {
-		            $("#solicitaBecaAlimenticiaError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#solicitaBecaAlimenticiaError");
-		        }
-		
-		        if ($('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]').is(":checked")) {
-		            let valorSeleccionado = $('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]:checked').val();
-		            $("#situacionViviendaError").hide();
-		            if (valorSeleccionado != 3) {
-		                // Validar campos adicionales si es necesario
-		                if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
-		                    enviar = false;
-		                    showErrorAndScroll("#nombreCaseroError");
-		                }
-		                if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
-		                    enviar = false;
-		                    showErrorAndScroll("#numComparteViviendaError");
-		                }
-		                if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
-		                    enviar = false;
-		                    showErrorAndScroll("#pagoRentaError");
-		                }
-		            }
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#situacionViviendaError");
-		        }
-		
-		        if ($('input[name="alumno.tieneVehiculo"]').is(":checked")) {
-		            $("#transporteError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#transporteError");
-		        }
-		
-		        if ($('input[name="alumno.familiarComunero"]').is(":checked")) {
-		            $("#hijoComuneroError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#hijoComuneroError");
-		        }
-		
-		        if ($('input[name="alumno.tieneTelefono"]').is(":checked")) {
-		            $("#utilizaTelefonoError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#utilizaTelefonoError");
-		        }
-		
-		        if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
-		            $("#tieneComputadoraError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#tieneComputadoraError");
-		        }
-		
-		        if ($('input[name="mediosTraslado"]').is(":checked")) {
-		            $("#mediosError").hide();
-		        } else {
-		            enviar = false;
-		            showErrorAndScroll("#mediosError");
-		        }
-		
-		        // Verificar si las validaciones de jQuery Validate pasan
-		       if ($("#myForm").valid() && enviar) {
-				    var idAlumno = $('#idAlumno').val();
-				    console.log("id de alumno: " + idAlumno);
-				    var idAlumnoInt = parseInt(idAlumno);
-				
-				    var url = "/formulario/marcarFormularioRealizado/" + idAlumnoInt;
-				
-				    // Realiza la solicitud GET
-				    $.ajax({
-				        url: url,
-				        method: "GET",
-				        success: function(response) {
-				            // Manejar la respuesta del servidor
-				            if (response.success) {
-				                // Enviar el formulario
-				                alert("Información enviada correctamente.");
-				                $("#myForm").submit();
-				            } else {
-				                // Manejar el caso en que la inserción en la base de datos falle
-				                alert("Información guardada correctamente.");
-				                console.error("Error al marcar el formulario como realizado.");
-				                $("#myForm").submit();
-				            }
-				        },
-				        error: function(xhr, status, error) {
-				            console.error("Error en la solicitud Ajax: " + error);
-				        }
-				    });
-				} else {
-				    console.error("No se cumplen las validaciones");
-				}
-		    });
-		    
-		
-			function showErrorAndScroll(errorElement) {
-			    $(errorElement).show();
-			    setTimeout(function() {
-			        $(errorElement).fadeOut();
-			    }, 5000);
-			}
-			
-			function validarViviendaAlumno(){
-				// Validar campos adicionales si es necesario
-                if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
-                    enviar = false;
-                    showErrorAndScroll("#nombreCaseroError");
-                }
-                if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
-                    enviar = false;
-                    showErrorAndScroll("#numComparteViviendaError");
-                }
-                if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
-                    enviar = false;
-                    showErrorAndScroll("#pagoRentaError");
-                }
-			}
-			
-			function actualizarEstadoFormMisDatos() {
-			    var idAlumno = $('#alumno.idAlumno').val();
-			    console.log("ID Alumno:", idAlumno);
-			    
-		    }
-			
+		    configurarValidacion();
 	});
+	//****************************************************************
+	//Esta función se encarga de verificar que el formulario se envie solo cuando se oprime el boton de guardar
+	document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            // Si el elemento enfocado es el botón de enviar, entonces envía el formulario
+            if (document.activeElement.id === 'submitButton') {
+                document.getElementById('myForm').submit();
+            }
+        }
+    });
+	
+	
+	function obtenerCarrera(idGrupo){
+		$.ajax({
+            url: '/carrera/carreraByIdGrupo/' + idGrupo,
+            type: 'GET',
+            success: function (data) {
+	           var nombre = data.carrera;
+	           $('#inputNombreCarrera').val(nombre);
+	        }
+	     });
+	}
+	
+	function obtenerSemestre(idGrupo){
+			$.ajax({
+	            url: '/carrera/semestreByIdGrupo/' + idGrupo,
+	            type: 'GET',
+	            success: function (data) {
+		           $('#inputNombreSemestre').val(data.nombreSemestre);
+		         
+		        }
+		     });
+		}
+		
+	async function fetchEstadoMunicipioLocalidad(idLocalidad) {
+	    
+    
+	    if (!idLocalidad) {
+	        console.error("ID de localidad no proporcionado");
+	        return;
+	    }
+	    
+	    try {
+	        const municipioResponse = await fetchMunicipioByIdLocalidad(idLocalidad);
+	        const idMunicipio = municipioResponse.idCatMunicipio;
+	        console.log("id de municipio: " + idMunicipio);
+	        
+	        const estadoResponse = await fetchEstadoByIdMunicipio(idMunicipio);
+	        const idEstado = estadoResponse.idCatEstado;
+	        $('#catEstado').val(idEstado);
+	        console.log("id de estado: " + idEstado);
+	        
+	        const municipiosResponse = await fetchMunicipiosByIdEstado(idEstado);
+	        const municipioSelect = $('#catMunicipio');
+	        municipioSelect.empty();
+	        municipioSelect.append('<option value="">Elige una opción</option>');
+	        municipiosResponse.forEach(municipio => {
+	            municipioSelect.append(`<option value="${municipio.idCatMunicipio}">${municipio.nombreMunicipio}</option>`);
+	        });
+	        municipioSelect.val(idMunicipio);
+	        
+	        const localidadesResponse = await fetchLocalidadesByIdMunicipio(idMunicipio);
+	        const localidadSelect = $('#catLocalidad');
+	        localidadSelect.empty();
+	        console.log(localidadesResponse);
+	        localidadSelect.append('<option value="">Elige una opción</option>');
+	        localidadesResponse.forEach(localidad => {
+	            localidadSelect.append(`<option value="${localidad.idCatLocalidad}">${localidad.nombreLocalidad}</option>`);
+	        });
+	        localidadSelect.val(idLocalidad);
+	        
+	        const codigoPostalResponse = await fetchCodigoPostalByIdLocalidad(idLocalidad);
+	        $('#codigoPostal').val(codigoPostalResponse.numeroCodigoPostal);
+	        
+	    } catch (error) {
+	        console.error("Error en la solicitud AJAX:", error);
+	    }
+	}
+	
+
+	
+	// Función para manejar el estado inicial y cambios de vivienda universitaria
+	function manejarViviendaUniversitaria() {
+	    var infoViviendaUniversitaria = document.getElementById("infoViviendaUniversitaria");
+	    var radios = document.querySelectorAll(".situacion-radio");
+	
+	    function actualizarEstado() {
+	        var selectedRadio = document.querySelector(".situacion-radio:checked");
+	        infoViviendaUniversitaria.style.display = selectedRadio && selectedRadio.value === "3" ? "none" : "block";
+	    }
+	
+	    actualizarEstado();
+	
+	    radios.forEach(function(radio) {
+	        radio.addEventListener("change", actualizarEstado);
+	    });
+	}
+	
+	// Función para manejar el estado inicial y cambios de transporte
+	function manejarTransporte() {
+	    var radioTransporteSi = document.getElementById("llevaAutoSi");
+	    var infoTransporteAlumno = document.getElementById("infoTransporteAlumno");
+	
+	    function actualizarEstadoInicialTransporte() {
+	        infoTransporteAlumno.style.display = radioTransporteSi.checked ? "block" : "none";
+	    }
+	
+	    actualizarEstadoInicialTransporte();
+	
+	    radioTransporteSi.addEventListener("change", actualizarEstadoInicialTransporte);
+	    document.getElementById("llevaAutoNo").addEventListener("change", actualizarEstadoInicialTransporte);
+	}
+	function showErrorAndScroll(errorElement) {
+	    $(errorElement).show();
+	    setTimeout(function() {
+	        $(errorElement).fadeOut();
+	    }, 5000);
+	}
+	
+	function validarViviendaAlumno(){
+		// Validar campos adicionales si es necesario
+        if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
+            enviar = false;
+            showErrorAndScroll("#nombreCaseroError");
+        }
+        if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
+            enviar = false;
+            showErrorAndScroll("#numComparteViviendaError");
+        }
+        if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
+            enviar = false;
+            showErrorAndScroll("#pagoRentaError");
+        }
+	}
+	
+	function actualizarEstadoFormMisDatos() {
+	    var idAlumno = $('#alumno.idAlumno').val();
+	    console.log("ID Alumno:", idAlumno);
+	    
+    }
+    
+    // Función para configurar la validación con jQuery Validate
+	function configurarValidacion() {
+	    var validator = $("#myForm").validate({
+	        rules: {
+	            "alumno.idioma": { required: true },
+	            "domicilio.coloniaBarrio": { required: true },
+	            "domicilio.calle": { required: true },
+	            "domicilio.numero": { required: true }
+	        },
+	        messages: {
+	            "alumno.idioma": { required: "*Llena el campo solicitado" },
+	            "domicilio.coloniaBarrio": { required: "*Llena el campo solicitado" },
+	            "domicilio.calle": { required: "*Llena el campo solicitado" },
+	            "domicilio.numero": { required: "*Llena el campo solicitado" }
+	        },
+	        errorPlacement: function(error, element) {
+	            error.insertAfter(element);
+	            setTimeout(function() {
+	                error.fadeOut(500, function() {
+	                    $(this).remove();
+	                });
+	            }, 5000);
+	        }
+	    });
+	
+	    // Botón de guardado (sin validación)
+	    $("#guardar").click(function() {
+	        validator.settings.ignore = "*";
+	        $("#myForm").submit();
+	        validator.settings.ignore = [];
+	    });
+	
+	    // Botón de envío con validación
+	    $("#validar").click(function(event) {
+	        event.preventDefault(); 
+	
+	        if ($("#myForm").valid() && validarCamposEspeciales()) {
+	            enviarFormulario();
+	        } else {
+	            console.error("No se cumplen las validaciones");
+	        }
+	    });
+	}
+
+	// Función para validar campos especiales no cubiertos por jQuery Validate
+	function validarCamposEspeciales() {
+	    var enviar = true;
+	
+	    // Validación adicional específica
+	    if ($('input[name="alumno.catEstadoCivil.idCatEstadoCivil"]').is(":checked")) {
+	        $("#estadoCivilError").hide();
+	    } else {
+	        enviar = false;
+	        showErrorAndScroll("#estadoCivilError");
+	    }
+	
+	    // Otras validaciones específicas similares
+	
+	    return enviar;
+	}
+	
+	// Función para mostrar error y desplazar la pantalla
+	function showErrorAndScroll(errorId) {
+	    $(errorId).show();
+	    $('html, body').animate({
+	        scrollTop: $(errorId).offset().top - 100
+	    }, 500);
+	}
+	
+	// Función para enviar el formulario
+	function enviarFormulario() {
+	    var idAlumno = $('#idAlumno').val();
+	    var idAlumnoInt = parseInt(idAlumno);
+	    var url = "/formulario/marcarFormularioRealizado/" + idAlumnoInt;
+	
+	    $.ajax({
+	        url: url,
+	        method: "GET",
+	        success: function(response) {
+	            if (response.success) {
+	                alert("Información enviada correctamente.");
+	                $("#myForm").submit();
+	            } else {
+	                alert("Información guardada correctamente.");
+	                console.error("Error al marcar el formulario como realizado.");
+	                $("#myForm").submit();
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("Error en la solicitud Ajax: " + error);
+	        }
+	    });
+	}
+	
     </script>
 </body>
 </html>
