@@ -50,7 +50,8 @@ public class AdministradorController {
         return "/formAgregarAlumno";
     }
     @PostMapping("/guardarAlumno")
-    public String guardarAlumno(Alumno alumno, @RequestParam("correoAlumno") String usuarioCorreo) {
+    public String guardarAlumno(Alumno alumno) {
+        String usuarioCorreo = alumno.getUsuario().getUsername();
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
         if (usuario != null) {
             alumno.setUsuario(usuario);
