@@ -65,7 +65,16 @@ function limitarLongitud(event) {
     }
 }
 
-function obtenerMunicipios(){
+// Función para resetear la validación de un campo específico
+function resetFieldValidation(fieldName) {
+    var validator = $("#formDependienteEconomico").validate();
+    var field = $("[id='" + fieldName + "']");
+    validator.resetElements(field);
+    field.removeClass("error");
+    field.parent().find("label.error").remove();
+}
+
+function obtenerMunicipiosDP(){
 	var select = document.getElementById('selectEstados');
 	var selectLocalidad = document.getElementById('selectLocalidades')
 	select.addEventListener('change',
@@ -75,10 +84,15 @@ function obtenerMunicipios(){
 	    $.ajax({
 	        url: '/domicilio/obtenerMunicipiosPorEstado',
 	        type: 'GET',
-	        data: { estadoId: selectIndex + 1},
+	        data: { estadoId: selectIndex},
 	        success: function(data) {
-	            actualizarSelectMunicipios(data);
+	            actualizarSelectMunicipiosDP(data);
 	            selectLocalidad.innerHTML = "";
+	            actualizarInputCP("");
+	            var option = document.createElement("option");
+			        option.value = "";
+			        option.text = "Elige una opción";
+			        selectLocalidad.appendChild(option);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -87,9 +101,15 @@ function obtenerMunicipios(){
 	  });
 }
 
-function actualizarSelectMunicipios(municipios) {
+function actualizarSelectMunicipiosDP(municipios) {
     var selectMunicipios = document.getElementById("selectMunicipios");
     selectMunicipios.innerHTML = ""; // Limpiar la lista de municipios
+
+	var option = document.createElement("option");
+        option.value = "";
+        option.text = "Elige una opción";
+        selectMunicipios.appendChild(option);
+	
 	
     municipios.forEach(function(municipio) {
         var option = document.createElement("option");
@@ -99,7 +119,7 @@ function actualizarSelectMunicipios(municipios) {
     });
 }
 
-function obtenerLocalidad(){
+function obtenerLocalidadDP(){
 	var select = document.getElementById('selectMunicipios');
 	//console.log(select.value);
 	select.addEventListener('change',
@@ -111,8 +131,8 @@ function obtenerLocalidad(){
 	        type: 'GET',
 	        data: { municipioId: selectIndex},
 	        success: function(data) {
-	            //console.log(data);
-	            actualizarSelectLocalidad(data);
+	            actualizarInputCP("");
+	            actualizarSelectLocalidadDP(data);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -121,10 +141,15 @@ function obtenerLocalidad(){
 	  });
 }
 
-function actualizarSelectLocalidad(localidades) {
+function actualizarSelectLocalidadDP(localidades) {
     var selectLocalidad = document.getElementById("selectLocalidades");
     selectLocalidad.innerHTML = ""; // Limpiar la lista de municipios
 	
+	var option = document.createElement("option");
+        option.value = "";
+        option.text = "Elige una opción";
+        selectLocalidad.appendChild(option);
+        
     localidades.forEach(function(localidad) {
         var option = document.createElement("option");
         option.value = localidad.idCatLocalidad;
@@ -145,7 +170,7 @@ function obtenerCodigoPostal(){
 	        type: 'GET',
 	        data: { localidadId: selectIndex},
 	        success: function(data) {
-	            actualizarInputCP(data);
+	            actualizarInputCP(data.numeroCodigoPostal);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -156,9 +181,16 @@ function obtenerCodigoPostal(){
 
 function actualizarInputCP(cp) {
     var inputCP = document.getElementById('cp');
-    console.log(cp.numeroCodigoPostal);
+    var municipio = document.getElementById("selectMunicipios");
+	var localidad = document.getElementById("selectLocalidades");
+
+    if(municipio.value === "" && localidad.value === ""){
+		inputCP.value = null;
+	}
+	
+    console.log(cp);
     inputCP.value = null;
-	inputCP.value = cp.numeroCodigoPostal;
+	inputCP.value = cp;
 }
 
 
@@ -253,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'GET',
         data: { estadoId: idCatEstado},
         success: function(data) {
-            actualizarSelectMunicipios(data);
+            actualizarSelectMunicipiosDP(data);
             selectMunicipios.value = idCatMunicipio;
             selectLocalidad.innerHTML = "";
             
@@ -262,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		        type: 'GET',
 		        data: { municipioId: idCatMunicipio},
 		        success: function(data) {
-		            actualizarSelectLocalidad(data);
+		            actualizarSelectLocalidadDP(data);
 		            selectLocalidad.value = idCatLocalidad;
 		        },
 		        error: function(xhr, status, error) {
@@ -277,3 +309,109 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 	    });
 });
+
+
+///////////////////////////////////////////////
+
+function obtenerMunicipios(estado){
+		$.ajax({
+                url: '/direccion/municipiosById/' + estado,
+                type: 'GET',
+                success: function(data) {
+                    var municipioSelect = $('#catMunicipio');
+                    municipioSelect.empty();
+                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+                    $.each(data, function(index, municipio) {
+                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                    });
+                }
+            });
+	}
+	
+	function obtenerLocalidadesDeMunicipio(municipio){
+		 $.ajax({
+            url: '/direccion/localidadesById/' + municipio,
+            type: 'GET',
+            success: function(data) {
+                var municipioSelect = $('#catLocalidad');
+                municipioSelect.empty();
+                console.log(data);
+                municipioSelect.append('<option value="">Elige una opción</option>');
+                $.each(data, function(index, localidad) {
+					console.log(data.idCatLocalidad);
+                    municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+                	
+                });
+            }
+        });
+	}
+	
+	function obtenerCPdeLocalidad(localidad){
+		$.ajax({
+            url: '/direccion/codigoPostalById/' + localidad,
+            type: 'GET',
+            success: function(data) {
+	            // Se establece el valor del campo #codigoPostal con el valor obtenido
+	            $('#codigoPostal').val(data.numeroCodigoPostal);
+	        }
+        });
+	}
+	
+
+
+
+function actualizarSelectLocalidad(localidades) {
+    var selectLocalidad = document.getElementById("selectLocalidades");
+    selectLocalidad.innerHTML = ""; // Limpiar la lista de municipios
+	
+    localidades.forEach(function(localidad) {
+        var option = document.createElement("option");
+        option.value = localidad.idCatLocalidad;
+        option.text = localidad.nombreLocalidad;
+        selectLocalidad.appendChild(option);
+    });
+}
+
+
+//Obtener municipio al que pertenece una localidad
+async function fetchMunicipioByIdLocalidad(idLocalidad) {
+    return $.ajax({
+        url: `/direccion/municipioByIdLocalidad/${idLocalidad}`,
+        type: 'GET'
+    });
+}
+
+//Obtener el estado al que pertenece un municipio
+async function fetchEstadoByIdMunicipio(idMunicipio) {
+    return $.ajax({
+        url: `/direccion/estadoByIdMunicipio/${idMunicipio}`,
+        type: 'GET'
+    });
+}
+
+//Obtener municipios de un estado
+async function fetchMunicipiosByIdEstado(idEstado) {
+    return $.ajax({
+        url: `/direccion/municipiosById/${idEstado}`,
+        type: 'GET'
+    });
+}
+
+//Obtener localidades de un municipio
+async function fetchLocalidadesByIdMunicipio(idMunicipio) {
+    return $.ajax({
+        url: `/direccion/localidadesById/${idMunicipio}`,
+        type: 'GET'
+    });
+}
+
+//Obtener CP de una localidad
+async function fetchCodigoPostalByIdLocalidad(idLocalidad) {
+    return $.ajax({
+        url: `/direccion/codigoPostalById/${idLocalidad}`,
+        type: 'GET'
+    });
+}
+
+
+
