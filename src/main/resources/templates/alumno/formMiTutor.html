@@ -161,9 +161,9 @@
                 <div class="mt-1" style="color: #6366F1;" >
                     <p>¿El domicilio de tu tutor coincide con el que te encuentras actualmente?</p>
                     <div class="mt-1" style="margin-left: 1cm;">
-                        <input type="radio" class="input-outline-primary " id="apoyoSi" name="domicilio" value="1" style="color: #6366F1;" onclick="toggleContent()">
+                        <input th:field="*{tutorEconomico.esViviendaAlumno}" type="radio" class="input-outline-primary " id="apoyoSi" name="tutorEconomico.esViviendaAlumno" value="1" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
-                        <input type="radio" class="input-outline-primary" id="aopyoNo" name="domicilio" value="0" style="color: #6366F1;" onclick="toggleContent()" checked>
+                        <input th:field="*{tutorEconomico.esViviendaAlumno}"type="radio" class="input-outline-primary" id="aopyoNo" name="tutorEconomico.esViviendaAlumno" value="0" style="color: #6366F1;" onclick="toggleContent()" checked>
                         <label for="apoyoNo" style="color:#6C757D;" class="me-5">No</label>
                     </div><br> 
                 </div>
@@ -174,7 +174,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Estado</p>
 								<!--							 -->
-			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipiosDP()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>							
 									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
 			                    
@@ -183,7 +183,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Municipio</p>
 								<!--th:field="*{domicilio.catLocalidad.catMunicipio.catIdMunicipio}"-->
-	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidad()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidadDP()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>									                            
 	                            </select>
 	                        </div>
@@ -255,9 +255,15 @@
     <footer th:insert="fragments/footer.html :: footer"/>
     
     <script>
+		
+		// Funciones cuando cargue el HTML
+       document.addEventListener('DOMContentLoaded', function() {
+		    
+		});
+		
 		function toggleContent() {
             var content = document.getElementById('contentDomicilio');
-            var radios = document.getElementsByName('domicilio');
+            var radios = document.getElementsByName('tutorEconomico.esViviendaAlumno');
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked && radios[i].value === '1') {
 				    $.ajax({
@@ -296,9 +302,7 @@
 			            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal);
 											document.getElementById('calle').value = domAlumno.calle;
 											document.getElementById('numero').value = domAlumno.numero;
-											document.getElementById('coloniaBarrio').value = domAlumno.coloniaBarrio;
-											
-											
+											document.getElementById('coloniaBarrio').value = domAlumno.coloniaBarrio;				
 										        
 								        },
 								        error: function(xhr, status, error) {
@@ -325,9 +329,7 @@
 				    document.getElementById('calle').readOnly = true;
 					document.getElementById('numero').readOnly = true;
 					document.getElementById('coloniaBarrio').readOnly = true;
-                    document.getElementById('selectLocalidades').readOnly = true;
-                    document.getElementById('selectMunicipios').readOnly = true;
-                    document.getElementById('selectEstados').readOnly = true;
+
                     
                 } else if (radios[i].checked && radios[i].value === '0') {
 					document.getElementById('calle').value = "";
@@ -341,7 +343,7 @@
 					document.getElementById('cp').value = "";
 					
 					var selectLocalidad = document.getElementById('selectLocalidades');
-					
+										
 					selectLocalidad.innerHTML = "";
 						var optionL = document.createElement("option");
 				        optionL.value = "";
@@ -361,7 +363,6 @@
 					var selectEstado = document.getElementById('selectEstados');
 					selectEstado.selectedIndex = 0;
 					selectEstado.readOnly = true;
-
                 }
             }
         }
@@ -492,6 +493,8 @@
             });
         });
 
+		
+		
 	</script>
     <script src="../javaScript.js/funcionamiento.js"></script>
 </body>

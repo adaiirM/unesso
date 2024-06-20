@@ -39,6 +39,8 @@ public class TutorEconomico {
 	private String correo;
 	
 	private Boolean trabajadorSuneo;
+	
+	private Boolean esViviendaAlumno;
 
 	public Integer getIdTutorEconomico() {
 		return idTutorEconomico;
@@ -111,12 +113,21 @@ public class TutorEconomico {
 	public void setTrabajadorSuneo(Boolean trabajadorSuneo) {
 		this.trabajadorSuneo = trabajadorSuneo;
 	}
+	
+	public Boolean getEsViviendaAlumno() {
+		return esViviendaAlumno;
+	}
+
+	public void setEsViviendaAlumno(Boolean esViviendaAlumno) {
+		this.esViviendaAlumno = esViviendaAlumno;
+	}
 
 	@Override
 	public String toString() {
 		return "TutorEconomico [idTutorEconomico=" + idTutorEconomico + ", domicilio=" + domicilio
 				+ ", catSituacionTrabajo=" + catSituacionTrabajo + ", catParentesco=" + catParentesco
 				+ ", catOcupacion=" + catOcupacion + ", nombreTutorEconomico=" + nombreTutorEconomico + ", telefono="
-				+ telefono + ", correo=" + correo + ", trabajadorSuneo=" + trabajadorSuneo + "]";
+				+ telefono + ", correo=" + correo + ", trabajadorSuneo=" + trabajadorSuneo + ", esViviendaAlumno="
+				+ esViviendaAlumno + "]";
 	}
 }

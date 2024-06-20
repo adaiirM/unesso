@@ -74,7 +74,7 @@ function resetFieldValidation(fieldName) {
     field.parent().find("label.error").remove();
 }
 
-function obtenerMunicipios(){
+function obtenerMunicipiosDP(){
 	var select = document.getElementById('selectEstados');
 	var selectLocalidad = document.getElementById('selectLocalidades')
 	select.addEventListener('change',
@@ -86,7 +86,7 @@ function obtenerMunicipios(){
 	        type: 'GET',
 	        data: { estadoId: selectIndex},
 	        success: function(data) {
-	            actualizarSelectMunicipios(data);
+	            actualizarSelectMunicipiosDP(data);
 	            selectLocalidad.innerHTML = "";
 	            actualizarInputCP("");
 	            var option = document.createElement("option");
@@ -101,7 +101,7 @@ function obtenerMunicipios(){
 	  });
 }
 
-function actualizarSelectMunicipios(municipios) {
+function actualizarSelectMunicipiosDP(municipios) {
     var selectMunicipios = document.getElementById("selectMunicipios");
     selectMunicipios.innerHTML = ""; // Limpiar la lista de municipios
 
@@ -119,7 +119,7 @@ function actualizarSelectMunicipios(municipios) {
     });
 }
 
-function obtenerLocalidad(){
+function obtenerLocalidadDP(){
 	var select = document.getElementById('selectMunicipios');
 	//console.log(select.value);
 	select.addEventListener('change',
@@ -132,7 +132,7 @@ function obtenerLocalidad(){
 	        data: { municipioId: selectIndex},
 	        success: function(data) {
 	            actualizarInputCP("");
-	            actualizarSelectLocalidad(data);
+	            actualizarSelectLocalidadDP(data);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -141,7 +141,7 @@ function obtenerLocalidad(){
 	  });
 }
 
-function actualizarSelectLocalidad(localidades) {
+function actualizarSelectLocalidadDP(localidades) {
     var selectLocalidad = document.getElementById("selectLocalidades");
     selectLocalidad.innerHTML = ""; // Limpiar la lista de municipios
 	
