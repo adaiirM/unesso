@@ -321,11 +321,23 @@
 				            console.error(error);
 				        }
 				    });
+				    
+				    document.getElementById('calle').readOnly = true;
+					document.getElementById('numero').readOnly = true;
+					document.getElementById('coloniaBarrio').readOnly = true;
+                    document.getElementById('selectLocalidades').readOnly = true;
+                    document.getElementById('selectMunicipios').readOnly = true;
+                    document.getElementById('selectEstados').readOnly = true;
                     
                 } else if (radios[i].checked && radios[i].value === '0') {
 					document.getElementById('calle').value = "";
+					document.getElementById('calle').readOnly = false;
+
 					document.getElementById('numero').value = "";
+					document.getElementById('numero').readOnly = false;
+					
 					document.getElementById('coloniaBarrio').value = "";
+					document.getElementById('coloniaBarrio').readOnly = false;
 					document.getElementById('cp').value = "";
 					
 					var selectLocalidad = document.getElementById('selectLocalidades');
@@ -335,6 +347,8 @@
 				        optionL.value = "";
 				        optionL.text = "Elige una opción";
 				        selectLocalidad.appendChild(optionL);
+					selectLocalidad.readOnly = false;
+					
 					
 					var selectMunicipio = document.getElementById('selectMunicipios');
 				    selectMunicipio.innerHTML = "";
@@ -342,11 +356,11 @@
 				        optionM.value = "";
 				        optionM.text = "Elige una opción";
 				        selectMunicipio.appendChild(optionM);
-				        
+				   	selectMunicipio.readOnly = true;
 					
-					var selectEstado = documento.getElementById('selectEstados');
+					var selectEstado = document.getElementById('selectEstados');
 					selectEstado.selectedIndex = 0;
-				
+					selectEstado.readOnly = true;
 
                 }
             }

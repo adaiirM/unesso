@@ -299,7 +299,7 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/guardarTutor")
-	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
+	public String guardarDom(@RequestParam("accion") String accion, @RequestParam("domTutor") String domTutor, Authentication auth, Alumno alumno, BindingResult result) {
 		/*if(result.hasErrors()) {
 			for (ObjectError error: result.getAllErrors()){
 				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
@@ -434,9 +434,6 @@ public class AlumnoController {
 		
 		return "redirect:/alumno/menuSolicitar";
 	}
-	
-	
-
 	
 	@ModelAttribute
 	public void setGenericos(Authentication auth, HttpSession sesion, Model model) {
