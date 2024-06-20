@@ -379,7 +379,7 @@
             </div>
             <div class="row mt-3">
 				 <div id="containerHermanos">
-					 <input hidden type="file" name="file"/>
+					<input hidden type="file" name="file"/>
 					<tr th:each="hermano, itemStat : ${formMiFamilia.familia.hermanos}">
 						 <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2 hermano-item">      
 							<td>
@@ -437,33 +437,27 @@
 							
 							<div class="col">
 					            <p class="textoInputs">Adjuntar comprobante:</p>
-					          
 					        </div>
-					        <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
-								<input hidden th:value="${hermano.getRutaArchivoComprobante()}" th:name="|familia.hermanos[${itemStat.index}__].rutaArchivoComprobante|"  th:field="*{familia.hermanos[__${itemStat.index}__].rutaArchivoComprobante}">
-					          <div class="file-select" id="src-file1" th:if="${hermano.getRutaArchivoComprobante() == null || hermano.getRutaArchivoComprobante().isEmpty()}">
-					                <label for="file-upload" class="custom-file-upload">
-								    <i class="fa fa-cloud-upload">Subir Comprobante</i> 
-									</label>
-									<input id="file-upload" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName(this, ${itemStat.index})|"/>
-									
-					                <input class="no-border"  th:id="'nombreArchivo-' + ${itemStat.index}">
-					         		<div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
-					          </div>
-					          <div th:if="${hermano.getRutaArchivoComprobante() != null && !hermano.getRutaArchivoComprobante().isEmpty()}">
-					             
-					         		<label for="file-upload" class="custom-file-upload">
-								    <i class="fa fa-cloud-upload">Subir Comprobante</i> 
-									</label>
-									<input id="file-upload" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName2(this, ${itemStat.index})|"/>
-					         		<input class="no-border" th:value="${hermano.getNombreArchivoOriginal()}" th:field="*{familia.hermanos[__${itemStat.index}__].nombreArchivoOriginal}"
-					                 th:name="|familia.hermanos[${itemStat.index}__].nombreArchivoOriginal|"  th:id="'nombreArchivo2-' + ${itemStat.index}">
-					              	<div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
-					          </div>
-					          
-					         	
+					       <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
+							    <input hidden th:value="${hermano.getRutaArchivoComprobante()}" th:name="|familia.hermanos[${itemStat.index}__].rutaArchivoComprobante|" th:field="*{familia.hermanos[__${itemStat.index}__].rutaArchivoComprobante}">
+							    <div class="file-select" id="src-file1" th:if="${hermano.getRutaArchivoComprobante() == null || hermano.getRutaArchivoComprobante().isEmpty()}">
+							        <label th:for="'file-upload-' + ${itemStat.index}" class="custom-file-upload">
+							            <i class="fa fa-cloud-upload">Subir Comprobante</i>
+							        </label>
+							        <input th:id="'file-upload-' + ${itemStat.index}" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName1(this, ${itemStat.index})|"/>
+							        <input class="no-border" th:id="'nombreArchivo1-' + ${itemStat.index}">
+							        <div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
+							    </div>
+							    <div th:if="${hermano.getRutaArchivoComprobante() != null && !hermano.getRutaArchivoComprobante().isEmpty()}">
+							        <label th:for="'file-upload-' + ${itemStat.index}" class="custom-file-upload">
+							            <i class="fa fa-cloud-upload">Subir Comprobante</i>
+							        </label>
+							        <input th:id="'file-upload-' + ${itemStat.index}" type="file" name="file" aria-label="Archivo" th:onchange="|updateFileName2(this, ${itemStat.index})|"/>
+							        <input class="no-border" th:value="${hermano.getNombreArchivoOriginal()}" th:field="*{familia.hermanos[__${itemStat.index}__].nombreArchivoOriginal}"
+							            th:name="|familia.hermanos[${itemStat.index}].nombreArchivoOriginal|" th:id="'nombreArchivo2-' + ${itemStat.index}">
+							        <div th:id="'nombreArchivoError'+ ${itemStat.index}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
+							    </div>
 							</div>
-					         
 					          
 					          <!-- ............................................................... -->
 						
@@ -513,23 +507,27 @@
     
     <script src="../javaScript.js/funcionamiento.js"></script>
      <script type="text/javascript">
+		 
 		 /*<![CDATA[*/
+		 /*
 		    function updateFileName1(input, index) {
 		        var fileName = input.files[0].name;
 		        var fileNameDisplay = document.getElementById('fileNameDisplay_' + index);
 		        fileNameDisplay.value = fileName;
 		        console.log("El archivo es: " + fileName);
 		    }
+		    */
 		    
 		/*]]>*/
-		 function updateFileName(input, index) {
-			    var fileName = input.files[0].name;
-			    document.getElementById('nombreArchivo-' + index).value = fileName;
-			}
-			function updateFileName2(input, index) {
-			    var fileName = input.files[0].name;
-			    document.getElementById('nombreArchivo2-' + index).value = fileName;
-			}
+		 function updateFileName1(input, index) {
+	        var fileName = input.files[0].name;
+	        document.getElementById('nombreArchivo1-' + index).value = fileName;
+	    }
+	
+	    function updateFileName2(input, index) {
+	        var fileName = input.files[0].name;
+	        document.getElementById('nombreArchivo2-' + index).value = fileName;
+	    }
 
 			
 			document.getElementById('numHermanosEstudiando').addEventListener('input', function() {
