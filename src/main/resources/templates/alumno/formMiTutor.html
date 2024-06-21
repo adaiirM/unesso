@@ -274,7 +274,7 @@
 					document.getElementById('selectMunicipios').disabled = true;
 					document.getElementById('selectLocalidades').disabled = true;
 					document.getElementById('selectDistritos').disabled = true;
-					
+
 					
                 } 
             }
@@ -428,7 +428,6 @@
                         required: true
                     },
                     "tutorEconomico.correo": {
-                        required: true,
                         email: true
                     },
                     "tutorEconomico.telefono":{
@@ -467,7 +466,6 @@
                         required: "Por favor, ingresa su nombre."
                     },
                     "tutorEconomico.correo": {
-                        required: "Por favor, Ingrese un correo electrónico.",
                         email: "Por favor, ingrese un correo electrónico válido."
                     },
                     "tutorEconomico.telefono": {
@@ -540,7 +538,7 @@
 		document.getElementById('selectEstados').addEventListener('change', function() {
 		    var selectEstados = document.getElementById('selectEstados');
 		    var selectDistritos = document.getElementById('selectDistritos');
-		    var selectRegiones = document.getElementById('selectRegiones')
+		    var selectRegiones = document.getElementById('selectRegiones');
 		    
 		    if(selectEstados.value !== "20"){
 				var inputDistrito = document.createElement("input");
@@ -548,7 +546,7 @@
 				inputDistrito.type = "text";
 				inputRegion.type = "text";
 				inputDistrito.className = "form-control estiloInputs rounded";
-				inputRegion.className = "form-control estiloInputs rounded";;
+				inputRegion.className = "form-control estiloInputs rounded";
 				
 			} else{
 				var inputDistrito = document.createElement("select");
