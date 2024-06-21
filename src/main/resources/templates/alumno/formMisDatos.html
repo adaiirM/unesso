@@ -69,14 +69,14 @@
 
 	<section>
 
-		<h1 class="titulo ps-5 mb-4 mt-2 fw-bold fs-1">MIS DATOS</h1>
+		<h1 class="titulo ps-5 mb-2 mt-2 fw-bold fs-1">MIS DATOS</h1>
 		<div class="container-auto row d-flex justify-content-center me-3 ps-3">
-			<div class="col-10 col-xs-2 col-sm-12 col-md-11 col-xl-4 rounded colorFondo mt-4 ms-4 mb-2 p-2">
+			<div class="col-12 col-xs-2 col-sm-12 col-md-11 col-xl-4 rounded colorFondo mt-4 ms-2 mb-2 p-2">
 				<h3 style="color: #6366F1;">Información general</h3>
 				<div class="row">
 					<div class="col-sm-4 col-md-4 col-lg-4 col-xl-12 pt-3">
 						<p class="textoInputs">Nombre Completo</p>
-						<input readonly type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreCompleto" >
+						<input readonly type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombreCompleto" >
 						<div id="resultField"></div>
 					</div>
 
@@ -177,9 +177,7 @@
 			</div>
 
 
-
-
-			<div class="col-10 col-xs-2 col-sm-12 col-md-11 col-xl-7 rounded ms-3 mb-4 mt-4 p-2">
+			<div class="col-12 col-xs-2 col-sm-12 col-md-11 col-xl-7 rounded ms-2 mb-2 mt-4 p-2">
 				<div class="colorFondo p-2 rounded">
 					<h3 style="color: #6366F1; padding-bottom: 1%;">Domicilio</h3>
 					<div class="col-md-12">
@@ -226,14 +224,14 @@
 									<p>¿Con cuantas personas comparte el costo de la renta?</p>
 									<!-- ********************************************************************* -->
 									<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
-									<div id="numComparteViviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+									<div id="numComparteViviendaError" class="error"  style="display: none;">*Debes seleccionar una opción</div>
 									<!-- ********************************************************************* -->
 									<input name="infoVivienda.numComparteVivienda"
 										   th:field="*{infoVivienda.numComparteVivienda}"
 										   value=""
 										   type="number"
 										   min="0" max="5"
-										   class="estiloInputs rounded"
+										   class="estiloInputs rounded form-control"
 										   style="width: 100%;"
 										   id="inputNombre"
 										   placeholder="">
@@ -251,7 +249,7 @@
 										   value=""
 										   type="number"
 										   min="0" max="99999"
-										   class="estiloInputs rounded"
+										   class="estiloInputs rounded form-control"
 										   style="width: 100%;"
 										   id="inputNombre"
 										   placeholder="">
@@ -268,7 +266,7 @@
 										   th:field="*{infoVivienda.nombreCasero}"
 										   value=""
 										   type="text"
-										   class="estiloInputs rounded"
+										   class="estiloInputs rounded form-control"
 										   style="width: 100%;"
 										   id="inputNombreCasero"
 										   placeholder="">
@@ -358,9 +356,8 @@
 
 	<section>
 		<div class="row me-1 d-flex justify-content-center">
-			<div class="col-10 col-xs-4 col-sm-12 col-md-6 col-xl-6 rounded ms-3 pt-4">
+			<div class="col-11 col-xs-4 col-sm-12 col-md-6 col-xl-6 rounded mt-2 ms-4 mb-2 p-2">
 				<div class="colorFondo rounded p-2">
-
 					<h3 style="color: #6366F1;">Transporte</h3>
 
 					<div class="col-md-12 pt-3">
@@ -425,8 +422,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-12 mt-3">
-						<p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidad?</p>
+					<div class="container mt-3">
+						<p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidadssss?</p>
 
 						<!-- ********************************************************************* -->
 						<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
@@ -435,17 +432,19 @@
 
 						<!-- ********************************************************************* -->
 
-						<div class="col-3 col-md-12 col-xs-4 col-sm-6 col-md-8 col-lg-6">
+						<div class="row">
+							<div class="col-12">
+								<div th:each="grupoTransporte, grupoStatus : ${gruposTransporte}" style="display: flex; justify-content: space-between;">
+									<div th:each="transporte, transporteStatus : ${grupoTransporte}">
+										<div class="col-4 col-sm-6 col-md-4 col-lg-3 mb-3">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" th:field="*{mediosTraslado}" name="mediosTraslado" th:value="${transporte.idCatMediosTransporte}">
+												<label class="form-check-label" for="checkbox${transporte.idCatMediosTransporte}">
+													<p class="subtitulo" th:text="${transporte.nombreMediosTransporte}"></p>
+												</label>
 
-							<div th:each="grupoTransporte, grupoStatus : ${gruposTransporte}" style="display: flex; justify-content: space-between;">
-								<div style="width: 100%;" th:each="transporte, transporteStatus : ${grupoTransporte}">
-									<div class="form-check" style="margin-bottom: 30px;">
-
-										<input class="form-check-input" type="checkbox" th:field="*{mediosTraslado}" name="mediosTraslado" th:value="${transporte.idCatMediosTransporte}">
-										<label class="form-check-label" for="checkbox${transporte.idCatMediosTransporte}">
-											<p class="subtitulo" th:text="${transporte.nombreMediosTransporte}"></p>
-										</label>
-
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -456,7 +455,7 @@
 
 
 
-			<div class="col-10 col-xs-4 col-sm-12 col-md-5 col-xl-5 rounded ms-3 pt-4">
+			<div class="col-11 col-xs-4 col-sm-12 col-md-5 col-xl-5 rounded ms-3 pt-4">
 				<div class="colorFondo p-2 rounded" style="height: 100%;">
 					<h3 style="color: #6366F1; padding-bottom: 2%;">Información complementaria</h3>
 					<div class="col-md-12" style="color: #6366F1; ">
@@ -555,10 +554,10 @@
 		-->
 
 
-		<button type="button" id="guardar" class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5">Guardar</button>
+		<button type="button" id="guardar" class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5">Guardar avances</button>
 
 		<!-- Botón para enviar con validaciones -->
-		<button type="button" id="validar" class="btn btn-outline-success mt-3 ">Enviar</button>
+		<button type="button" id="validar" class="btn btn-outline-success mt-3 ">Siguiente</button>
 	</div>
 
 </form>
