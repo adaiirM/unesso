@@ -60,10 +60,11 @@
 
 					<div class="col-12 col-sm-6">
 						<input type="text" id="numPersonasAportan" name="numPersonasAportan" class="rounded estiloInputs" style="border-color: #6C757D; margin-left: 20px; height: 40px;">						
+					<!-- 
 						<button type="button" onclick="generarPersonas()" id="generateButton">Aceptar</button>
+					-->
 					</div>	
-					
-					
+				
 					<h4 class="mt-3" style=" color: #6366F1;" >Personas que aportan al gasto familiar:</h4> 
             		<p class="fontPoppins mt-3 textoInputs" style="color: #6C757D; text-align: justify;">Menciona el ingreso total mensual de cada persona que aporta al gasto de tu familia, en caso de que sus ingresos sean semanales o quincenales, deberás realizar una suma total e indicar el ingreso mensual.</p>
 				   	
@@ -211,6 +212,35 @@
 		    	mostrarMesFin();
 			}
 		});
+		
+		window.onload = function() {
+	        // Obtener el elemento input
+	        var inputFechaInicio = document.getElementById('periodoInicio');
+			var inputFechaFin = document.getElementById('periodoFin');
+			var periodoHiddenInicio = document.getElementById('periodoInicioHidden');
+			var periodoHiddenFin = document.getElementById('periodoFinHidden');
+			colocarFechaActual(inputFechaInicio, periodoHiddenInicio);
+			colocarFechaActual(inputFechaFin, periodoHiddenFin);
+			mostrarMesInicio();
+		    mostrarMesFin();
+	    }
+	    
+	    function colocarFechaActual(inputFecha, periodoHidden){
+	        // Verificar si no tiene valor asignado
+	        if (!inputFecha.value) {
+	            // Obtener la fecha actual
+	            var hoy = new Date();
+	
+	            // Formatear la fecha en formato yyyy-mm-dd
+	            var dia = ("0" + hoy.getDate()).slice(-2);
+	            var mes = ("0" + (hoy.getMonth() + 1)).slice(-2);
+	            var anio = hoy.getFullYear();
+	
+	            // Asignar la fecha formateada al input
+	            inputFecha.value = anio + '-' + mes + '-' + dia;
+	            periodoHidden.value = dia + '/' + mes + '/' + anio;
+	        }
+		}
 		
 		document.getElementById('pagoBimestral').addEventListener('input', function() {
             // Obtener el valor del primer input
