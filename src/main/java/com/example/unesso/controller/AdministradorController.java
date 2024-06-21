@@ -20,7 +20,7 @@ public class AdministradorController {
     @Autowired
     private AlumnoServiceJPA alumnoService;
     @Autowired
-    private UsuarioServiceJPA usuarioService;;
+    private UsuarioServiceJPA usuarioService;
 
 
     @GetMapping("/menuAdministrador")
@@ -53,7 +53,12 @@ public class AdministradorController {
     public String guardarAlumno(Alumno alumno) {
         String usuarioCorreo = alumno.getUsuario().getUsername();
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
-        if (usuario != null) {
+        if (usuario == null) {
+            usuario = new Usuario();
+            usuario.setUsername(usuarioCorreo);
+            usuario.setPassword("{noop}UNSIJ2024");
+            usuario.setStatus(true);
+            usuarioService.saveUsuario(usuario);
             alumno.setUsuario(usuario);
             alumnoService.saveAlumno(alumno);
             return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar

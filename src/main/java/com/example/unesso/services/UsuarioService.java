@@ -7,4 +7,5 @@ import com.example.unesso.model.Usuario;
  */
 public interface UsuarioService {
     Usuario findByCorreo(String correo);
+    void saveUsuario(Usuario usuario);
 }

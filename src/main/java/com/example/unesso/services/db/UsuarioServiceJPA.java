@@ -18,4 +18,8 @@ public class UsuarioServiceJPA implements UsuarioService {
 	public Usuario findByCorreo(String correo) {
 		return usuarioRepo.findByCorreo(correo);
 	}
+	@Override
+	public void saveUsuario(Usuario usuario) {
+        usuarioRepo.save(usuario);
+    }
 }
