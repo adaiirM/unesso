@@ -368,7 +368,6 @@ public class AlumnoController {
 			@RequestParam("observaciones") String observacones) {
 		if (!multiPart.isEmpty()) {
 			System.out.print(multiPart);
-
 		}
 		
 		System.out.println("Familia del formulario: " + familia.toString());
@@ -389,9 +388,15 @@ public class AlumnoController {
 				gfEnviar.setIdGastosFam(gf.getIdGastosFam());
 				
 				if(a.getFamilia().getGastosFam().getReciboLuz() != null) {
+					
 					System.out.println("Entra");
 					ReciboLuz rb = serviceReciboLuz.buscarPorId(a.getFamilia().getGastosFam().getReciboLuz().getIdReciboLuz());
 					ReciboLuz rbEnviar = familia.getGastosFam().getReciboLuz();
+					
+					if(rbEnviar.getPagoBimestral() == null) {
+						rbEnviar.setPagoBimestral("0");
+					}
+					
 					rbEnviar.setIdReciboLuz(rb.getIdReciboLuz());
 					System.out.println(rbEnviar.toString());
 					serviceReciboLuz.guardarReciboLuz(rbEnviar);

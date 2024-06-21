@@ -212,6 +212,35 @@
 			}
 		});
 		
+		window.onload = function() {
+	        // Obtener el elemento input
+	        var inputFechaInicio = document.getElementById('periodoInicio');
+			var inputFechaFin = document.getElementById('periodoFin');
+			var periodoHiddenInicio = document.getElementById('periodoInicioHidden');
+			var periodoHiddenFin = document.getElementById('periodoFinHidden');
+			colocarFechaActual(inputFechaInicio, periodoHiddenInicio);
+			colocarFechaActual(inputFechaFin, periodoHiddenFin);
+			mostrarMesInicio();
+		    mostrarMesFin();
+	    }
+	    
+	    function colocarFechaActual(inputFecha, periodoHidden){
+	        // Verificar si no tiene valor asignado
+	        if (!inputFecha.value) {
+	            // Obtener la fecha actual
+	            var hoy = new Date();
+	
+	            // Formatear la fecha en formato yyyy-mm-dd
+	            var dia = ("0" + hoy.getDate()).slice(-2);
+	            var mes = ("0" + (hoy.getMonth() + 1)).slice(-2);
+	            var anio = hoy.getFullYear();
+	
+	            // Asignar la fecha formateada al input
+	            inputFecha.value = anio + '-' + mes + '-' + dia;
+	            periodoHidden.value = dia + '/' + mes + '/' + anio;
+	        }
+		}
+		
 		document.getElementById('pagoBimestral').addEventListener('input', function() {
             // Obtener el valor del primer input
             const value = this.value;

@@ -205,7 +205,7 @@
 	                    <div class="row mt-4">
 	                        <div class="col">
 	                            <p class="textoInputs">Distrito</p>
-	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                            <select id="selectDistritos" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
 	                                <option value="" selected class="subtitulo">Elige una opción</option>
 	                                <option value="1" class="subtitulo">Distrito 1</option>
 	                                <option value="2" class="subtitulo">Distrito 2</option>
@@ -214,7 +214,7 @@
 	                        </div>
 	                        <div class="col">
 	                            <p class="textoInputs">Región</p>
-	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                            <select id="selectRegiones" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
 	                                <option value=""  class="subtitulo">Elige una opción</option>
 	                                <option value="1" class="subtitulo">Región 1</option>
 	                                <option value="2" class="subtitulo">Región 2</option>
@@ -257,6 +257,8 @@
     
     <script>
 		
+		
+		
 		// Funciones cuando cargue el HTML
        document.addEventListener('DOMContentLoaded', function() {
 		    var content = document.getElementById('contentDomicilio');
@@ -271,9 +273,12 @@
 					document.getElementById('selectEstados').disabled = true;
 					document.getElementById('selectMunicipios').disabled = true;
 					document.getElementById('selectLocalidades').disabled = true;
+					document.getElementById('selectDistritos').disabled = true;
+					
 					
                 } 
             }
+            
 		});
 		
 		function sincronizarValor(){
@@ -357,7 +362,12 @@
 					document.getElementById('selectMunicipios').disabled = true;
 					document.getElementById('selectLocalidades').disabled = true;
 					
-
+					if(document.getElementById('selectEstados') == "20"){
+						document.getElementById('selectDistritos').readOnly = true;
+					} else {
+						document.getElementById('selectDistritos').disabled = true;
+					}
+					
                     
                 } else if (radios[i].checked && radios[i].value === '0') {
 					document.getElementById('calle').value = "";
@@ -373,6 +383,8 @@
 					document.getElementById('selectEstados').disabled = false;
 					document.getElementById('selectMunicipios').disabled = false;
 					document.getElementById('selectLocalidades').disabled = false;
+					
+					
 					
 					var selectLocalidad = document.getElementById('selectLocalidades');
 										
@@ -525,7 +537,47 @@
             });
         });
 
+		document.getElementById('selectEstados').addEventListener('change', function() {
+		    var selectEstados = document.getElementById('selectEstados');
+		    var selectDistritos = document.getElementById('selectDistritos');
+		    var selectRegiones = document.getElementById('selectRegiones')
+		    
+		    if(selectEstados.value !== "20"){
+				var inputDistrito = document.createElement("input");
+				var inputRegion = document.createElement("input");
+				inputDistrito.type = "text";
+				inputRegion.type = "text";
+				inputDistrito.className = "form-control estiloInputs rounded";
+				inputRegion.className = "form-control estiloInputs rounded";;
+				
+			} else{
+				var inputDistrito = document.createElement("select");
+				var inputRegion = document.createElement("select");
+
+				inputDistrito.className = "form-select estiloInputs";
+				inputRegion.className = "form-select estiloInputs";
+			}
+
+        	inputDistrito.id = selectDistritos.id; // Mantener el mismo id si es necesario
+        	inputDistrito.name = selectDistritos.name; // Mantener el mismo name si es necesario
+        	//inputDistrito.value = selectDistritos.options[selectDistritos.selectedIndex].text; // Asigna el valor del texto seleccionado
+			inputDistrito.style.cssText = 'width: 96%;';
+			// Reemplaza el select con el input
+							
+        	selectDistritos.parentNode.replaceChild(inputDistrito, selectDistritos);
+        	
+        	inputRegion.id = selectRegiones.id; // Mantener el mismo id si es necesario
+        	inputRegion.name = selectRegiones.name; // Mantener el mismo name si es necesario
+        	//inputDistrito.value = selectDistritos.options[selectDistritos.selectedIndex].text; // Asigna el valor del texto seleccionado
+			inputRegion.style.cssText = 'width: 96%;';
+			// Reemplaza el select con el input
+							
+        	selectRegiones.parentNode.replaceChild(inputRegion, selectRegiones);
+		});
 		
+		function cambiarInputDistrito(){
+			
+		}
 		
 	</script>
     <script src="../javaScript.js/funcionamiento.js"></script>

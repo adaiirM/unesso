@@ -31,7 +31,7 @@ public class ReciboLuz {
 	
 	private String pagoBimestral;
 	
-	private Double pagoPromedioMes;
+	private String pagoPromedioMes;
 	
 	private String rutaRecibo;
 	
@@ -85,11 +85,11 @@ public class ReciboLuz {
 		this.nombreArchivo = nombreArchivo;
 	}
 
-	public Double getPagoPromedioMes() {
+	public String getPagoPromedioMes() {
 		return pagoPromedioMes;
 	}
 
-	public void setPagoPromedioMes(Double pagoPromedioMes) {
+	public void setPagoPromedioMes(String pagoPromedioMes) {
 		this.pagoPromedioMes = pagoPromedioMes;
 	}
 
