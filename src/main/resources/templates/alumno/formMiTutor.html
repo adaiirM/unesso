@@ -62,21 +62,21 @@
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
 	                    <p class="subtitulo" style="text-align: justify;">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
-	                    <input type="number" min="0" class="form-control estiloInputs" style="width: 5em;" id="gastoMensual" name="gastoMensual" th:field="*{gastoMensual}"  placeholder="">
+	                    <input type="number" min="0" class="form-control estiloInputs" style="width: 6em;" id="gastoMensual" name="gastoMensual" th:field="*{gastoMensual}"  placeholder="">
 	                </div>
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿Dependes económicamente?</p>
-	                   <div class="d-flex">
-						    <div style="width: 100%;">
-						        <div class="form-check">
+	                   <div class="d-flex justify-content-start w-25">
+						    <div class="me-5">
+						        <div class="form-check d-flex justify-content-start" >
 						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input" name="dependeEconomicamente" id="flexRadioDefault1" value="1" checked>
 									<label class="form-check-label" for="flexRadioDefault1">
 										<p class="subtitulo">Si</p>
 						            </label>
 						        </div>
 						    </div>
-						    <div style="width: 850%;">
-						        <div class="form-check">
+						    <div>
+						        <div class="form-check d-flex justify-content-start">
 						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input"  name="dependeEconomicamente" id="flexRadioDefault2" value="0">
 						            <label class="form-check-label" for="flexRadioDefault2">
 						                <p class="subtitulo">No</p>
@@ -85,17 +85,111 @@
 						    </div>
 						</div>
 	                </div>
+
+					<div class="row">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+							<p>Ingresa el nombre del centro de trabajo</p>
+							<input type="text" class="form-control estiloInputs" style="width: 100%;" id="">
+						</div>
+						<div class="col-sm-7 col-md-4 col-lg-4 ">
+							<p>Menciona el ingreso mensual que recibes</p>
+							<input type="number" class="form-control estiloInputs" style="width: 54%;" id="">
+						</div>
+						<div class="col-sm-5
+						 col-md-4 col-lg-4 col-xl-4">
+							<p>Ingresa el telefono del centro de trabajo</p>
+							<input type="text" class="form-control estiloInputs" style="width: 60%;" id="">
+						</div>
+
+						<div class="col-12">
+							<h3 class="mt-4 mb-4" style="color: #6366F1;">Domicilio</h3>
+							<div class="row">
+								<div class="col">
+									<p class="textoInputs">Estado</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Estado 1</option>
+										<option value="2" class="subtitulo">Estado 2</option>
+										<option value="3" class="subtitulo">Estado 3</option>
+									</select>
+								</div>
+								<div class="col">
+									<p class="textoInputs">Región</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Región 1</option>
+										<option value="2" class="subtitulo">Región 2</option>
+										<option value="3" class="subtitulo">Región 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="row mt-4">
+								<div class="col">
+									<p class="textoInputs">Distrito</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Distrito 1</option>
+										<option value="2" class="subtitulo">Distrito 2</option>
+										<option value="3" class="subtitulo">Distrito 3</option>
+									</select>
+								</div>
+								<div class="col">
+									<p class="textoInputs">Municipio</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Municipio 1</option>
+										<option value="2" class="subtitulo">Municipio 2</option>
+										<option value="3" class="subtitulo">Municipio 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="row mt-4">
+								<div class="col">
+									<p class="textoInputs">Localidad</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Localidad 1</option>
+										<option value="2" class="subtitulo">Localidad 2</option>
+										<option value="3" class="subtitulo">Localidad 3</option>
+									</select>
+								</div>
+								<div class="col">
+									<p class="textoInputs">Colonia</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Colonia o barrio 1</option>
+										<option value="2" class="subtitulo">Colonia o barrio 2</option>
+										<option value="3" class="subtitulo">Colonia o barrio 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-5 me-5 mt-4">
+									<p class="textoInputs">Calle</p>
+									<input type="text" class="form-control estiloInputs" style="width: 100%" id="">
+								</div>
+								<div class="col-4 col-sm-3 col-md-3 col-lg-1 me-5 mt-4">
+									<p class="textoInputs">Número</p>
+									<input type="number" class="form-control estiloInputs" style="width: 100%;" id="">
+								</div>
+								<div class="col-4 col-sm-3 col-md-3 col-lg-1 mt-4">
+									<p class="textoInputs">C.P.</p>
+									<input type="number" class="form-control estiloInputs" style="width: 100%;" id="">
+								</div>
+							</div>
+						</div>
+					</div>	
 	            </div>
 	        </div>
 	    </div><br>
 		
-        <p class="subtitulo m-4 " >Datos del padre, madre o tutor o familiar más cercano (preferiblemente, del que se depende económicamente) </p>
-        <div class="container-auto row justify-content-center" >
+        <p class="subtitulo ms-5 mt-4" >Datos del padre, madre o tutor o familiar más cercano (preferiblemente, del que se depende económicamente) </p>
+        <div class="container-auto row justify-content-center">
             <div class="col-10 col-xs-2 col-sm-10 col-md-9 col-xl-5  rounded colorFondo m-2 p-4 ms-4">
                 <h3 style="color: #6366F1;">Información general</h3>
                 <div class="col-12">
                     <p class="textoInputs">Nombre Completo</p>
-                    <input th:field="*{tutorEconomico.nombreTutorEconomico}" class="estiloInputs rounded" style="width: 100%;" type="text" id="nombreTutorEconomico" name="tutorEconomico.nombreTutorEconomico" placeholder="Ingrese el nombre completo">
+                    <input th:field="*{tutorEconomico.nombreTutorEconomico}" class="estiloInputs rounded form-control" style="width: 100%;" type="text" id="nombreTutorEconomico" name="tutorEconomico.nombreTutorEconomico" placeholder="Ingrese el nombre completo">
                 </div>
                 
                 <div  for="selectCatParentesco" class="col-12 pt-3">
@@ -113,7 +207,7 @@
 	            <div class="col-12 pt-3">
 	                <div class="d-flex">
 	                    <div style="width: 100%;" class="me-4">
-	                        <p class="textoInputs">Correo electronico</p>
+	                        <p class="textoInputs">E-mail</p>
 	                        <input th:field="*{tutorEconomico.correo}" type="email" class="form-control estiloInputs rounded" style="width: 100%;" id="correo" name="tutorEconomico.correo" placeholder="Ingrese su correo electronico">
 	                    </div>
 	                    <div style="width: 100%;">
@@ -198,7 +292,7 @@
 	                            <input th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}" type="hidden" id="valorOculto" name="tutorEconomico.domicilio.catLocalidad">
 	                        </div>
 	                        <div class="col">
-	                            <p class="textoInputs">Colonia o barrio</p>
+	                            <p class="textoInputs">Colonia</p>
 	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 	                        </div>
 	                    </div>
@@ -224,17 +318,17 @@
 	                    </div>
 	                </div>
 	
-	                <div class="row ms-3 mt-4 me-3">
-	                    <div class="col">
+	                <div class="row ms-3 me-3">
+	                    <div class="col-12 col-md-6 mt-4">
 	                        <label>Calle</label>
 	                        <input th:field="*{tutorEconomico.domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="tutorEconomico.domicilio.calle" placeholder="Nombre de la calle">
 	                    </div>
-	                    <div class="col">
+	                    <div class="col-6 mt-4 col-md-3">
 	                        <label>Numero</label>
 	                        <input th:field="*{tutorEconomico.domicilio.numero}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="numero" name="tutorEconomico.domicilio.numero" placeholder="Número">
 	                    </div>
-	                    <div class="col">
-	                        <label>Codigo postal</label>
+	                    <div class="col-6 mt-4 col-md-3">
+	                        <label>C.P.</label>
 	                        <input th:field="*{tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="codigoPostal" placeholder="" readonly>
 	                    </div>
 	                </div>
