@@ -23,6 +23,12 @@ public class UsuarioServiceJPA implements IUsuarioService {
 	public void saveUsuario(Usuario usuario) {
         usuarioRepo.save(usuario);
     }
+
+	@Override
+	public void deleteUsuarioByCorreo(String correo) {
+		usuarioRepo.deleteByCorreo(correo);
+	}
+
 	public Usuario buscarPorCorreo(String correo) {
 		return usuarioRepo.getByCorreo(correo);
 	}

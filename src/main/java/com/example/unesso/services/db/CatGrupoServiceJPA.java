@@ -36,5 +36,7 @@ public class CatGrupoServiceJPA implements ICatGrupoService {
 		return catGrupoRepo.findByNombreGrupo(nombreGrupo);
 	}
 
-
+	public CatGrupo save(CatGrupo catGrupo) {
+		return catGrupoRepo.save(catGrupo);
+	}
 }

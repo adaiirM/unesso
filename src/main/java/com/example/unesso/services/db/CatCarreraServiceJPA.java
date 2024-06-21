@@ -23,5 +23,8 @@ public class CatCarreraServiceJPA implements ICatCarreraService {
 	public List<CatCarrera> buscarTodas() {
 		return catCarreraRepo.findAll();
 	}
-	
+
+	public CatCarrera save(CatCarrera catCarrera) {
+		return catCarreraRepo.save(catCarrera);
+	}
 }

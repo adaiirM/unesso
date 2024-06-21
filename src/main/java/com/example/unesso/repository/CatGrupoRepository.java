@@ -44,4 +44,5 @@ public interface CatGrupoRepository extends JpaRepository<CatGrupo, Integer> {
 
     //metodo para obtener el grupo por el nombre del grupo
     CatGrupo findByNombreGrupo(String nombreGrupo);
+
 }

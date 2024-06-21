@@ -21,4 +21,8 @@ public class CatSemestreServiceJPA implements ICatSemestreService {
 		return catSemestreRepo.findAll();
 	}
 
+	public CatSemestre save(CatSemestre catSemestre) {
+		return catSemestreRepo.save(catSemestre);
+	}
+
 }

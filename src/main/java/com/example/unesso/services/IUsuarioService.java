@@ -10,4 +10,5 @@ public interface IUsuarioService {
 	Usuario guardarUsuario(Usuario usuario);
 	Usuario findByCorreo(String correo);
 	void saveUsuario(Usuario usuario);
+	void deleteUsuarioByCorreo(String correo);
 }

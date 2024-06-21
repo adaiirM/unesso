@@ -12,6 +12,8 @@ import com.example.unesso.model.Usuario;
 import com.example.unesso.repository.AlumnoRepository;
 import com.example.unesso.services.IAlumnoService;
 
+import java.util.List;
+
 
 @Service
 @Primary
@@ -45,11 +47,26 @@ public class AlumnoServiceJPA implements  IAlumnoService {
 	}
 
 	@Override
+	public Alumno getByIdAlumno(Integer idAlumno) {
+		return alumnoRepo.findByIdAlumno(idAlumno);
+	}
+
+	@Override
 	public Alumno guardar(Alumno alumno) {
 		return alumnoRepo.save(alumno);
 	}
 
+	@Override
+	public List<Alumno> getAllAlumnos() {
+		return alumnoRepo.findAll();
+	}
+
+
+
 	public void saveAlumno(Alumno alumno) {
 		alumnoRepo.save(alumno);
+	}
+	public void deleteAlumno(Integer idAlumno) {
+		alumnoRepo.deleteById(idAlumno);
 	}
 }

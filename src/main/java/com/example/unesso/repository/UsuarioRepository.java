@@ -9,4 +9,5 @@ import com.example.unesso.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Usuario findByCorreo(String correo);
 	Usuario getByCorreo(String correo);
+    void deleteByCorreo(String correo);
 }

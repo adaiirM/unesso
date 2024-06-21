@@ -4,11 +4,9 @@ import com.example.unesso.model.*;
 import com.example.unesso.services.db.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,9 +46,112 @@ public class AdministradorController {
         return "/solicitudesRevisadas";
     }
     @GetMapping("/alumnos")
-    public String alumnos(){
+    public String alumnos(Model model){
+        List<Alumno> alumnos = alumnoService.getAllAlumnos();  // Método que obtiene todos los alumnos
+        System.out.println(alumnos);
+        model.addAttribute("alumnos", alumnos);
         return "/administrarAlumno";
     }
+    @PostMapping("/eliminarAlumno")
+    @Transactional
+    public String eliminarAlumno(@RequestParam Integer idAlumno) {
+        Alumno alumnoExistente = alumnoService.getByIdAlumno(idAlumno);
+        if (alumnoExistente == null) {
+            return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
+        }
+        if (alumnoExistente.getUsuario() != null) {
+            usuarioService.deleteUsuarioByCorreo(alumnoExistente.getUsuario().getUsername());
+        }
+
+        alumnoService.deleteAlumno(idAlumno);
+        return "redirect:/administrador/alumnos";
+    }
+    @GetMapping("/actualizarAlumno")
+    public String mostrarFormularioActualizacion(@RequestParam Integer idAlumno, Model model) {
+        System.out.println(idAlumno);
+        Alumno alumno = alumnoService.getByIdAlumno(idAlumno);
+
+        if (alumno == null) {
+            return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
+        }
+
+        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+        List<CatSemestre> semestres = catSemestreService.buscarTodos();
+
+        model.addAttribute("alumno", alumno);
+        model.addAttribute("carreras", carreras);
+        model.addAttribute("semestres", semestres);
+
+        return "/formActualizarAlumno";
+    }
+    @PostMapping("/actualizarAlumno")
+    @Transactional // Asegura que este método esté dentro de una transacción
+    public String actualizarAlumno(@RequestParam("idAlumno") Integer idAlumno, @ModelAttribute("alumno") Alumno alumno) {
+
+
+        // Buscar el alumno existente en la base de datos
+        Alumno alumnoExistente = alumnoService.getByIdAlumno(idAlumno);
+        if (alumnoExistente == null) {
+            return "redirect:/administrador/ERROR";
+        }
+
+        String usuarioCorreo = alumno.getUsuario().getUsername();
+        Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
+
+        // Si el alumno existente tiene un usuario asignado, eliminar el usuario
+        if (alumnoExistente.getUsuario() != null) {
+            usuarioService.deleteUsuarioByCorreo(alumnoExistente.getUsuario().getUsername());
+        }
+
+        if (usuario == null) {
+            usuario = new Usuario();
+            usuario.setUsername(usuarioCorreo);
+            usuario.setPassword("{noop}UNSIJ2024");
+            usuario.setStatus(true);
+
+            CatRol catRol = catRolService.findByIdRol(1);
+            usuario.setCatRol(catRol);
+
+            usuarioService.saveUsuario(usuario);
+        } else {
+            usuario.setUsername(usuarioCorreo);
+            usuarioService.saveUsuario(usuario);
+        }
+
+        alumnoExistente.setUsuario(usuario);
+
+        CatGrupo grupo = catGrupoService.findByNombreGrupo(alumno.getCatGrupo().getNombreGrupo());
+        if (grupo == null) {
+            // Manejar el caso donde el grupo no existe
+            return "redirect:/administrador/ERROR";
+        }
+
+        alumnoExistente.setCatGrupo(grupo);
+
+        EstadoFormularios estadoFormularios = alumnoExistente.getEstadoFormularios();
+        if (estadoFormularios == null) {
+            estadoFormularios = new EstadoFormularios();
+            estadoFormularios.setFormMisDatos(false);
+            estadoFormularios.setFormMiFamilia(false);
+            estadoFormularios.setFormDependienteEconomico(false);
+            estadoFormularios.setFormMisGatos(false);
+            estadoFormularioService.guardarEstadoFormularios(estadoFormularios);
+        }
+        alumnoExistente.setEstadoFormularios(estadoFormularios);
+
+        // Actualizar otros campos del alumno según sea necesario
+        alumnoExistente.setNombre(alumno.getNombre());
+        alumnoExistente.setApellidoP(alumno.getApellidoP());
+        alumnoExistente.setApellidoM(alumno.getApellidoM());
+        alumnoExistente.setCurp(alumno.getCurp());
+        alumnoExistente.setTelefono(alumno.getTelefono());
+        alumnoExistente.setMatricula(alumno.getMatricula());
+
+        alumnoService.saveAlumno(alumnoExistente);
+
+        return "redirect:/administrador/alumnos";
+    }
+
     @GetMapping("/fechas")
     public String fechas(){
         return "/administrarFecha";
