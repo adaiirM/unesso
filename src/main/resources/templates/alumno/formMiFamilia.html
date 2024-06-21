@@ -779,18 +779,17 @@
 	            var isValid = true;
 	
 	            // Validación de radio buttons
-	            var domicilioSi = document.getElementById('domicilioSi');
-	            var domicilioNo = document.getElementById('domicilioNo');
 	            var domicilioError = document.getElementById('domicilioError');
-	            if (!domicilioSi.checked && !domicilioNo.checked) {
-	                domicilioError.style.display = 'block';
-	                setTimeout(function() {
-				        $(domicilioError).fadeOut();
-				    }, 5000);
-	                isValid = false;
-	            } else {
-	                domicilioError.style.display = 'none';
-	            }
+			if (!$('#domicilioSi').is(':checked') && !$('#domicilioNo').is(':checked')) {
+				console.log("No esta seleccionado si o no");
+				domicilioError.style.display = 'block';
+				setTimeout(function () {
+					$(domicilioError).fadeOut();
+				}, 5000);
+				isValid = false;
+			} else {
+				domicilioError.style.display = 'none';
+			}
 	            
 	            var serviciosError = document.getElementById('serviciosError');
 	            if ($('input[name="serviciosVivienda"]').is(":checked")) {
