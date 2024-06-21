@@ -19,11 +19,17 @@
         }
         .error {
             color: red;
-            font-size: 0.875em;            
+            font-size: 0.875em;      
+                  
         }
         .form-check-inline {
             position: relative;
         }
+        
+        .error option {
+		    background-color: white; /* Ejemplo de fondo rojo claro */
+		    color: black; /* Ejemplo de color de texto oscuro */
+		}
     </style>
 </head>
 <body>
@@ -56,7 +62,7 @@
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿A cuánto hacienden tus gastos mensuales de manutención?</p>
 	                    <p class="subtitulo" style="text-align: justify;">Lo que pagas de alimentación, transporte, vivienda, servicios médicos, libros y materiales escolares, entretenimiento, etc. (Por favor no incluyas los gastos en colegiatura e inscripciones de la universidad)</p>
-	                    <input type="number" class="form-control estiloInputs" style="width: 5em;" id="gastoMensual" name="gastoMensual" th:field="*{gastoMensual}"  placeholder="">
+	                    <input type="number" min="0" class="form-control estiloInputs" style="width: 5em;" id="gastoMensual" name="gastoMensual" th:field="*{gastoMensual}"  placeholder="">
 	                </div>
 	                <div class="col-12 mt-3">
 	                    <p class="textoInputs">¿Dependes económicamente?</p>
@@ -92,9 +98,10 @@
                     <input th:field="*{tutorEconomico.nombreTutorEconomico}" class="estiloInputs rounded" style="width: 100%;" type="text" id="nombreTutorEconomico" name="tutorEconomico.nombreTutorEconomico" placeholder="Ingrese el nombre completo">
                 </div>
                 
-                <div class="col-12 pt-3">
+                <div  for="selectCatParentesco" class="col-12 pt-3">
                     <p class="textoInputs">Parentesco</p>
-                    <select th:field="*{tutorEconomico.catParentesco.idCatParentesco}" id="catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                    <select th:field="*{tutorEconomico.catParentesco.idCatParentesco}" id="catParentesco" name="selectCatParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example" required>
+						<option class="subtitulo" value="">Elige una opción</option>							
 						<option class="subtitulo"
 							th:each="catParentesco : ${parentescos}" 
 							th:value="${catParentesco.idCatParentesco}" 
@@ -117,7 +124,8 @@
 	            </div>
 	            <div class="col mt-3">
 	                <p class="textoInputs">Indica su ocupación:</p>
-	                 <select th:field="*{tutorEconomico.catOcupacion.idCatOcupacion}" id="catOcupacion" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+	                 <select th:field="*{tutorEconomico.catOcupacion.idCatOcupacion}" id="catOcupacion" name="selectCatOcupacion" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                        <option value="" class="subtitulo">Elige una opción</option>							
 						<option th:each="catOcupacion : ${ocupaciones}" th:value="${catOcupacion.idCatOcupacion}" th:text="${catOcupacion.nombreOcupacion}" class="subtitulo"></option>
 	                </select>
 	            </div>
@@ -153,9 +161,9 @@
                 <div class="mt-1" style="color: #6366F1;" >
                     <p>¿El domicilio de tu tutor coincide con el que te encuentras actualmente?</p>
                     <div class="mt-1" style="margin-left: 1cm;">
-                        <input type="radio" class="input-outline-primary " id="apoyoSi" name="domicilio" value="1" style="color: #6366F1;" onclick="toggleContent()">
+                        <input th:field="*{tutorEconomico.esViviendaAlumno}" type="radio" class="input-outline-primary " id="apoyoSi" name="tutorEconomico.esViviendaAlumno" value="1" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
-                        <input type="radio" class="input-outline-primary" id="aopyoNo" name="domicilio" value="0" style="color: #6366F1;" onclick="toggleContent()" checked>
+                        <input th:field="*{tutorEconomico.esViviendaAlumno}"type="radio" class="input-outline-primary" id="aopyoNo" name="tutorEconomico.esViviendaAlumno" value="0" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoNo" style="color:#6C757D;" class="me-5">No</label>
                     </div><br> 
                 </div>
@@ -166,14 +174,17 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Estado</p>
 								<!--							 -->
-			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipios()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipiosDP()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                                <option value="" class="subtitulo">Elige una opción</option>							
 									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
+			                    
 			                    </select>
 	                        </div>
 	                        <div class="col">
 	                            <p class="textoInputs">Municipio</p>
 								<!--th:field="*{domicilio.catLocalidad.catMunicipio.catIdMunicipio}"-->
-	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidad()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidadDP()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                                <option value="" class="subtitulo">Elige una opción</option>									                            
 	                            </select>
 	                        </div>
 	                    </div>
@@ -181,24 +192,21 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Localidad</p>
 								<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
-	                            <select id="selectLocalidades"  name="tutorEconomico.domicilio.catLocalidad"  onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                            <select id="selectLocalidades" onchange="sincronizarValor(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                                <option value="" class="subtitulo">Elige una opción</option>		
 	                            </select>
+	                            <input th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}" type="hidden" id="valorOculto" name="tutorEconomico.domicilio.catLocalidad">
 	                        </div>
 	                        <div class="col">
 	                            <p class="textoInputs">Colonia o barrio</p>
-	                            <select name="domicilio.coloniaBarrio" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-	                                <option selected class="subtitulo">Elige una opción</option>
-	                                <option value="1" class="subtitulo">Colonia o barrio 1</option>
-	                                <option value="2" class="subtitulo">Colonia o barrio 2</option>
-	                                <option value="3" class="subtitulo">Colonia o barrio 3</option>
-	                            </select>
+	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 	                        </div>
 	                    </div>
 	                    <div class="row mt-4">
 	                        <div class="col">
 	                            <p class="textoInputs">Distrito</p>
 	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value="" selected class="subtitulo">Elige una opción</option>
 	                                <option value="1" class="subtitulo">Distrito 1</option>
 	                                <option value="2" class="subtitulo">Distrito 2</option>
 	                                <option value="3" class="subtitulo">Distrito 3</option>
@@ -207,7 +215,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Región</p>
 	                            <select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-	                                <option selected class="subtitulo">Elige una opción</option>
+	                                <option value=""  class="subtitulo">Elige una opción</option>
 	                                <option value="1" class="subtitulo">Región 1</option>
 	                                <option value="2" class="subtitulo">Región 2</option>
 	                                <option value="3" class="subtitulo">Región 3</option>
@@ -227,7 +235,7 @@
 	                    </div>
 	                    <div class="col">
 	                        <label>Codigo postal</label>
-	                        <input th:field="*{tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="cp" placeholder="">
+	                        <input th:field="*{tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="cp" name="codigoPostal" placeholder="" readonly>
 	                    </div>
 	                </div>
 				</div>
@@ -235,8 +243,8 @@
          	</div>
          
         <div class="d-flex justify-content-center mt-5">
- 			<button class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5" type="submit" role="button" name="accion" value="guardar">Guardar</button>
-            <button class="btn btn-outline-success mt-3" type="submit" role="button" name="accion" value="enviar">Enviar</button>
+ 			<button class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5" type="submit" role="button" name="accion" value="guardar">Guardar avances</button>
+            <button class="btn btn-outline-success mt-3" type="submit" role="button" name="accion" value="enviar">Siguiente</button>
     	</div>
     	
     	<input type="hidden" id="idCatEstado" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
@@ -248,20 +256,157 @@
     <footer th:insert="fragments/footer.html :: footer"/>
     
     <script>
-		function toggleContent() {
-            var content = document.getElementById('contentDomicilio');
-            var radios = document.getElementsByName('domicilio');
+		
+		// Funciones cuando cargue el HTML
+       document.addEventListener('DOMContentLoaded', function() {
+		    var content = document.getElementById('contentDomicilio');
+            var radios = document.getElementsByName('tutorEconomico.esViviendaAlumno');
+            
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked && radios[i].value === '1') {
-                    content.classList.add('hidden');
+				    
+				    document.getElementById('calle').readOnly = true;
+					document.getElementById('numero').readOnly = true;
+					document.getElementById('coloniaBarrio').readOnly = true;
+					document.getElementById('selectEstados').disabled = true;
+					document.getElementById('selectMunicipios').disabled = true;
+					document.getElementById('selectLocalidades').disabled = true;
+					
+                } 
+            }
+		});
+		
+		function sincronizarValor(){
+			var select = document.getElementById("selectLocalidades");
+        	var valorSeleccionado = select.options[select.selectedIndex].value;
+        	document.getElementById("valorOculto").value = valorSeleccionado;
+		}
+		
+		function toggleContent() {
+            var content = document.getElementById('contentDomicilio');
+            var radios = document.getElementsByName('tutorEconomico.esViviendaAlumno');
+            document.getElementById("valorOculto").value = null;
+            
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked && radios[i].value === '1') {
+				    $.ajax({
+				        url: '/domicilio/obtenerDomiclioPorAlumno',
+				        type: 'GET',
+				        success: function(data) {
+							
+							if(data !== null){
+								
+								var domAlumno = data;
+							
+				            var estado = document.getElementById('selectEstados');
+							estado.value = domAlumno.catLocalidad.catMunicipio.catEstado.idCatEstado;
+							var selectEstado = estado.selectedIndex;
+						    $.ajax({
+						        url: '/domicilio/obtenerMunicipiosPorEstado',
+						        type: 'GET',
+						        data: { estadoId: selectEstado},
+						        success: function(data) {
+
+						            actualizarSelectMunicipiosDP(data);
+						            
+									var municipio = document.getElementById('selectMunicipios');
+									municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
+
+								    selectIndex = municipio.value;
+								    $.ajax({
+								        url: '/domicilio/obtenerLocalidadesPorMunicipio',
+								        type: 'GET',
+								        data: { municipioId: selectIndex},
+								        success: function(data) {
+											actualizarSelectLocalidadDP(data);
+								            var localidad = document.getElementById('selectLocalidades');
+											localidad.value = domAlumno.catLocalidad.idCatLocalidad;
+											document.getElementById("valorOculto").value = localidad.value;
+
+			            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal);
+											document.getElementById('calle').value = domAlumno.calle;
+											document.getElementById('numero').value = domAlumno.numero;
+											document.getElementById('coloniaBarrio').value = domAlumno.coloniaBarrio;				
+										        
+								        },
+								        error: function(xhr, status, error) {
+								            console.error(error);
+								        }
+								    });
+						        },
+						        error: function(xhr, status, error) {
+						            console.error(error);
+						        }
+						    });           
+								
+							}else{
+								alert("No hay datos registrados");
+								document.querySelector('input[name="domicilio"][value=0"]').checked = true;
+
+							}
+				        },
+				        error: function(xhr, status, error) {
+				            console.error(error);
+				        }
+				    });
+				    
+				    document.getElementById('calle').readOnly = true;
+					document.getElementById('numero').readOnly = true;
+					document.getElementById('coloniaBarrio').readOnly = true;
+					document.getElementById('selectEstados').disabled = true;
+					document.getElementById('selectMunicipios').disabled = true;
+					document.getElementById('selectLocalidades').disabled = true;
+					
+
+                    
                 } else if (radios[i].checked && radios[i].value === '0') {
-                    content.classList.remove('hidden');
+					document.getElementById('calle').value = "";
+					document.getElementById('calle').readOnly = false;
+
+					document.getElementById('numero').value = "";
+					document.getElementById('numero').readOnly = false;
+					
+					document.getElementById('coloniaBarrio').value = "";
+					document.getElementById('coloniaBarrio').readOnly = false;
+					document.getElementById('cp').value = "";
+					
+					document.getElementById('selectEstados').disabled = false;
+					document.getElementById('selectMunicipios').disabled = false;
+					document.getElementById('selectLocalidades').disabled = false;
+					
+					var selectLocalidad = document.getElementById('selectLocalidades');
+										
+					selectLocalidad.innerHTML = "";
+						var optionL = document.createElement("option");
+				        optionL.value = "";
+				        optionL.text = "Elige una opción";
+				        selectLocalidad.appendChild(optionL);
+					selectLocalidad.readOnly = false;
+					
+					
+					var selectMunicipio = document.getElementById('selectMunicipios');
+				    selectMunicipio.innerHTML = "";
+						var optionM = document.createElement("option");
+				        optionM.value = "";
+				        optionM.text = "Elige una opción";
+				        selectMunicipio.appendChild(optionM);
+				   	selectMunicipio.readOnly = true;
+					
+					var selectEstado = document.getElementById('selectEstados');
+					selectEstado.selectedIndex = 0;
+					selectEstado.readOnly = true;
                 }
             }
         }
         
+        
         $(document).ready(function () {
             // Agrega las reglas de validación
+            
+            $.extend($.validator.messages, {
+                required: "Por favor, selecciona una opcion"
+            });
+
             $("#formDependienteEconomico").validate({
                 rules: {
 					gastoMensual : {
@@ -286,41 +431,69 @@
 					},
 					dependeEconomicamente: {
 						required: true
-					}, "tutorEconomico.trabajadorSuneo":{
+					},"tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal": {
+						required: true
+					},
+					"tutorEconomico.trabajadorSuneo":{
+						required: true
+					},
+					"tutorEconomico.catOcupacion.idCatOcupacion":{
+						required: true
+					},"tutorEconomico.domicilio.coloniaBarrio": {
+						required: true
+					},
+					"tutorEconomico.catParentesco.idCatParentesco": {
 						required: true
 					}
+					
                 },
                 messages: {
 					gastoMensual : {
 						required: "Ingresa una cantidad."
 					},
                     "tutorEconomico.nombreTutorEconomico": {
-                        required: "Por favor ingresa su nombre."
+                        required: "Por favor, ingresa su nombre."
                     },
                     "tutorEconomico.correo": {
-                        required: "Por favor Ingrese un correo electrónico.",
-                        email: "Por favor ingrese un correo electrónico válido."
+                        required: "Por favor, Ingrese un correo electrónico.",
+                        email: "Por favor, ingrese un correo electrónico válido."
                     },
                     "tutorEconomico.telefono": {
                         required: "Por favor, ingrese el teléfono del tutor económico.",
                         digits: "Por favor, ingrese solo números.",
                         rangelength: "El teléfono debe tener 10 dígitos.",
-                    },"tutorEconomico.domicilio.calle": {
+                    },
+                    "tutorEconomico.domicilio.calle": {
                         required: "Por favor, ingresa un domicilio."
-                    },"tutorEconomico.domicilio.numero": {
+                    },
+                    "tutorEconomico.domicilio.numero": {
 						required: "Por favor, ingrese un dato, si no tiene número puede escribir s/n."
-					},dependeEconomicamente: {
+					},
+					dependeEconomicamente: {
 						required: "Por favor, seleccione una opción."
-					}, "tutorEconomico.trabajadorSuneo":{
+					},
+					"tutorEconomico.trabajadorSuneo":{
 						required: "Por favor, seleccione una opción."
+					},
+					"tutorEconomico.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal": {
+						required: "Por favor, selecciona una localidad"
+					},
+					"tutorEconomico.catOcupacion.idCatOcupacion":{
+						required: "Por favor, selecciona una ocupación."
+					},
+					"tutorEconomico.domicilio.coloniaBarrio": {
+						required: "Por favor, ingresa su colonia o barrio."
+					},
+					"tutorEconomico.catParentesco.idCatParentesco": {
+						required: "Por favor, selecciona un parentesco"
 					}
                 },
                 errorPlacement: function(error, element) {
                     if (element.attr("type") == "radio") {
-                        error.insertAfter(element.closest('.form-check').find('label').last());
-                    } else {
-                        error.insertAfter(element);
-                    }
+                    	error.insertAfter(element.closest('.form-check').find('label').last());
+	                } else {
+	                    error.insertAfter(element);
+	                }
                 },
                 submitHandler: function (form, event) {
                     // Obtenemos el valor del botón presionado
@@ -352,9 +525,9 @@
             });
         });
 
+		
+		
 	</script>
-    
-    
     <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>

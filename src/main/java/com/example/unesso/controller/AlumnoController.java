@@ -173,7 +173,7 @@ public class AlumnoController {
 	public IGastosFamService serviceGastosFam;
 	
 	@Autowired
-	IReciboLuzService serviceReciboLuz;
+	public IReciboLuzService serviceReciboLuz;
 	
 	//Relizara las operaciones CRUD para el fromulario de miFamilia
 	@Autowired
@@ -245,24 +245,27 @@ public class AlumnoController {
 		System.out.println("Ob: " + a.getObservaciones());
 		if(a.getFamilia() != null) {
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
-			// Obtener la fecha del objeto
-	        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
-	        Date fechaF = f.getGastosFam().getReciboLuz().getPeriodoFin();
+			if(f.getGastosFam() != null) {
+				if(f.getGastosFam().getReciboLuz() != null) {
+					// Obtener la fecha del objeto
+			        Date fechaI = f.getGastosFam().getReciboLuz().getPeriodoInicio();
+			        Date fechaF = f.getGastosFam().getReciboLuz().getPeriodoFin();
 
-	        // Convertir Date a LocalDate
-	        LocalDate localDateI = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	        LocalDate localDateF = fechaF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			        // Convertir Date a LocalDate
+			        LocalDate localDateI = fechaI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			        LocalDate localDateF = fechaF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-	        // Formatear LocalDate a yyyy-MM-dd
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	        String fechaFormateadaI = localDateI.format(formatter);
-	        String fechaFormateadaF = localDateF.format(formatter);
-			System.out.println(fechaFormateadaI); 
+			        // Formatear LocalDate a yyyy-MM-dd
+			        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			        String fechaFormateadaI = localDateI.format(formatter);
+			        String fechaFormateadaF = localDateF.format(formatter);
+					System.out.println(fechaFormateadaI); 
 
-				
-			
-			model.addAttribute("fechaFormateadaI", fechaFormateadaI);
-			model.addAttribute("fechaFormateadaF", fechaFormateadaF);
+					model.addAttribute("fechaFormateadaI", fechaFormateadaI);
+					model.addAttribute("fechaFormateadaF", fechaFormateadaF);
+				}
+			}
+
 			
 		} else {
 			f.setIngresoFamiliar(new ArrayList<>());
@@ -297,65 +300,67 @@ public class AlumnoController {
 	
 	@PostMapping("/guardarTutor")
 	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
-		/*if(result.hasErrors()) {
-			for (ObjectError error: result.getAllErrors()){
-				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
-			}
-			
-			return "alumno/formTutor";
-		}*/
-		//Recuperar datos de sesion para conocer el alumno de la sesión
-		Alumno a = obtenerAlumnoSesion(auth);
-		a.setGastoMensual(alumno.getGastoMensual());
-		a.setDependeEconomicamente(alumno.getDependeEconomicamente());
-		System.out.println("Datos del alumno de la sesion: " + alumno.toString());
-		System.out.println("Accion: " + accion);
 		
-		if(a.getTutorEconomico() != null) {
-			System.out.println("Tutor del formulario: " + alumno.getTutorEconomico());
+		System.out.println("1. Alumno formulario: " + alumno.toString());
+		
+		//Recuperar datos de sesion para conocer el alumno de la sesión
+		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
+		
+		//Verificar cuando no fue seleecionada una opcion en los select 
+		if(alumno.getTutorEconomico().getCatOcupacion().getIdCatOcupacion() == null) {
+			alumno.getTutorEconomico().setCatOcupacion(null);
+		}
+		
+		if(alumno.getTutorEconomico().getCatParentesco().getIdCatParentesco() == null) {
+			alumno.getTutorEconomico().setCatParentesco(null);
+		}
+		
+		if(alumno.getTutorEconomico().getDomicilio().getCatLocalidad().getIdCatLocalidad() == null) {
+			alumno.getTutorEconomico().getDomicilio().setCatLocalidad(null);
+		}
+		
+		//Asignar el gasto mensual a alumno
+		alumnoSesion.setGastoMensual(alumno.getGastoMensual());
+		
+		//Asignar si el alumno depende economicamente
+		alumnoSesion.setDependeEconomicamente(alumno.getDependeEconomicamente());
+		
+		System.out.println("Daots del alumnoSesion: " + alumnoSesion.toString());
+		
+		//Verificar si el alumno tiene relacionado un tutor
+			//Si tiene uno, actualizar datos
+		if(alumnoSesion.getTutorEconomico() != null) {
 			
-			//Obtener el tutor de la base de datos mediante el id dentro del alumno
-			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(a.getTutorEconomico().getIdTutorEconomico());
-			System.out.println("Tutor de la base de datos: " + t.toString());
+			//Actualizar datos del domiciliio del tutor con los datos del formulario
+			Domicilio domicilioDB = serviceDomicilio.buscarPorId(alumnoSesion.getTutorEconomico().getDomicilio().getIdDomicilio());
+			Domicilio domicilioForm = alumno.getTutorEconomico().getDomicilio();
+			domicilioForm.setIdDomicilio(domicilioDB.getIdDomicilio());
+			serviceDomicilio.guardar(domicilioForm);
 			
-			//Crear domicilio que almacena el domicilio de la base de datos
-			Domicilio dommicilioBD = serviceDomicilio.buscarPorId(a.getTutorEconomico().getDomicilio().getIdDomicilio());
+			//Actualizar datos del tutor con los datos del formulario
+			TutorEconomico tutorDB =  serviceTutorEconomico.obtenerPorId(alumnoSesion.getTutorEconomico().getIdTutorEconomico());
+			TutorEconomico tutorForm = alumno.getTutorEconomico();
+			tutorForm.setIdTutorEconomico(tutorDB.getIdTutorEconomico());
+			serviceTutorEconomico.guardarTutor(tutorForm);
 			
-			//Crear objeto de domicilio para almacenar el domicilio proveniente del formulario
-			Domicilio domicilioFormulario = alumno.getTutorEconomico().getDomicilio();
-			
-			//Asignar al domiclio del formulario el id del domiclio de la base de datos
-			domicilioFormulario.setIdDomicilio(dommicilioBD.getIdDomicilio());
-			
-			//Asignar el id del tutor y el objeto del domicilio
-			alumno.getTutorEconomico().setIdTutorEconomico(t.getIdTutorEconomico());
-			alumno.getTutorEconomico().setDomicilio(domicilioFormulario);
-			
-			//Guardara en la bd
-			t = alumno.getTutorEconomico();
-			serviceDomicilio.guardarDomicilio(domicilioFormulario);
-			serviceTutorEconomico.guardarTutor(t);
-		}else {
-			System.out.println("---------------------------------Entra----------------------------------");
-			a.setTutorEconomico(alumno.getTutorEconomico());
-			serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());
-			serviceAlumno.guardarAlumno(a);
+			//Si no tiene un tutor relacionado, crear uno
+		} else {
+			TutorEconomico tutorE = serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());			
+			alumnoSesion.setTutorEconomico(tutorE);
+			//serviceAlumno.guardar(alumnoSesion);
 		}
 		
 		if(accion.equals("enviar")) {
-			if(a.getEstadoFormularios() == null) {
-				EstadoFormularios ef = new EstadoFormularios();
-				ef.setFormDependienteEconomico(true);
-				EstadoFormularios e = serviceEstadoFormularios.guardarEstadoFormularios(ef);
-				a.setEstadoFormularios(e);
-				serviceAlumno.guardarAlumno(a);
-			} else {
-				a.getEstadoFormularios().setFormDependienteEconomico(true);
-				serviceAlumno.guardarAlumno(a);
-			}
+			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
 		}
-
+		
+		serviceAlumno.guardarAlumno(alumnoSesion);
+		
 		return "redirect:/alumno/menuSolicitar";
+	}
+	
+	private void actualizarDomicilio(Alumno alumno) {
+		
 	}
 	
 	@PostMapping("/guardarGastos")
@@ -406,9 +411,6 @@ public class AlumnoController {
 		
 		return "redirect:/alumno/menuSolicitar";
 	}
-	
-	
-
 	
 	@ModelAttribute
 	public void setGenericos(Authentication auth, HttpSession sesion, Model model) {
