@@ -392,7 +392,7 @@
 					</div>
 				</div>    
 	                <div class="col-md-12 mt-3">
-	                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidad?</p>
+	                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidades?</p>
 	                    
 	                    <!-- ********************************************************************* -->
 				        <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
@@ -401,19 +401,16 @@
 	                    
 	                    <!-- ********************************************************************* -->
 	                    
-	                    <div class="col-md-12">
+	                    <div class="col-12 col-md-12">
 								
 								<div th:each="grupoTransporte, grupoStatus : ${gruposTransporte}" style="display: flex; justify-content: space-between;">
 								    <div style="width: 48%;" th:each="transporte, transporteStatus : ${grupoTransporte}">
-								        <div class="form-check" style="margin-bottom: 30px;">
-								  
 								             <div class="form-check" style="margin-bottom: 30px;">
 								                <input class="form-check-input" type="checkbox" th:field="*{mediosTraslado}" name="mediosTraslado" th:value="${transporte.idCatMediosTransporte}">
 								                <label class="form-check-label" for="checkbox${transporte.idCatMediosTransporte}">
 								                    <p class="subtitulo" th:text="${transporte.nombreMediosTransporte}"></p>
 								                </label>
 								            </div>
-								        </div>
 								    </div>
 								</div>
 
