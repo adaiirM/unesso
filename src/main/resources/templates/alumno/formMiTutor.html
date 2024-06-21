@@ -163,7 +163,7 @@
                     <div class="mt-1" style="margin-left: 1cm;">
                         <input th:field="*{tutorEconomico.esViviendaAlumno}" type="radio" class="input-outline-primary " id="apoyoSi" name="tutorEconomico.esViviendaAlumno" value="1" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
-                        <input th:field="*{tutorEconomico.esViviendaAlumno}"type="radio" class="input-outline-primary" id="aopyoNo" name="tutorEconomico.esViviendaAlumno" value="0" style="color: #6366F1;" onclick="toggleContent()" checked>
+                        <input th:field="*{tutorEconomico.esViviendaAlumno}"type="radio" class="input-outline-primary" id="aopyoNo" name="tutorEconomico.esViviendaAlumno" value="0" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoNo" style="color:#6C757D;" class="me-5">No</label>
                     </div><br> 
                 </div>
@@ -192,9 +192,10 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Localidad</p>
 								<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
-	                            <select id="selectLocalidades" name="tutorEconomico.domicilio.catLocalidad" onchange="ocLocalidad(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                            <select id="selectLocalidades" onchange="sincronizarValor(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>		
 	                            </select>
+	                            <input type="hidden" id="valorOculto" name="tutorEconomico.domicilio.catLocalidad">
 	                        </div>
 	                        <div class="col">
 	                            <p class="textoInputs">Colonia o barrio</p>
@@ -258,12 +259,34 @@
 		
 		// Funciones cuando cargue el HTML
        document.addEventListener('DOMContentLoaded', function() {
-		    
+		    var content = document.getElementById('contentDomicilio');
+            var radios = document.getElementsByName('tutorEconomico.esViviendaAlumno');
+            
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked && radios[i].value === '1') {
+				    
+				    document.getElementById('calle').readOnly = true;
+					document.getElementById('numero').readOnly = true;
+					document.getElementById('coloniaBarrio').readOnly = true;
+					document.getElementById('selectEstados').disabled = true;
+					document.getElementById('selectMunicipios').disabled = true;
+					document.getElementById('selectLocalidades').disabled = true;
+					
+                } 
+            }
 		});
+		
+		function sincronizarValor(){
+			var select = document.getElementById("selectLocalidades");
+        	var valorSeleccionado = select.options[select.selectedIndex].value;
+        	document.getElementById("valorOculto").value = valorSeleccionado;
+		}
 		
 		function toggleContent() {
             var content = document.getElementById('contentDomicilio');
             var radios = document.getElementsByName('tutorEconomico.esViviendaAlumno');
+            document.getElementById("valorOculto").value = null;
+            
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked && radios[i].value === '1') {
 				    $.ajax({
@@ -298,7 +321,8 @@
 											actualizarSelectLocalidadDP(data);
 								            var localidad = document.getElementById('selectLocalidades');
 											localidad.value = domAlumno.catLocalidad.idCatLocalidad;
-											
+											document.getElementById("valorOculto").value = localidad.value;
+
 			            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal);
 											document.getElementById('calle').value = domAlumno.calle;
 											document.getElementById('numero').value = domAlumno.numero;
@@ -329,6 +353,10 @@
 				    document.getElementById('calle').readOnly = true;
 					document.getElementById('numero').readOnly = true;
 					document.getElementById('coloniaBarrio').readOnly = true;
+					document.getElementById('selectEstados').disabled = true;
+					document.getElementById('selectMunicipios').disabled = true;
+					document.getElementById('selectLocalidades').disabled = true;
+					
 
                     
                 } else if (radios[i].checked && radios[i].value === '0') {
@@ -341,6 +369,10 @@
 					document.getElementById('coloniaBarrio').value = "";
 					document.getElementById('coloniaBarrio').readOnly = false;
 					document.getElementById('cp').value = "";
+					
+					document.getElementById('selectEstados').disabled = false;
+					document.getElementById('selectMunicipios').disabled = false;
+					document.getElementById('selectLocalidades').disabled = false;
 					
 					var selectLocalidad = document.getElementById('selectLocalidades');
 										

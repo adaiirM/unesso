@@ -300,20 +300,11 @@ public class AlumnoController {
 	
 	@PostMapping("/guardarTutor")
 	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
-		/*if(result.hasErrors()) {
-			for (ObjectError error: result.getAllErrors()){
-				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
-			}
-			
-			return "alumno/formTutor";
-		}*/
 		
-		//System.out.println("1. Alumno formulario: " + alumno.toString());
+		System.out.println("1. Alumno formulario: " + alumno.toString());
 		
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
-		
-		//System.out.println("2. Alumno sesion: " + alumnoSesion.toString());
 		
 		//Verificar cuando no fue seleecionada una opcion en los select 
 		if(alumno.getTutorEconomico().getCatOcupacion().getIdCatOcupacion() == null) {
@@ -334,99 +325,33 @@ public class AlumnoController {
 		//Asignar si el alumno depende economicamente
 		alumnoSesion.setDependeEconomicamente(alumno.getDependeEconomicamente());
 		
+		System.out.println("Daots del alumnoSesion: " + alumnoSesion.toString());
 		
 		//Verificar si el alumno tiene relacionado un tutor
 			//Si tiene uno, actualizar datos
 		if(alumnoSesion.getTutorEconomico() != null) {
 			
-			//Obtener el tutor de la base de datos mediante el id dentro del alumno
+			//Actualizar datos del domiciliio del tutor con los datos del formulario
+			Domicilio domicilioDB = serviceDomicilio.buscarPorId(alumnoSesion.getTutorEconomico().getDomicilio().getIdDomicilio());
+			Domicilio domicilioForm = alumno.getTutorEconomico().getDomicilio();
+			domicilioForm.setIdDomicilio(domicilioDB.getIdDomicilio());
+			serviceDomicilio.guardar(domicilioForm);
+			
+			//Actualizar datos del tutor con los datos del formulario
 			TutorEconomico tutorDB =  serviceTutorEconomico.obtenerPorId(alumnoSesion.getTutorEconomico().getIdTutorEconomico());
-			//System.out.println("Tutor de la base de datos: " + tutorDB.toString());
-			
-			//Verificar si el domicilio del tutor es igual al del alumno
-			if(alumno.getTutorEconomico().getEsViviendaAlumno().equals(true)) {
-				//Obtener el domicilio relacionado al alumno 
-				Domicilio domAlumno = serviceDomicilio.buscarPorId(alumnoSesion.getDomicilio().getIdDomicilio());
-				
-				//Quitar los datos traidos de la base de datos
-				tutorDB.setDomicilio(null);
-				//Asignar el objeto obtenido del domiclio del alumno
-				tutorDB.setDomicilio(domAlumno);
-				
-				//Guardara en la bd
-				serviceDomicilio.guardarDomicilio(tutorDB.getDomicilio());
-				
-				//Si no es igual, actualizar el domicilio de la base de datos
-			} else {
-				//Crear domicilio que almacena el domicilio de la base de datos
-				Domicilio dommicilioBD = serviceDomicilio.buscarPorId(alumnoSesion.getTutorEconomico().getDomicilio().getIdDomicilio());
-				
-				//Crear objeto de domicilio para almacenar el domicilio proveniente del formulario
-				Domicilio domicilioFormulario = alumno.getTutorEconomico().getDomicilio();
-				
-				//Asignar al domiclio del formulario el id del domiclio de la base de datos. para que teber el id correspondiente y los nuevos datos
-				domicilioFormulario.setIdDomicilio(dommicilioBD.getIdDomicilio());
-				
-				//Asignar el id del tutor y el objeto del domicilio
-				alumno.getTutorEconomico().setIdTutorEconomico(tutorDB.getIdTutorEconomico());
-				alumno.getTutorEconomico().setDomicilio(domicilioFormulario);
-				
-				tutorDB = alumno.getTutorEconomico();
-				
-				//Guardara en la bd
-				serviceDomicilio.guardarDomicilio(domicilioFormulario);
-			}
-			
-			serviceTutorEconomico.guardarTutor(tutorDB);
+			TutorEconomico tutorForm = alumno.getTutorEconomico();
+			tutorForm.setIdTutorEconomico(tutorDB.getIdTutorEconomico());
+			serviceTutorEconomico.guardarTutor(tutorForm);
 			
 			//Si no tiene un tutor relacionado, crear uno
 		} else {
-			
-			//Obtener el tutor de la base de datos mediante el id dentro del alumno
-			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(alumnoSesion.getTutorEconomico().getIdTutorEconomico());
-			System.out.println("Tutor de la base de datos: " + t.toString());
-				
-			//Verificar si el domicilio del tutor es igual al del alumno
-			if(alumno.getTutorEconomico().getEsViviendaAlumno().equals(true)) {
-				
-				//Buscar el el domiclio por el id del alumno de la sesion para encontrar el domiclio asociado
-				Domicilio domAlumno = serviceDomicilio.buscarPorId(alumnoSesion.getDomicilio().getIdDomicilio());
-				
-				//Crear objeto para guardar los datos del tutor del formulario
-				TutorEconomico tutorEconomicoForm = alumno.getTutorEconomico();
-				//Quitar los datos traidos del formulario
-				tutorEconomicoForm.setDomicilio(null);
-				
-				//Asignar el objeto obtenido del domiclio del alumno
-				tutorEconomicoForm.setDomicilio(domAlumno);
-				
-				//Actualizar el tutor del alumno del formulario
-				alumno.setTutorEconomico(tutorEconomicoForm);
-			}
-			
-			//Guardar el nuevo tutor 
-			serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());
-			//Actualizar el alumno de la base de datos
-			serviceAlumno.guardarAlumno(alumnoSesion);
+			TutorEconomico tutorE = serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());			
+			alumnoSesion.setTutorEconomico(tutorE);
+			//serviceAlumno.guardar(alumnoSesion);
 		}
 		
+		serviceAlumno.guardarAlumno(alumnoSesion);
 		
-		if(accion.equals("enviar")) {
-			if(alumnoSesion.getEstadoFormularios() == null) {
-				EstadoFormularios ef = new EstadoFormularios();
-				ef.setFormDependienteEconomico(true);
-				EstadoFormularios e = serviceEstadoFormularios.guardarEstadoFormularios(ef);
-				alumnoSesion.setEstadoFormularios(e);
-				serviceAlumno.guardarAlumno(alumnoSesion);
-			} else {
-				alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(false);
-				if(alumnoSesion.getTutorEconomico().getCatOcupacion() != null) {
-					alumnoSesion.getTutorEconomico();
-				}
-				serviceAlumno.guardarAlumno(alumnoSesion);
-			}
-		}
-
 		return "redirect:/alumno/menuSolicitar";
 	}
 	
