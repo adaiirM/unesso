@@ -15,8 +15,6 @@ public class CatEstado {
 	
 	private String nombreEstado;
 
-	
-	
 	public Integer getIdCatEstado() {
 		return idCatEstado;
 	}

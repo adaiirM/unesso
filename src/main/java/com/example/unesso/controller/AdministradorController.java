@@ -1,9 +1,7 @@
 package com.example.unesso.controller;
 
-import com.example.unesso.model.Alumno;
-import com.example.unesso.model.Usuario;
-import com.example.unesso.services.db.AlumnoServiceJPA;
-import com.example.unesso.services.db.UsuarioServiceJPA;
+import com.example.unesso.model.*;
+import com.example.unesso.services.db.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +19,12 @@ public class AdministradorController {
     private AlumnoServiceJPA alumnoService;
     @Autowired
     private UsuarioServiceJPA usuarioService;
+    @Autowired
+    private EstadoFormulariosServiceJPA estadoFormularioService;
+    @Autowired
+    private ICatRolServiceJPA catRolService;
+    @Autowired
+    private CatGrupoServiceJPA catGrupoService;
 
 
     @GetMapping("/menuAdministrador")
@@ -50,20 +54,42 @@ public class AdministradorController {
         return "/formAgregarAlumno";
     }
     @PostMapping("/guardarAlumno")
-    public String guardarAlumno(Alumno alumno) {
+    public String guardarAlumno(Alumno alumno,@RequestParam("nombreGrupo") String nombreGrupo) {
         String usuarioCorreo = alumno.getUsuario().getUsername();
+        //busca si ya existe el usuario en la base de datos
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
         if (usuario == null) {
+            //si no existe, crea el usuario y el alumno
             usuario = new Usuario();
             usuario.setUsername(usuarioCorreo);
             usuario.setPassword("{noop}UNSIJ2024");
             usuario.setStatus(true);
+
+            CatRol catRol = catRolService.findByIdRol(1);
+            usuario.setCatRol(catRol);
+            usuario.setCatRol(catRol);
+
             usuarioService.saveUsuario(usuario);
             alumno.setUsuario(usuario);
+            //alumnoService.saveAlumno(alumno);
+
+            //se crea el estatus formulario
+            EstadoFormularios estadoFormularios = new EstadoFormularios();
+            estadoFormularios.setFormMisDatos(false);
+            estadoFormularios.setFormMiFamilia(false);
+            estadoFormularios.setFormDependienteEconomico(false);
+            estadoFormularios.setFormMisGatos(false);
+            alumno.setEstadoFormularios(estadoFormularios);
+
+            //se relaciona con el grupo del alumno
+            CatGrupo grupo = catGrupoService.findByNombreGrupo(nombreGrupo);
+            alumno.setCatGrupo(grupo);
+
+            estadoFormularioService.guardarEstadoFormularios(estadoFormularios);
             alumnoService.saveAlumno(alumno);
             return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
         }else{
-            return "error"; // Redirige a la lista de alumnos después de guardar
+            return "error";
         }
 
     }

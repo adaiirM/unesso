@@ -1,5 +1,6 @@
 package com.example.unesso.model;
 
+import java.time.Year;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -21,15 +22,12 @@ public class Transporte {
 	@JoinColumn(name="idCatTipoTransporte")
 	private CatTipoTransporte catTipoTransporte;
 	
-	@OneToOne
-	@JoinColumn(name="idAlumno")
-	private Alumno alumno;
-	
+
 	private String marca;
 	
 	private String modelo;
 	
-	private Date anio;
+	private Year anio;
 
 	
 	public Integer getIdTransporte() {
@@ -48,13 +46,6 @@ public class Transporte {
 		this.catTipoTransporte = catTipoTransporte;
 	}
 
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
 
 	public String getMarca() {
 		return marca;
@@ -72,21 +63,18 @@ public class Transporte {
 		this.modelo = modelo;
 	}
 
-	public Date getAnio() {
+	public Year getAnio() {
 		return anio;
 	}
 
-	public void setAnio(Date anio) {
+	public void setAnio(Year anio) {
 		this.anio = anio;
 	}
 
 	@Override
 	public String toString() {
-		return "Transporte [idTransporte=" + idTransporte + ", catTipoTransporte=" + catTipoTransporte + ", alumno="
-				+ alumno + ", marca=" + marca + ", modelo=" + modelo + ", anio=" + anio + "]";
+		return "Transporte [idTransporte=" + idTransporte + ", catTipoTransporte=" + catTipoTransporte + ", marca=" + marca + ", modelo=" + modelo + ", anio=" + anio + "]";
 	}
 	
 	
-	
-
 }

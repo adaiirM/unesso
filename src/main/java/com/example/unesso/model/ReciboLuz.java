@@ -29,8 +29,13 @@ public class ReciboLuz {
 	
 	private String nombreArchivo;
 	
+	private String pagoBimestral;
+	
 	private Double pagoPromedioMes;
 	
+	private String rutaRecibo;
+	
+	private String nombreOriginal;
 
 	public Integer getIdReciboLuz() {
 		return idReciboLuz;
@@ -88,14 +93,35 @@ public class ReciboLuz {
 		this.pagoPromedioMes = pagoPromedioMes;
 	}
 
+	public String getRutaRecibo() {
+		return rutaRecibo;
+	}
+
+	public void setRutaRecibo(String rutaRecibo) {
+		this.rutaRecibo = rutaRecibo;
+	}
+
+	public String getNombreOriginal() {
+		return nombreOriginal;
+	}
+
+	public void setNombreOriginal(String nombreOriginal) {
+		this.nombreOriginal = nombreOriginal;
+	}
+
+	public String getPagoBimestral() {
+		return pagoBimestral;
+	}
+
+	public void setPagoBimestral(String pagoBimestral) {
+		this.pagoBimestral = pagoBimestral;
+	}
+
 	@Override
 	public String toString() {
 		return "ReciboLuz [idReciboLuz=" + idReciboLuz + ", domicilio=" + domicilio + ", titular=" + titular
 				+ ", periodoInicio=" + periodoInicio + ", periodoFin=" + periodoFin + ", nombreArchivo=" + nombreArchivo
-				+ ", pagoPromedioMes=" + pagoPromedioMes + "]";
+				+ ", pagoBimestral=" + pagoBimestral + ", pagoPromedioMes=" + pagoPromedioMes + ", rutaRecibo="
+				+ rutaRecibo + ", nombreOriginal=" + nombreOriginal + "]";
 	}
-	
-	
-	
-
 }

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    
+    <!-- Incluye jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluye jQuery Validate -->
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <style>
+		.calendar-container {
+            text-align: center;
+        }
+	</style>
+    <title>Gastos e ingresos</title>
+</head>
+<body > 
+	<header  th:insert="fragments/navAlumnos.html :: menu-nav">
+	</header>    
+    
+    <div class="container m-7 " style="margin-top: 1cm;" >
+        <div class="row">
+            <ol class="p-1 colorFondo breadcrumb bread-primary ">
+                <a th:href="@{/}" style="text-decoration: none;">
+                    <button  class="btn camino" >Inicio</button>
+                </a>
+                <a th:href="@{/alumno/menuSolicitar}" style="text-decoration: none;">
+                    <button  class="btn camino" >Estudio socioeconocimo</button>
+                </a>
+                <a style="text-decoration: none;">
+                    <button class="btn btn-primary camino" style="background-color: #4F46E5; ">Gastos e ingresos</button>
+                </a>
+                   
+            </ol>
+        </div>
+    </div>
+
+	 <section>
+
+		<div class="ms-5 me-5 mb-4">
+            <h1 class="titulo">MIS GASTOS E INGRESOS</h1>
+            <p style="text-align: justify;" class="fontPoppins">
+                Deberás incluir TODAS las fuentes de ingreso familiar, y deberá acompañarse de comprobantes oficiales de Ingresos. En caso de no depender económicamente de otras personas, deberá presentarse comprobante oficial de Ingresos del alumno. <br>
+                Se deberán reportar el ingreso bruto así como el ingreso neto. 
+                <br>
+                Los datos de agua y consumo de electricidad deberán corresponder al semestre más reciente y deberán ser del domicilio del padre, madre o tutor. En el caso de no depender económicamente, deberán ser del domicilio del alumno.
+            </p>
+        </div>
+
+		
+			<form id="formMisGastos" th:action="@{/alumno/guardarGastos}" th:object="${familia}" method="POST" enctype="multipart/form-data">
+				<div class="ms-5 me-5 rounded colorFondo row pb-3">	
+					<h3 class="titulo mt-3 mb-3">INGRESOS MENSUALES</h3>
+					<p class="fontPoppins textoInputs" style="color: #818CF8; ">¿Cuántas personas aportan al gasto familiar?  (Alumno, padre, madre, tutor y otros de los que se depende económicamente)</p>  
+
+					<div class="col-12 col-sm-6">
+						<input type="text" id="numPersonasAportan" name="numPersonasAportan" class="rounded estiloInputs" style="border-color: #6C757D; margin-left: 20px; height: 40px;">						
+						<button type="button" onclick="generarPersonas()" id="generateButton">Aceptar</button>
+					</div>	
+					
+					
+					<h4 class="mt-3" style=" color: #6366F1;" >Personas que aportan al gasto familiar:</h4> 
+            		<p class="fontPoppins mt-3 textoInputs" style="color: #6C757D; text-align: justify;">Menciona el ingreso total mensual de cada persona que aporta al gasto de tu familia, en caso de que sus ingresos sean semanales o quincenales, deberás realizar una suma total e indicar el ingreso mensual.</p>
+				   	
+				   	<div id="containerPersonas"></div>
+				   	
+					
+			   </div>
+	
+				<div class="ms-5 me-5 rounded d-flex justify-content-center mt-3 row">
+					<div class="rounded col-lg-6 pe-4 mb-3">
+						<div class="row rounded colorFondo p-3" style="height: 100%;">
+
+							<h1 class="titulo">Recibo de luz</h1>
+							<div class="col">
+								<p class="textoInputs">Nombre del titular de los recibos de luz:</p>
+								<input type="text" class="form-control estiloInputs rounded" style="width: 80%;"
+								id="titular" name="gastosFam.reciboLuz.titular"  placeholder="Nombre completo del titular"
+								th:field="*{gastosFam.reciboLuz.titular}">
+							</div>
+							<div class="col-sm-12">
+								<br>
+								<p class="textoInputs" style="text-decoration: none; justify-content:center">Pago de recibo de luz</p>
+							</div>
+				
+							<div class="col-sm-6">
+								<p class="textoInputs" style="color: #6C757D;">Fecha inicial</p>
+								<input th:value="${fechaFormateadaI}" type="date" id="periodoInicio" name="periodoInicio" class="form-control estiloInputs rounded" style="width: 50%;" >
+								<input type="hidden" id="periodoInicioHidden" name="gastosFam.reciboLuz.periodoInicio">
+							</div>
+
+							<div class="col-sm-6">
+								<p class="textoInputs" style="color: #6C757D;">Fecha final</p>
+								<input th:value="${fechaFormateadaF}" type="date" id="periodoFin" name="periodoFin" class="form-control estiloInputs rounded" style="width: 50%;">
+								<input type="hidden" id="periodoFinHidden" name="gastosFam.reciboLuz.periodoFin">
+							</div>
+
+							<div class="col-sm-6 mt-3">
+								<p class="textoInputs" style="color: #6C757D;">Pago <b><span id="mesInicio" ></span></b> - <b><spam id="mesFin"></spam></b></p>
+								<input th:field="*{gastosFam.reciboLuz.pagoBimestral}" type="number" id="pagoBimestral" name="gastosFam.reciboLuz.pagoBimestral.pagoBimestral" class="form-control estiloInputs rounded" style="width: 50%;">
+							</div>
+
+							<div class="col-sm-6 mt-3">
+								<p class="textoInputs" style="color: #6C757D;">Pago mensual promedio</p>
+								<input th:field="*{gastosFam.reciboLuz.pagoPromedioMes}" type="text" id="pagoPromedioMes" name="gastosFam.reciboLuz.pagoPromedioMes" class="form-control estiloInputs rounded" style="width: 50%;" readonly>
+							</div>
+
+							<div class="col">
+								<p class="textoInputs mt-3">Adjuntar luz recibo:</p>
+								<input id="archivoReciboLuz" name="archivoReciboLuz" type="file" class="ms-1 w-100 form-control">
+								<p class="help-block"> Archivo [pdf]</p>
+							</div>
+						</div>
+					</div>
+	
+					<div class=" col-lg-6 mb-3">
+						<div class="rounded colorFondo row ps-2" style="height: 100%;">
+							<h1 class="titulo">Gastos mensuales</h1>		 
+							<p style="text-align: justify;">Menciona el promedio mensual, cuanto gastan tu y tu familia en:</p>
+		 
+							<div class="row">
+								<div class="col-4 pe-4">
+									<div class="row">
+										<p class="fontPoppins" style="color: #6C757D;">Alimentación:</p>
+										<input th:field="*{gastosFam.gastosAlimentacion}" type="number" id="gastosAlimentacion" name="gastosFam.gastosAlimentacion" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
+									</div>
+
+									<div class="row mt-3">
+										<p class="fontPoppins" style="color: #6C757D;">Renta:</p>
+										<input th:field="*{gastosFam.gastoRenta}" type="number" id="gastoRenta" name="gastosFam.gastoRenta" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
+									</div>
+
+									<div class="row mt-3">
+										<p class="fontPoppins" style="color: #6C757D;">Otros:</p>
+										<input th:field="*{gastosFam.gastoOtros}" type="number" id="gastoOtros" name="gastosFam.gastoOtros" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
+									</div>
+								</div>
+								<div class="col-4 pe-4">
+									<div class="row">
+										<p class="fontPoppins" style="color: #6C757D;">Escolares:</p>
+										<input th:field="*{gastosFam.gastoEscolares}" type="number" id="gastoEscolares" name="gastosFam.gastoEscolares" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
+									</div>
+
+									<div class="row mt-3">
+										<p class="fontPoppins" style="color: #6C757D;">Ropa:</p>
+										<input th:field="*{gastosFam.gastoRopa}" type="number" id="gastoRopa" name="gastosFam.gastoRopa" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
+									</div>
+								</div>
+								<div class="col-4">
+
+									<div class="row">
+										<p class="fontPoppins" style="color: #6C757D;">Transporte:</p>
+										<input th:field="*{gastosFam.gastoTransporte}" type="number" id="gastoTransporte" name="gastosFam.gastoTransporte" class="form-control estiloInputs rounded sumInput" style="width: 100%;">
+									</div>
+
+									<div class="row mt-3">
+										<p class="font-family" style="color: #6C757D;">Servicios:</p>
+										<input th:field="*{gastosFam.gastoServicios}" type="number" id="gastoServicios" name="gastosFam.gastoServicios" class="form-control estiloInputs rounded sumInput" style="width: 100%;" readonly>
+									</div>
+								</div>
+							</div>
+							<div>
+								<p class="fontPoppins mt-3 textoInputs">Total: $<span id="sumTotal"  style="color: #6C757D;"></span></p>
+							</div>
+						</div>
+					</div>
+					<div class="colorFondo rounded p-3 mt-1 col col-md-12" style="width: 40%;">
+						<label class="mb-2" for="observacionesGenerales" style="color: #6366F1;">
+							Observaciones
+						</label>
+						<textarea th:text="${observaciones}" name="observaciones" rows="7" id="observacionesGenerales" cols="10" class="form-control estiloInputs" style="width: 100%; text-align: justify;"
+							placeholder="Dentro de este espacio, puedes agregar cualquier aclaración sobre algún documento o dato que necesite una explicación adicional para facilitar la comprensión de los revisores."> </textarea>
+					</div>
+				
+					
+			   	</div>
+			   	
+				<div class="d-flex justify-content-center mt-5">
+					<button id="guardar" name="accion" onclick="formatarFechaParaEnvio()" class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5" type="submit" role="button" value="guardar" >Guardar</button>
+            		<button id="enviar" name="accion" onclick="formatarFechaParaEnvio()" class="btn btn-outline-success mt-3" type="submit" role="button" value="enviar">Enviar</button>
+				</div>
+				
+				
+		   </form>
+    </section>
+    
+    
+
+    <footer th:insert="fragments/footer.html :: footer"></footer>
+    
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var parentescos = /*[[${parentescos}]]*/ [];
+        /*]]>*/
+    </script>
+    <script>
+		const meses = [
+                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ];
+        // Funciones cuando cargue el HTML
+        document.addEventListener('DOMContentLoaded', function() {
+		    suma();
+		    if((document.getElementById('periodoInicio').value) != "" && (document.getElementById('periodoFin').value) != ""){
+				mostrarMesInicio();
+		    	mostrarMesFin();
+			}
+		});
+		
+		document.getElementById('pagoBimestral').addEventListener('input', function() {
+            // Obtener el valor del primer input
+            const value = this.value;
+
+            // Realizar la operación (dividir entre 2)
+            const result = value / 2;
+
+            // Colocar el resultado en el segundo input
+            document.getElementById('pagoPromedioMes').value = result;
+            
+            document.getElementById('gastoServicios').value = result;
+            
+            suma();
+        });
+        
+       document.getElementById('periodoInicio').addEventListener('change', function() {
+		    mostrarMesInicio();
+		});
+        
+        document.getElementById('periodoFin').addEventListener('change', function() {
+			mostrarMesFin();
+        });
+        
+        function mostrarMesInicio(){
+			// Obtener el valor del campo de entrada
+		    const dateValue = document.getElementById('periodoInicio').value;
+		    
+		    // Crear un objeto Date con el valor del campo de entrada
+		    const date = new Date(dateValue);
+		
+		    // Obtener el nombre del mes
+		    const nombreMes = meses[date.getMonth()];
+			
+			document.getElementById('periodoInicioHidden').value = formatearFecha(dateValue);
+
+		    // Escribir el nombre del mes en el elemento 
+		    document.getElementById('mesInicio').innerText = nombreMes;
+		}
+		
+		function mostrarMesFin(){
+			// Obtener el valor del campo de entrada
+            const dateValue = document.getElementById('periodoFin').value;
+            
+            // Crear un objeto Date con el valor del campo de entrada
+            const date = new Date(dateValue);
+
+			const nombreMes = meses[date.getMonth()];
+			
+			document.getElementById('periodoFinHidden').value = formatearFecha(dateValue);
+
+            // Escribir el mes en el elemento 
+            document.getElementById('mesFin').innerText = `${nombreMes}`;
+		}
+        
+        // Función para formatear la fecha antes de enviarla al servidor
+	    function formatearFecha(fecha) {
+	        // Separar los componentes de la fecha (día, mes, año) usando el guion como delimitador
+	        let partes = fecha.split('-');
+	        let nuevaFecha = partes[2] + '/' + partes[1] + '/' + partes[0];
+	        // Crear el nuevo formato de fecha (dd/mm/aaaa)
+	        return nuevaFecha;
+	    }
+		
+		function suma(){
+			const inputs = document.querySelectorAll('.sumInput');
+		    const totalSpan = document.getElementById('sumTotal');
+		
+		    function updateSum() {
+		        let sum = 0;
+		        inputs.forEach(input => {
+		            sum += parseFloat(input.value) || 0;
+		        });
+		        totalSpan.textContent = sum.toFixed(2);
+		    }
+		
+		    inputs.forEach(input => {
+		        input.addEventListener('input', updateSum);
+		    });
+		
+		    updateSum(); // Inicializa la suma al cargar la página
+		}
+			    
+	    // Método personalizado para validar la selección de archivo
+        $.validator.addMethod("fileRequired", function (value, element) {
+            return element.files.length > 0;
+        }, "Por favor seleccione un archivo.");
+	    
+	    $(document).ready(function () {
+            // Agrega las reglas de validación
+            $("#formMisGastos").validate({
+                rules: {
+					"gastosFam.reciboLuz.titular" : {
+						required: true
+					},
+					periodoInicio: {
+						required: true
+					},
+					periodoFin: {
+						required: true
+					},  
+					pagoBimestral: {
+						required: true
+					},
+					"archivoReciboLuz": {
+                        fileRequired: true,
+                        extension: "pdf" // Puedes ajustar las extensiones permitidas
+                    },
+                    "gastosFam.gastosAlimentacion":{
+						required: true
+					},
+					"gastosFam.gastoRenta": {
+						required: true
+					},
+                    "gastosFam.gastoOtros":{
+						required: true
+					},
+					"gastosFam.gastoEscolares": {
+						required: true
+					},
+                    "gastosFam.gastoRopa":{
+						required: true
+					},
+					"gastosFam.gastoTransporte": {
+						required: true
+					},
+                    "gastosFam.gastoServicio":{
+						required: true
+					}
+                },
+                messages: {
+					"gastosFam.reciboLuz.titular" : {
+						required: "Por favor ingresa el nombre del titular"
+					},
+					periodoInicio: {
+						required: "Por favor ingresa la fecha de inicio"
+					},
+					periodoFin:{
+						required: "Por favor ingresa la fecha de fin"
+					},
+					pagoBimestral: {
+						required: "Por favor ingresa el pago bimestral"
+					},
+                    archivoReciboLuz: {
+                        fileRequired: "Por favor seleccione un archivo para subir.",
+                        extension: "Por favor seleccione un archivo con una extensión pdf."
+                    },
+                    "gastosFam.gastosAlimentacion": {
+						required: "Por favor ingresa este gasto"
+					},
+					"gastosFam.gastoRenta": {
+						required: "Por favor ingresa este gasto"
+					},
+                    "gastosFam.gastoOtros":{
+						required: "Por favor ingresa este gasto"
+					},
+					"gastosFam.gastoEscolares": {
+						required: "Por favor ingresa este gasto"
+					},
+                    "gastosFam.gastoRopa":{
+						required: "Por favor ingresa este gasto"
+					},
+					"gastosFam.gastoTransporte": {
+						required: "Por favor ingresa este gasto"
+					},
+                    "gastosFam.gastoServicio":{
+						required: "Por favor ingresa este gasto"
+					}
+                },
+                submitHandler: function (form, event) {
+                    // Obtenemos el valor del botón presionado
+                    const accion = $(document.activeElement).val();
+                    
+                    // Validar y enviar solo si la acción es "enviar"
+                    if (accion === 'enviar') {
+                        alert("Información enviada correctamente.");
+                        form.submit();
+                    } else {
+                        // Previene el envío si se presiona "Guardar"
+                        form.submit();
+                        alert("Información guardada correctamente.");
+                        // Puedes agregar aquí la lógica para guardar sin enviar
+                    }
+                }
+            });
+
+            // Intercepta el evento submit para el botón "Guardar"
+            $('button[name="accion"][value="guardar"]').click(function (event) {
+                // Desactiva la validación y permite el envío del formulario
+                $("#formMisGastos").validate().cancelSubmit = true;
+            });
+
+            // Intercepta el evento submit para el botón "Enviar"
+            $('button[name="accion"][value="enviar"]').click(function (event) {
+                // Activa la validación
+                $("#formMisGastos").validate().cancelSubmit = false;
+            });
+        });
+	</script>
+    <script src="../javaScript.js/funcionamiento.js"></script>
+
+
+</body>
+</html>

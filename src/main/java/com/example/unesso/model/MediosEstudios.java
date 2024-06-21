@@ -9,7 +9,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="mediosEstudio")
+@Table(name="mediosEstudios")
 public class MediosEstudios {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -23,10 +23,11 @@ public class MediosEstudios {
 	@JoinColumn(name="idAlumno")
 	private Alumno alumno;
 	
+	/*
 	@OneToOne
 	@JoinColumn(name="idCatInternet")
 	private CatInternet catInternet;
-
+	*/
 	
 	
 	public Integer getIdMediosEstudio() {
@@ -53,18 +54,12 @@ public class MediosEstudios {
 		this.alumno = alumno;
 	}
 
-	public CatInternet getCatInternet() {
-		return catInternet;
-	}
-
-	public void setCatInternet(CatInternet catInternet) {
-		this.catInternet = catInternet;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "MediosEstudio [idMediosEstudio=" + idMediosEstudios + ", catMedios=" + catMedios + ", alumno=" + alumno
-				+ ", catInternet=" + catInternet + "]";
+				 ;
 	}
 	
 	

@@ -33,7 +33,7 @@
     </div>
 
     <div class="container mt-5">
-        <form th:action="@{/administrador/guardarAlumno}" th:object="${alumno}" method="post">
+        <form action="#" th:action="@{/administrador/guardarAlumno}" th:object="${alumno}" method="post">
             <div class="row ps-5 pe-5">
                 <div class=" col-6 rounded colorFondo m-2 p-4">
                     <h3 style="color: #6366F1;">Datos personales</h3>
@@ -115,11 +115,10 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <label for="grupoAlumno" class="ms-1" style="color: #6366F1;">
+                                <label for="nombreGrupo" class="ms-1" style="color: #6366F1;">
                                     Grupo
                                 </label>
-                                <input id="grupoAlumno" type="number" class="ms-1 w-100 form-control"
-                                    th:field="*{catGrupo}">
+                                <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control">
                             </div>
                             <div class="col">
                                 <label for="matriculaAlumno" class="ms-1" style="color: #6366F1;">

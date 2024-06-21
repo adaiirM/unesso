@@ -5,8 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name="serviciosVivienda")
@@ -19,10 +21,11 @@ public class ServiciosVivienda {
 	@JoinColumn(name="idCatServicios")
 	private CatServicios catServicios;
 	
-	@OneToOne
-	@JoinColumn(name="idViviendaFamilia")
-	private ViviendaFamiliar viviendaFamilia;
+	@ManyToOne
+    @JoinColumn(name = "idViviendaFamiliar")
+    private ViviendaFamiliar viviendaFamiliar;
 	
+
 	private String otros;
 	
 
@@ -43,11 +46,11 @@ public class ServiciosVivienda {
 	}
 
 	public ViviendaFamiliar getViviendaFamilia() {
-		return viviendaFamilia;
+		return viviendaFamiliar;
 	}
 
 	public void setViviendaFamilia(ViviendaFamiliar viviendaFamilia) {
-		this.viviendaFamilia = viviendaFamilia;
+		this.viviendaFamiliar = viviendaFamilia;
 	}
 
 	public String getOtros() {
@@ -61,10 +64,7 @@ public class ServiciosVivienda {
 	@Override
 	public String toString() {
 		return "ServiciosVivienda [idServiciosVivienda=" + idServiciosVivienda + ", catServicios=" + catServicios
-				+ ", viviendaFamilia=" + viviendaFamilia + ", otros=" + otros + "]";
+				+ ", viviendaFamilia=" + viviendaFamiliar + ", otros=" + otros + "]";
 	}
-	
-	
-	
 
 }

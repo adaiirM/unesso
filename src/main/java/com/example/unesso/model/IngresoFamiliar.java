@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -13,9 +14,9 @@ import jakarta.persistence.Table;
 public class IngresoFamiliar {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer idIngresosFamiliar;
+	private Integer idIngresoFamiliar;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="idFamilia")
 	private Familia familia;
 	
@@ -25,7 +26,7 @@ public class IngresoFamiliar {
 	
 	@OneToOne
 	@JoinColumn(name="idCatOcupacion")
-	private CatOcupacion idCatOcupacion;
+	private CatOcupacion catOcupacion;
 	
 	private String nombrePersona;
 	
@@ -34,70 +35,98 @@ public class IngresoFamiliar {
 	private Double ingresoNeto;
 	
 
-	public Integer getIdIngresosFamilia() {
-		return idIngresosFamiliar;
+	
+	public Integer getIdIngresosFamiliar() {
+		return idIngresoFamiliar;
 	}
 
-	public void setIdIngresosFamilia(Integer idIngresosFamilia) {
-		this.idIngresosFamiliar = idIngresosFamilia;
+
+
+	public void setIdIngresosFamiliar(Integer idIngresosFamiliar) {
+		this.idIngresoFamiliar = idIngresosFamiliar;
 	}
+
+
 
 	public Familia getFamilia() {
 		return familia;
 	}
 
+
+
 	public void setFamilia(Familia familia) {
 		this.familia = familia;
 	}
+
+
 
 	public CatParentesco getCatParentesco() {
 		return catParentesco;
 	}
 
+
+
 	public void setCatParentesco(CatParentesco catParentesco) {
 		this.catParentesco = catParentesco;
 	}
 
-	public CatOcupacion getIdCatOcupacion() {
-		return idCatOcupacion;
+
+
+	public CatOcupacion getCatOcupacion() {
+		return catOcupacion;
 	}
 
-	public void setIdCatOcupacion(CatOcupacion idCatOcupacion) {
-		this.idCatOcupacion = idCatOcupacion;
+
+
+	public void setCatOcupacion(CatOcupacion catOcupacion) {
+		this.catOcupacion = catOcupacion;
 	}
+
+
 
 	public String getNombrePersona() {
 		return nombrePersona;
 	}
 
+
+
 	public void setNombrePersona(String nombrePersona) {
 		this.nombrePersona = nombrePersona;
 	}
+
+
 
 	public Double getIngresoBruto() {
 		return ingresoBruto;
 	}
 
+
+
 	public void setIngresoBruto(Double ingresoBruto) {
 		this.ingresoBruto = ingresoBruto;
 	}
+
+
 
 	public Double getIngresoNeto() {
 		return ingresoNeto;
 	}
 
+
+
 	public void setIngresoNeto(Double ingresoNeto) {
 		this.ingresoNeto = ingresoNeto;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "IngresosFamilia [idIngresosFamilia=" + idIngresosFamiliar + ", familia=" + familia + ", catParentesco="
-				+ catParentesco + ", idCatOcupacion=" + idCatOcupacion + ", nombrePersona=" + nombrePersona
+		return "IngresoFamiliar [idIngresosFamiliar=" + idIngresoFamiliar + ", catParentesco="
+				+ catParentesco + ", catOcupacion=" + catOcupacion + ", nombrePersona=" + nombrePersona
 				+ ", ingresoBruto=" + ingresoBruto + ", ingresoNeto=" + ingresoNeto + "]";
 	}
 	
 	
 	
-
 }

@@ -15,16 +15,16 @@ public class Domicilio {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idDomicilio;
 	
-	@OneToOne
-	@JoinColumn(name="idCatLocalidad")
-	private CatLocalidad catLocalidad;
-	
 	private String coloniaBarrio;
 	
 	private String calle;
 	
-	private Integer numero;
+	private String numero;
 
+	@OneToOne
+	@JoinColumn(name="idCatLocalidad")
+	private CatLocalidad catLocalidad;
+	
 	public Integer getIdDomicilio() {
 		return idDomicilio;
 	}
@@ -57,11 +57,11 @@ public class Domicilio {
 		this.calle = calle;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

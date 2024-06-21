@@ -1,3 +1,4 @@
+
 body {
     overflow-x: hidden;
 }
@@ -337,4 +338,65 @@ footer hr {
 
 #tablaSolicitudes th, #tablaSolicitudes td {
     background-color: #F5F5F5; 
+}
+
+
+.formCambiarContraseña label {
+	width: 100%;
+	float: left;
+	display: inline-block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.formCambiarContraseña label.error {
+	float: left;
+	color: red;
+	font-weight: normal;
+	padding-left: .5em;
+	vertical-align: top;
+}
+
+ /* Estilos personalizados para los mensajes de error */
+/*MENSAJE DE ERROR*/
+.error {
+    color: red;
+    font-size: 1em;
+}
+
+
+
+
+#rutaArchivoComprobante input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #4F46E5; /* Color del borde */
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px; /* Bordes redondeados */
+    color: #4F46E5; /* Color del texto */
+    background-color: white; /* Color de fondo */
+    text-align: center;
+}
+/* Estilo para el estado de enfoque */
+.custom-file-upload:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.5);
+}
+
+/* Estilo para el estado de hover */
+.custom-file-upload:hover {
+    background-color: #F0F0FF; /* Color de fondo al pasar el ratÃ³n */
+}
+
+.no-border {
+    border: none; /* Sin bordes */
+    background: none; /* Sin fondo */
+    pointer-events: none; /* No se puede hacer clic ni enfocar */
+    color: inherit; /* Hereda el color del texto */
+    font: inherit; /* Hereda la fuente del texto */
+    padding: 0; /* Sin padding */
+    margin: 0; /* Sin margen */
+    outline: none; /* Sin outline al enfocar */
 }

@@ -1,5 +1,6 @@
 package com.example.unesso.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,7 @@ public class GastosFam {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idGastosFam;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idReciboLuz")
 	private ReciboLuz reciboLuz;
 	
@@ -32,8 +33,6 @@ public class GastosFam {
 	private Double gastoTransporte;
 	
 	private Double gastoOtros;
-	
-	
 
 	public Integer getIdGastosFam() {
 		return idGastosFam;
@@ -67,12 +66,12 @@ public class GastosFam {
 		this.gastoRenta = gastoRenta;
 	}
 
-	public Double getGastoServicio() {
+	public Double getGastoServicios() {
 		return gastoServicios;
 	}
 
-	public void setGastoServicio(Double gastoServicio) {
-		this.gastoServicios = gastoServicio;
+	public void setGastoServicios(Double gastoServicios) {
+		this.gastoServicios = gastoServicios;
 	}
 
 	public Double getGastoEscolares() {
@@ -110,13 +109,8 @@ public class GastosFam {
 	@Override
 	public String toString() {
 		return "GastosFam [idGastosFam=" + idGastosFam + ", reciboLuz=" + reciboLuz + ", gastosAlimentacion="
-				+ gastosAlimentacion + ", gastoRenta=" + gastoRenta + ", gastoServicio=" + gastoServicios
+				+ gastosAlimentacion + ", gastoRenta=" + gastoRenta + ", gastoServicios=" + gastoServicios
 				+ ", gastoEscolares=" + gastoEscolares + ", gastoRopa=" + gastoRopa + ", gastoTransporte="
 				+ gastoTransporte + ", gastoOtros=" + gastoOtros + "]";
 	}
-	
-	
-	
-	
-
 }
