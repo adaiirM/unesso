@@ -350,6 +350,10 @@ public class AlumnoController {
 			//serviceAlumno.guardar(alumnoSesion);
 		}
 		
+		if(accion.equals("enviar")) {
+			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
+		}
+		
 		serviceAlumno.guardarAlumno(alumnoSesion);
 		
 		return "redirect:/alumno/menuSolicitar";
