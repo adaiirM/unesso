@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 
 @RequestMapping("/administrador")
@@ -25,6 +27,11 @@ public class AdministradorController {
     private ICatRolServiceJPA catRolService;
     @Autowired
     private CatGrupoServiceJPA catGrupoService;
+    @Autowired
+    private CatSemestreServiceJPA catSemestreService;
+    @Autowired
+    private CatCarreraServiceJPA catCarreraService;
+
 
 
     @GetMapping("/menuAdministrador")
@@ -51,6 +58,10 @@ public class AdministradorController {
     @GetMapping("/agregarAlumno")
     public String agregarAlumno(Model model){
         model.addAttribute("alumno", new Alumno());
+        List<CatSemestre> semestres = catSemestreService.buscarTodos(); // Obtener los semestres desde el servicio
+        List<CatCarrera> carreras = catCarreraService.buscarTodas(); // Obtener las carreras desde el servicio
+        model.addAttribute("semestres", semestres); // Agregar los semestres al modelo
+        model.addAttribute("carreras", carreras); // Agregar las carreras al modelo
         return "/formAgregarAlumno";
     }
     @PostMapping("/guardarAlumno")

@@ -84,7 +84,8 @@
                                     Carrera
                                 </label>
                                 <select id="carreraSelect" name="opciones" class="col-1 text-start estiloInputs w-100">
-                                    <option value="opcion1" class="textoInputs">Ingeniería Forestal</option>
+                                    <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}" th:text="${carrera.carrera}"></option>
+                                    <!--<option value="opcion1" class="textoInputs">Ingeniería Forestal</option>
                                     <option value="opcion2" class="textoInputs">Licenciatura en Ciencias Ambientales
                                         para el
                                         Desarrollo Comunitario</option>
@@ -92,7 +93,7 @@
                                         Sistemas Inteligentes</option>
                                     <option value="opcion4" class="textoInputs">Licenciatura en Biología</option>
                                     <option value="opcion4" class="textoInputs">Licenciatura en Administración Turística
-                                    </option>
+                                    </option>-->
                                 </select>
                             </div>
                             <div class="col">
@@ -100,50 +101,51 @@
                                     Semestre
                                 </label>
                                 <select id="semestreSelect" name="opciones" class="col-1 text-start estiloInputs w-100">
-                                    <option value="opcion1" class="textoInputs">Primero</option>
-                                    <option value="opcion2" class="textoInputs">Segundo</option>
-                                    <option value="opcion3" class="textoInputs">Tercero</option>
-                                    <option value="opcion4" class="textoInputs">Cuarto</option>
-                                    <option value="opcion4" class="textoInputs">Quinto</option>
-                                    <option value="opcion4" class="textoInputs">Sexto</option>
-                                    <option value="opcion4" class="textoInputs">Séptimo</option>
-                                    <option value="opcion4" class="textoInputs">Octavo</option>
-                                    <option value="opcion4" class="textoInputs">Noveno</option>
-                                    <option value="opcion4" class="textoInputs">Décimo</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="nombreGrupo" class="ms-1" style="color: #6366F1;">
-                                    Grupo
-                                </label>
-                                <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control">
-                            </div>
-                            <div class="col">
-                                <label for="matriculaAlumno" class="ms-1" style="color: #6366F1;">
-                                    Matricula
-                                </label>
-                                <input id="matriculaAlumno" type="number" class="ms-1 w-100 form-control"
-                                    th:field="*{matricula}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container mt-5">
-                        <div class="row justify-content-center text-center">
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    </div>
+                                    <option th:each="semestre : ${semestres}" th:value="${semestre.idCatSemestre}" th:text="${semestre.nombreSemestre}"></option>
+                                    <!--  <option value="opcion1" class="textoInputs">Primero</option>
+                                     <option value="opcion2" class="textoInputs">Segundo</option>
+                                     <option value="opcion3" class="textoInputs">Tercero</option>
+                                     <option value="opcion4" class="textoInputs">Cuarto</option>
+                                     <option value="opcion4" class="textoInputs">Quinto</option>
+                                     <option value="opcion4" class="textoInputs">Sexto</option>
+                                     <option value="opcion4" class="textoInputs">Séptimo</option>
+                                     <option value="opcion4" class="textoInputs">Octavo</option>
+                                     <option value="opcion4" class="textoInputs">Noveno</option>
+                                     <option value="opcion4" class="textoInputs">Décimo</option> -->
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col">
+                                 <label for="nombreGrupo" class="ms-1" style="color: #6366F1;">
+                                     Grupo
+                                 </label>
+                                 <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control">
+                             </div>
+                             <div class="col">
+                                 <label for="matriculaAlumno" class="ms-1" style="color: #6366F1;">
+                                     Matricula
+                                 </label>
+                                 <input id="matriculaAlumno" type="number" class="ms-1 w-100 form-control"
+                                     th:field="*{matricula}">
+                             </div>
+                         </div>
+                     </div>
+                     <div class="container mt-5">
+                         <div class="row justify-content-center text-center">
+                             <div class="col-6">
+                                 <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Guardar</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </form>
+     </div>
+     </div>
 
-    <footer th:insert="footer.html"></footer>
-    <script src="../javaScript.js/funcionamiento.js"></script>
-</body>
+     <footer th:insert="footer.html"></footer>
+     <script src="../javaScript.js/funcionamiento.js"></script>
+ </body>
 
-</html>
+ </html>
