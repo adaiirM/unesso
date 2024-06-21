@@ -86,31 +86,31 @@
                     <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModal2()"></button>
                 </div>
                 <div class="modal-header">
-                    <h2 class="modal-title mx-auto" style="color: #4F46E5; font: bolder;">Información del alumno</h2>
+                    <h2 class="modal-title mx-auto text-center" style="color: #4F46E5; font-weight: bold; font-size:large;">INFORMACIÓN DEL ALUMNO</h2>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-2">
                             <p class="textoInputs" style="color: #4F46E5;">Nombre: </p>
                         </div>
-                        <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            <p><span th:text="${alumnoSesion.nombre}"/> <span th:text="${alumnoSesion.apellidoP}"/> <span th:text="${alumnoSesion.apellidoM}"/></p>
+                        <div class="col-9 ms-3 d-flex justify-content-start textoInputs">
+                            <p class="subtitulo"><span th:text="${alumnoSesion.nombre}"/> <span th:text="${alumnoSesion.apellidoP}"/> <span th:text="${alumnoSesion.apellidoM}"/></p>
                         </div>                        
                     </div>
                     <div class="row mt-3">
                         <div class="col-2">
                             <p class="textoInputs" style="color: #4F46E5;">Carrera: </p>
                         </div>
-                        <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            <span th:text="${alumnoSesion.catGrupo.catCarrera.carrera}"/>
+                        <div class="col-9 ms-3 d-flex justify-content-start textoInputs">
+                            <span class="subtitulo" th:text="${alumnoSesion.catGrupo.catCarrera.carrera}"/>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-2">
                             <p class="textoInputs" style="color: #4F46E5;">Semestre: </p>
                         </div>
-                        <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            <span th:text="${alumnoSesion.catGrupo.catSemestre.nombreSemestre}"/>
+                        <div class="col-9 ms-2 d-flex justify-content-start textoInputs">
+                            <p class="subtitulo ms-3"><span th:text="${alumnoSesion.catGrupo.catSemestre.nombreSemestre}"/></p>
                         </div>
                     </div>
                 </div>
