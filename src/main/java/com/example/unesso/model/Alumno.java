@@ -107,7 +107,6 @@ public class Alumno {
 	
 	private String idioma;
 
-	
 
 	public Integer getIdAlumno() {
 		return idAlumno;
