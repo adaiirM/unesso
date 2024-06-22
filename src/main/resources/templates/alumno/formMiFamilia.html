@@ -516,680 +516,709 @@
 		    */
 		    
 		/*]]>*/
-		 function updateFileName1(input, index) {
-	        var fileName = input.files[0].name;
-	        document.getElementById('nombreArchivo1-' + index).value = fileName;
-	    }
-	
-	    function updateFileName2(input, index) {
-	        var fileName = input.files[0].name;
-	        document.getElementById('nombreArchivo2-' + index).value = fileName;
-	    }
+	     		function updateFileName1(input, index) {
+			var fileName = input.files[0].name;
+			document.getElementById('nombreArchivo1-' + index).value = fileName;
+		}
 
-			
-			document.getElementById('numHermanosEstudiando').addEventListener('input', function() {
-	            generarHermanos(this.value);
-	        });
-			
-			    // Obtener referencias a los elementos de entrada
-		    var numHermanoInput = document.getElementById('numHermano');
-		    var numHermanosEstudiandoInput = document.getElementById('numHermanosEstudiando');
-		    var hermanosDejoEstudioInput = document.getElementById('inputNum');
-		    var hermanosLicenciaturaInput = document.getElementById('inputLicHermano');
-		
-		    // Función para validar y completar
-		    function validarYCompletar() {
-		        var numHermanos = parseInt(numHermanoInput.value) || 0;
-		        var hermanosEstudiando = parseInt(numHermanosEstudiandoInput.value) || 0;
-		        var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
-		        var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
-		
-		        var total = hermanosEstudiando + hermanosDejoEstudio + hermanosLicenciatura;
-		
-		        // Si el total es igual al número de hermanos, completar campos vacíos con 0
-		        if (total === numHermanos) {
-		            if (numHermanosEstudiandoInput.value === "") {
-		                numHermanosEstudiandoInput.value = 0;
-		            }
-		            if (hermanosDejoEstudioInput.value === "") {
-		                hermanosDejoEstudioInput.value = 0;
-		            }
-		            if (hermanosLicenciaturaInput.value === "") {
-		                hermanosLicenciaturaInput.value = 0;
-		            }
-		        }
-		
-		        // Alerta si el total es mayor que el número de hermanos
-			    if (total > numHermanos) {
-			        alert('La suma de los campos no puede ser mayor que el número de hermanos.');
-			        return false; // Indica que la validación falló
-			    }
-			
-			    return true; // Indica que la validación pasó
-		    }
-		
-		    // Agregar event listener para validar y completar al cambiar cualquier valor
-		    numHermanoInput.addEventListener('change', validarYCompletar);
-		    numHermanosEstudiandoInput.addEventListener('change', validarYCompletar);
-		    hermanosDejoEstudioInput.addEventListener('change', validarYCompletar);
-		    hermanosLicenciaturaInput.addEventListener('change', validarYCompletar);
-		
-		    // Función para inicializar valores y validar al cargar la página
-		    function inicializarYValidar() {
-		        var numHermanos = parseInt(numHermanoInput.value) || 0;
-		        var hermanosEstudiando = parseInt(numHermanosEstudiandoInput.value) || 0;
-		        var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
-		        var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
-		
-		        if (numHermanos > 0 || hermanosEstudiando > 0 || hermanosEstudiando > numHermanos || hermanosDejoEstudio > 0 || hermanosLicenciatura > 0) {
-		            validarYCompletar();
-		        }
-		    }
-		
-		    // Inicializar y validar al cargar la página
-		    window.addEventListener('load', inicializarYValidar);
-			
-	    $(document).ready(function () {
-			
-			
-			
-			var hermanoItems = document.getElementsByClassName('hermano-item');
-	        for (var i = 0; i < hermanoItems.length; i++) {
-	            console.log(i);
-	        }
+		function updateFileName2(input, index) {
+			var fileName = input.files[0].name;
+			document.getElementById('nombreArchivo2-' + index).value = fileName;
+		}
 
 
-			
-		    //Obtener idMunicipio
-	        
-	        
-	        	//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
-	            $('#catEstado').change(function() {
-			            var estado = $(this).val();
-	    				console.log('Selected Estado:', estado);
-	    				
-			            $.ajax({
-			                url: '/direccion/municipiosById/' + estado,
-			                type: 'GET',
-			                success: function(data) {
-			                    var municipioSelect = $('#catMunicipio');
-			                    municipioSelect.empty();
-			                    municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
-			                    $.each(data, function(index, municipio) {
-			                        municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
-			                    });
-			                }
-			            });
-			            
-			        });
-			        
-			        //Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
-			        $('#catMunicipio').change(function() {
-			            var municipio = $(this).val();
-			            
-	    				console.log('Selected municipio:', municipio);
-	    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-			            $.ajax({
-			                url: '/direccion/localidadesById/' + municipio,
-			                type: 'GET',
-			                success: function(data) {
-			                    var municipioSelect = $('#catLocalidad');
-			                    municipioSelect.empty();
-			                    console.log(data);
-			                    municipioSelect.append('<option value="">Elige una opción</option>');
-			                    $.each(data, function(index, localidad) {
-									console.log(data.idCatLocalidad);
-			                        municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
-			                    	
-			                    });
-			                }
-			            });
-			        });
-			        
-			        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
-			        $('#catLocalidad').change(function() {
-			            var localidad = $(this).val();
-	    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-			            $.ajax({
-			                url: '/direccion/codigoPostalById/' + localidad,
-			                type: 'GET',
-			                success: function(data) {
-					            // Se establece el valor del campo #codigoPostal con el valor obtenido
-					            $('#codigoPostal').val(data.numeroCodigoPostal);
-					        }
-			            });
-			        });
-			
-		    
-			        
-	            
-	            
-	    // Obtener referencias a los elementos de radio
-		   $('#domicilioSi').change(function() {
-		        // Check if the checkbox is checked
-		        if ($('#domicilioSi').is(':checked')) {
-		            // If checked, get the value of #idLocalidadTutor
-		            var idLocalidad = $('#idLocalidadTutor');
-		            var idCatLocalidad = idLocalidad.val();
-		
-		            console.log("El campo 'Si' está seleccionado");
-		            setLocalidad(idCatLocalidad);
-		        } else {
-		            // If not checked, get the value of #idLocalidad
-		            var idLocalidad = $('#idLocalidad');
-		            var idCatLocalidad = idLocalidad.val();
-		
-		            setLocalidad(idCatLocalidad);
-		        }
-		    });
-		
-		    // Obtener el valor de #idLocalidad
-		    var idLocalidad = $('#idLocalidad');
-		    var idCatLocalidad = idLocalidad.val();
-		
-		    // Verificar si idCatLocalidad tiene un valor
-		    if (idCatLocalidad && idCatLocalidad.trim() !== "") {
-		        // Obtener idMunicipio
-		        setLocalidad(idCatLocalidad);
-		    }
-	
-		// Referencias a los elementos
-	    const internetSi = document.getElementById("internetSi");
-	    const internetNo = document.getElementById("internetNo");
-	    const tipoConexionContainer = document.getElementById("tipoConexionContainer");
-	
-	    // Función para mostrar u ocultar el contenedor del tipo de conexión
-	    function toggleTipoConexion() {
-	        if (internetSi.checked) {
-				
-	            tipoConexionContainer.style.display = "block";
-	        } else {
-	            tipoConexionContainer.style.display = "none";
-	        }
-	    }
-	
-	    // Añadir eventos a los radio buttons
-	    internetSi.addEventListener("change", toggleTipoConexion);
-	    internetNo.addEventListener("change", toggleTipoConexion);
-	
-	    // Ocultar el contenedor por defecto
-	    toggleTipoConexion();
-	    
-	    
-	    
-	    
-	    
-	     // Configuración de la validación
-	     
-		    var validator = $("#myForm").validate({
-		        rules: {
-		            "infoFamilia.numHermanos": {
-		                required: true
-		            },
-		            "infoFamilia.hermanosEstudiando": {
-		                required: true
-		            },
-		            "infoFamilia.hermanosDejoEstudio": {
-		                required: true
-		            },
-		            "infoFamilia.hermanosLicenciatura": {
-		                required: true
-		            }
-		            
-		        },
-		        messages: {
-		            "infoFamilia.numHermanos": {
-		                required: "*Llena el campo solicitado"
-		            },
-		            "infoFamilia.hermanosEstudiando": {
-		                required: "*Llena el campo solicitado"
-		            },
-		            "infoFamilia.hermanosDejoEstudio": {
-		                required: "*Llena el campo solicitado"
-		            },
-		            "infoFamilia.hermanosLicenciatura": {
-		                required: "*Llena el campo solicitado"
-		            }
-		            
-		        },
-		        errorPlacement: function(error, element) {
-		            error.insertAfter(element);
-		            // Mostrar el mensaje de error durante 10 segundos
-		            setTimeout(function() {
-		                error.fadeOut(500, function() {
-		                    $(this).remove();
-		                });
-		            }, 5000);
-		        }
-		    });
-		    
-		
-		    // Botón de guardado (sin validación)
-		    $("#guardar").click(function() {
-		        // Desactivar temporalmente la validación
-		        validator.settings.ignore = "*";
-		        $("#myForm").submit();
-		        // Reactivar la validación para el próximo uso
-		        validator.settings.ignore = [];
-		    });
-		
-		    // Botón de envío con validación
-		    $("#validar").click(function(event) {
-	            event.preventDefault(); // Evita el envío del formulario por defecto
-	
-	            var isValid = true;
-	
-	            // Validación de radio buttons
-	            var domicilioError = document.getElementById('domicilioError');
-			if (!$('#domicilioSi').is(':checked') && !$('#domicilioNo').is(':checked')) {
-				console.log("No esta seleccionado si o no");
-				domicilioError.style.display = 'block';
-				setTimeout(function () {
-					$(domicilioError).fadeOut();
-				}, 5000);
-				isValid = false;
-			} else {
-				domicilioError.style.display = 'none';
-			}
-	            
-	            var serviciosError = document.getElementById('serviciosError');
-	            if ($('input[name="serviciosVivienda"]').is(":checked")) {
-		            //domicilioError.style.display = 'block';
-					displayError(domicilioError);
-	                
-		        } else {
-		            isValid = false;
-		                serviciosError.style.display = 'none';
-		             
-		        }
-		        
-		        var internetError = document.getElementById('accesoInternetError');
-		        
-		        if ($('input[name="alumno.tieneInternet"]').is(":checked")) {
-		            internetError.style.display = 'none';
-		            
-		            var campoElement = document.getElementById('catInternet');
-			        var errorElement = document.getElementById('tipoConexionError');
-			
-			        if (campoElement.value === '') {
-			           
-			            isValid = false;
-			             setTimeout(() => {
-			                errorElement.style.display = 'block';
-			             }, 8000); 
-			            isValid = false;
-			        } else {
-			            errorElement.style.display = 'none';
-			        }
-		            
-		        } else {
-		            isValid = false;
-		            internetError.style.display = 'block';
-		        }
-	            
-	
-	            // Validación de campos de texto y select
-	            var fieldsToValidate = [
-	                { id: 'catEstado', errorId: 'estadoError', type: 'select' },
-	                { id: 'region', errorId: 'regionError', type: 'text' },
-	                { id: 'colonia', errorId: 'coloniaError', type: 'text' },
-	                { id: 'distrito', errorId: 'distritoError', type: 'text' },
-	                { id: 'catMunicipio', errorId: 'municipioError', type: 'select' },
-	                { id: 'catLocalidad', errorId: 'localidadError', type: 'select' },
-	                { id: 'inputTel', errorId: 'telefonoError' },
-		            { id: 'catEscolaridadPadre', errorId: 'escolaridadPadreError', type: 'select' },
-		            { id: 'catEscolaridadMadre', errorId: 'escolaridadMadreError', type: 'select' },
-		            { id: 'catSituacionvivienda', errorId: 'viviendaError', type: 'select' },
-		            { id: 'catMaterialVivienda', errorId: 'materialError', type: 'select' },
-		            { id: 'catTipoVivienda', errorId: 'tipoViviendaError', type: 'select' },
-		            { id: 'inputNombre', errorId: 'personasViviendaError' }
-		            
-	            ];
-	
-	            fieldsToValidate.forEach(function(field) {
-				    var fieldElement = document.getElementById(field.id);
-				    var errorElement = document.getElementById(field.errorId);
-				
-				    if (field.type === 'select' && fieldElement.value === '') {
-				        displayError(errorElement); // Mostrar error con timeout
-				        isValid = false;
-				    } else if (field.type === 'text' && fieldElement.value.trim() === '') {
-				        displayError(errorElement); // Mostrar error con timeout
-				        isValid = false;
-				    } else {
-				        errorElement.style.display = 'none';
-				    }
-				});
-	            
-	       
-		    
-		     const numHermanosEstudiando = document.getElementById('numHermanosEstudiando').value;
+		document.getElementById('numHermanosEstudiando').addEventListener('input', function () {
+			generarHermanos(this.value);
+		});
 
-    for (let i = 0; i < numHermanosEstudiando; i++) {
-        // Nombre validation
-        const nombreField = document.getElementById('nombreHermano' + i);
-        const nombreError = document.getElementById('nombreError' + i);
-        if (nombreField.value.trim() === '') {
-            
-            setTimeout(() => {
-                nombreError.style.display = 'block';
-            }, 8000); 
-            isValid = false;
-        } else {
-            nombreError.style.display = 'none';
-        }
+		// Obtener referencias a los elementos de entrada
+		var numHermanoInput = document.getElementById('numHermano');
+		var numHermanosEstudiandoInput = document.getElementById('numHermanosEstudiando');
+		var hermanosDejoEstudioInput = document.getElementById('inputNum');
+		var hermanosLicenciaturaInput = document.getElementById('inputLicHermano');
 
-        // Edad validation
-        const edadField = document.getElementById('edadHermano' + i);
-        const edadError = document.getElementById('edadError' + i);
-        if (edadField.value.trim() === '') {
-            
-            setTimeout(() => {
-                edadError.style.display = 'block';
-            }, 8000); 
-            isValid = false;
-        } else {
-            edadError.style.display = 'none';
-        }
+		// Función para validar y completar
+		function validarYCompletar() {
+			var numHermanos = parseInt(numHermanoInput.value) || 0;
+			var hermanosEstudiando = parseInt(numHermanosEstudiandoInput.value) || 0;
+			var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
+			var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
 
-        // Grado validation
-        const gradoField = document.getElementById('gradoHermano' + i);
-        const gradoError = document.getElementById('gradoError' + i);
-        if (gradoField.value.trim() === '') {
-            
-            setTimeout(() => {
-                gradoError.style.display = 'block';
-            }, 8000); 
-            isValid = false;
-        } else {
-            gradoError.style.display = 'none';
-        }
+			var total = hermanosEstudiando + hermanosDejoEstudio + hermanosLicenciatura;
 
-        // Institucion validation
-        const institucionField = document.getElementById('institucionHermano' + i);
-        const institucionError = document.getElementById('institucionError' + i);
-        if (institucionField.value.trim() === '') {
-            
-            setTimeout(() => {
-                institucionError.style.display = 'block';
-            }, 8000); 
-            isValid = false;
-        } else {
-            institucionError.style.display = 'none';
-        }
-
-        // Comprobante validation
-        const comprobanteField = document.getElementById('comprobanteHermano' + i);
-        const comprobanteError = document.getElementById('comprobanteError' + i);
-        if (comprobanteField.value.trim() === '') {
-            
-            setTimeout(() => {
-                comprobanteError.style.display = 'block';
-            }, 8000); 
-            isValid = false;
-        } else {
-            comprobanteError.style.display = 'none';
-        }
-
-        // Archivo validation
-        const archivoError = document.getElementById('nombreArchivoError' + i);
-        const archivoField = document.getElementById('nombreArchivo-' + i) || document.getElementById('nombreArchivo2-' + i);
-        if (!archivoField.value.trim()) {
-            
-            setTimeout(() => {
-                archivoError.style.display = 'block';
-            }, 8000); 
-            isValid = false;
-        } else {
-            archivoError.style.display = 'none';
-        }
-    }
-	            
-	            
-	            // Verificar si todas las validaciones pasan
-	            if ($("#myForm").valid() && isValid && validarYCompletar()) {
-				    var idAlumno = $('#idAlumno').val();
-				    console.log("id de alumno: " + idAlumno);
-				    var idAlumnoInt = parseInt(idAlumno);
-				
-				    var url = "/formulario/marcarMiFamiliaRealizado/" + idAlumnoInt;
-				
-				    // Realiza la solicitud GET
-				    $.ajax({
-				        url: url,
-				        method: "GET",
-				        success: function(response) {
-				            // Manejar la respuesta del servidor
-				            if (response.success) {
-				                // Enviar el formulario
-				                alert("Información enviada correctamente.");
-				                $("#myForm").submit();
-				            } else {
-				                // Manejar el caso en que la inserción en la base de datos falle
-				                alert("Ups. No se ha podido actualizar correctamente tu información");
-				                console.error("Error al marcar el formulario como realizado.");
-				                $("#myForm").submit();
-				            }
-				        },
-				        error: function(xhr, status, error) {
-				            console.error("Error en la solicitud Ajax: " + error);
-				        }
-				    });
-				} else {
-				   alert("Ups. Tienes datos obligatorios sin llenar");
+			// Si el total es igual al número de hermanos, completar campos vacíos con 0
+			if (total === numHermanos) {
+				if (numHermanosEstudiandoInput.value === "") {
+					numHermanosEstudiandoInput.value = 0;
 				}
-	            
-	            
-	        });
-		    
-		    
-		    function setLocalidad(idCatLocalidad){
-				 $.ajax({
-			        url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
-			        type: 'GET',
-			        success: function(data) {
-			            var idMunicipio = data.idCatMunicipio;
-			            console.log("id de municipio: " + idMunicipio);
+				if (hermanosDejoEstudioInput.value === "") {
+					hermanosDejoEstudioInput.value = 0;
+				}
+				if (hermanosLicenciaturaInput.value === "") {
+					hermanosLicenciaturaInput.value = 0;
+				}
+			}
+
+			// Alerta si el total es mayor que el número de hermanos
+			if (total > numHermanos) {
+				alert('La suma de los campos no puede ser mayor que el número de hermanos.');
+				return false; // Indica que la validación falló
+			}
+
+			return true; // Indica que la validación pasó
+		}
+
+		// Agregar event listener para validar y completar al cambiar cualquier valor
+		numHermanoInput.addEventListener('change', validarYCompletar);
+		numHermanosEstudiandoInput.addEventListener('change', validarYCompletar);
+		hermanosDejoEstudioInput.addEventListener('change', validarYCompletar);
+		hermanosLicenciaturaInput.addEventListener('change', validarYCompletar);
+
+		// Función para inicializar valores y validar al cargar la página
+		function inicializarYValidar() {
+			var numHermanos = parseInt(numHermanoInput.value) || 0;
+			var hermanosEstudiando = parseInt(numHermanosEstudiandoInput.value) || 0;
+			var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
+			var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
+
+			if (numHermanos > 0 || hermanosEstudiando > 0 || hermanosEstudiando > numHermanos || hermanosDejoEstudio > 0 || hermanosLicenciatura > 0) {
+				validarYCompletar();
+			}
+		}
+
+		// Inicializar y validar al cargar la página
+		window.addEventListener('load', inicializarYValidar);
+
+		$(document).ready(function () {
+
+
+
+			var hermanoItems = document.getElementsByClassName('hermano-item');
+			for (var i = 0; i < hermanoItems.length; i++) {
+				console.log(i);
+			}
+
+
+
+			//Obtener idMunicipio
+
+
+			//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
+			$('#catEstado').change(function () {
+				var estado = $(this).val();
+				console.log('Selected Estado:', estado);
+
+				$.ajax({
+					url: '/direccion/municipiosById/' + estado,
+					type: 'GET',
+					success: function (data) {
+						var municipioSelect = $('#catMunicipio');
+						municipioSelect.empty();
+						municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+						$.each(data, function (index, municipio) {
+							municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+						});
+					}
+				});
+
+			});
+
+			//Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
+			$('#catMunicipio').change(function () {
+				var municipio = $(this).val();
+
+				console.log('Selected municipio:', municipio);
+				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+				$.ajax({
+					url: '/direccion/localidadesById/' + municipio,
+					type: 'GET',
+					success: function (data) {
+						var municipioSelect = $('#catLocalidad');
+						municipioSelect.empty();
+						console.log(data);
+						municipioSelect.append('<option value="">Elige una opción</option>');
+						$.each(data, function (index, localidad) {
+							console.log(data.idCatLocalidad);
+							municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad + '</option>');
+
+						});
+					}
+				});
+			});
+
+			//Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+			$('#catLocalidad').change(function () {
+				var localidad = $(this).val();
+				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+				$.ajax({
+					url: '/direccion/codigoPostalById/' + localidad,
+					type: 'GET',
+					success: function (data) {
+						// Se establece el valor del campo #codigoPostal con el valor obtenido
+						$('#codigoPostal').val(data.numeroCodigoPostal);
+					}
+				});
+			});
+
+
+
+
+
+			// Obtener referencias a los elementos de radio
+			 $('#domicilioSi').change(function () {
+			        obtenerDomicilioChecked();
+			    });
 			
-			            //Obtener idEstado
-			            $.ajax({
-			                url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
-			                type: 'GET',
-			                success: function(data) {
-			                    var idEstado = data.idCatEstado;
-			                    $('#catEstado').val(idEstado);
-			                    console.log("id de estado: " + idEstado);
+			    $('#domicilioNo').change(function () {
+			        if ($('#domicilioNo').is(':checked')) {
+			            $('#colonia').prop('disabled', false);
+			            var idLocalidad = $('#idLocalidad');
+			            var idCatLocalidad = idLocalidad.val();
+			            if (idCatLocalidad) {
+			                setLocalidad(idCatLocalidad);
+			            }
 			
-			                    //Obtener municipios por id de estado
-			                    $.ajax({
-			                        url: '/direccion/municipiosById/' + idEstado,
-			                        type: 'GET',
-			                        success: function(data) {
-			                            var municipioSelect = $('#catMunicipio');
-			                            municipioSelect.empty();
-			                            municipioSelect.append('<option value="">Elige una opción</option>');
-			                            $.each(data, function(index, municipio) {
-			                                municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
-			                            });
-			                            municipioSelect.val(idMunicipio);
-			                            
-			                            //Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-							            $.ajax({
-							                url: '/direccion/localidadesById/' + idMunicipio,
-							                type: 'GET',
-							                success: function(data) {
-							                    var loSelect = $('#catLocalidad');
-							                    loSelect.empty();
-							                    console.log(data);
-							                    loSelect.append('<option value="">Elige una opción</option>');
-							                    $.each(data, function(index, localidad) {
-													console.log(data.idCatLocalidad);
-							                        loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
-							                    	
-							                    });
-							                    loSelect.val(idCatLocalidad);
-							                     //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
-											      
-								    				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-										            $.ajax({
-										                url: '/direccion/codigoPostalById/' + idCatLocalidad,
-										                type: 'GET',
-										                success: function(data) {
-												            // Se establece el valor del campo #codigoPostal con el valor obtenido
-												            $('#codigoPostal').val(data.numeroCodigoPostal);
-												        }
-										            });
-							                }
-							            });
-			                            
-			                        },
-			                        error: function(error) {
-			                            console.error("Error en la solicitud AJAX:", error);
-			                        }
-			                    });
-			                },
-			                error: function(error) {
-			                    console.error("Error en la solicitud AJAX:", error);
-			                }
-			            });
-			        },
-			        error: function(error) {
-			            console.error("Error en la solicitud AJAX:", error);
+			            $("#catLocalidad").removeAttr('disabled');
+			            $("#catMunicipio").removeAttr('disabled');
+			            $("#catEstado").removeAttr('disabled');
 			        }
 			    });
-			}
-		
-	    
-	    function displayError(errorElement) {
-		    errorElement.style.display = 'block';
-		    setTimeout(function() {
-		        errorElement.style.display = 'none';
-		    }, 8000);
-		}
-        
 			
-       });
-        
-       
-       
-       
-       document.addEventListener('DOMContentLoaded', () => {
-	      document.querySelectorAll('input[type=text]').forEach( node => node.addEventListener('keypress', e => {
-	        if(e.keyCode == 13) {
-	          e.preventDefault();
-	        }
-	      }))
-	   });
-	  
-		
+			    // Llamar la función al cargar la página si ya está seleccionado
+			    if ($('#domicilioSi').is(':checked')) {
+			        obtenerDomicilioChecked();
+			    }
+			
+			    if ($('#domicilioNo').is(':checked')) {
+			        $('#colonia').prop('disabled', false);
+			        var idLocalidad = $('#idLocalidad');
+			        var idCatLocalidad = idLocalidad.val();
+			        if (idCatLocalidad) {
+			            setLocalidad(idCatLocalidad);
+			        }
+			
+			        $("#catLocalidad").removeAttr('disabled');
+			        $("#catMunicipio").removeAttr('disabled');
+			        $("#catEstado").removeAttr('disabled');
+			    }
+
+
+
+
+			// Referencias a los elementos
+			const internetSi = document.getElementById("internetSi");
+			const internetNo = document.getElementById("internetNo");
+			const tipoConexionContainer = document.getElementById("tipoConexionContainer");
+
+			// Función para mostrar u ocultar el contenedor del tipo de conexión
+			function toggleTipoConexion() {
+				if (internetSi.checked) {
+
+					tipoConexionContainer.style.display = "block";
+				} else {
+					tipoConexionContainer.style.display = "none";
+				}
+			}
+
+			// Añadir eventos a los radio buttons
+			internetSi.addEventListener("change", toggleTipoConexion);
+			internetNo.addEventListener("change", toggleTipoConexion);
+
+			// Ocultar el contenedor por defecto
+			toggleTipoConexion();
+
+
+
+
+
+			// Configuración de la validación
+
+			var validator = $("#myForm").validate({
+				rules: {
+					"infoFamilia.numHermanos": {
+						required: true
+					},
+					"infoFamilia.hermanosEstudiando": {
+						required: true
+					},
+					"infoFamilia.hermanosDejoEstudio": {
+						required: true
+					},
+					"infoFamilia.hermanosLicenciatura": {
+						required: true
+					},
+					"esViviendaTutor":{
+						required: true
+					}
+
+				},
+				messages: {
+					"infoFamilia.numHermanos": {
+						required: "*Llena el campo solicitado"
+					},
+					"infoFamilia.hermanosEstudiando": {
+						required: "*Llena el campo solicitado"
+					},
+					"infoFamilia.hermanosDejoEstudio": {
+						required: "*Llena el campo solicitado"
+					},
+					"infoFamilia.hermanosLicenciatura": {
+						required: "*Llena el campo solicitado"
+					},
+					"esViviendaTutor":{
+						required: "*Selecciona un campo"
+					}
+
+				},
+				errorPlacement: function (error, element) {
+					error.insertAfter(element);
+					// Mostrar el mensaje de error durante 10 segundos
+					setTimeout(function () {
+						error.fadeOut(500, function () {
+							$(this).remove();
+						});
+					}, 5000);
+				}
+			});
+
+
+			// Botón de guardado (sin validación)
+			$("#guardar").click(function () {
+				// Desactivar temporalmente la validación
+				validator.settings.ignore = "*";
+				$("#myForm").submit();
+				// Reactivar la validación para el próximo uso
+				validator.settings.ignore = [];
+			});
+
+			// Botón de envío con validación
+			$("#validar").click(function (event) {
+				event.preventDefault(); // Evita el envío del formulario por defecto
+
+				var isValid = true;
+
+		        
+		       
+
+				var serviciosError = document.getElementById('serviciosError');
+				if (!$('input[name="serviciosVivienda"]:checked').length) {
+					serviciosError.style.display = 'block';
+					isValid = false;
+				} else {
+					
+					serviciosError.style.display = 'none';
+
+				}
+
+				var internetError = document.getElementById('accesoInternetError');
+
+				if (!$('input[name="alumno.tieneInternet"]').is(":checked")) {
+					isValid = false;
+					setTimeout(() => {
+						internetError.style.display = 'block';
+					}, 8000);
+				} else {
+					internetError.style.display = 'none';
+					
+				}
+				
+				const internetSi = document.getElementById("internetSi");
+				if(internetSi.checked){
+					var campoElement = document.getElementById('catInternet');
+					var errorElement = document.getElementById('tipoConexionError');
+					if (campoElement.value === '') {
+						isValid = false;
+						setTimeout(() => {
+							errorElement.style.display = 'block';
+						}, 5000);
+					} else {
+						errorElement.style.display = 'none';
+					}
+				}
+
+
+				// Validación de campos de texto y select
+				var fieldsToValidate = [
+					{id: 'catEstado', errorId: 'estadoError', type: 'select'},
+					{id: 'region', errorId: 'regionError', type: 'text'},
+					{id: 'colonia', errorId: 'coloniaError', type: 'text'},
+					{id: 'distrito', errorId: 'distritoError', type: 'text'},
+					{id: 'catMunicipio', errorId: 'municipioError', type: 'select'},
+					{id: 'catLocalidad', errorId: 'localidadError', type: 'select'},
+					{id: 'inputTel', errorId: 'telefonoError'},
+					{id: 'catEscolaridadPadre', errorId: 'escolaridadPadreError', type: 'select'},
+					{id: 'catEscolaridadMadre', errorId: 'escolaridadMadreError', type: 'select'},
+					{id: 'catSituacionvivienda', errorId: 'viviendaError', type: 'select'},
+					{id: 'catMaterialVivienda', errorId: 'materialError', type: 'select'},
+					{id: 'catTipoVivienda', errorId: 'tipoViviendaError', type: 'select'},
+					{id: 'inputNombre', errorId: 'personasViviendaError'}
+
+				];
+
+				fieldsToValidate.forEach(function (field) {
+					var fieldElement = document.getElementById(field.id);
+					var errorElement = document.getElementById(field.errorId);
+
+					if (field.type === 'select' && fieldElement.value === '') {
+						displayError(errorElement); // Mostrar error con timeout
+						isValid = false;
+					} else if (field.type === 'text' && fieldElement.value.trim() === '') {
+						displayError(errorElement); // Mostrar error con timeout
+						isValid = false;
+					} else {
+						errorElement.style.display = 'none';
+					}
+				});
+
+
+
+				const numHermanosEstudiando = document.getElementById('numHermanosEstudiando').value;
+
+				for (let i = 0; i < numHermanosEstudiando; i++) {
+					// Nombre validation
+					const nombreField = document.getElementById('nombreHermano' + i);
+					const nombreError = document.getElementById('nombreError' + i);
+					if (nombreField.value.trim() === '') {
+
+						setTimeout(() => {
+							nombreError.style.display = 'block';
+						}, 8000);
+						isValid = false;
+					} else {
+						nombreError.style.display = 'none';
+					}
+
+					// Edad validation
+					const edadField = document.getElementById('edadHermano' + i);
+					const edadError = document.getElementById('edadError' + i);
+					if (edadField.value.trim() === '') {
+
+						setTimeout(() => {
+							edadError.style.display = 'block';
+						}, 8000);
+						isValid = false;
+					} else {
+						edadError.style.display = 'none';
+					}
+
+					// Grado validation
+					const gradoField = document.getElementById('gradoHermano' + i);
+					const gradoError = document.getElementById('gradoError' + i);
+					if (gradoField.value.trim() === '') {
+
+						setTimeout(() => {
+							gradoError.style.display = 'block';
+						}, 8000);
+						isValid = false;
+					} else {
+						gradoError.style.display = 'none';
+					}
+
+					// Institucion validation
+					const institucionField = document.getElementById('institucionHermano' + i);
+					const institucionError = document.getElementById('institucionError' + i);
+					if (institucionField.value.trim() === '') {
+
+						setTimeout(() => {
+							institucionError.style.display = 'block';
+						}, 8000);
+						isValid = false;
+					} else {
+						institucionError.style.display = 'none';
+					}
+
+					// Comprobante validation
+					const comprobanteField = document.getElementById('comprobanteHermano' + i);
+					const comprobanteError = document.getElementById('comprobanteError' + i);
+					if (comprobanteField.value.trim() === '') {
+
+						setTimeout(() => {
+							comprobanteError.style.display = 'block';
+						}, 8000);
+						isValid = false;
+					} else {
+						comprobanteError.style.display = 'none';
+					}
+
+					// Archivo validation
+					const archivoError = document.getElementById('nombreArchivoError' + i);
+					const archivoField = document.getElementById('nombreArchivo-' + i) || document.getElementById('nombreArchivo2-' + i);
+					if (!archivoField.value.trim()) {
+
+						setTimeout(() => {
+							archivoError.style.display = 'block';
+						}, 8000);
+						isValid = false;
+					} else {
+						archivoError.style.display = 'none';
+					}
+				}
+
+
+				// Verificar si todas las validaciones pasan
+				if ($("#myForm").valid() && isValid && validarYCompletar()) {
+					var idAlumno = $('#idAlumno').val();
+					console.log("id de alumno: " + idAlumno);
+					var idAlumnoInt = parseInt(idAlumno);
+
+					var url = "/formulario/marcarMiFamiliaRealizado/" + idAlumnoInt;
+
+					// Realiza la solicitud GET
+					$.ajax({
+						url: url,
+						method: "GET",
+						success: function (response) {
+							// Manejar la respuesta del servidor
+							if (response.success) {
+								// Enviar el formulario
+								alert("Información enviada correctamente.");
+								$("#myForm").submit();
+							} else {
+								// Manejar el caso en que la inserción en la base de datos falle
+								alert("Ups. No se ha podido actualizar correctamente tu información");
+								console.error("Error al marcar el formulario como realizado.");
+								$("#myForm").submit();
+							}
+						},
+						error: function (xhr, status, error) {
+							console.error("Error en la solicitud Ajax: " + error);
+						}
+					});
+				} else {
+					alert("Ups. Tienes datos obligatorios sin llenar");
+				}
+
+
+			});
+
+
+
+			function displayError(errorElement) {
+				errorElement.style.display = 'block';
+				setTimeout(function () {
+					errorElement.style.display = 'none';
+				}, 8000);
+			}
+
+
+		});
+
+
+
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelectorAll('input[type=text]').forEach(node => node.addEventListener('keypress', e => {
+				if (e.keyCode == 13) {
+					e.preventDefault();
+				}
+			}))
+		});
+
+
 		const escolaridades = [
-            { nombreEscolaridad: 'Primaria' },
-            { nombreEscolaridad: 'Secundaria' },
-            { nombreEscolaridad: 'Bachillerato' },
-            { nombreEscolaridad: 'Tecnico' },
-            { nombreEscolaridad: 'Licenciatura' },
-            { nombreEscolaridad: 'Posgrado' }
-            
-            // Agrega más opciones según sea necesario
-        ];
-		
-		
-	function generarHermanos() {
-	    // Obtén el valor ingresado por el usuario
-	    console.log("Esta es la funcion crear más hermanos");
-	    var numHermanos = parseInt(document.getElementById('numHermanosEstudiando').value);
-	
-	    // Referencia al contenedor donde se agregarán los elementos
-	    const container = document.getElementById('containerHermanos');
-	
-	    // Limpia el contenedor antes de agregar nuevos elementos
-	    container.innerHTML = '';
-	    
-	    if(numHermanos === 0 ){
-			 var newElement = `
+			{nombreEscolaridad: 'Primaria'},
+			{nombreEscolaridad: 'Secundaria'},
+			{nombreEscolaridad: 'Bachillerato'},
+			{nombreEscolaridad: 'Tecnico'},
+			{nombreEscolaridad: 'Licenciatura'},
+			{nombreEscolaridad: 'Posgrado'}
+
+			// Agrega más opciones según sea necesario
+		];
+
+
+		function generarHermanos() {
+			// Obtén el valor ingresado por el usuario
+			console.log("Esta es la funcion crear más hermanos");
+			var numHermanos = parseInt(document.getElementById('numHermanosEstudiando').value);
+
+			// Referencia al contenedor donde se agregarán los elementos
+			const container = document.getElementById('containerHermanos');
+
+			// Limpia el contenedor antes de agregar nuevos elementos
+			container.innerHTML = '';
+
+			if (numHermanos === 0) {
+				var newElement = `
 				 <input hidden type="file" name="file"/>
 			 `;
-	        container.innerHTML += newElement;
-		}
-	
-	    for (let i = 0; i < numHermanos; i++) {
-	        let opcionesEscolaridad = '';
-	        escolaridades.forEach(escolaridad => {
-	            opcionesEscolaridad += `<option value="${escolaridad.nombreEscolaridad}">${escolaridad.nombreEscolaridad}</option>`;
-	        });
-	
-	        var newElement = `
-	        <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2 hermano-item">
-	            <td>
-	                <input hidden name="familia.hermanos[${i}].idHermanos"/>
-	            </td>
-	            <div class="col-12 col-sm-8 mt-3 col-lg-4 col-xl-4">
-	                <p class="textoInputs">Nombre completo:</p>
-	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
-	                name="familia.hermanos[${i}].nombreHermanos" id="nombreHermano${i}"/>
-	                <div id="nombreError${i}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
-	            </div>
-	            <div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-1">
-	                <p class="textoInputs">Edad:</p>
-	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
-	                name="familia.hermanos[${i}].edad" id="edadHermano${i}"/>
-	                <div id="edadError${i}" class="error" style="display: none;">Por favor, ingrese la edad.</div>
-	            </div>
-	            <div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-2">
-	                <p class="textoInputs">Grado de estudios:</p>
-	                <select name="familia.hermanos[${i}].grado" id="gradoHermano${i}" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-	                    <option value="">Elige una opción</option>
-	                    ${opcionesEscolaridad}
-	                </select>
-	                <div id="gradoError${i}" class="error" style="display: none;">Por favor, seleccione una escolaridad.</div>
-	            </div>
-	            <div class="col-12 col-sm-8 col-lg-6 mt-3 col-xl-3">
-	                <p class="textoInputs">Nombre de su institución:</p>
-	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
-	                name="familia.hermanos[${i}].nombreEscuela" id="institucionHermano${i}"/>
-	                <div id="institucionError${i}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
-	            </div>
-	            <div class="col-12 mt-3 col-lg-6 col-xl-2">
-	                <p class="textoInputs">Tipo de Comprobante de estudios:</p>
-	                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
-	                name="familia.hermanos[${i}].nombreTipoComprobante" id="comprobanteHermano${i}"/>
-	                <div id="comprobanteError${i}" class="error" style="display: none;">Por favor, ingrese el nombre del comprobante.</div>
-	            </div>
-	            <div class="col">
-	                <p class="textoInputs">Adjuntar comprobante:</p>
-	            </div>
-	            <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
-	                <input hidden name="familia.hermanos[${i}].rutaArchivoComprobante"/>
-	                <div class="file-select" id="src-file1">
-	                    <label for="file-upload${i}" class="custom-file-upload">
-	                        <i class="fa fa-cloud-upload">Subir Comprobante</i>
-	                    </label>
-	                    <input id="file-upload${i}" type="file" name="file" aria-label="Archivo" onchange="updateFileName(this, ${i})"/>
-	                    <input class="no-border" id="nombreArchivo-${i}">
-	                    <div id="nombreArchivoError${i}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
-	                </div>
-	            </div>
-	        </div>
-	        `;
-	        container.innerHTML += newElement;
-	    }
-	    
-	}	
-	
-         function updateFileName(input, index) {
-            const file = input.files[0].name;
-            const allowedExtensions = /(\.pdf)$/i;
+				container.innerHTML += newElement;
+			}
 
-            if (!allowedExtensions.exec(file)) {
-                alert('Solo se permiten archivos PDF.');
-                input.value = '';
-                document.getElementById(`nombreArchivo-${index}`).value = '';
-                return false;
-            } else {
-                document.getElementById(`nombreArchivo-${index}`).value = file;
-            }
-        }
-		
-    </script>
+			for (let i = 0; i < numHermanos; i++) {
+				let opcionesEscolaridad = '';
+				escolaridades.forEach(escolaridad => {
+					opcionesEscolaridad += `<option value="${escolaridad.nombreEscolaridad}">${escolaridad.nombreEscolaridad}</option>`;
+				});
+
+				if(numHermanos < 5){
+					var newElement = `
+				        <div style="background-color: white; border-color: #6366F1; border-style: solid; border-width: .5px; width: 98.6%;" class="ms-2 rounded ps-3 pe-3 pb-3 row mt-2 hermano-item">
+				            <td>
+				                <input hidden name="familia.hermanos[${i}].idHermanos"/>
+				            </td>
+				            <div class="col-12 col-sm-8 mt-3 col-lg-4 col-xl-4">
+				                <p class="textoInputs">Nombre completo:</p>
+				                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder="Ingrese el nombre de persona dependiente"
+				                name="familia.hermanos[${i}].nombreHermanos" id="nombreHermano${i}"/>
+				                <div id="nombreError${i}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
+				            </div>
+				            <div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-1">
+				                <p class="textoInputs">Edad:</p>
+				                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
+				                name="familia.hermanos[${i}].edad" id="edadHermano${i}"/>
+				                <div id="edadError${i}" class="error" style="display: none;">Por favor, ingrese la edad.</div>
+				            </div>
+				            <div class="col-12 col-sm-4 mt-3 col-lg-4 col-xl-2">
+				                <p class="textoInputs">Grado de estudios:</p>
+				                <select name="familia.hermanos[${i}].grado" id="gradoHermano${i}" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+				                    <option value="">Elige una opción</option>
+				                    ${opcionesEscolaridad}
+				                </select>
+				                <div id="gradoError${i}" class="error" style="display: none;">Por favor, seleccione una escolaridad.</div>
+				            </div>
+				            <div class="col-12 col-sm-8 col-lg-6 mt-3 col-xl-3">
+				                <p class="textoInputs">Nombre de su institución:</p>
+				                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
+				                name="familia.hermanos[${i}].nombreEscuela" id="institucionHermano${i}"/>
+				                <div id="institucionError${i}" class="error" style="display: none;">Por favor, ingrese un nombre.</div>
+				            </div>
+				            <div class="col-12 mt-3 col-lg-6 col-xl-2">
+				                <p class="textoInputs">Tipo de Comprobante de estudios:</p>
+				                <input type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" placeholder=""
+				                name="familia.hermanos[${i}].nombreTipoComprobante" id="comprobanteHermano${i}"/>
+				                <div id="comprobanteError${i}" class="error" style="display: none;">Por favor, ingrese el nombre del comprobante.</div>
+				            </div>
+				            <div class="col">
+				                <p class="textoInputs">Adjuntar comprobante:</p>
+				            </div>
+				            <div id="rutaArchivoComprobante" class="col-12 mt-3 col-lg-6 col-xl-2">
+				                <input hidden name="familia.hermanos[${i}].rutaArchivoComprobante"/>
+				                <div class="file-select" id="src-file1">
+				                    <label for="file-upload${i}" class="custom-file-upload">
+				                        <i class="fa fa-cloud-upload">Subir Comprobante</i>
+				                    </label>
+				                    <input id="file-upload${i}" type="file" name="file" aria-label="Archivo" onchange="updateFileName(this, ${i})"/>
+				                    <input class="no-border" id="nombreArchivo-${i}">
+				                    <div id="nombreArchivoError${i}" class="error" style="display: none;">Por favor, adjunte un comprobante.</div>
+				                </div>
+				            </div>
+				        </div>
+				        `;
+						container.innerHTML += newElement;
+				}
+			}
+
+		}
+
+		function updateFileName(input, index) {
+			const file = input.files[0].name;
+			const allowedExtensions = /(\.pdf)$/i;
+
+			if (!allowedExtensions.exec(file)) {
+				alert('Solo se permiten archivos PDF.');
+				input.value = '';
+				document.getElementById(`nombreArchivo-${index}`).value = '';
+				return false;
+			} else {
+				document.getElementById(`nombreArchivo-${index}`).value = file;
+			}
+		}
+
+		function setLocalidad(idCatLocalidad) {
+			$.ajax({
+				url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
+				type: 'GET',
+				success: function (data) {
+					var idMunicipio = data.idCatMunicipio;
+					console.log("id de municipio: " + idMunicipio);
+
+					//Obtener idEstado
+					$.ajax({
+						url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
+						type: 'GET',
+						success: function (data) {
+							var idEstado = data.idCatEstado;
+							$('#catEstado').val(idEstado);
+							console.log("id de estado: " + idEstado);
+
+							//Obtener municipios por id de estado
+							$.ajax({
+								url: '/direccion/municipiosById/' + idEstado,
+								type: 'GET',
+								success: function (data) {
+									var municipioSelect = $('#catMunicipio');
+									municipioSelect.empty();
+									municipioSelect.append('<option value="">Elige una opción</option>');
+									$.each(data, function (index, municipio) {
+										municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+									});
+									municipioSelect.val(idMunicipio);
+
+									//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+									$.ajax({
+										url: '/direccion/localidadesById/' + idMunicipio,
+										type: 'GET',
+										success: function (data) {
+											var loSelect = $('#catLocalidad');
+											loSelect.empty();
+											console.log(data);
+											loSelect.append('<option value="">Elige una opción</option>');
+											$.each(data, function (index, localidad) {
+												console.log(data.idCatLocalidad);
+												loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad + '</option>');
+
+											});
+											loSelect.val(idCatLocalidad);
+											//Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+
+											//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+											$.ajax({
+												url: '/direccion/codigoPostalById/' + idCatLocalidad,
+												type: 'GET',
+												success: function (data) {
+													// Se establece el valor del campo #codigoPostal con el valor obtenido
+													$('#codigoPostal').val(data.numeroCodigoPostal);
+												}
+											});
+										}
+									});
+
+								},
+								error: function (error) {
+									console.error("Error en la solicitud AJAX:", error);
+								}
+							});
+						},
+						error: function (error) {
+							console.error("Error en la solicitud AJAX:", error);
+						}
+					});
+				},
+				error: function (error) {
+					console.error("Error en la solicitud AJAX:", error);
+				}
+			});
+		}
+
+		 function obtenerDomicilioChecked() {
+	        if ($('#domicilioSi').is(':checked')) {
+	            var idLocalidad = $('#idLocalidadAlumno');
+	            var idCatLocalidad = idLocalidad.val();
+	
+	            $("#catLocalidad").attr('disabled', 'disabled');
+	            $("#catMunicipio").attr('disabled', 'disabled');
+	            $("#catEstado").attr('disabled', 'disabled');
+	
+	            var coloniaAlumno = $('#coloniaAlumno').val();
+	            $('#colonia').val(coloniaAlumno);
+	            $('#colonia').prop('disabled', true);
+	
+	            console.log("El campo 'Si' está seleccionado");
+	            setLocalidad(idCatLocalidad);
+	        }
+	    }
+	</script>
 </body>
+
 </html>
