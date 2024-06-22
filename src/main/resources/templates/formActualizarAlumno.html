@@ -33,7 +33,7 @@
         </div>
 
         <div class="container mt-5">
-            <form action="#" th:action="@{/administrador/actualizarAlumno(idAlumno=${alumno.idAlumno})}" th:object="${alumno}" method="post">
+            <form action="#" th:action="@{actualizarAlumno(idAlumno=${alumno.idAlumno})}" th:object="${alumno}" method="post">
                 <div class="row ps-5 pe-5">
                     <div class=" col-6 rounded colorFondo m-2 p-4">
                         <h3 style="color: #6366F1;">Datos personales</h3>
@@ -55,16 +55,12 @@
                                 <input id="apellidoMaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoM}">
                             </div>
                         </div>
-                        <label for="curpAlumno" class="ms-1" style="color: #6366F1;">
-                            CURP
-                        </label>
-                        <input id="curpAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{curp}">
                         <div class="row">
                             <div class="col">
-                                <label for="correoAlumno" class="ms-1" style="color: #6366F1;">
-                                    Correo electronico
+                                <label for="curpAlumno" class="ms-1" style="color: #6366F1;">
+                                    CURP
                                 </label>
-                                <input id="correoAlumno" name="correoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{usuario.username}">
+                                <input id="curpAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{curp}">
                             </div>
                             <div class="col">
                                 <label for="telefonoAlumno" class="ms-1" style="color: #6366F1;">
@@ -72,6 +68,20 @@
                                 </label>
                                 <input id="telefonoAlumno" type="number" class="ms-1 w-100 form-control"
                                        th:field="*{telefono}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="correoParam" class="ms-1" style="color: #6366F1;">
+                                    Correo electronico
+                                </label>
+                                <input id="correoParam" name="correoParam" type="text" class="ms-1 w-100 form-control" th:value="${alumno.usuario.username}">
+                            </div>
+                            <div class="col">
+                                <label for="contraseniaParam" class="ms-1" style="color: #6366F1;">
+                                    Contraseña
+                                </label>
+                                <input id="contraseniaParam" name="contraseniaParam" type="text" class="ms-1 w-100 form-control" th:value="${alumno.usuario.password}">
                             </div>
                         </div>
                     </div>
