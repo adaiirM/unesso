@@ -69,7 +69,7 @@
 	                   <div class="d-flex justify-content-start w-25">
 						    <div class="me-5">
 						        <div class="form-check d-flex justify-content-start" >
-						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input" name="dependeEconomicamente" id="flexRadioDefault1" value="1" checked>
+						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input" name="dependeEconomicamente" id="dependeEconomicamenteSi" value="1" onclick="mostarOcultarDatosTrabajo()">
 									<label class="form-check-label" for="flexRadioDefault1">
 										<p class="subtitulo">Si</p>
 						            </label>
@@ -77,7 +77,7 @@
 						    </div>
 						    <div>
 						        <div class="form-check d-flex justify-content-start">
-						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input"  name="dependeEconomicamente" id="flexRadioDefault2" value="0">
+						            <input type="radio" th:field="*{dependeEconomicamente}" class="form-check-input"  name="dependeEconomicamente" id="dependeEconomicamenteNo" value="0" onclick="mostarOcultarDatosTrabajo()">
 						            <label class="form-check-label" for="flexRadioDefault2">
 						                <p class="subtitulo">No</p>
 						            </label>
@@ -85,24 +85,27 @@
 						    </div>
 						</div>
 	                </div>
-
-					<div class="row">
+	                
+					<!--th:classappend="${mostrarDiv} ? '' : 'hidden'"-->
+					
+					<div id="datosTrabajo"  class="row">
 						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-							<p>Ingresa el nombre del centro de trabajo</p>
-							<input type="text" class="form-control estiloInputs" style="width: 100%;" id="">
+							<p>Ingresa el nombre del centro de tu trabajo</p>
+							<input th:field="*{trabajo.nombreTrabajo}" type="text" class="form-control estiloInputs" style="width: 100%;" id="nombreTrabajo" name="trabajo.nombreTrabajo">
 						</div>
 						<div class="col-sm-7 col-md-4 col-lg-4 ">
 							<p>Menciona el ingreso mensual que recibes</p>
-							<input type="number" class="form-control estiloInputs" style="width: 54%;" id="">
+							<input th:field="*{trabajo.ingresoMensual}"  type="number" min="0" class="form-control estiloInputs" style="width: 54%;" id="ingresoMensual" name="trabajo.ingresoMensual" >
 						</div>
 						<div class="col-sm-5
 						 col-md-4 col-lg-4 col-xl-4">
 							<p>Ingresa el telefono del centro de trabajo</p>
-							<input type="text" class="form-control estiloInputs" style="width: 60%;" id="">
+							<input th:field="*{trabajo.telefono}"  type="number" class="form-control estiloInputs" style="width: 60%;" id="telefonoTrabajo" name="trabajo.telefono" oninput="limitarLongitud(event)">
 						</div>
 
 						<div class="col-12">
 							<h3 class="mt-4 mb-4" style="color: #6366F1;">Domicilio</h3>
+							<p class="textoInputs">Dirreción de tu trabajo</p>
 							<div class="row">
 								<div class="col">
 									<p class="textoInputs">Estado</p>
@@ -111,26 +114,6 @@
 										<option value="1" class="subtitulo">Estado 1</option>
 										<option value="2" class="subtitulo">Estado 2</option>
 										<option value="3" class="subtitulo">Estado 3</option>
-									</select>
-								</div>
-								<div class="col">
-									<p class="textoInputs">Región</p>
-									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-										<option selected class="subtitulo">Elige una opción</option>
-										<option value="1" class="subtitulo">Región 1</option>
-										<option value="2" class="subtitulo">Región 2</option>
-										<option value="3" class="subtitulo">Región 3</option>
-									</select>
-								</div>
-							</div>
-							<div class="row mt-4">
-								<div class="col">
-									<p class="textoInputs">Distrito</p>
-									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-										<option selected class="subtitulo">Elige una opción</option>
-										<option value="1" class="subtitulo">Distrito 1</option>
-										<option value="2" class="subtitulo">Distrito 2</option>
-										<option value="3" class="subtitulo">Distrito 3</option>
 									</select>
 								</div>
 								<div class="col">
@@ -155,26 +138,43 @@
 								</div>
 								<div class="col">
 									<p class="textoInputs">Colonia</p>
-									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-										<option selected class="subtitulo">Elige una opción</option>
-										<option value="1" class="subtitulo">Colonia o barrio 1</option>
-										<option value="2" class="subtitulo">Colonia o barrio 2</option>
-										<option value="3" class="subtitulo">Colonia o barrio 3</option>
-									</select>
+									<input th:field="*{trabajo.domicilio.coloniaBarrio}" id="coloniaBarrio" name="trabajo.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 								</div>
 							</div>
+							<div class="row mt-4 hidden">
+								<div class="col">
+									<p class="textoInputs">Región</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Región 1</option>
+										<option value="2" class="subtitulo">Región 2</option>
+										<option value="3" class="subtitulo">Región 3</option>
+									</select>
+								</div>
+								<div class="col">
+									<p class="textoInputs">Distrito</p>
+									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option selected class="subtitulo">Elige una opción</option>
+										<option value="1" class="subtitulo">Distrito 1</option>
+										<option value="2" class="subtitulo">Distrito 2</option>
+										<option value="3" class="subtitulo">Distrito 3</option>
+									</select>
+								</div>
+								
+							</div>
+							
 							<div class="row">
 								<div class="col-12 col-sm-12 col-md-6 col-lg-5 me-5 mt-4">
 									<p class="textoInputs">Calle</p>
-									<input type="text" class="form-control estiloInputs" style="width: 100%" id="">
+									<input th:field="*{trabajo.domicilio.calle}" type="text" class="form-control estiloInputs" style="width: 100%" id="calleTrabajo" name="trabajo.domicilio.calle">
 								</div>
 								<div class="col-4 col-sm-3 col-md-3 col-lg-1 me-5 mt-4">
 									<p class="textoInputs">Número</p>
-									<input type="number" class="form-control estiloInputs" style="width: 100%;" id="">
+									<input th:field="*{trabajo.domicilio.numero}" type="number" class="form-control estiloInputs" style="width: 100%;" id="numeroTrabajo" name="trabajo.domicilio.numero">
 								</div>
 								<div class="col-4 col-sm-3 col-md-3 col-lg-1 mt-4">
 									<p class="textoInputs">C.P.</p>
-									<input type="number" class="form-control estiloInputs" style="width: 100%;" id="">
+									<input th:field="*{trabajo.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal}" type="number" class="form-control estiloInputs" style="width: 100%;" id="cpTrabajo" readonly>
 								</div>
 							</div>
 						</div>
@@ -271,7 +271,6 @@
 			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipiosDP()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>							
 									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
-			                    
 			                    </select>
 	                        </div>
 	                        <div class="col">
@@ -296,7 +295,7 @@
 	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 	                        </div>
 	                    </div>
-	                    <div class="row mt-4">
+	                    <div class="row mt-4 hidden">
 	                        <div class="col">
 	                            <p class="textoInputs">Distrito</p>
 	                            <select id="selectDistritos" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
@@ -344,20 +343,18 @@
     	<input type="hidden" id="idCatEstado" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
     	<input type="hidden" id="idCatMunicipio" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.idCatMunicipio}"/>
     	<input type="hidden" id="idCatLocalidad" th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}"/>
-
 	</form>
        
     <footer th:insert="fragments/footer.html :: footer"/>
     
     <script>
 		
-		
-		
 		// Funciones cuando cargue el HTML
        document.addEventListener('DOMContentLoaded', function() {
 		    var content = document.getElementById('contentDomicilio');
             var radios = document.getElementsByName('tutorEconomico.esViviendaAlumno');
             
+            //Desactivar campos cuando la opción sea 'Si'
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked && radios[i].value === '1') {
 				    
@@ -368,17 +365,30 @@
 					document.getElementById('selectMunicipios').disabled = true;
 					document.getElementById('selectLocalidades').disabled = true;
 					document.getElementById('selectDistritos').disabled = true;
-
-					
-                } 
+					document.getElementById('selectRegiones').disabled = true;
+                } else {
+					cambiarInputDistritoRegion();
+				}
             }
             
+            mostarOcultarDatosTrabajo(); 
 		});
 		
 		function sincronizarValor(){
 			var select = document.getElementById("selectLocalidades");
         	var valorSeleccionado = select.options[select.selectedIndex].value;
         	document.getElementById("valorOculto").value = valorSeleccionado;
+		}
+		
+		function mostarOcultarDatosTrabajo(){
+			const datosTrabajo = document.getElementById("datosTrabajo");
+           	const mostrarRadio = document.querySelector('input[name="dependeEconomicamente"][value="0"]');
+			
+			if (mostrarRadio.checked) {
+                datosTrabajo.classList.remove("hidden");
+            } else {
+                datosTrabajo.classList.add("hidden");
+            }
 		}
 		
 		function toggleContent() {
@@ -397,46 +407,46 @@
 								
 								var domAlumno = data;
 							
-				            var estado = document.getElementById('selectEstados');
-							estado.value = domAlumno.catLocalidad.catMunicipio.catEstado.idCatEstado;
-							var selectEstado = estado.selectedIndex;
-						    $.ajax({
-						        url: '/domicilio/obtenerMunicipiosPorEstado',
-						        type: 'GET',
-						        data: { estadoId: selectEstado},
-						        success: function(data) {
-
-						            actualizarSelectMunicipiosDP(data);
-						            
-									var municipio = document.getElementById('selectMunicipios');
-									municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
-
-								    selectIndex = municipio.value;
-								    $.ajax({
-								        url: '/domicilio/obtenerLocalidadesPorMunicipio',
-								        type: 'GET',
-								        data: { municipioId: selectIndex},
-								        success: function(data) {
-											actualizarSelectLocalidadDP(data);
-								            var localidad = document.getElementById('selectLocalidades');
-											localidad.value = domAlumno.catLocalidad.idCatLocalidad;
-											document.getElementById("valorOculto").value = localidad.value;
-
-			            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal);
-											document.getElementById('calle').value = domAlumno.calle;
-											document.getElementById('numero').value = domAlumno.numero;
-											document.getElementById('coloniaBarrio').value = domAlumno.coloniaBarrio;				
-										        
-								        },
-								        error: function(xhr, status, error) {
-								            console.error(error);
-								        }
-								    });
-						        },
-						        error: function(xhr, status, error) {
-						            console.error(error);
-						        }
-						    });           
+					            var estado = document.getElementById('selectEstados');
+								estado.value = domAlumno.catLocalidad.catMunicipio.catEstado.idCatEstado;
+								var selectEstado = estado.selectedIndex;
+							    $.ajax({
+							        url: '/domicilio/obtenerMunicipiosPorEstado',
+							        type: 'GET',
+							        data: { estadoId: selectEstado},
+							        success: function(data) {
+	
+							            actualizarSelectMunicipiosDP(data);
+							            
+										var municipio = document.getElementById('selectMunicipios');
+										municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
+	
+									    selectIndex = municipio.value;
+									    $.ajax({
+									        url: '/domicilio/obtenerLocalidadesPorMunicipio',
+									        type: 'GET',
+									        data: { municipioId: selectIndex},
+									        success: function(data) {
+												actualizarSelectLocalidadDP(data);
+									            var localidad = document.getElementById('selectLocalidades');
+												localidad.value = domAlumno.catLocalidad.idCatLocalidad;
+												document.getElementById("valorOculto").value = localidad.value;
+	
+				            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal);
+												document.getElementById('calle').value = domAlumno.calle;
+												document.getElementById('numero').value = domAlumno.numero;
+												document.getElementById('coloniaBarrio').value = domAlumno.coloniaBarrio;				
+											        
+									        },
+									        error: function(xhr, status, error) {
+									            console.error(error);
+									        }
+									    });
+							        },
+							        error: function(xhr, status, error) {
+							            console.error(error);
+							        }
+							    });           
 								
 							}else{
 								alert("No hay datos registrados");
@@ -458,8 +468,11 @@
 					
 					if(document.getElementById('selectEstados') == "20"){
 						document.getElementById('selectDistritos').readOnly = true;
+						document.getElementById('selectRegiones').readOnly = true;
+
 					} else {
 						document.getElementById('selectDistritos').disabled = true;
+						document.getElementById('selectRegiones').disabled = true;
 					}
 					
                     
@@ -478,7 +491,14 @@
 					document.getElementById('selectMunicipios').disabled = false;
 					document.getElementById('selectLocalidades').disabled = false;
 					
-					
+					if(document.getElementById('selectEstados') == "20"){
+						document.getElementById('selectDistritos').readOnly = false;
+						document.getElementById('selectRegiones').readOnly = false;
+						
+					} else {
+						document.getElementById('selectDistritos').disabled = false;
+						document.getElementById('selectRegiones').disabled = false;
+					}
 					
 					var selectLocalidad = document.getElementById('selectLocalidades');
 										
@@ -549,8 +569,58 @@
 					},
 					"tutorEconomico.catParentesco.idCatParentesco": {
 						required: true
+					},
+					"trabajo.nombreTrabajo":{
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						}
+					},
+					"trabajo.ingresoMensual": {
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						}
+					},
+					"trabajo.telefono": {
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						},
+						digits: true,
+                        rangelength: [10, 10]
+					},
+					"trabajo.domicilio.coloniaBarrio": {
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						}
+					},
+					"trabajo.domicilio.calle": {
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						}
+					},
+					"trabajo.domicilio.numero": {
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						}
+					},					
+					"trabajo.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal": {
+						required:{
+							depends: function(element){
+								return $("#dependeEconomicamenteNo").is(":checked");
+							}
+						}
 					}
-					
                 },
                 messages: {
 					gastoMensual : {
@@ -590,6 +660,23 @@
 					},
 					"tutorEconomico.catParentesco.idCatParentesco": {
 						required: "Por favor, selecciona un parentesco"
+					},
+					"trabajo.nombreTrabajo": {
+						required: "Por favor, ingresa el nombre del centro de tu trabajo"
+					},
+					"trabajo.domicilio.coloniaBarrio": {
+						required: "Por favor, ingresa su colonia o barrio."
+					},
+                    "trabajo.domicilio.calle": {
+                        required: "Por favor, ingresa el nombre de la calle."
+                    },
+                    "trabajo.domicilio.numero": {
+						required: "Por favor, ingrese un dato, si no tiene número puede escribir s/n.",
+						digits: "Por favor, ingrese solo números.",
+                        rangelength: "El teléfono debe tener 10 dígitos.",
+					},
+					"trabajo.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal": {
+						required: "Por favor, selecciona una localidad"
 					}
                 },
                 errorPlacement: function(error, element) {
@@ -630,7 +717,11 @@
         });
 
 		document.getElementById('selectEstados').addEventListener('change', function() {
-		    var selectEstados = document.getElementById('selectEstados');
+		   cambiarInputDistritoRegion();
+		});
+		
+		function cambiarInputDistritoRegion(){
+			 var selectEstados = document.getElementById('selectEstados');
 		    var selectDistritos = document.getElementById('selectDistritos');
 		    var selectRegiones = document.getElementById('selectRegiones');
 		    
@@ -662,14 +753,12 @@
         	inputRegion.name = selectRegiones.name; // Mantener el mismo name si es necesario
         	//inputDistrito.value = selectDistritos.options[selectDistritos.selectedIndex].text; // Asigna el valor del texto seleccionado
 			inputRegion.style.cssText = 'width: 96%;';
-			// Reemplaza el select con el input
-							
+
+			// Reemplaza el select con el input							
         	selectRegiones.parentNode.replaceChild(inputRegion, selectRegiones);
-		});
-		
-		function cambiarInputDistrito(){
-			
 		}
+		
+		
 		
 	</script>
     <script src="../javaScript.js/funcionamiento.js"></script>
