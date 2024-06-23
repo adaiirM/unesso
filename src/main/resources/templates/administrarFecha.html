@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<nav th:insert="navAdministrador.html"></nav>
+<nav th:insert="~{navAdministrador.html}"></nav>
 
 
 <div class="container mt-3 ps-5" >
@@ -29,7 +29,8 @@
 
 <main class="">
     <h1 class="titulo text-center fontPoppins colorMorado titulo">Administrar fechas</h1>
-    <p  class="text-center fontPoppins colorMorado">Se asignan fechas por carrera para  abrir y cerrar la convocatoria de la beca</p>
+    <p class="text-center fontPoppins colorMorado">Se asignan fechas por carrera para abrir y cerrar la convocatoria de la beca</p>
+
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col-auto">
@@ -50,7 +51,7 @@
         </div>
         <div class="row justify-content-md-center">
             <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">M. Ciencias en Conservación  de los Recursos Forestales</button></a>
+                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">M. Ciencias en Conservación de los Recursos Forestales</button></a>
             </div>
             <div class="col-auto">
                 <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">M. Ciencias en Gestión Ambiental</button></a>
@@ -58,77 +59,77 @@
         </div>
     </div>
 
-    <div class="container container-custom rounded mt-5 w-75 w-md-100 w-lg-25" style="background-color:#6366F1;">
-        <div class="fecha">
-            <h3 class="fontPoppins text-center text-white pt-2" >Fecha inicio</h3>
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
-                    <label for="dia" class="text-white" style="text-align: center;">Día</label>
-                    <input type="number" class="form-control text-secondary" id="dia" name="dia" min="1" max="31" value="1">
-                </div>
-                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30" >
-                    <label for="mes" class="text-white">Mes</label>
-                    <select class="form-select text-secondary" id="mes" name="mes">
-                        <option value="enero">01</option>
-                        <option value="febrero">02</option>
-                        <option value="marzo">03</option>
-                        <option value="abril">04</option>
-                        <option value="mayo">05</option>
-                        <option value="junio">06</option>
-                        <option value="julio">07</option>
-                        <option value="agosto">08</option>
-                        <option value="septiembre">09</option>
-                        <option value="octubre">10</option>
-                        <option value="noviembre">11</option>
-                        <option value="diciembre">12</option>
-                    </select>
-                </div>
-                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
-                    <label for="año" class="text-white">Año</label>
-                    <input type="number" class="form-control text-secondary" id="año" name="año" min="2024" max="2099" value="2024">
+    <div class="mt-5">
+        <form autocomplete="off">
+            <div class="flex-row d-flex justify-content-center">
+                <div class="col-lg-6 col-11 px-1">
+                    <div class="row input-group input-daterange">
+                        <div class="col text-center">
+                            <label for="start">Fecha inicial</label>
+                            <input type="text" id="start" class="entrada form-control text-left mr-2">
+                        </div>
+                        <div class="col text-center">
+                            <label for="end">Fecha final</label>
+                            <input type="text" id="end" class="entrada form-control text-left ml-2">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="fecha mt-4">
-            <h3 class="fontPoppins text-center text-white">Fecha límite</h3>
-            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
-                    <label for="dia-limite" class="text-white">Día</label>
-                    <input type="number" class="form-control text-secondary" id="dia-limite" name="dia-limite" min="1" max="31" value="1">
-                </div>
-                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
-                    <label for="mes-limite" class="text-white">Mes</label>
-                    <select class="form-select text-secondary" id="mes-limite" name="mes-limite">
-                        <option value="enero">01</option>
-                        <option value="febrero">02</option>
-                        <option value="marzo">03</option>
-                        <option value="abril">04</option>
-                        <option value="mayo">05</option>
-                        <option value="junio">06</option>
-                        <option value="julio">07</option>
-                        <option value="agosto">08</option>
-                        <option value="septiembre">09</option>
-                        <option value="octubre">10</option>
-                        <option value="noviembre">11</option>
-                        <option value="diciembre">12</option>
-                    </select>
-                </div>
-                <div class="col-12 col-sm-4 mb-3 mb-sm-0 w-30">
-                    <label for="año-limite" class="text-white">Año</label>
-                    <input type="number" class="form-control text-secondary" id="año-limite" name="año-limite" min="2024" max="2099" value="2024">
-                </div>
-            </div>
-            <div class="row justify-content-center mt-4">
-                <div class="col-auto mb-4">
-                    <button type="button" class="btn btn-primary fontPoppins" style="background-color: #ffffff; color: #6366F1;">Aceptar</button>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <button class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5">Agregar fecha</button>
+    </div>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table id="tablaSolicitudes" class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col" style="color: #4F46E5;">Carrera</th>
+                    <th scope="col" style="color: #4F46E5;">Fecha inicial</th>
+                    <th scope="col" style="color: #4F46E5;">Fecha final</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
+                    <td class="subtitulo">Forestal</td>
+                    <td class="subtitulo">01-06-2024</td>
+                    <td class="subtitulo">03-06-2024</td>
+                </tr>
+                <tr>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
+                    <td class="subtitulo">Ciencias Ambientales</td>
+                    <td class="subtitulo">04-06-2024</td>
+                    <td class="subtitulo">07-06-2024</td>
+                </tr>
+                <tr>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
+                    <td class="subtitulo">Informatica</td>
+                    <td class="subtitulo">08-06-2024</td>
+                    <td class="subtitulo">10-06-2024</td>
+                </tr>
+                <tr>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
+                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
+                    <td class="subtitulo">Biología</td>
+                    <td class="subtitulo">11-06-2024</td>
+                    <td class="subtitulo">13-06-2024</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>
 
-<footer th:insert="footer.html"></footer>
+<footer th:insert="~{footer.html}"></footer>
 <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>

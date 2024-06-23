@@ -205,4 +205,14 @@ public class AdministradorController {
         }
 
     }
+    @GetMapping("/agregarFechasRegistradas")
+    public String agregarFechasRegistradas(Model model) {
+        model.addAttribute("fechasRegistradas", new FechasRegistradas());
+        List<CatCarrera> carreras = catCarreraService.buscarTodas(); // Obtener las carreras desde el servicio
+        model.addAttribute("carreras", carreras); // Agregar las carreras al modelo
+        return "/formAgregarFechasRegistradas";
+    }
+
+
+
 }
