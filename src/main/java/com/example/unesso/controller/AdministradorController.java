@@ -75,6 +75,11 @@ public class AdministradorController {
             return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
         }
 
+        // Remover {noop} del password
+        if (alumno.getUsuario() != null && alumno.getUsuario().getPassword().startsWith("{noop}")) {
+            alumno.getUsuario().setPassword(alumno.getUsuario().getPassword().substring(6));
+        }
+
         List<CatCarrera> carreras = catCarreraService.buscarTodas();
         List<CatSemestre> semestres = catSemestreService.buscarTodos();
 
@@ -86,39 +91,29 @@ public class AdministradorController {
     }
     @PostMapping("/actualizarAlumno")
     @Transactional // Asegura que este método esté dentro de una transacción
-    public String actualizarAlumno(@RequestParam("idAlumno") Integer idAlumno, @ModelAttribute("alumno") Alumno alumno) {
-
-
+    public String actualizarAlumno(@RequestParam("idAlumno") Integer idAlumno,@ModelAttribute("alumno") Alumno alumno,
+                                   @RequestParam("correoParam") String correoParam,
+                                   @RequestParam("contraseniaParam") String contraseniaParam) {
         // Buscar el alumno existente en la base de datos
         Alumno alumnoExistente = alumnoService.getByIdAlumno(idAlumno);
         if (alumnoExistente == null) {
             return "redirect:/administrador/ERROR";
         }
 
-        String usuarioCorreo = alumno.getUsuario().getUsername();
+        // Buscar el usuario existente en la base de datos
+        String usuarioCorreo = alumnoExistente.getUsuario().getUsername();
+        String usuarioContrasenia = alumnoExistente.getUsuario().getPassword();
+
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
 
-        // Si el alumno existente tiene un usuario asignado, eliminar el usuario
-        if (alumnoExistente.getUsuario() != null) {
-            usuarioService.deleteUsuarioByCorreo(alumnoExistente.getUsuario().getUsername());
+        //si se cambio el correo o la contraseña se actualiza a el usuario
+        if(!usuarioCorreo.equals(correoParam) || !usuarioContrasenia.equals(contraseniaParam)){
+            usuario.setUsername(usuarioCorreo);
+            usuario.setPassword("{noop}"+contraseniaParam);
+            usuarioService.saveUsuario(usuario);
+            alumnoExistente.setUsuario(usuario);
         }
 
-        if (usuario == null) {
-            usuario = new Usuario();
-            usuario.setUsername(usuarioCorreo);
-            usuario.setPassword("{noop}UNSIJ2024");
-            usuario.setStatus(true);
-
-            CatRol catRol = catRolService.findByIdRol(1);
-            usuario.setCatRol(catRol);
-
-            usuarioService.saveUsuario(usuario);
-        } else {
-            usuario.setUsername(usuarioCorreo);
-            usuarioService.saveUsuario(usuario);
-        }
-
-        alumnoExistente.setUsuario(usuario);
 
         CatGrupo grupo = catGrupoService.findByNombreGrupo(alumno.getCatGrupo().getNombreGrupo());
         if (grupo == null) {
@@ -165,44 +160,47 @@ public class AdministradorController {
         model.addAttribute("carreras", carreras); // Agregar las carreras al modelo
         return "/formAgregarAlumno";
     }
-    @PostMapping("/guardarAlumno")
-    public String guardarAlumno(Alumno alumno,@RequestParam("nombreGrupo") String nombreGrupo) {
-        String usuarioCorreo = alumno.getUsuario().getUsername();
-        //busca si ya existe el usuario en la base de datos
-        Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
-        if (usuario == null) {
-            //si no existe, crea el usuario y el alumno
-            usuario = new Usuario();
-            usuario.setUsername(usuarioCorreo);
-            usuario.setPassword("{noop}UNSIJ2024");
-            usuario.setStatus(true);
+        @PostMapping("/guardarAlumno")
+        public String guardarAlumno(Alumno alumno,@RequestParam("nombreGrupo") String nombreGrupo) {
+            String usuarioCorreo = alumno.getUsuario().getUsername();
+            //busca si ya existe el usuario en la base de datos
+            Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
+            if (usuario == null) {
+                //si no existe, crea el usuario y el alumno
+                usuario = new Usuario();
+                usuario.setUsername(usuarioCorreo);
+                usuario.setPassword("{noop}UNSIJ2024");
+                usuario.setStatus(true);
 
-            CatRol catRol = catRolService.findByIdRol(1);
-            usuario.setCatRol(catRol);
-            usuario.setCatRol(catRol);
+                CatRol catRol = catRolService.findByIdRol(1);
+                usuario.setCatRol(catRol);
+                usuario.setCatRol(catRol);
 
-            usuarioService.saveUsuario(usuario);
-            alumno.setUsuario(usuario);
-            //alumnoService.saveAlumno(alumno);
+                usuarioService.saveUsuario(usuario);
+                alumno.setUsuario(usuario);
+                //alumnoService.saveAlumno(alumno);
 
-            //se crea el estatus formulario
-            EstadoFormularios estadoFormularios = new EstadoFormularios();
-            estadoFormularios.setFormMisDatos(false);
-            estadoFormularios.setFormMiFamilia(false);
-            estadoFormularios.setFormDependienteEconomico(false);
-            estadoFormularios.setFormMisGatos(false);
-            alumno.setEstadoFormularios(estadoFormularios);
+                //se crea el estatus formulario
+                EstadoFormularios estadoFormularios = new EstadoFormularios();
+                estadoFormularios.setFormMisDatos(false);
+                estadoFormularios.setFormMiFamilia(false);
+                estadoFormularios.setFormDependienteEconomico(false);
+                estadoFormularios.setFormMisGatos(false);
+                alumno.setEstadoFormularios(estadoFormularios);
 
-            //se relaciona con el grupo del alumno
-            CatGrupo grupo = catGrupoService.findByNombreGrupo(nombreGrupo);
-            alumno.setCatGrupo(grupo);
+                //se relaciona con el grupo del alumno
+                CatGrupo grupo = catGrupoService.findByNombreGrupo(nombreGrupo);
+                alumno.setCatGrupo(grupo);
 
-            estadoFormularioService.guardarEstadoFormularios(estadoFormularios);
-            alumnoService.saveAlumno(alumno);
-            return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
-        }else{
-            return "error";
+                estadoFormularioService.guardarEstadoFormularios(estadoFormularios);
+                alumnoService.saveAlumno(alumno);
+                return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
+            }else{
+                return "error";
+            }
+
         }
+<<<<<<< HEAD
 
     }
     @GetMapping("/agregarFechasRegistradas")
@@ -215,4 +213,6 @@ public class AdministradorController {
 
 
 
+=======
+>>>>>>> 2672c7921c72d1bf37b081bf66d96c4bf4f8e1f0
 }
