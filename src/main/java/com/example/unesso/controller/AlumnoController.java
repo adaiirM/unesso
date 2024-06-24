@@ -305,9 +305,6 @@ public class AlumnoController {
 	
 	@PostMapping("/guardarTutor")
 	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
-		
-		System.out.println("1. Alumno formulario: " + alumno.toString());
-		System.out.println("Datos trabajo: " + alumno.getTrabajo());
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
 		
@@ -350,7 +347,8 @@ public class AlumnoController {
 		} else {
 			//Verificar que el usuario dependa economicamente
 			if(alumno.getDependeEconomicamente().equals(false)) {
-						
+				
+				// Si depende, guardar el domiclio y trabajo actualizados.
 				Domicilio domicilioTrabajoDB = serviceDomicilio.buscarPorId(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
 				Domicilio domicilioTrabajoForm = alumno.getTrabajo().getDomicilio();
 				domicilioTrabajoForm.setIdDomicilio(domicilioTrabajoDB.getIdDomicilio());
@@ -364,6 +362,7 @@ public class AlumnoController {
 				trabajoForm.setAlumno(alumnoSesion);
 				serviceTrabajo.guardarTrabajo(trabajoForm);
 				
+				//Si no depende, se borran los registros
 			} else {
 				
 				Domicilio domicilioVacio = new Domicilio();	
@@ -371,16 +370,14 @@ public class AlumnoController {
 				if(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio() == null) {
 					domicilioVacio = null;
 				} 
-
+				
 				domicilioVacio.setIdDomicilio(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
-
 				serviceDomicilio.guardar(domicilioVacio);
 				
 				alumnoSesion.getTrabajo().setTelefono(null);
 				alumnoSesion.getTrabajo().setNombreTrabajo(null);
 				alumnoSesion.getTrabajo().setIngresoMensual(null);
 				
-				System.out.println(alumnoSesion.getTrabajo() + " - ");
 				serviceAlumno.guardar(alumnoSesion);
 			}
 		}
@@ -407,13 +404,15 @@ public class AlumnoController {
 			alumnoSesion.setTutorEconomico(tutorE);
 			//serviceAlumno.guardar(alumnoSesion);
 		}
-				 
+
+		serviceAlumno.guardarAlumno(alumnoSesion);
+
 		if(accion.equals("enviar")) {
 			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
-		}
-		serviceAlumno.guardarAlumno(alumnoSesion);
-		
-		return "redirect:/alumno/menuSolicitar";
+			return "redirect:/alumno/formMisGastos";
+		} else {
+			return "redirect:/alumno/menuSolicitar";
+		}		
 	}
 	
 	
