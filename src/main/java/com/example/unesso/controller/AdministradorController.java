@@ -1,13 +1,18 @@
 package com.example.unesso.controller;
 
 import com.example.unesso.model.*;
+import com.example.unesso.services.FechasRegistradasService;
 import com.example.unesso.services.db.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -19,6 +24,7 @@ public class AdministradorController {
     private AlumnoServiceJPA alumnoService;
     @Autowired
     private UsuarioServiceJPA usuarioService;
+
     @Autowired
     private EstadoFormulariosServiceJPA estadoFormularioService;
     @Autowired
@@ -29,6 +35,8 @@ public class AdministradorController {
     private CatSemestreServiceJPA catSemestreService;
     @Autowired
     private CatCarreraServiceJPA catCarreraService;
+    @Autowired
+    private FechasRegistradasServiceJPA fechasRegistradasService;
 
 
 
@@ -38,20 +46,23 @@ public class AdministradorController {
     }
 
     @GetMapping("/estudiosSocieconomicos")
-    public String todasLasSolicitudes(){
+    public String todasLasSolicitudes() {
         return "/todasSolicitudes";
     }
+
     @GetMapping("/solicitudesRevisadas")
-    public String solicitudesRevisadas(){
+    public String solicitudesRevisadas() {
         return "/solicitudesRevisadas";
     }
+
     @GetMapping("/alumnos")
-    public String alumnos(Model model){
+    public String alumnos(Model model) {
         List<Alumno> alumnos = alumnoService.getAllAlumnos();  // Método que obtiene todos los alumnos
         System.out.println(alumnos);
         model.addAttribute("alumnos", alumnos);
         return "/administrarAlumno";
     }
+
     @PostMapping("/eliminarAlumno")
     @Transactional
     public String eliminarAlumno(@RequestParam Integer idAlumno) {
@@ -66,6 +77,7 @@ public class AdministradorController {
         alumnoService.deleteAlumno(idAlumno);
         return "redirect:/administrador/alumnos";
     }
+
     @GetMapping("/actualizarAlumno")
     public String mostrarFormularioActualizacion(@RequestParam Integer idAlumno, Model model) {
         System.out.println(idAlumno);
@@ -89,9 +101,10 @@ public class AdministradorController {
 
         return "/formActualizarAlumno";
     }
+
     @PostMapping("/actualizarAlumno")
     @Transactional // Asegura que este método esté dentro de una transacción
-    public String actualizarAlumno(@RequestParam("idAlumno") Integer idAlumno,@ModelAttribute("alumno") Alumno alumno,
+    public String actualizarAlumno(@RequestParam("idAlumno") Integer idAlumno, @ModelAttribute("alumno") Alumno alumno,
                                    @RequestParam("correoParam") String correoParam,
                                    @RequestParam("contraseniaParam") String contraseniaParam) {
         // Buscar el alumno existente en la base de datos
@@ -107,9 +120,9 @@ public class AdministradorController {
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
 
         //si se cambio el correo o la contraseña se actualiza a el usuario
-        if(!usuarioCorreo.equals(correoParam) || !usuarioContrasenia.equals(contraseniaParam)){
+        if (!usuarioCorreo.equals(correoParam) || !usuarioContrasenia.equals(contraseniaParam)) {
             usuario.setUsername(usuarioCorreo);
-            usuario.setPassword("{noop}"+contraseniaParam);
+            usuario.setPassword("{noop}" + contraseniaParam);
             usuarioService.saveUsuario(usuario);
             alumnoExistente.setUsuario(usuario);
         }
@@ -147,12 +160,8 @@ public class AdministradorController {
         return "redirect:/administrador/alumnos";
     }
 
-    @GetMapping("/fechas")
-    public String fechas(){
-        return "/administrarFecha";
-    }
     @GetMapping("/agregarAlumno")
-    public String agregarAlumno(Model model){
+    public String agregarAlumno(Model model) {
         model.addAttribute("alumno", new Alumno());
         List<CatSemestre> semestres = catSemestreService.buscarTodos(); // Obtener los semestres desde el servicio
         List<CatCarrera> carreras = catCarreraService.buscarTodas(); // Obtener las carreras desde el servicio
@@ -160,59 +169,131 @@ public class AdministradorController {
         model.addAttribute("carreras", carreras); // Agregar las carreras al modelo
         return "/formAgregarAlumno";
     }
-        @PostMapping("/guardarAlumno")
-        public String guardarAlumno(Alumno alumno,@RequestParam("nombreGrupo") String nombreGrupo) {
-            String usuarioCorreo = alumno.getUsuario().getUsername();
-            //busca si ya existe el usuario en la base de datos
-            Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
-            if (usuario == null) {
-                //si no existe, crea el usuario y el alumno
-                usuario = new Usuario();
-                usuario.setUsername(usuarioCorreo);
-                usuario.setPassword("{noop}UNSIJ2024");
-                usuario.setStatus(true);
+    @PostMapping("/guardarAlumno")
+    public String guardarAlumno(Alumno alumno, @RequestParam("nombreGrupo") String nombreGrupo) {
+        String usuarioCorreo = alumno.getUsuario().getUsername();
+        //busca si ya existe el usuario en la base de datos
+        Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
+        if (usuario == null) {
+            //si no existe, crea el usuario y el alumno
+            usuario = new Usuario();
+            usuario.setUsername(usuarioCorreo);
+            usuario.setPassword("{noop}UNSIJ2024");
+            usuario.setStatus(true);
 
-                CatRol catRol = catRolService.findByIdRol(1);
-                usuario.setCatRol(catRol);
-                usuario.setCatRol(catRol);
+            CatRol catRol = catRolService.findByIdRol(1);
+            usuario.setCatRol(catRol);
+            usuario.setCatRol(catRol);
 
-                usuarioService.saveUsuario(usuario);
-                alumno.setUsuario(usuario);
-                //alumnoService.saveAlumno(alumno);
+            usuarioService.saveUsuario(usuario);
+            alumno.setUsuario(usuario);
+            //alumnoService.saveAlumno(alumno);
 
-                //se crea el estatus formulario
-                EstadoFormularios estadoFormularios = new EstadoFormularios();
-                estadoFormularios.setFormMisDatos(false);
-                estadoFormularios.setFormMiFamilia(false);
-                estadoFormularios.setFormDependienteEconomico(false);
-                estadoFormularios.setFormMisGatos(false);
-                alumno.setEstadoFormularios(estadoFormularios);
+            //se crea el estatus formulario
+            EstadoFormularios estadoFormularios = new EstadoFormularios();
+            estadoFormularios.setFormMisDatos(false);
+            estadoFormularios.setFormMiFamilia(false);
+            estadoFormularios.setFormDependienteEconomico(false);
+            estadoFormularios.setFormMisGatos(false);
+            alumno.setEstadoFormularios(estadoFormularios);
 
-                //se relaciona con el grupo del alumno
-                CatGrupo grupo = catGrupoService.findByNombreGrupo(nombreGrupo);
-                alumno.setCatGrupo(grupo);
+            //se relaciona con el grupo del alumno
+            CatGrupo grupo = catGrupoService.findByNombreGrupo(nombreGrupo);
+            alumno.setCatGrupo(grupo);
 
-                estadoFormularioService.guardarEstadoFormularios(estadoFormularios);
-                alumnoService.saveAlumno(alumno);
-                return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
-            }else{
-                return "error";
-            }
-
+            estadoFormularioService.guardarEstadoFormularios(estadoFormularios);
+            alumnoService.saveAlumno(alumno);
+            return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
+        } else {
+            return "error";
         }
-<<<<<<< HEAD
 
     }
-    @GetMapping("/agregarFechasRegistradas")
-    public String agregarFechasRegistradas(Model model) {
-        model.addAttribute("fechasRegistradas", new FechasRegistradas());
-        List<CatCarrera> carreras = catCarreraService.buscarTodas(); // Obtener las carreras desde el servicio
-        model.addAttribute("carreras", carreras); // Agregar las carreras al modelo
-        return "/formAgregarFechasRegistradas";
+
+    @GetMapping("/fechas")
+    public String fechas(Model model) {
+        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+        List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.getAllFechasRegistradas();
+        model.addAttribute("carreras", carreras);
+        model.addAttribute("fechasRegistradas",fechasRegistradas);
+
+        return "administrarFecha";
     }
 
 
+    @PostMapping("/guardarFecha")
+    public String guardarFecha(@RequestParam("carreraFecha") Integer idCatCarrera,
+                               @RequestParam("fechaInicio")  Date fechaInicioStr,
+                               @RequestParam("fechaFin")  Date fechaFinStr) {
 
-=======
->>>>>>> 2672c7921c72d1bf37b081bf66d96c4bf4f8e1f0
+        // Imprimir valores para depuración
+        System.out.println("Received carreraFecha: " + idCatCarrera);
+        System.out.println("Received fechaInicio: " + fechaInicioStr);
+        System.out.println("Received fechaFin: " + fechaFinStr);
+
+        // Buscar la carrera en la base de datos usando el id
+        CatCarrera carrera = catCarreraService.findById(idCatCarrera);
+        System.out.println("Found carrera: " + carrera);
+
+        if (carrera == null) {
+            throw new RuntimeException("No se encontró la carrera para el id: " + idCatCarrera);
+        }
+
+        // Crear una nueva instancia de FechasRegistradas y asignar los valores
+        FechasRegistradas fechasRegistradas = new FechasRegistradas();
+        fechasRegistradas.setCarrera(carrera);
+        fechasRegistradas.setFechaInicio(fechaInicioStr);
+        fechasRegistradas.setFechaFin(fechaFinStr);
+
+        // Guardar las fechas registradas en la base de datos
+        fechasRegistradasService.guardar(fechasRegistradas);
+
+        return "redirect:/administrador/fechas"; // Redirigir a la vista de administración de fechas
+    }
+
+    @PostMapping("/eliminarFecha")
+    @Transactional
+    public String eliminarFecha(@RequestParam("idFechasRegistradas") Integer idFecha) {
+        FechasRegistradas fechaExistente = fechasRegistradasService.getByIdFechasRegistradas(idFecha);
+        if (fechaExistente == null) {
+            return "redirect:/administrador/error"; // Redirige si la fecha no se encuentra
+        }
+
+        fechasRegistradasService.deleteFechasRegistradas(idFecha);
+        return "redirect:/administrador/fechas";
+    }
+
+    @GetMapping("/actualizarFecha")
+    public String mostrarFormularioActualizacionFecha(@RequestParam Integer idFecha, Model model) {
+        // Obtener la fecha registrada por su ID
+        FechasRegistradas fechaRegistrada = fechasRegistradasService.getByIdFechasRegistradas(idFecha);
+
+        // Verificar si la fecha existe
+        if (fechaRegistrada == null) {
+            // Manejar caso de error, redireccionar o mostrar mensaje de error
+            return "redirect:/error";
+        }
+
+        // Obtener lista de carreras u otros datos necesarios
+        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+
+        // Agregar objetos necesarios al modelo
+        model.addAttribute("fechaRegistrada", fechaRegistrada);
+        model.addAttribute("carreras", carreras);
+
+        // Devolver la vista del formulario de actualización de fecha
+        return "formActualizarFecha";
+    }
+
+    @PostMapping("/actualizarFecha")
+    public String actualizarFecha(@ModelAttribute("fechaRegistrada") FechasRegistradas fechaRegistrada) {
+        // Guardar la fecha actualizada en la base de datos
+        fechasRegistradasService.guardar(fechaRegistrada);
+
+        // Redireccionar a una página de confirmación o a la lista de fechas actualizadas
+        return "redirect:/administrador/fechas";
+    }
+
+
 }
+

@@ -12,74 +12,67 @@
 
 <nav th:insert="~{navAdministrador.html}"></nav>
 
-
-<div class="container mt-3 ps-5" >
-    <div class="row" >
-        <ol class="p-1 colorFondo breadcrumb bread-primary ">
+<div class="container mt-3 ps-5">
+    <div class="row">
+        <ol class="p-1 colorFondo breadcrumb bread-primary">
             <a th:href="@{/administrador/menuAdministrador}" style="text-decoration: none;">
-                <button  class="btn camino" >Inicio</button>
+                <button class="btn camino">Inicio</button>
             </a>
             <a href="administrarFecha.html" style="text-decoration: none;">
-                <button href="#" class="btn btn-primary camino" style="background-color: #4F46E5; ">Fechas</button>
+                <button class="btn btn-primary camino" style="background-color: #4F46E5;">Fechas</button>
             </a>
         </ol>
     </div>
 </div>
 
-
 <main class="">
-    <h1 class="titulo text-center fontPoppins colorMorado titulo">Administrar fechas</h1>
-    <p class="text-center fontPoppins colorMorado">Se asignan fechas por carrera para abrir y cerrar la convocatoria de la beca</p>
 
-    <div class="container">
-        <div class="row justify-content-md-center mt-5">
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">Forestal</button></a>
-            </div>
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">Ciencias Ambientales</button></a>
-            </div>
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">Informática</button></a>
-            </div>
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">Biología</button></a>
-            </div>
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">Administración Turística</button></a>
-            </div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">M. Ciencias en Conservación de los Recursos Forestales</button></a>
-            </div>
-            <div class="col-auto">
-                <a href=""><button type="button" class="btn btn-outline-primary cboton titulo">M. Ciencias en Gestión Ambiental</button></a>
-            </div>
-        </div>
+    <div class="d-flex flex-column align-items-center mb-5 ms-2 me-2">
+        <h1 class="titulo text-center">Administrar fechas</h1>
+        <p class="text-center fontPoppins colorMorado">Se asignan fechas por carrera para abrir y cerrar el formulario socioeconómico</p>
     </div>
 
-    <div class="mt-5">
-        <form autocomplete="off">
-            <div class="flex-row d-flex justify-content-center">
-                <div class="col-lg-6 col-11 px-1">
-                    <div class="row input-group input-daterange">
-                        <div class="col text-center">
-                            <label for="start">Fecha inicial</label>
-                            <input type="text" id="start" class="entrada form-control text-left mr-2">
-                        </div>
-                        <div class="col text-center">
-                            <label for="end">Fecha final</label>
-                            <input type="text" id="end" class="entrada form-control text-left ml-2">
-                        </div>
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-primary mb-4 ms-5" style="background-color:#4F46E5;" onclick="mostrarModalFecha()"><img src="../img/calendario.png" style="width: 15%;" alt=""> Agregar fecha</button>
+    </div>
+
+    <!-- Ventana modalFecha -->
+    <div id="modalFecha" class="modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mx-auto" style="color: #4F46E5;">Agregar fecha</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <form th:action="@{/administrador/guardarFecha}" method="post" autocomplete="off">
+                            <div class="mb-3">
+                                <label for="carreraSelectFecha" class="form-label">Carrera</label>
+                                <select id="carreraSelectFecha" name="carreraFecha" class="form-select">
+                                    <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}" th:text="${carrera.carrera}"></option>
+                                </select>
+                            </div>
+
+                            <div class="row input-group input-daterange">
+                                <div class="col-6 mb-3">
+                                    <label for="start" class="form-label">Fecha inicial</label>
+                                    <input type="text" id="start" name="fechaInicio" class="form-control">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label for="end" class="form-label">Fecha final</label>
+                                    <input type="text" id="end" name="fechaFin" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer mx-auto">
+                                <button type="button" class="btn btn-danger hBtn me-5" onclick="cerrarModalFecha()">Cancelar</button>
+                                <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Agregar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="d-flex justify-content-center mt-5 mb-5">
-        <button class="btn btn-outline-primary hBtn mt-3 estiloBoton me-5">Agregar fecha</button>
+        </div>
     </div>
 
     <div class="container">
@@ -95,41 +88,38 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">Forestal</td>
-                    <td class="subtitulo">01-06-2024</td>
-                    <td class="subtitulo">03-06-2024</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">Ciencias Ambientales</td>
-                    <td class="subtitulo">04-06-2024</td>
-                    <td class="subtitulo">07-06-2024</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">Informatica</td>
-                    <td class="subtitulo">08-06-2024</td>
-                    <td class="subtitulo">10-06-2024</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">Biología</td>
-                    <td class="subtitulo">11-06-2024</td>
-                    <td class="subtitulo">13-06-2024</td>
+                <tr th:each="fechaRegistrada : ${fechasRegistradas}">
+                    <td>
+                        <form th:action="@{/administrador/eliminarFecha}" method="post">
+                            <input type="hidden" th:name="idFechasRegistradas" th:value="${fechaRegistrada.idFechasRegistradas}">
+                            <button type="submit" style="border: none; background: none; padding: 0; margin: 0;">
+                                <img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar">
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a th-href="@{/administrador/actualizarFecha(idFechasRegistradas=${idFechasRegistradas})}">
+                            <img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar">
+                        </a>
+                    </td>
+                    <td class="subtitulo" th:text="${fechaRegistrada.carrera.carrera}"></td>
+                    <td class="subtitulo" th:text="${#dates.format(fechaRegistrada.fechaInicio, 'dd-MM-yyyy')}"></td>
+                    <td class="subtitulo" th:text="${#dates.format(fechaRegistrada.fechaFin, 'dd-MM-yyyy')}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+
+
 </main>
 
 <footer th:insert="~{footer.html}"></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
 <script src="../javaScript.js/funcionamiento.js"></script>
+
 </body>
 </html>
