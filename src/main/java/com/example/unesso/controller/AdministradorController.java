@@ -68,7 +68,7 @@ public class AdministradorController {
         System.out.println(alumnos);
         model.addAttribute("alumnos", alumnos);
         return "/administrarAlumno";
-
+    }
     public String listarAlumnos(Model model, @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
@@ -89,7 +89,7 @@ public class AdministradorController {
         model.addAttribute("keyword", currentKeyword);
 
         return "administrarAlumno";
->>>>>>> origin/Administrador
+
     }
 
     @PostMapping("/eliminarAlumno")
