@@ -64,12 +64,6 @@ public class AdministradorController {
     }
 
     @GetMapping("/alumnos")
-    public String alumnos(Model model) {
-        List<Alumno> alumnos = alumnoService.getAllAlumnos();  // Método que obtiene todos los alumnos
-        System.out.println(alumnos);
-        model.addAttribute("alumnos", alumnos);
-        return "/administrarAlumno";
-    }
     public String listarAlumnos(Model model, @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
