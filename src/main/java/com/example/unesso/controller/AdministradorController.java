@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -249,13 +250,21 @@ public class AdministradorController {
 
     @PostMapping("/guardarFecha")
     public String guardarFecha(@RequestParam("carreraFecha") Integer idCatCarrera,
-                               @RequestParam("fechaInicio")  Date fechaInicioStr,
-                               @RequestParam("fechaFin")  Date fechaFinStr) {
+                               @RequestParam("fechaInicio") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaInicioStr,
+                               @RequestParam("fechaFin") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaFinStr,
+                                Model model) {
 
         // Imprimir valores para depuración
         System.out.println("Received carreraFecha: " + idCatCarrera);
         System.out.println("Received fechaInicio: " + fechaInicioStr);
         System.out.println("Received fechaFin: " + fechaFinStr);
+
+
+        //Valida si la fecha de inicio es
+        if (fechaInicioStr.after(fechaFinStr)) {
+            model.addAttribute("errorMessage", "La fecha de inicio no puede ser mayor que la fecha de fin.");
+            return "redirect:/administrador/fechas?error"; // Redirigir a la vista con un mensaje de error
+        }
 
         // Buscar la carrera en la base de datos usando el id
         CatCarrera carrera = catCarreraService.findById(idCatCarrera);
