@@ -33,26 +33,26 @@
     </div>
 
     <div class="container mt-5">
-        <form action="#" th:action="@{/administrador/guardarAlumno}" th:object="${alumno}" method="post">
+        <form id="formularioAlumno" action="#" th:action="@{/administrador/guardarAlumno}" th:object="${alumno}" method="post">
             <div class="row ps-5 pe-5">
                 <div class=" col-6 rounded colorFondo m-2 p-4">
                     <h3 style="color: #6366F1;">Datos personales</h3>
                     <label for="nombreAlumno" class="ms-1" style="color: #6366F1;">
                         Nombre
                     </label>
-                    <input id="nombreAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{nombre}">
+                    <input id="nombreAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{nombre}" required>
                     <div class="row">
                         <div class="col">
                             <label for="apellidoPaternoAlumno" class="ms-1" style="color: #6366F1;">
                                 Apellido Paterno
                             </label>
-                            <input id="apellidoPaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoP}">
+                            <input id="apellidoPaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoP}" required>
                         </div>
                         <div class="col">
                             <label for="apellidoMaternoAlumno" class="ms-1" style="color: #6366F1;">
                                 Apellido Materno
                             </label>
-                            <input id="apellidoMaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoM}">
+                            <input id="apellidoMaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoM}" required>
                         </div>
                     </div>
                     <label for="curpAlumno" class="ms-1" style="color: #6366F1;">
@@ -120,7 +120,7 @@
                                  <label for="nombreGrupo" class="ms-1" style="color: #6366F1;">
                                      Grupo
                                  </label>
-                                 <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control" readonly="true">
+                                 <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control" readonly="true" required>
                              </div>
                              <div class="col">
                                  <label for="matriculaAlumno" class="ms-1" style="color: #6366F1;">
@@ -171,6 +171,62 @@
             }
             carreraSelect.addEventListener('change', updateGrupo);
             semestreSelect.addEventListener('change', updateGrupo);
+
+            document.getElementById('formularioAlumno').addEventListener('submit', function(event) {
+                let isValid = true;
+
+                const inputs = this.querySelectorAll('input[required], select[required]');
+                inputs.forEach(function(input) {
+                    if (input.value.trim() === '') {
+                        isValid = false;
+                        input.classList.add('is-invalid');
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+
+                // Validar que la CURP tenga 18 caracteres
+                const curp = document.getElementById('curpAlumno').value;
+                if (curp.length !== 18) {
+                    isValid = false;
+                    document.getElementById('curpAlumno').classList.add('is-invalid');
+                } else {
+                    document.getElementById('curpAlumno').classList.remove('is-invalid');
+                }
+
+                // Validar que la matrícula tenga 10 caracteres
+                const matricula = document.getElementById('matriculaAlumno').value;
+                if (matricula.length !== 10) {
+                    isValid = false;
+                    document.getElementById('matriculaAlumno').classList.add('is-invalid');
+                } else {
+                    document.getElementById('matriculaAlumno').classList.remove('is-invalid');
+                }
+
+                // Validar el formato del correo electrónico
+                const email = document.getElementById('correoAlumno').value;
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailPattern.test(email)) {
+                    isValid = false;
+                    document.getElementById('correoAlumno').classList.add('is-invalid');
+                } else {
+                    document.getElementById('correoAlumno').classList.remove('is-invalid');
+                }
+
+                // Validar el formato del número telefónico
+                const telefono = document.getElementById('telefonoAlumno').value;
+                const telefonoPattern = /^[0-9]{10}$/;
+                if (!telefonoPattern.test(telefono)) {
+                    isValid = false;
+                    document.getElementById('telefonoAlumno').classList.add('is-invalid');
+                } else {
+                    document.getElementById('telefonoAlumno').classList.remove('is-invalid');
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); // Previene el envío del formulario si la validación falla
+                }
+            });
         });
     </script>
  </body>
