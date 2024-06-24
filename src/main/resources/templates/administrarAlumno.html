@@ -52,7 +52,7 @@
         <div class="d-flex align-items-center ms-md-auto me-5">
             <p class="textoInputs me-2 mb-0 ms-5">Buscar</p>
             <form th:action="@{/administrador/alumnos}" method="get">
-                <input type="text" name="keyword" class="estiloInputs" style="width: 200px; height: 25px;" th:value="${keyword}">
+                <input type="text" name="keyword" class="estiloInputs rounded" style="width: 200px; height: 25px;" th:value="${keyword}">
                 <input type="hidden" name="size" th:value="${size}">
                 <button type="submit" class="btn btn-primary ms-2 custom-btn">Buscar</button>
             </form>
