@@ -1,7 +1,6 @@
 package com.example.unesso.services.db;
 
-<<<<<<< HEAD
-=======
+
 import java.util.Optional;
 
 >>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
@@ -9,19 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
-import com.example.unesso.repository.CatEscolaridadRepository;
-import com.example.unesso.repository.TrabajoRepository;
-import com.example.unesso.services.TrabajoService;
 
-@Service
-@Primary
-public class TrabajoServiceJPA implements TrabajoService {
-	@Autowired
-	private TrabajoRepository trabajoRepo;
-	
-	
-=======
 import com.example.unesso.model.ReciboLuz;
 import com.example.unesso.model.Trabajo;
 import com.example.unesso.repository.CatEscolaridadRepository;

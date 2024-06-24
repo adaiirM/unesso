@@ -70,8 +70,6 @@ public class Alumno {
 	@JoinColumn(name="idEstadoFormularios")
 	private EstadoFormularios estadoFormularios;
 	
-<<<<<<< HEAD
-=======
 	@OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Trabajo trabajo;
 >>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
@@ -472,12 +470,6 @@ public class Alumno {
 	}
 
 	
-<<<<<<< HEAD
-	
-	
-
-
-=======
 >>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 
 	public EstadoFormularios getEstadoFormularios() {
@@ -492,8 +484,6 @@ public class Alumno {
 
 
 
-<<<<<<< HEAD
-=======
 	public Trabajo getTrabajo() {
 		return trabajo;
 	}
@@ -511,9 +501,7 @@ public class Alumno {
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", domicilio=" + domicilio + ", infoVivienda=" + infoVivienda
 				+ ", tutor=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia
-<<<<<<< HEAD
-				
-=======
+
 >>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 				+", usuario=" + usuario + ", catGrupo=" + catGrupo
 				+ ", transporte=" + transporte + ", matricula=" + matricula + ", nombre=" + nombre + ", apellidoP="

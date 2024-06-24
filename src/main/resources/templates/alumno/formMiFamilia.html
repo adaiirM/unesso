@@ -591,7 +591,6 @@
 
 		$(document).ready(function () {
 
-<<<<<<< HEAD
 			//Esta funcion obtiene los municipios de un estado en base al estado seleccionado
             $('#catEstado').change(function() {
 		            var estado = $(this).val();
@@ -628,118 +627,6 @@
 		    }
 			
 			obtenerDomicilioCheckedNo()
-=======
-
-
-			var hermanoItems = document.getElementsByClassName('hermano-item');
-			for (var i = 0; i < hermanoItems.length; i++) {
-				console.log(i);
-			}
-
-
-
-			//Obtener idMunicipio
-
-
-			//Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
-			$('#catEstado').change(function () {
-				var estado = $(this).val();
-				console.log('Selected Estado:', estado);
-
-				$.ajax({
-					url: '/direccion/municipiosById/' + estado,
-					type: 'GET',
-					success: function (data) {
-						var municipioSelect = $('#catMunicipio');
-						municipioSelect.empty();
-						municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
-						$.each(data, function (index, municipio) {
-							municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
-						});
-					}
-				});
-
-			});
-
-			//Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
-			$('#catMunicipio').change(function () {
-				var municipio = $(this).val();
-
-				console.log('Selected municipio:', municipio);
-				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-				$.ajax({
-					url: '/direccion/localidadesById/' + municipio,
-					type: 'GET',
-					success: function (data) {
-						var municipioSelect = $('#catLocalidad');
-						municipioSelect.empty();
-						console.log(data);
-						municipioSelect.append('<option value="">Elige una opción</option>');
-						$.each(data, function (index, localidad) {
-							console.log(data.idCatLocalidad);
-							municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad + '</option>');
-
-						});
-					}
-				});
-			});
-
-			//Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
-			$('#catLocalidad').change(function () {
-				var localidad = $(this).val();
-				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
-				$.ajax({
-					url: '/direccion/codigoPostalById/' + localidad,
-					type: 'GET',
-					success: function (data) {
-						// Se establece el valor del campo #codigoPostal con el valor obtenido
-						$('#codigoPostal').val(data.numeroCodigoPostal);
-					}
-				});
-			});
-
-
-
-
-
-			// Obtener referencias a los elementos de radio
-			 $('#domicilioSi').change(function () {
-			        obtenerDomicilioChecked();
-			    });
-			
-			    $('#domicilioNo').change(function () {
-			        if ($('#domicilioNo').is(':checked')) {
-			            $('#colonia').prop('disabled', false);
-			            var idLocalidad = $('#idLocalidad');
-			            var idCatLocalidad = idLocalidad.val();
-			            if (idCatLocalidad) {
-			                setLocalidad(idCatLocalidad);
-			            }
-			
-			            $("#catLocalidad").removeAttr('disabled');
-			            $("#catMunicipio").removeAttr('disabled');
-			            $("#catEstado").removeAttr('disabled');
-			        }
-			    });
-			
-			    // Llamar la función al cargar la página si ya está seleccionado
-			    if ($('#domicilioSi').is(':checked')) {
-			        obtenerDomicilioChecked();
-			    }
-			
-			    if ($('#domicilioNo').is(':checked')) {
-			        $('#colonia').prop('disabled', false);
-			        var idLocalidad = $('#idLocalidad');
-			        var idCatLocalidad = idLocalidad.val();
-			        if (idCatLocalidad) {
-			            setLocalidad(idCatLocalidad);
-			        }
-			
-			        $("#catLocalidad").removeAttr('disabled');
-			        $("#catMunicipio").removeAttr('disabled');
-			        $("#catEstado").removeAttr('disabled');
-			    }
->>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 
 
 
@@ -749,19 +636,6 @@
 			const internetNo = document.getElementById("internetNo");
 			const tipoConexionContainer = document.getElementById("tipoConexionContainer");
 
-<<<<<<< HEAD
-=======
-			// Función para mostrar u ocultar el contenedor del tipo de conexión
-			function toggleTipoConexion() {
-				if (internetSi.checked) {
-
-					tipoConexionContainer.style.display = "block";
-				} else {
-					tipoConexionContainer.style.display = "none";
-				}
-			}
-
->>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 			// Añadir eventos a los radio buttons
 			internetSi.addEventListener("change", toggleTipoConexion);
 			internetNo.addEventListener("change", toggleTipoConexion);
@@ -1260,7 +1134,6 @@
 	            setLocalidad(idCatLocalidad);
 	        }
 	    }
-<<<<<<< HEAD
 	    
 	    function obtenerDomicilioCheckedNo(){
 			if ($('#domicilioNo').is(':checked')) {
@@ -1285,8 +1158,6 @@
 				tipoConexionContainer.style.display = "none";
 			}
 		}
-=======
->>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	</script>
 </body>
 
