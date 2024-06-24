@@ -73,16 +73,24 @@
             </select>
             <p class="textoInputs ms-2 mb-0 me-2">Solicitudes</p>
         </div>
-        <div class="d-flex align-items-center justify-content-center">
-            <p class="mb-0 me-3 textoInputs">Estado</p>
-            <select class="form-select estiloInputs col-2" style="width: 70%;" aria-label="Default select example" >
-                <option value="1">Finalizado</option>
-                <option value="2">Sin revisar</option>
-            </select>
-        </div>
-        <div class="d-flex align-items-center ms-md-auto me-5">
-            <p class="textoInputs me-2 mb-0 ms-5">Buscar</p>
-            <input type="text" class="estiloInputs rounded" style="width: 200px; height: 25px;">
+        <div class="container">
+            <div class="row mt-4">
+                <!-- Estado -->
+                <div class="col-12 col-md-6 d-flex align-items-center mb-3">
+                    <p class="mb-0 me-2 textoInputs">Estado</p>
+                    <select class="form-selec estiloInputs form-control" style="width: 50%;" aria-label="Default select example" >
+                        <option value="1">Finalizado</option>
+                        <option value="1">Pendiente</option>
+                        <option value="2">Sin revisar</option>
+                    </select>
+                </div>
+                
+                <!-- Buscar -->
+                <div class="col-12 col-md-6 d-flex align-items-center">
+                    <p class="textoInputs me-2 mb-0">Buscar</p>
+                    <input type="text" class="estiloInputs rounded form-control" style="width: 50%;" placeholder="Buscar . . .">
+                </div>
+            </div>
         </div>
     </div>
 </div>

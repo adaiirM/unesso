@@ -30,7 +30,7 @@
 
 <div class="d-flex justify-content-center">
     <a th:href="@{/administrador/agregarAlumno}">
-        <button class="btn btn-primary mb-4 ms-5"  style="background-color:#4F46E5;"><img src="../img/agregaraAlumnos.png"style="width: 15%;" alt="">Agregar alumno</button>
+        <button class="btn btn-primary mb-4 ms-5 custom-btn"><img src="../img/agregaraAlumnos.png"style="width: 15%;" alt="">Agregar alumno</button>
     </a>
 </div>
 
@@ -54,7 +54,7 @@
             <form th:action="@{/administrador/alumnos}" method="get">
                 <input type="text" name="keyword" class="estiloInputs" style="width: 200px; height: 25px;" th:value="${keyword}">
                 <input type="hidden" name="size" th:value="${size}">
-                <button type="submit" class="btn btn-primary ms-2" style="background-color:#4F46E5;">Buscar</button>
+                <button type="submit" class="btn btn-primary ms-2 custom-btn">Buscar</button>
             </form>
         </div>
     </div>
