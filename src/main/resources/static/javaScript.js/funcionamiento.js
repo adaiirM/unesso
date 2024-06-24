@@ -434,7 +434,6 @@ $(document).ready(function () {
         autoclose: true,
         orientation: "bottom auto"
     });
-
-
 });
+
 
