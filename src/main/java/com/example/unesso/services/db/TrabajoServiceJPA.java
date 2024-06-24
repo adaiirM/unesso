@@ -1,10 +1,13 @@
 package com.example.unesso.services.db;
 
+
 import java.util.Optional;
 
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
 
 import com.example.unesso.model.ReciboLuz;
 import com.example.unesso.model.Trabajo;
@@ -31,4 +34,5 @@ public class TrabajoServiceJPA implements ITrabajoService {
 	public Trabajo guardarTrabajo(Trabajo trabajo) {
 		return trabajoRepo.save(trabajo);
 	}
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 }

@@ -36,6 +36,8 @@ import com.example.unesso.model.CatOcupacion;
 import com.example.unesso.model.CatParentesco;
 import com.example.unesso.model.CatServicios;
 import com.example.unesso.model.Domicilio;
+
+
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.GastosFam;
 import com.example.unesso.model.ReciboLuz;
@@ -64,6 +66,7 @@ import com.example.unesso.services.IEstadoFormulariosService;
 import com.example.unesso.services.IFamiliaService;
 import com.example.unesso.services.IGastosFamService;
 import com.example.unesso.services.IReciboLuzService;
+
 import com.example.unesso.services.ITrabajoService;
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
@@ -485,6 +488,7 @@ public class AlumnoController {
 			model.addAttribute("parentescos", listaParentesco);
 			System.out.println(a);
 			model.addAttribute("alumnoSesion", a);
+
 		}		
 		
 		model.addAttribute("carreras", catCarreraService.buscarTodas());
@@ -527,7 +531,7 @@ public class AlumnoController {
 	            IntStream.range(0, (catMedios.size() + 1) / 2)
 	                .mapToObj(i -> catMedios.subList(i * 2, Math.min(i * 2 + 2, catMedios.size())))
 	                .collect(Collectors.toList());
-	               
+
 	     model.addAttribute("catMedios", medios);	
 	}
 	

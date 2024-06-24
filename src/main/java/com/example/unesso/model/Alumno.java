@@ -72,6 +72,7 @@ public class Alumno {
 	
 	@OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Trabajo trabajo;
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	
 	private String matricula;
 	
@@ -469,6 +470,7 @@ public class Alumno {
 	}
 
 	
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 
 	public EstadoFormularios getEstadoFormularios() {
 		return estadoFormularios;
@@ -494,10 +496,13 @@ public class Alumno {
 
 
 
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	@Override
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", domicilio=" + domicilio + ", infoVivienda=" + infoVivienda
 				+ ", tutor=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia
+
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 				+", usuario=" + usuario + ", catGrupo=" + catGrupo
 				+ ", transporte=" + transporte + ", matricula=" + matricula + ", nombre=" + nombre + ", apellidoP="
 				+ apellidoP + ", apellidoM=" + apellidoM + ", telefono=" + telefono + ", curp=" + curp
