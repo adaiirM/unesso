@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,7 +59,7 @@
 					<p class="fontPoppins textoInputs" style="color: #818CF8; ">¿Cuántas personas aportan al gasto familiar?  (Alumno, padre, madre, tutor y otros de los que se depende económicamente)</p>  
 
 					<div class="col-12 col-sm-6">
-						<input type="text" id="numPersonasAportan" name="numPersonasAportan" class="rounded estiloInputs" style="border-color: #6C757D; margin-left: 20px; height: 40px;">						
+						<input th:field="*{numPersonasAportan}" type="number" id="numPersonasAportan" name="numPersonasAportan" class="rounded estiloInputs" style="border-color: #6C757D; margin-left: 20px; height: 40px;" min="0" max="3">						
 					<!-- 
 						<button type="button" onclick="generarPersonas()" id="generateButton">Aceptar</button>
 					-->
@@ -211,7 +211,17 @@
 				mostrarMesInicio();
 		    	mostrarMesFin();
 			}
+			generarPersonas();
 		});
+		
+		document.getElementById('numPersonasAportan').addEventListener('input', function() {
+			var num = parseInt(document.getElementById('numPersonasAportan').value);
+			if(num > 0 && num <=3){
+				generarPersonas();	
+			}else {
+				
+			}
+	    });
 		
 		window.onload = function() {
 	        // Obtener el elemento input

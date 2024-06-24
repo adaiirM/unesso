@@ -110,32 +110,28 @@
 							<div class="row">
 								<div class="col">
 									<p class="textoInputs">Estado</p>
-									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-										<option selected class="subtitulo">Elige una opción</option>
-										<option value="1" class="subtitulo">Estado 1</option>
-										<option value="2" class="subtitulo">Estado 2</option>
-										<option value="3" class="subtitulo">Estado 3</option>
+									<select id="selectEstadosTrabajo" th:field="*{trabajo.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}" 
+											onclick="obtenerMunicipiosDP('selectEstadosTrabajo', 'selectLocalidadesTrabajo', 'selectMunicipiosTrabajo', 'cpTrabajo')" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option value="" class="subtitulo">Elige una opción</option>
+										<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
 									</select>
 								</div>
 								<div class="col">
 									<p class="textoInputs">Municipio</p>
-									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-										<option selected class="subtitulo">Elige una opción</option>
-										<option value="1" class="subtitulo">Municipio 1</option>
-										<option value="2" class="subtitulo">Municipio 2</option>
-										<option value="3" class="subtitulo">Municipio 3</option>
+									<select id="selectMunicipiosTrabajo" onclick="obtenerLocalidadDP('selectMunicipiosTrabajo', 'selectLocalidadesTrabajo', 'cpTrabajo')"
+									 		class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option value="" class="subtitulo">Elige una opción</option>
 									</select>
 								</div>
 							</div>
 							<div class="row mt-4">
 								<div class="col">
 									<p class="textoInputs">Localidad</p>
-									<select class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-										<option selected class="subtitulo">Elige una opción</option>
-										<option value="1" class="subtitulo">Localidad 1</option>
-										<option value="2" class="subtitulo">Localidad 2</option>
-										<option value="3" class="subtitulo">Localidad 3</option>
+									<select id="selectLocalidadesTrabajo" onchange="sincronizarValorTrabajo(event)" onclick="obtenerCodigoPostal('selectMunicipiosTrabajo', 'selectLocalidadesTrabajo', 'cpTrabajo')" 
+											class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+										<option value="" class="subtitulo">Elige una opción</option>
 									</select>
+		                            <input th:value="*{trabajo.domicilio.catLocalidad.idCatLocalidad}" type="hidden" id="valorOcultoTrabajo" name="trabajo.domicilio.catLocalidad">
 								</div>
 								<div class="col">
 									<p class="textoInputs">Colonia</p>
@@ -208,7 +204,7 @@
 	            <div class="col-12 pt-3">
 	                <div class="d-flex">
 	                    <div style="width: 100%;" class="me-4">
-	                        <p class="textoInputs">E-mail</p>
+	                        <p class="textoInputs">E-mail (Opcional)</p>
 	                        <input th:field="*{tutorEconomico.correo}" type="email" class="form-control estiloInputs rounded" style="width: 100%;" id="correo" name="tutorEconomico.correo" placeholder="Ingrese su correo electronico">
 	                    </div>
 	                    <div style="width: 100%;">
@@ -254,7 +250,7 @@
                 <h3 style="color: #6366F1;">Domicilio</h3>
                 <p class="subtitulo">Indica la dirección de la persona de quien se depende económicamente, si éste es el caso, o de lo contrario, a la persona que se pueda localizar para aclaraciones.</p>
                 <div class="mt-1" style="color: #6366F1;" >
-                    <p>¿El domicilio de tu tutor coincide con el que te encuentras actualmente?</p>
+                    <p>¿Su domicilio coincide con el que te encuentras actualmente?</p>
                     <div class="mt-1" style="margin-left: 1cm;">
                         <input th:field="*{tutorEconomico.esViviendaAlumno}" type="radio" class="input-outline-primary " id="apoyoSi" name="tutorEconomico.esViviendaAlumno" value="1" style="color: #6366F1;" onclick="toggleContent()">
                         <label for="apoyoSi" style="color:#6C757D;" class="me-5">Si</label>
@@ -269,7 +265,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Estado</p>
 								<!--							 -->
-			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipiosDP()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+			                    <select id="selectEstados" th:field="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"  onclick="obtenerMunicipiosDP('selectEstados', 'selectLocalidades', 'selectMunicipios', 'cp')" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>							
 									<option th:each="catEstado : ${estados}" th:value="${catEstado.idCatEstado}" th:text="${catEstado.nombreEstado}"  class="subtitulo"></option>
 			                    </select>
@@ -277,7 +273,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Municipio</p>
 								<!--th:field="*{domicilio.catLocalidad.catMunicipio.catIdMunicipio}"-->
-	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidadDP()"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                            <select id="selectMunicipios" onchange="handleSelectChange(event)"  onclick="obtenerLocalidadDP('selectMunicipios', 'selectLocalidades', 'cp')"  class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>									                            
 	                            </select>
 	                        </div>
@@ -286,7 +282,7 @@
 	                        <div class="col">
 	                            <p class="textoInputs">Localidad</p>
 								<!--th:field="*{domicilio.catLocalidad.idLocalidad}"--> 
-	                            <select id="selectLocalidades" onchange="sincronizarValor(event)" onclick="obtenerCodigoPostal()" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
+	                            <select id="selectLocalidades" onchange="sincronizarValor(event)" onclick="obtenerCodigoPostal('selectMunicipios', 'selectLocalidades', 'cp')" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example" required>
 	                                <option value="" class="subtitulo">Elige una opción</option>		
 	                            </select>
 	                            <input th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}" type="hidden" id="valorOculto" name="tutorEconomico.domicilio.catLocalidad">
@@ -344,11 +340,17 @@
     	<input type="hidden" id="idCatEstado" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
     	<input type="hidden" id="idCatMunicipio" th:value="*{tutorEconomico.domicilio.catLocalidad.catMunicipio.idCatMunicipio}"/>
     	<input type="hidden" id="idCatLocalidad" th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}"/>
+    	
+    	<input type="hidden" id="idCatEstadoTrabajo" th:value="*{trabajo.domicilio.catLocalidad.catMunicipio.catEstado.idCatEstado}"/>
+    	<input type="hidden" id="idCatMunicipioTrabajo" th:value="*{trabajo.domicilio.catLocalidad.catMunicipio.idCatMunicipio}"/>
+    	<input type="hidden" id="idCatLocalidadTrabajo" th:value="*{trabajo.domicilio.catLocalidad.idCatLocalidad}"/>
 	</form>
        
     <footer th:insert="fragments/footer.html :: footer"/>
     
     <script>
+		
+		
 		
 		// Funciones cuando cargue el HTML
        document.addEventListener('DOMContentLoaded', function() {
@@ -372,13 +374,60 @@
 				}
             }
             
-            mostarOcultarDatosTrabajo(); 
+            recuperarDomicilio('selectLocalidades', 'selectMunicipios', 'idCatEstado', 'idCatMunicipio', 'idCatLocalidad');
+            recuperarDomicilio('selectLocalidadesTrabajo', 'selectMunicipiosTrabajo', 'idCatEstadoTrabajo', 'idCatMunicipioTrabajo', 'idCatLocalidadTrabajo');
+            mostarOcultarDatosTrabajo();
 		});
+		
+		function recuperarDomicilio(selectLocalidades, selectMunicipios, inputCatEstado, inputCatMunicipio, inputCatLocalidad){
+			var selectLocalidad = document.getElementById(selectLocalidades);
+			var selectMunicipio = document.getElementById(selectMunicipios);
+		
+			let idCatEstado = document.getElementById(inputCatEstado).value;
+			let idCatMunicipio = document.getElementById(inputCatMunicipio).value;
+			let idCatLocalidad = document.getElementById(inputCatLocalidad).value;
+			
+			 $.ajax({
+		        url: '/domicilio/obtenerMunicipiosPorEstado',
+		        type: 'GET',
+		        data: { estadoId: idCatEstado},
+		        success: function(data) {
+		            actualizarSelectMunicipiosDP(data, selectMunicipios);
+		            selectMunicipio.value = idCatMunicipio;
+		            selectLocalidad.innerHTML = "";
+		            
+		            $.ajax({
+				        url: '/domicilio/obtenerLocalidadesPorMunicipio',
+				        type: 'GET',
+				        data: { municipioId: idCatMunicipio},
+				        success: function(data) {
+				            actualizarSelectLocalidadDP(data, selectLocalidades);
+				            selectLocalidad.value = idCatLocalidad;
+				        },
+				        error: function(xhr, status, error) {
+				            console.error(error);
+				        }
+				    });
+		            
+		        },
+		        error: function(xhr, status, error) {
+		            console.log("Error" + error);
+		            console.error(error);
+		        }
+			    });
+		}
+	
 		
 		function sincronizarValor(){
 			var select = document.getElementById("selectLocalidades");
         	var valorSeleccionado = select.options[select.selectedIndex].value;
         	document.getElementById("valorOculto").value = valorSeleccionado;
+		}
+		
+		function sincronizarValorTrabajo(){
+			var select = document.getElementById("selectLocalidadesTrabajo");
+        	var valorSeleccionado = select.options[select.selectedIndex].value;
+        	document.getElementById("valorOcultoTrabajo").value = valorSeleccionado;
 		}
 		
 		function mostarOcultarDatosTrabajo(){
@@ -390,6 +439,10 @@
             } else {
                 datosTrabajo.classList.add("hidden");
             }
+		}
+		
+		function recuperarValores(){
+			
 		}
 		
 		function toggleContent() {
@@ -417,7 +470,7 @@
 							        data: { estadoId: selectEstado},
 							        success: function(data) {
 	
-							            actualizarSelectMunicipiosDP(data);
+							            actualizarSelectMunicipiosDP(data, 'selectMunicipios');
 							            
 										var municipio = document.getElementById('selectMunicipios');
 										municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
@@ -428,12 +481,13 @@
 									        type: 'GET',
 									        data: { municipioId: selectIndex},
 									        success: function(data) {
-												actualizarSelectLocalidadDP(data);
+												actualizarSelectLocalidadDP(data, 'selectLocalidades');
 									            var localidad = document.getElementById('selectLocalidades');
 												localidad.value = domAlumno.catLocalidad.idCatLocalidad;
 												document.getElementById("valorOculto").value = localidad.value;
 	
-				            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal);
+				            	            	actualizarInputCP(domAlumno.catLocalidad.catCodigoPostal.idCatCodigoPostal,
+				            	            						'cp', 'selectMunicipios', 'selectLocalidadess');
 												document.getElementById('calle').value = domAlumno.calle;
 												document.getElementById('numero').value = domAlumno.numero;
 												document.getElementById('coloniaBarrio').value = domAlumno.coloniaBarrio;				
@@ -674,7 +728,7 @@
 						required: "Por favor, ingresa el nombre del centro de tu trabajo"
 					},
 					"trabajo.telefono": {
-						required: "Por favor, ingrese el teléfono del tutor económico.",
+						required: "Por favor, ingrese el número de teléfono.",
                         digits: "Por favor, ingrese solo números.",
                         rangelength: "El teléfono debe tener 10 dígitos.",
 					},
@@ -690,9 +744,7 @@
                         required: "Por favor, ingresa el nombre de la calle."
                     },
                     "trabajo.domicilio.numero": {
-						required: "Por favor, ingrese un dato, si no tiene número puede escribir s/n.",
-						digits: "Por favor, ingrese solo números.",
-                        rangelength: "El teléfono debe tener 10 dígitos.",
+						required: "Por favor, ingrese un dato, si no tiene número puede escribir s/n."
 					},
 					"trabajo.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal": {
 						required: "Por favor, selecciona una localidad"

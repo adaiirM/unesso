@@ -40,6 +40,7 @@ import com.example.unesso.model.Domicilio;
 
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.GastosFam;
+import com.example.unesso.model.IngresoFamiliar;
 import com.example.unesso.model.ReciboLuz;
 import com.example.unesso.model.Trabajo;
 import com.example.unesso.model.TutorEconomico;
@@ -82,8 +83,6 @@ public class AlumnoController {
 	
 	@Value("${unessi.ruta.comprobantes}")
 	private String rutaComprobantes;
-		
-		
 	
 	@Value("${inesis.ruta.recibosLuz}")
 	private String rutaRecibosLuz;
@@ -409,7 +408,7 @@ public class AlumnoController {
 
 		if(accion.equals("enviar")) {
 			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
-			return "redirect:/alumno/formMisGastos";
+			return "redirect:/alumno/miFamilia";
 		} else {
 			return "redirect:/alumno/menuSolicitar";
 		}		
@@ -419,31 +418,38 @@ public class AlumnoController {
 	@PostMapping("/guardarGastos")
 	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
 			@RequestParam("observaciones") String observacones) {
+		//Recuperar datos de sesion para conocer el alumno de la sesión
+		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
+		
+		
 		if (!multiPart.isEmpty()) {
 			System.out.print(multiPart);
 		}
 		
-		System.out.println("Familia del formulario: " + familia.toString());
-		System.out.println(observacones);
+		System.out.println("Familia del formulario: " + familia.getIngresoFamiliar().toString());
 		
-		//Recuperar datos de sesion para conocer el alumno de la sesión
-		Alumno a = obtenerAlumnoSesion(auth);
-		
-		if(a.getFamilia() != null) {
+		if(alumnoSesion.getFamilia() != null) {
 			
-			familia.setIdFamilia(a.getFamilia().getIdFamilia());
-			System.out.println("Antes del if" + a.getFamilia().getIdFamilia());
+			// Asociar la familia a cada ingreso familiar
+	        if (familia.getIngresoFamiliar() != null) {
+	            for (IngresoFamiliar ingreso : familia.getIngresoFamiliar()) {
+	                ingreso.setFamilia(familia);
+	            }	            
+	        }
+			
+			familia.setIdFamilia(alumnoSesion.getFamilia().getIdFamilia());
+			System.out.println("Antes del if" + alumnoSesion.getFamilia().getIdFamilia());
 			
 			
-			if(a.getFamilia().getGastosFam() != null) {
-				GastosFam gf = serviceGastosFam.buscarPorId(a.getFamilia().getGastosFam().getIdGastosFam());
+			if(alumnoSesion.getFamilia().getGastosFam() != null) {
+				GastosFam gf = serviceGastosFam.buscarPorId(alumnoSesion.getFamilia().getGastosFam().getIdGastosFam());
 				GastosFam gfEnviar = familia.getGastosFam();
 				gfEnviar.setIdGastosFam(gf.getIdGastosFam());
 				
-				if(a.getFamilia().getGastosFam().getReciboLuz() != null) {
+				if(alumnoSesion.getFamilia().getGastosFam().getReciboLuz() != null) {
 					
 					System.out.println("Entra");
-					ReciboLuz rb = serviceReciboLuz.buscarPorId(a.getFamilia().getGastosFam().getReciboLuz().getIdReciboLuz());
+					ReciboLuz rb = serviceReciboLuz.buscarPorId(alumnoSesion.getFamilia().getGastosFam().getReciboLuz().getIdReciboLuz());
 					ReciboLuz rbEnviar = familia.getGastosFam().getReciboLuz();
 					
 					if(rbEnviar.getPagoBimestral() == null) {
@@ -460,12 +466,20 @@ public class AlumnoController {
 			serviceFamilia.guardarFamilia(familia);
 		} else {
 			Familia f = serviceFamilia.guardarFamilia(familia);
-			a.setFamilia(f);
-			serviceAlumno.guardarAlumno(a);
+			
+			// Asociar la familia a cada ingreso familiar
+	        if (familia.getIngresoFamiliar() != null) {
+	            for (IngresoFamiliar ingreso : familia.getIngresoFamiliar()) {
+	                ingreso.setFamilia(familia);
+	            }	            
+	        }
+			
+			alumnoSesion.setFamilia(f);
+			serviceAlumno.guardarAlumno(alumnoSesion);
 		}
 		
-		a.setObservaciones(observacones);
-		serviceAlumno.guardarAlumno(a);
+		alumnoSesion.setObservaciones(observacones);
+		serviceAlumno.guardarAlumno(alumnoSesion);
 		
 		return "redirect:/alumno/menuSolicitar";
 	}

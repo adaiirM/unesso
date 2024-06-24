@@ -74,9 +74,9 @@ function resetFieldValidation(fieldName) {
     field.parent().find("label.error").remove();
 }
 
-function obtenerMunicipiosDP(){
-	var select = document.getElementById('selectEstados');
-	var selectLocalidad = document.getElementById('selectLocalidades')
+function obtenerMunicipiosDP(selectEstados, selectLocalidades, selectMunicipios, inputCodigoP){
+	var select = document.getElementById(selectEstados);
+	var selectLocalidad = document.getElementById(selectLocalidades);
 	select.addEventListener('change',
 	  function(){
 	    //var selectedOption = this.options[select.selectedIndex];
@@ -86,9 +86,9 @@ function obtenerMunicipiosDP(){
 	        type: 'GET',
 	        data: { estadoId: selectIndex},
 	        success: function(data) {
-	            actualizarSelectMunicipiosDP(data);
+	            actualizarSelectMunicipiosDP(data, selectMunicipios);
 	            selectLocalidad.innerHTML = "";
-	            actualizarInputCP("");
+	            actualizarInputCP("", inputCodigoP, selectMunicipios, selectLocalidades);
 	            var option = document.createElement("option");
 			        option.value = "";
 			        option.text = "Elige una opción";
@@ -101,26 +101,26 @@ function obtenerMunicipiosDP(){
 	  });
 }
 
-function actualizarSelectMunicipiosDP(municipios) {
-    var selectMunicipios = document.getElementById("selectMunicipios");
-    selectMunicipios.innerHTML = ""; // Limpiar la lista de municipios
+function actualizarSelectMunicipiosDP(municipios, selectMunicipios) {
+    var selectMunicipio = document.getElementById(selectMunicipios);
+    selectMunicipio.innerHTML = ""; // Limpiar la lista de municipios
 
 	var option = document.createElement("option");
         option.value = "";
         option.text = "Elige una opción";
-        selectMunicipios.appendChild(option);
+        selectMunicipio.appendChild(option);
 	
 	
     municipios.forEach(function(municipio) {
         var option = document.createElement("option");
         option.value = municipio.idCatMunicipio;
         option.text = municipio.nombreMunicipio;
-        selectMunicipios.appendChild(option);
+        selectMunicipio.appendChild(option);
     });
 }
 
-function obtenerLocalidadDP(){
-	var select = document.getElementById('selectMunicipios');
+function obtenerLocalidadDP(selectMunicipios, selectLocalidades, inputCodigoP){
+	var select = document.getElementById(selectMunicipios);
 	//console.log(select.value);
 	select.addEventListener('change',
 	  function(){
@@ -131,8 +131,8 @@ function obtenerLocalidadDP(){
 	        type: 'GET',
 	        data: { municipioId: selectIndex},
 	        success: function(data) {
-	            actualizarInputCP("");
-	            actualizarSelectLocalidadDP(data);
+	            actualizarInputCP("", inputCodigoP, selectMunicipios, selectLocalidades);
+	            actualizarSelectLocalidadDP(data, selectLocalidades);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -141,8 +141,8 @@ function obtenerLocalidadDP(){
 	  });
 }
 
-function actualizarSelectLocalidadDP(localidades) {
-    var selectLocalidad = document.getElementById("selectLocalidades");
+function actualizarSelectLocalidadDP(localidades, selectLocalidades) {
+    var selectLocalidad = document.getElementById(selectLocalidades);
     selectLocalidad.innerHTML = ""; // Limpiar la lista de municipios
 	
 	var option = document.createElement("option");
@@ -158,8 +158,8 @@ function actualizarSelectLocalidadDP(localidades) {
     });
 }
 
-function obtenerCodigoPostal(){
-	var select = document.getElementById('selectLocalidades');
+function obtenerCodigoPostal(selectMunicipios, selectLocalidades, inputCodigoP){
+	var select = document.getElementById(selectLocalidades);
 	//console.log(select.value);
 	select.addEventListener('input',
 	  function(){
@@ -170,7 +170,7 @@ function obtenerCodigoPostal(){
 	        type: 'GET',
 	        data: { localidadId: selectIndex},
 	        success: function(data) {
-	            actualizarInputCP(data.numeroCodigoPostal);
+	            actualizarInputCP(data.numeroCodigoPostal, inputCodigoP, selectMunicipios, selectLocalidades);
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -179,18 +179,17 @@ function obtenerCodigoPostal(){
 	  });
 }
 
-function actualizarInputCP(cp) {
-    var inputCP = document.getElementById('cp');
-    var municipio = document.getElementById("selectMunicipios");
-	var localidad = document.getElementById("selectLocalidades");
+function actualizarInputCP(cp, inputCodigoP, selectMunicipios, selectLocalidades) {
+    var inputCP = document.getElementById(inputCodigoP);
+    var municipio = document.getElementById(selectMunicipios);
+	var localidad = document.getElementById(selectLocalidades);
 
     if(municipio.value === "" && localidad.value === ""){
 		inputCP.value = null;
 	}
 	
-    console.log(cp);
     inputCP.value = null;
-	inputCP.value = cp;
+	inputCP.value = cp;    
 }
 
 
@@ -211,51 +210,45 @@ function generarPersonas() {
             opcionesParentesco += `<option th:value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
         });
 		var newElement = `
-        <div class="rounded" style="display:flex; border: 1px solid #6C757D; padding-bottom: 10px;">
-            <div style="border-radius: 5px; border-color: black; margin: 6px;">
-                <a class="textoInputs" style="text-decoration: none;">Nombre completo</a>
-                <br><br>
-                <input name="ingresoFamiliar[${i}].nombrePersona" type="text" th:field="*{ingresoFamiliar[__${i}__].nombrePersona}" id="nombrePersona" class="rounded estiloInputs" style="border-color: #6366F1; width: 260px; height: 40px;">
-            	<p>${i}</p>
-            </div>
-            <div style="border-radius: 5px; border-color: black; margin: 6px;">
-                <a class="textoInputs" style="text-decoration: none;">Parentesco</a><!-- colocar un combobox -->
-                <br><br>
-                <select name="ingresoFamiliar[${i}].catParenteso" class="form-select estiloInputs" style="width: 180px;height: 40px;" aria-label="Default select example">
-                	 ${opcionesParentesco}
-                </select>
-            </div>
-            
-            <div style="border-radius: 5px; border-color: black; margin: 6px;">
-                <a class="textoInputs" style="text-decoration: none;">Empresa o lugar de trabajo</a>
-                <br><br>
-                <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 250px; height: 40px;">
-            </div>
-            
-            <div style="border-radius: 5px; border-color: black; margin: 6px;">
-                <a class="textoInputs" style="text-decoration: none;">Puesto o tipo de trabajo</a>
-                <br><br>
-                <input type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 220px; height: 40px;">    
-            </div>
         
-            <div style="border-radius: 5px; border-color: black; margin: 6px;">
-                <a class="textoInputs" style="text-decoration: none;">IMB</a>
-                <br>
-                <a style="color: #6C757D; font-size: 14px;">(Ingreso mensual bruto)</a>
-                
-                <input name="ingresoFamiliar[${i}].ingresoBruto" th:field="*{ingresoFamiliar[__${i}__].ingresoBruto}" type="text" id="ingresoBruto" class="rounded estiloInputs" style="border-color: #6366F1; width: 130px; height: 40px;">
-            </div>
+        <div class="rounded mb-4">
+            <div class="row">
+                <div class="col-sm-6 col-xl-4">
+                    <p class="textoInputs">Nombre completo</p>
+                    <input th:field="*{ingresoFamiliar[__${i}__].nombrePersona}" id="nombrePersona" name="ingresoFamiliar[${i}].nombrePersona" type="text" class="form-control rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <p class="textoInputs">Parentesco</p>
+                    <select name="ingresoFamiliar[${i}].catParenteso" class="form-select estiloInputs" aria-label="Default select example">
+                        <option value="" class="subtitulo">Elige una opcion</option>
+                        ${opcionesParentesco}
+                    </select>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <p class="textoInputs">Empresa o lugar de trabajo</p>
+                    <input type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <p class="textoInputs">Puesto o tipo de trabajo</p>
+                    <input type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                </div>
             
-            <div style="border-radius: 5px; border-color: black; margin: 6px;"><!-- HACERLO LAS PEQUEÑO -->
-                <a class="textoInputs" style="text-decoration: none;">IMN</a>
-                <br>
-                <a style="color: #6C757D; font-size: 14px;">(Ingreso mensual neto)</a>
+                <div class="col-sm-6 col-xl-4">
+                    <p>IMB <span style="color: #6C757D;">(Ingreso Mensual Bruto)</span></p>
+                    <input name="ingresoFamiliar[${i}].ingresoBruto" th:field="*{ingresoFamiliar[__${i}__].ingresoBruto}" id="ingresoBruto" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                    </div>
                 
-                <input name="ingresoFamiliar[${i}].ingresoNeto" th:field="*{ingresoFamiliar[__${i}__].ingresoNeto}" type="text" id="correoLogin" class="rounded estiloInputs" style="border-color: #6366F1; width: 130px; height: 40px;">
+                <div class="col-sm-6 col-xl-4">
+                    <p>IMN <span style="color: #6C757D;">(Ingreso Mensual Neto)</span></p>
+                    <input name="ingresoFamiliar[${i}].ingresoNeto" th:field="*{ingresoFamiliar[__${i}__].ingresoNeto}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                </div>
+
+                <div class="col-sm-6 col-xl-4">
+                    <p>Ingreso Total: <span style="color: #6C757D;">$200.5</span></p>
+                </div>
             </div>
-            
-        </div>
-        <br>
+    	</div>
+        <hr>
         `;
         container.innerHTML += newElement;
    	}
@@ -274,7 +267,7 @@ function generarPersonas() {
 document.addEventListener('DOMContentLoaded', function() {
 	  
 	var selectLocalidad = document.getElementById('selectLocalidades');
-	var selectMunicipios = document.getElementById('selectMunicipios');
+	var selectMunicipio = document.getElementById('selectMunicipios');
 
 	let idCatEstado = document.getElementById('idCatEstado').value;
 	let idCatMunicipio = document.getElementById('idCatMunicipio').value;
@@ -285,8 +278,8 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'GET',
         data: { estadoId: idCatEstado},
         success: function(data) {
-            actualizarSelectMunicipiosDP(data);
-            selectMunicipios.value = idCatMunicipio;
+            actualizarSelectMunicipiosDP(data, 'selectMunicipios');
+            selectMunicipio.value = idCatMunicipio;
             selectLocalidad.innerHTML = "";
             
             $.ajax({
@@ -294,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		        type: 'GET',
 		        data: { municipioId: idCatMunicipio},
 		        success: function(data) {
-		            actualizarSelectLocalidadDP(data);
+		            actualizarSelectLocalidadDP(data, 'selectLocalidades');
 		            selectLocalidad.value = idCatLocalidad;
 		        },
 		        error: function(xhr, status, error) {
