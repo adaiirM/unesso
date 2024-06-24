@@ -20,4 +20,7 @@ public interface ICatCarreraService {
     CatCarrera findByNombreCarrera(String nombreCarrera);
 
 	CatCarrera findById(Integer id);
+
+	List<CatCarrera> buscarCarrerasSinFecha();
 }
+

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +69,7 @@ public class AdministradorController {
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
         int currentPage = page.orElse(0);
-        int pageSize = size.orElse(1); // Valor por defecto
+        int pageSize = size.orElse(3); // Valor por defecto (solicitudes que muestra)
 
         String currentKeyword = keyword.orElse("");
 
@@ -233,13 +234,30 @@ public class AdministradorController {
 
     @GetMapping("/fechas")
     public String fechas(Model model) {
-        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+        List<CatCarrera> carrerasSinFecha = catCarreraService.buscarCarrerasSinFecha();
         List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.getAllFechasRegistradas();
-        model.addAttribute("carreras", carreras);
-        model.addAttribute("fechasRegistradas",fechasRegistradas);
 
-        return "administrarFecha";
+        // Filtrar carreras que ya tienen fecha asignada
+        List<CatCarrera> carrerasDisponibles = new ArrayList<>();
+        for (CatCarrera carrera : carrerasSinFecha) {
+            boolean tieneFechaAsignada = false;
+            for (FechasRegistradas fecha : fechasRegistradas) {
+                if (fecha.getCarrera().getIdCatCarrera().equals(carrera.getIdCatCarrera())) {
+                    tieneFechaAsignada = true;
+                    break;
+                }
+            }
+            if (!tieneFechaAsignada) {
+                carrerasDisponibles.add(carrera);
+            }
+        }
+
+        model.addAttribute("carreras", carrerasDisponibles);
+        model.addAttribute("fechasRegistradas", fechasRegistradas);
+
+        return "administrarFecha"; // Nombre del archivo HTML de Thymeleaf
     }
+
 
 
     @PostMapping("/guardarFecha")
@@ -292,37 +310,40 @@ public class AdministradorController {
         return "redirect:/administrador/fechas";
     }
 
-    @GetMapping("/actualizarFecha")
-    public String mostrarFormularioActualizacionFecha(@RequestParam Integer idFecha, Model model) {
-        // Obtener la fecha registrada por su ID
-        FechasRegistradas fechaRegistrada = fechasRegistradasService.getByIdFechasRegistradas(idFecha);
+    @PostMapping("/actualizarFecha")
+    public String actualizarFecha(@RequestParam("idFechasRegistradas") Integer idFechasRegistradas,
+                                  @RequestParam("idCatCarrera") Integer idCatCarrera,
+                                  @RequestParam("fechaInicio") Date fechaInicio,
+                                  @RequestParam("fechaFin") Date fechaFin) {
 
-        // Verificar si la fecha existe
-        if (fechaRegistrada == null) {
-            // Manejar caso de error, redireccionar o mostrar mensaje de error
-            return "redirect:/error";
+        // Imprimir valores para depuración
+        System.out.println("Received idFechasRegistradas: " + idFechasRegistradas);
+        System.out.println("Received idCatCarrera: " + idCatCarrera);
+        System.out.println("Received fechaInicio: " + fechaInicio);
+        System.out.println("Received fechaFin: " + fechaFin);
+
+        // Buscar la carrera por su id
+        CatCarrera carrera = catCarreraService.findById(idCatCarrera);
+        if (carrera == null) {
+            throw new RuntimeException("No se encontró la carrera para el id: " + idCatCarrera);
         }
 
-        // Obtener lista de carreras u otros datos necesarios
-        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+        // Obtener la fecha registrada por su id
+        FechasRegistradas fechaRegistrada = fechasRegistradasService.getByIdFechasRegistradas(idFechasRegistradas);
+        if (fechaRegistrada == null) {
+            throw new RuntimeException("No se encontró la fecha registrada para el id: " + idFechasRegistradas);
+        }
 
-        // Agregar objetos necesarios al modelo
-        model.addAttribute("fechaRegistrada", fechaRegistrada);
-        model.addAttribute("carreras", carreras);
+        // Actualizar los valores de la fecha registrada
+        fechaRegistrada.setCarrera(carrera);
+        fechaRegistrada.setFechaInicio(fechaInicio);
+        fechaRegistrada.setFechaFin(fechaFin);
 
-        // Devolver la vista del formulario de actualización de fecha
-        return "formActualizarFecha";
-    }
-
-    @PostMapping("/actualizarFecha")
-    public String actualizarFecha(@ModelAttribute("fechaRegistrada") FechasRegistradas fechaRegistrada) {
-        // Guardar la fecha actualizada en la base de datos
+        // Guardar los cambios en la base de datos
         fechasRegistradasService.guardar(fechaRegistrada);
 
-        // Redireccionar a una página de confirmación o a la lista de fechas actualizadas
-        return "redirect:/administrador/fechas";
+        return "redirect:/administrador/fechas"; // Redirigir a la vista de fechas administradas
     }
-
 
 }
 
