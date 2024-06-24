@@ -96,6 +96,7 @@
 
 				<div class="col-md-12 pt-3">
 					<p class="textoInputs">Estado Civil</p>
+<<<<<<< HEAD
 					<div id="estadoCivilError" class="error" style="display: none;">*Debes seleccionar tu estado civil</div>
 					<div style="display: flex; justify-content: space-between;" class="containerEstadoCivil">
 			
@@ -124,11 +125,44 @@
 							</div>
 						</div>
 
+=======
+
+					<!-- ********************************************************************* -->
+					<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					<!-- ********************************************************************* -->
+					<div id="estadoCivilError" class="error" style="display: none;">*Debes seleccionar tu estado civil</div>
+					<div style="display: flex; justify-content: space-between;">
+						<div style="width: 48%;" th:each="estadoCivil : ${estadosCiviles}">
+							<input th:field="*{alumno.catEstadoCivil.idCatEstadoCivil}"  name="alumno.catEstadoCivil.idCatEstadoCivil" class="form-check-input" type="radio" th:value="${estadoCivil.idCatEstadoCivil} ">
+							<label class="form-check-label" >
+								<p class="subtitulo" th:text="${estadoCivil.nombreEstadoCivil}"></p>
+							</label>
+						</div>
+
+
+						<!--
+                        <div style="width: 48%;" th:each="estadoCivil : ${estadosCiviles}">
+                            <input th:field="*{alumno.catEstadoCivil.idCatEstadoCivil}"  name="alumno.catEstadoCivil.idCatEstadoCivil" class="form-check-input" type="radio" th:value="${estadoCivil.idCatEstadoCivil} ">
+                            <label class="form-check-label" >
+                                <p class="subtitulo" th:text="${estadoCivil.nombreEstadoCivil}"></p>
+                            </label>
+                        </div>
+                        -->
+
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 					</div>
 				</div>
 				<div class="col-md-12 pt-3">
 					<p class="textoInputs">¿Tienes los recursos económicos necesarios para tus actividades académicas?</p>
+<<<<<<< HEAD
 					<div style="display: flex; justify-content: space-between;" class="containerRecursosSuficientes">
+=======
+					<!-- ********************************************************************* -->
+					<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+					<div id="recursosEconomicosError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+					<!-- ********************************************************************* -->
+					<div style="display: flex; justify-content: space-between;">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 						<div style="width: 48%;">
 							<div class="form-check">
 								<input class="form-check-input" type="radio" th:field="*{alumno.recursosSuficientes}" name="alumno.recursosSuficientes" id="flexRadioDefault1" value="1">
@@ -149,8 +183,19 @@
 				<div class="col-12 mt-3">
 					<p class="textoInputs">¿Solicitas beca alimentaria?</p>
 
+<<<<<<< HEAD
 					
 					<div style="display: flex; justify-content: space-between;" class="containerSolicitaBeca">
+=======
+					<!-- ********************************************************************* -->
+					<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
+
+					<div id="solicitaBecaAlimenticiaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+
+					<!-- ********************************************************************* -->
+
+					<div style="display: flex; justify-content: space-between;">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 						<div style="width: 100%;">
 							<div class="form-check">
 								<input value="1" class="form-check-input" th:field="*{alumno.solicitaBecaAlimenticia}" type="radio" name="alumno.solicitaBecaAlimenticia" id="flexRadioDefault100">
@@ -161,9 +206,13 @@
 						</div>
 						<div style="width: 100%;">
 							<div class="form-check">
+<<<<<<< HEAD
 								<input name="alumno.solicitaBecaAlimenticia"
 								 th:field="*{alumno.solicitaBecaAlimenticia}" value="0"
 								  class="form-check-input" type="radio"  id="flexRadioDefault100">
+=======
+								<input name="alumno.solicitaBecaAlimenticia" th:field="*{alumno.solicitaBecaAlimenticia}" value="0" class="form-check-input" type="radio"  id="flexRadioDefault100">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 								<label class="form-check-label" for="flexRadioDefault2">
 									<p class="subtitulo">No</p>
 								</label>
@@ -195,7 +244,11 @@
 										   name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"
 										   th:field="*{infoVivienda.catSituacionVivienda.idCatSituacionVivienda}"
 										   th:value="${catSituacion.idCatSituacionVivienda}"
+<<<<<<< HEAD
 										   class="form-check-input situacion-radio"
+=======
+										   class="form-check-input"
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 										   type="radio" />
 									<label class="form-check-label" for="situacion${catSituacion.idCatSituacionVivienda}">
 										<p class="subtitulo" th:text="${catSituacion.nombreSituacionVivienda}"></p>
@@ -284,7 +337,11 @@
 								<div class="col-12">
 									<p class="textoInputs">Estado</p>
 									<select name="catEstado" id="catEstado" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+<<<<<<< HEAD
 										<option class="subtitulo" value="">Elige una opción</option>
+=======
+										<option class="subtitulo">Elige una opción</option>
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 										<option
 												th:each="estado : ${catEstado}"
 												th:value="${estado.idCatEstado}"
@@ -359,8 +416,19 @@
 
 					<div class="col-md-12 pt-3">
 						<p class="textoInputs">¿Llevas automóvil o motocicleta cotidianamente a la universidad?</p>
+<<<<<<< HEAD
 						
 						<div style="display: flex; justify-content: space-between;" class="containerTieneVehiculo">
+=======
+						<!-- ********************************************************************* -->
+						<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+
+						<div id="transporteError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+
+						<!-- ********************************************************************* -->
+
+						<div style="display: flex; justify-content: space-between;">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 							<div style="width: 100%;">
 								<div class="form-check">
 									<input th:field="*{alumno.tieneVehiculo}" name="alumno.tieneVehiculo" value="1" class="form-check-input" type="radio"  id="llevaAutoSi">
@@ -399,28 +467,37 @@
 								<div class="form-group">
 									<label for="marca">Marca:</label>
 									<input type="text" class="form-control" id="marca"  th:field="*{transporte.marca}" name="transporte.marca" style="width: 80%;">
+<<<<<<< HEAD
 									<!-- ********************************************************************* -->
 									<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
 									<div id="marcaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
 									<!-- ********************************************************************* -->
+=======
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 								</div>
 
 								<div class="form-group">
 									<label for="modelo">Modelo:</label>
 									<input type="text" class="form-control" id="modelo"  th:field="*{transporte.modelo}" name="transporte.modelo" style="width: 80%;">
+<<<<<<< HEAD
 									<!-- ********************************************************************* -->
 									<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
 									<div id="modeloError" class="error" style="display: none;">*Debes seleccionar una opción</div>
 									<!-- ********************************************************************* -->
+=======
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 								</div>
 
 								<div class="form-group">
 									<label for="anio">Año:</label>
 									<input th:field="*{transporte.anio}"  class="form-control" id="anio" name="transporte.anio" style="width: 80%;" placeholder="Ingresa un año" type="number" min="1000" max="9999">
+<<<<<<< HEAD
 									<!-- ********************************************************************* -->
 									<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
 									<div id="anioError" class="error" style="display: none;">*Debes seleccionar una opción</div>
 									<!-- ********************************************************************* -->
+=======
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 								</div>
 							</div>
 						</div>
@@ -464,9 +541,21 @@
 					<div class="col-md-12" style="color: #6366F1; ">
 						<p class="textoInputs">¿Eres hijo o nieto de comunero de Ixtlán de Juárez?</p>
 
+<<<<<<< HEAD
 					</div>
 					<div class="col-md-12">
 						<div style="display: flex; justify-content: space-between;" class="containerFamiliarComunero">
+=======
+						<!-- ********************************************************************* -->
+						<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+
+						<div id="hijoComuneroError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+
+						<!-- ********************************************************************* -->
+					</div>
+					<div class="col-md-12">
+						<div style="display: flex; justify-content: space-between;">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 							<div style="width: 48%;">
 								<div class="form-check">
 									<input value="1" th:field="*{alumno.familiarComunero}" name="alumno.familiarComunero" class="form-check-input" type="radio"  id="flexRadioDefault20">
@@ -485,8 +574,19 @@
 						<p class="textoInputs">¿Utilizas teléfono celular en la universidad?</p>
 					</div>
 
+<<<<<<< HEAD
 					<div class="col-md-12">
 						<div style="display: flex; justify-content: space-between;" class="containerTieneTelefono">
+=======
+					<!-- ********************************************************************* -->
+					<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+
+					<div id="utilizaTelefonoError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+
+					<!-- ********************************************************************* -->
+					<div class="col-md-12">
+						<div style="display: flex; justify-content: space-between;">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 							<div style="width: 48%;">
 								<div class="form-check">
 									<input  th:field="*{alumno.tieneTelefono}" name="alumno.tieneTelefono" class="form-check-input" type="radio"  id="flexRadioDefault22" value="1">
@@ -505,8 +605,20 @@
 						<p class="textoInputs">¿Tienes computadora personal y/o portátil?</p>
 					</div>
 
+<<<<<<< HEAD
 					<div class="col-md-12">
 						<div style="display: flex; justify-content: space-between;" class="containerTieneComputadora">
+=======
+					<!-- ********************************************************************* -->
+					<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
+
+					<div id="tieneComputadoraError" class="error" style="display: none;">*Debes seleccionar una opción</div>
+
+					<!-- ********************************************************************* -->
+
+					<div class="col-md-12">
+						<div style="display: flex; justify-content: space-between;">
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 							<div style="width: 50%;">
 								<div class="form-check">
 									<input th:field="*{alumno.tieneComputadora}" name="alumno.tieneComputadora" value="1" class="form-check-input" type="radio"  id="flexRadioDefault24">
@@ -555,6 +667,7 @@
 
 <script src="../javaScript.js/funcionamiento.js"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
 	    $(document).ready(function () {
 			
         
@@ -964,3 +1077,463 @@
     </script>
 </body>
 </html>
+=======
+	$(document).ready(function () {
+
+
+        //Esta funcion obtiene los municipios de un estado en base al id del estado seleccionado
+        $('#catEstado').change(function() {
+                var estado = $(this).val();
+                console.log('Selected Estado:', estado);
+
+                $.ajax({
+                    url: '/direccion/municipiosById/' + estado,
+                    type: 'GET',
+                    success: function(data) {
+                        var municipioSelect = $('#catMunicipio');
+                        municipioSelect.empty();
+                        municipioSelect.append('<option class="subtitulo" value="">Elige una opción</option>');
+                        $.each(data, function(index, municipio) {
+                            municipioSelect.append('<option class="subtitulo" value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                        });
+                    }
+                });
+
+            });
+
+            //Esta funcion obtiene las localidades de un municipio en base al id del municipio seleccionado
+            $('#catMunicipio').change(function() {
+                var municipio = $(this).val();
+
+                console.log('Selected municipio:', municipio);
+                //Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+                $.ajax({
+                    url: '/direccion/localidadesById/' + municipio,
+                    type: 'GET',
+                    success: function(data) {
+                        var municipioSelect = $('#catLocalidad');
+                        municipioSelect.empty();
+                        console.log(data);
+                        municipioSelect.append('<option value="">Elige una opción</option>');
+                        $.each(data, function(index, localidad) {
+                            console.log(data.idCatLocalidad);
+                            municipioSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+
+                        });
+                    }
+                });
+            });
+
+            //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+            $('#catLocalidad').change(function() {
+                var localidad = $(this).val();
+                //Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+                $.ajax({
+                    url: '/direccion/codigoPostalById/' + localidad,
+                    type: 'GET',
+                    success: function(data) {
+                        // Se establece el valor del campo #codigoPostal con el valor obtenido
+                        $('#codigoPostal').val(data.numeroCodigoPostal);
+                    }
+                });
+            });
+
+
+        //Se obtienen y settean los datos de carrera, grupo y nombre del alumno
+        //Se optiene el idGrupo con el que fue registrado el alumno
+        var idGrupoAlumno = $('#idGrupo');
+        console.log("id de grupo: "+ idGrupoAlumno.val());
+        var idGrupo = parseInt(idGrupoAlumno.val());
+
+        //Se establece automaticamente la carrera con la que fue registrado el alumno
+        $.ajax({
+        url: '/carrera/carreraByIdGrupo/' + idGrupo,
+        type: 'GET',
+        success: function (data) {
+           var nombre = data.carrera;
+           $('#inputNombreCarrera').val(nombre);
+        }
+        });
+
+        //Se establece automaticamente el semestre con la que fue registrado el alumno
+        $.ajax({
+        url: '/carrera/semestreByIdGrupo/' + idGrupo,
+        type: 'GET',
+        success: function (data) {
+           $('#inputNombreSemestre').val(data.nombreSemestre);
+
+        }
+        });
+
+
+
+        //Se recuperan y establecen los datos de estado, municipio y localidad que regsitro el alumno
+        //Estos valores se buscan por medio del id de localidad
+        //Se obtiene los datos haciendo una consulta a los metodos de DomicilioController
+        var idLocalidad = $('#idCatLocalidad');
+        var idCatLocalidad = idLocalidad.val(); // Obtener el valor de #idCatLocalidad
+        if(idCatLocalidad != "" || idCatLocalidad != null) {
+                //Obtener Municipio por idLocalidad
+                $.ajax({
+                    url: '/direccion/municipioByIdLocalidad/' + idCatLocalidad,
+                    type: 'GET',
+                    success: function(data) {
+                        var idMunicipio = data.idCatMunicipio;
+                        console.log("id de municipio: " + idMunicipio);
+
+                        //Obtener idMunicipio
+                        $.ajax({
+                            url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
+                            type: 'GET',
+                            success: function(data) {
+                                var idEstado = data.idCatEstado;
+                                $('#catEstado').val(idEstado);
+                                console.log("id de estado: " + idEstado);
+
+                                //Obtener estado por id de municipio
+                                $.ajax({
+                                    url: '/direccion/municipiosById/' + idEstado,
+                                    type: 'GET',
+                                    success: function(data) {
+                                        var municipioSelect = $('#catMunicipio');
+                                        municipioSelect.empty();
+                                        municipioSelect.append('<option value="">Elige una opción</option>');
+                                        $.each(data, function(index, municipio) {
+                                            municipioSelect.append('<option value="' + municipio.idCatMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                                        });
+                                        municipioSelect.val(idMunicipio);
+
+                                        //Se obtiene la localidad por el id de municipio
+                                        $.ajax({
+                                            url: '/direccion/localidadesById/' + idMunicipio,
+                                            type: 'GET',
+                                            success: function(data) {
+                                                var loSelect = $('#catLocalidad');
+                                                loSelect.empty();
+                                                console.log(data);
+                                                loSelect.append('<option value="">Elige una opción</option>');
+                                                $.each(data, function(index, localidad) {
+                                                    console.log(data.idCatLocalidad);
+                                                    loSelect.append('<option value="' + localidad.idCatLocalidad + '">' + localidad.nombreLocalidad  + '</option>');
+
+                                                });
+                                                loSelect.val(idCatLocalidad);
+                                                 //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
+
+                                                    //Se obtiene los datos haciendo una consulta al metodo de DomicilioController
+                                                    $.ajax({
+                                                        url: '/direccion/codigoPostalById/' + idCatLocalidad,
+                                                        type: 'GET',
+                                                        success: function(data) {
+                                                            // Se establece el valor del campo #codigoPostal con el valor obtenido
+                                                            $('#codigoPostal').val(data.numeroCodigoPostal);
+                                                        }
+                                                    });
+                                            }
+                                        });
+
+                                    },
+                                    error: function(error) {
+                                        console.error("Error en la solicitud AJAX:", error);
+                                    }
+                                });
+                            },
+                            error: function(error) {
+                                console.error("Error en la solicitud AJAX:", error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.error("Error en la solicitud AJAX:", error);
+                    }
+                });
+        }
+
+
+
+        //Si el alumno lleva transporte a la univesidad:
+        var radioTransporteSi = document.getElementById("llevaAutoSi");
+        var radioTransporteNo = document.getElementById("llevaAutoNo");
+
+         if (radioTransporteSi.checked) {
+            infoTransporteAlumno.style.display = "block";
+         }
+
+
+        //****************************************************************
+        //Si el usuario selecciona que si lleva transporte se mostraran los campos para registrar
+        //los datos del transporte
+        function actualizarEstadoInicialTransporte() {
+            if (radioTransporteSi.checked) {
+                infoTransporteAlumno.style.display = "block";
+            } else {
+                infoTransporteAlumno.style.display = "none";
+            }
+        }
+        //Se ejecuta la función
+        actualizarEstadoInicialTransporte();
+
+        //Cada que cambie el estado se mostrara u ocultara los campos
+        radioTransporteSi.addEventListener("change", function() {
+            actualizarEstadoInicialTransporte();
+        });
+
+        radioTransporteNo.addEventListener("change", function() {
+            actualizarEstadoInicialTransporte();
+        });
+        //****************************************************************
+        var infoViviendaUniversitaria = document.getElementById("infoViviendaUniversitaria");
+        var radios = document.querySelectorAll(".situacion-radio");
+
+        //Si el valor es diferente del id = 3 se mostraran  los campos de texto, de lo contrario se ocultaran
+        function actualizarEstado() {
+            var selectedRadio = document.querySelector(".situacion-radio:checked");
+            if (selectedRadio && selectedRadio.value == "3") {
+                infoViviendaUniversitaria.style.display = "none";
+            } else {
+                infoViviendaUniversitaria.style.display = "block";
+            }
+        }
+
+        // Inicializar el estado al cargar la página
+        actualizarEstado();
+
+        // Añadir eventos a los botones de radio
+        radios.forEach(function(radio) {
+            radio.addEventListener("change", actualizarEstado);
+        });
+
+
+
+        //****************************************************************
+        //Esta función se encarga de verificar que el formulario se envie solo cuando se oprime el boton de guardar
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                // Si el elemento enfocado es el botón de enviar, entonces envía el formulario
+                if (document.activeElement.id === 'submitButton') {
+                    document.getElementById('myForm').submit();
+                }
+            }
+        });
+        //****************************************************************
+
+        // Obtener los valores de los campos
+        var nombreAlumno = $('#nombre');
+        var valNombre = nombreAlumno.val();
+        var apellidoMat = $('#apellidoM');
+        var valApellidoM = apellidoMat.val()
+        var apellidoPat = $('#apellidoP');
+        var valApellidoP = apellidoPat.val();
+
+        var concatenatedValue = valNombre + ' ' + valApellidoM + ' ' + valApellidoP;
+        $('#inputNombreCompleto').val(concatenatedValue);
+
+         //****************************************************************
+
+        // Configuración de la validación
+        var validator = $("#myForm").validate({
+            rules: {
+                "alumno.idioma": {
+                    required: true
+                },
+                "domicilio.coloniaBarrio":{
+                    required: true
+                },
+                "domicilio.calle":{
+                    required: true
+                },
+                "domicilio.numero":{
+                    required: true
+                }
+            },
+            messages: {
+                "alumno.idioma": {
+                    required: "*Llena el campo solicitado"
+                },
+                "domicilio.coloniaBarrio": {
+                    required: "*Llena el campo solicitado"
+                },
+                "domicilio.calle": {
+                    required: "*Llena el campo solicitado"
+                },
+                "domicilio.numero": {
+                    required: "*Llena el campo solicitado"
+                }
+
+            },
+            errorPlacement: function(error, element) {
+                error.insertAfter(element);
+                // Mostrar el mensaje de error durante 10 segundos
+                setTimeout(function() {
+                    error.fadeOut(500, function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+            }
+        });
+
+        // Botón de guardado (sin validación)
+        $("#guardar").click(function() {
+            // Desactivar temporalmente la validación
+            validator.settings.ignore = "*";
+            $("#myForm").submit();
+            // Reactivar la validación para el próximo uso
+            validator.settings.ignore = [];
+        });
+
+        // Botón de envío con validación
+        $("#validar").click(function(event) {
+            event.preventDefault(); // Evita el envío del formulario por defecto
+
+            // Validación adicional
+            let enviar = true;
+
+            if ($('input[name="alumno.catEstadoCivil.idCatEstadoCivil"]').is(":checked")) {
+                $("#estadoCivilError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#estadoCivilError");
+            }
+
+            if ($('input[name="alumno.recursosSuficientes"]').is(":checked")) {
+                $("#recursosEconomicosError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#recursosEconomicosError");
+            }
+
+            if ($('input[name="alumno.solicitaBecaAlimenticia"]').is(":checked")) {
+                $("#solicitaBecaAlimenticiaError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#solicitaBecaAlimenticiaError");
+            }
+
+            if ($('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]').is(":checked")) {
+                let valorSeleccionado = $('input[name="infoVivienda.catSituacionVivienda.idCatSituacionVivienda"]:checked').val();
+                $("#situacionViviendaError").hide();
+                if (valorSeleccionado != 3) {
+                    // Validar campos adicionales si es necesario
+                    if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
+                        enviar = false;
+                        showErrorAndScroll("#nombreCaseroError");
+                    }
+                    if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
+                        enviar = false;
+                        showErrorAndScroll("#numComparteViviendaError");
+                    }
+                    if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
+                        enviar = false;
+                        showErrorAndScroll("#pagoRentaError");
+                    }
+                }
+            } else {
+                enviar = false;
+                showErrorAndScroll("#situacionViviendaError");
+            }
+
+            if ($('input[name="alumno.tieneVehiculo"]').is(":checked")) {
+                $("#transporteError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#transporteError");
+            }
+
+            if ($('input[name="alumno.familiarComunero"]').is(":checked")) {
+                $("#hijoComuneroError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#hijoComuneroError");
+            }
+
+            if ($('input[name="alumno.tieneTelefono"]').is(":checked")) {
+                $("#utilizaTelefonoError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#utilizaTelefonoError");
+            }
+
+            if ($('input[name="alumno.tieneComputadora"]').is(":checked")) {
+                $("#tieneComputadoraError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#tieneComputadoraError");
+            }
+
+            if ($('input[name="mediosTraslado"]').is(":checked")) {
+                $("#mediosError").hide();
+            } else {
+                enviar = false;
+                showErrorAndScroll("#mediosError");
+            }
+
+            // Verificar si las validaciones de jQuery Validate pasan
+           if ($("#myForm").valid() && enviar) {
+                var idAlumno = $('#idAlumno').val();
+                console.log("id de alumno: " + idAlumno);
+                var idAlumnoInt = parseInt(idAlumno);
+
+                var url = "/formulario/marcarFormularioRealizado/" + idAlumnoInt;
+
+                // Realiza la solicitud GET
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    success: function(response) {
+                        // Manejar la respuesta del servidor
+                        if (response.success) {
+                            // Enviar el formulario
+                            alert("Información enviada correctamente.");
+                            $("#myForm").submit();
+                        } else {
+                            // Manejar el caso en que la inserción en la base de datos falle
+                            alert("Información guardada correctamente.");
+                            console.error("Error al marcar el formulario como realizado.");
+                            $("#myForm").submit();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error en la solicitud Ajax: " + error);
+                    }
+                });
+            } else {
+                console.error("No se cumplen las validaciones");
+            }
+        });
+
+
+        function showErrorAndScroll(errorElement) {
+            $(errorElement).show();
+            setTimeout(function() {
+                $(errorElement).fadeOut();
+            }, 5000);
+        }
+
+        function validarViviendaAlumno(){
+            // Validar campos adicionales si es necesario
+            if (!$('input[name="infoVivienda.nombreCasero"]').val()) {
+                enviar = false;
+                showErrorAndScroll("#nombreCaseroError");
+            }
+            if (!$('input[name="infoVivienda.numComparteVivienda"]').val()) {
+                enviar = false;
+                showErrorAndScroll("#numComparteViviendaError");
+            }
+            if (!$('input[name="infoVivienda.pagoRenta"]').val()) {
+                enviar = false;
+                showErrorAndScroll("#pagoRentaError");
+            }
+        }
+
+        function actualizarEstadoFormMisDatos() {
+            var idAlumno = $('#alumno.idAlumno').val();
+            console.log("ID Alumno:", idAlumno);
+
+        }
+
+});
+</script>
+</body>
+</html>
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b

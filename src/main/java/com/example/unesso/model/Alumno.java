@@ -70,6 +70,11 @@ public class Alumno {
 	@JoinColumn(name="idEstadoFormularios")
 	private EstadoFormularios estadoFormularios;
 	
+<<<<<<< HEAD
+=======
+	@OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Trabajo trabajo;
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	
 	private String matricula;
 	
@@ -467,10 +472,13 @@ public class Alumno {
 	}
 
 	
+<<<<<<< HEAD
 	
 	
 
 
+=======
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 
 	public EstadoFormularios getEstadoFormularios() {
 		return estadoFormularios;
@@ -484,11 +492,29 @@ public class Alumno {
 
 
 
+<<<<<<< HEAD
+=======
+	public Trabajo getTrabajo() {
+		return trabajo;
+	}
+
+
+
+	public void setTrabajo(Trabajo trabajo) {
+		this.trabajo = trabajo;
+	}
+
+
+
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	@Override
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", domicilio=" + domicilio + ", infoVivienda=" + infoVivienda
 				+ ", tutor=" + tutorEconomico + ", catEstadoCivil=" + catEstadoCivil + ", familia=" + familia
+<<<<<<< HEAD
 				
+=======
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 				+", usuario=" + usuario + ", catGrupo=" + catGrupo
 				+ ", transporte=" + transporte + ", matricula=" + matricula + ", nombre=" + nombre + ", apellidoP="
 				+ apellidoP + ", apellidoM=" + apellidoM + ", telefono=" + telefono + ", curp=" + curp

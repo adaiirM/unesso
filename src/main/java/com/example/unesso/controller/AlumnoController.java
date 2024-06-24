@@ -36,10 +36,13 @@ import com.example.unesso.model.CatOcupacion;
 import com.example.unesso.model.CatParentesco;
 import com.example.unesso.model.CatServicios;
 import com.example.unesso.model.Domicilio;
-import com.example.unesso.model.EstadoFormularios;
+
+=======
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.GastosFam;
 import com.example.unesso.model.ReciboLuz;
+import com.example.unesso.model.Trabajo;
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.services.IAlumnoService;
@@ -64,6 +67,9 @@ import com.example.unesso.services.IEstadoFormulariosService;
 import com.example.unesso.services.IFamiliaService;
 import com.example.unesso.services.IGastosFamService;
 import com.example.unesso.services.IReciboLuzService;
+
+import com.example.unesso.services.ITrabajoService;
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
 
@@ -186,7 +192,9 @@ public class AlumnoController {
 	@Autowired
 	private ICatInternetService catInternetService;
 	
-	
+	@Autowired 
+	private ITrabajoService serviceTrabajo;
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	
 	@GetMapping("/menuSolicitar")
 	public String menuSolicitar(Authentication auth, Model model) {
@@ -302,7 +310,9 @@ public class AlumnoController {
 	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
 		
 		System.out.println("1. Alumno formulario: " + alumno.toString());
-		
+
+		System.out.println("Datos trabajo: " + alumno.getTrabajo());
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
 		
@@ -318,7 +328,7 @@ public class AlumnoController {
 		if(alumno.getTutorEconomico().getDomicilio().getCatLocalidad().getIdCatLocalidad() == null) {
 			alumno.getTutorEconomico().getDomicilio().setCatLocalidad(null);
 		}
-		
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 		//Asignar el gasto mensual a alumno
 		alumnoSesion.setGastoMensual(alumno.getGastoMensual());
 		
@@ -343,25 +353,56 @@ public class AlumnoController {
 			tutorForm.setIdTutorEconomico(tutorDB.getIdTutorEconomico());
 			serviceTutorEconomico.guardarTutor(tutorForm);
 			
+
+			//Verificar que el usuario dependa economicamente
+			if(alumno.getDependeEconomicamente().equals(false)) {
+				//Actualizar datos del domiciliio del trabajo del alumno con los datos del formulario
+				Domicilio domicilioTrabajoDB = serviceDomicilio.buscarPorId(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
+				Domicilio domicilioTrabajoForm = alumno.getTrabajo().getDomicilio();
+				domicilioTrabajoForm.setIdDomicilio(domicilioTrabajoDB.getIdDomicilio());
+				
+				//Validar si la localidad del domicilio viene vacia
+				if(domicilioTrabajoForm.getCatLocalidad().getIdCatLocalidad() == null) {
+					domicilioTrabajoForm.setCatLocalidad(null);
+				}
+				serviceDomicilio.guardar(domicilioTrabajoForm);
+				System.out.println(domicilioTrabajoForm.toString());
+				
+				//Actualizar datos del trabajo con los datos del formulario
+				Trabajo trabajoDB = serviceTrabajo.buscarPorId(alumnoSesion.getTrabajo().getIdTrabajo());
+				Trabajo trabajoForm = alumno.getTrabajo();
+				trabajoForm.setIdTrabajo(trabajoDB.getIdTrabajo());
+				trabajoForm.setAlumno(alumnoSesion);
+				serviceTrabajo.guardarTrabajo(trabajoForm);
+			} else {
+				
+			}
 			//Si no tiene un tutor relacionado, crear uno
 		} else {
+			//Verificar que el alumno tenga un trabajo 
+			if (alumno.getTrabajo() != null) {
+				alumno.getTrabajo().setAlumno(alumnoSesion);
+			}
+			alumnoSesion.setTrabajo(alumno.getTrabajo());
+			
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 			TutorEconomico tutorE = serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());			
 			alumnoSesion.setTutorEconomico(tutorE);
 			//serviceAlumno.guardar(alumnoSesion);
 		}
 		
+		
+		 
 		if(accion.equals("enviar")) {
 			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
 		}
-		
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 		serviceAlumno.guardarAlumno(alumnoSesion);
 		
 		return "redirect:/alumno/menuSolicitar";
 	}
 	
-	private void actualizarDomicilio(Alumno alumno) {
-		
-	}
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	
 	@PostMapping("/guardarGastos")
 	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
@@ -434,23 +475,23 @@ public class AlumnoController {
 			model.addAttribute("parentescos", listaParentesco);
 			System.out.println(a);
 			model.addAttribute("alumnoSesion", a);
-		}
-		
-		
+
+		}		
 		
 		model.addAttribute("carreras", catCarreraService.buscarTodas());
-		 model.addAttribute("catEstado", catEstadoService.buscarTodos());
-		 model.addAttribute("estadosCiviles", catEstadoCivilService.buscarTodos()); 
-		 model.addAttribute("catTipoTransporte", catTipoTransporteService.buscarTodos()); 
-		 model.addAttribute("catSemestre",iCatSemestreService.buscarTodos());
-		 model.addAttribute("catEscolaridad", catEscolaridadService.buscarTodas());
-		 model.addAttribute("catTipoVivienda", vatTipoViviendaService.buscarTodas());
-		 model.addAttribute("catSituacionViviendaFam", catSituacionViviendaService.buscarTodas());
-		 model.addAttribute("catMaterialVivienda",catMaterialViviendaService.buscarTodas());
-		 model.addAttribute("catPerentesco",catParentescoService.buscarTodos());
-		 model.addAttribute("catSituacionViviendaUni", catSituacionViviendaUniService.buscarTodas());
-		 model.addAttribute("catOcupacion",catOcupacionService.buscarTodas());
-		 model.addAttribute("catInternet",catInternetService.buscarTodos());
+		model.addAttribute("catEstado", catEstadoService.buscarTodos());
+		model.addAttribute("estadosCiviles", catEstadoCivilService.buscarTodos()); 
+		model.addAttribute("catTipoTransporte", catTipoTransporteService.buscarTodos()); 
+		model.addAttribute("catSemestre",iCatSemestreService.buscarTodos());
+		model.addAttribute("catEscolaridad", catEscolaridadService.buscarTodas());
+		model.addAttribute("catTipoVivienda", vatTipoViviendaService.buscarTodas());
+		model.addAttribute("catSituacionViviendaFam", catSituacionViviendaService.buscarTodas());
+		model.addAttribute("catMaterialVivienda",catMaterialViviendaService.buscarTodas());
+		model.addAttribute("catPerentesco",catParentescoService.buscarTodos());
+		model.addAttribute("catSituacionViviendaUni", catSituacionViviendaUniService.buscarTodas());
+		model.addAttribute("catOcupacion",catOcupacionService.buscarTodas());
+		model.addAttribute("catInternet",catInternetService.buscarTodos());
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 		 
 		 //Lista de catMediosTransporte
 		 List<CatMediosTransporte> mediosTransporte =  catMediosTransporteService.buscarTodos();
@@ -478,14 +519,11 @@ public class AlumnoController {
 	            IntStream.range(0, (catMedios.size() + 1) / 2)
 	                .mapToObj(i -> catMedios.subList(i * 2, Math.min(i * 2 + 2, catMedios.size())))
 	                .collect(Collectors.toList());
-	               
-	     model.addAttribute("catMedios", medios);
-		 
-		 
-		
+
+	     model.addAttribute("catMedios", medios);	
 	}
 	
-	
+>>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
 	private Alumno obtenerAlumnoSesion(Authentication auth) {
 		String correo = auth.getName();
 		Usuario u = serviceUsuario.buscarPorCorreo(correo);
