@@ -422,10 +422,10 @@ async function fetchCodigoPostalByIdLocalidad(idLocalidad) {
 // Funcionamiento calendario
 $(document).ready(function () {
     $('#start').datepicker({
-        format: 'dd/mm/yyyy',
-        todayHighlight: true,
-        autoclose: true,
-        orientation: "bottom auto"
+            format: 'dd/mm/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+            orientation: "bottom auto"
     });
 
     $('#end').datepicker({

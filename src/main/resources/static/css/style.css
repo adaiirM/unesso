@@ -400,3 +400,47 @@ footer hr {
     margin: 0; /* Sin margen */
     outline: none; /* Sin outline al enfocar */
 }
+
+/* ESTILO CALENDARIO */
+
+/* Custom CSS for Datepicker */
+.datepicker-dropdown {
+    background-color: #f8f9fa; /* Light grey background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 0.25rem; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.datepicker table {
+    width: 100%;
+    margin: 0;
+}
+
+.datepicker td, .datepicker th {
+    border-radius: 0.25rem; /* Slight rounding of corners */
+    padding: 0.5rem; /* More padding for larger clickable area */
+}
+
+.datepicker td.day:hover, .datepicker td.day.focused {
+    background: #007bff; /* Bootstrap primary color */
+    color: #fff; /* White text */
+}
+
+.datepicker .today {
+    background-color: #007bff; /* Highlight today with primary color */
+    color: #fff; /* White text */
+}
+
+.datepicker .active {
+    background-color: #28a745; /* Active date with success color */
+    color: #fff; /* White text */
+}
+
+.datepicker .disabled {
+    color: #6c757d; /* Grey out disabled dates */
+    background-color: #e9ecef; /* Light grey background for disabled dates */
+    cursor: not-allowed;
+}
+
+
+/* FIN ESTILO CALENDARIO */
