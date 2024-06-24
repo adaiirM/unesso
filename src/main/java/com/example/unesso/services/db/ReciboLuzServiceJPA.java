@@ -25,12 +25,9 @@ public class ReciboLuzServiceJPA implements IReciboLuzService {
 
 		return null;	
 	}
->>>>>>> 65bf87f7c87f9ee64db5be972b5c536dcb035b8b
-
+	
 	@Override
 	public ReciboLuz guardarReciboLuz(ReciboLuz reciboLuz) {
 		return reciboLuzRepo.save(reciboLuz);
 	}
-	
-	
 }
