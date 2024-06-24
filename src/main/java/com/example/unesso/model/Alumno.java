@@ -22,15 +22,15 @@ public class Alumno {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idAlumno;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idDomicilio")
 	private Domicilio domicilio;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idInfoVivienda")
 	private InfoVivienda infoVivienda;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idTutorEconomico")
 	private TutorEconomico tutorEconomico;
 	
@@ -38,11 +38,11 @@ public class Alumno {
 	@JoinColumn(name="idCatEstadoCivil")
 	private CatEstadoCivil catEstadoCivil;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idFamilia")
 	private Familia familia;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idUsuario")
 	private Usuario usuario;
 	
@@ -50,7 +50,7 @@ public class Alumno {
 	@JoinColumn(name="idCatGrupo")
 	private CatGrupo catGrupo;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idTransporte")
 	private Transporte transporte;
 	
@@ -66,7 +66,7 @@ public class Alumno {
 	@JoinColumn(name="idCatInternet")
 	private CatInternet catInternet;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="idEstadoFormularios")
 	private EstadoFormularios estadoFormularios;
 	

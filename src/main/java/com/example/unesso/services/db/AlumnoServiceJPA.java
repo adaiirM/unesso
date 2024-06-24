@@ -3,6 +3,8 @@ package com.example.unesso.services.db;
 import com.example.unesso.model.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.unesso.repository.AlumnoRepository;
@@ -61,6 +63,14 @@ public class AlumnoServiceJPA implements  IAlumnoService {
 		return alumnoRepo.findAll();
 	}
 
+	@Override
+	public Page<Alumno> buscarAlumno(String keyword, Pageable pageable) {
+		if (keyword == null || keyword.isEmpty()) {
+			return alumnoRepo.findAll(pageable);
+		} else {
+			return alumnoRepo.findByNombreContainingIgnoreCase(keyword, pageable);
+		}
+	}
 
 
 	public void saveAlumno(Alumno alumno) {
@@ -69,4 +79,5 @@ public class AlumnoServiceJPA implements  IAlumnoService {
 	public void deleteAlumno(Integer idAlumno) {
 		alumnoRepo.deleteById(idAlumno);
 	}
+
 }
