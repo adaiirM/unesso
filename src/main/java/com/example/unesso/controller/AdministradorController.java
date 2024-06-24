@@ -69,7 +69,7 @@ public class AdministradorController {
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
         int currentPage = page.orElse(0);
-        int pageSize = size.orElse(1); // Valor por defecto
+        int pageSize = size.orElse(3); // Valor por defecto (solicitudes que muestra)
 
         String currentKeyword = keyword.orElse("");
 

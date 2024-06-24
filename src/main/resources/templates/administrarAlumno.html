@@ -14,12 +14,13 @@
 <div class="m-5 mt-3">
     <div class="row">
         <ol class="p-1 colorFondo breadcrumb bread-primary ">
-            <a th:href="@{/administrador/menuAdministrador}">
-                <button href="" class="btn camino" id="botonInicio">Inicio</button>
+            <a th:href="@{/administrador/menuAdministrador}" style="text-decoration: none;">
+                <button class="btn camino" id="botonInicio">Inicio</button>
             </a>
-
-            <button href="#" class="btn btn-primary camino localizacion"
-                    id="solicitudesCarrera">Alumnos</button>
+            <a>
+                <button class="btn btn-primary camino localizacion"
+                        id="solicitudesCarrera">Alumnos</button>
+            </a>
         </ol>
     </div>
 </div>
@@ -52,7 +53,7 @@
         <div class="d-flex align-items-center ms-md-auto me-5">
             <p class="textoInputs me-2 mb-0 ms-5">Buscar</p>
             <form th:action="@{/administrador/alumnos}" method="get">
-                <input type="text" name="keyword" class="estiloInputs" style="width: 200px; height: 25px;" th:value="${keyword}">
+                <input type="text" name="keyword" class="estiloInputs rounded" style="width: 200px; height: 25px;" th:value="${keyword}">
                 <input type="hidden" name="size" th:value="${size}">
                 <button type="submit" class="btn btn-primary ms-2 custom-btn">Buscar</button>
             </form>
