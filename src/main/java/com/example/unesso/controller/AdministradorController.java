@@ -4,15 +4,13 @@ import com.example.unesso.model.*;
 import com.example.unesso.services.FechasRegistradasService;
 import com.example.unesso.services.db.*;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-import org.springframework.format.annotation.DateTimeFormat;
-=======
+
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
->>>>>>> origin/Administrador
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -65,13 +63,12 @@ public class AdministradorController {
     }
 
     @GetMapping("/alumnos")
-<<<<<<< HEAD
     public String alumnos(Model model) {
         List<Alumno> alumnos = alumnoService.getAllAlumnos();  // Método que obtiene todos los alumnos
         System.out.println(alumnos);
         model.addAttribute("alumnos", alumnos);
         return "/administrarAlumno";
-=======
+
     public String listarAlumnos(Model model, @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
