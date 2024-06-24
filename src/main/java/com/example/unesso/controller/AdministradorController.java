@@ -345,6 +345,5 @@ public class AdministradorController {
         return "redirect:/administrador/fechas"; // Redirigir a la vista de fechas administradas
     }
 
-
 }
 
