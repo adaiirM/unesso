@@ -1,7 +1,10 @@
 package com.example.unesso.services.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.unesso.model.FechasRegistradas;
+import com.example.unesso.services.FechasRegistradasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,9 @@ import com.example.unesso.services.ICatCarreraService;
 public class CatCarreraServiceJPA implements ICatCarreraService {
 	@Autowired
 	private CatCarreraRepository catCarreraRepo;
+
+	@Autowired
+	private FechasRegistradasServiceJPA fechasRegistradasService;
 	/**
      * Obtiene todas las carreras de la base de datos.
      * @return List<CatCarrera> lista de carreras. 
@@ -50,5 +56,34 @@ public class CatCarreraServiceJPA implements ICatCarreraService {
 	}
 
 
+	@Override
+	public List<CatCarrera> buscarCarrerasSinFecha() {
+		List<CatCarrera> carrerasSinFecha = new ArrayList<>();
 
+		// Obtener todas las carreras
+		List<CatCarrera> todasLasCarreras = catCarreraRepo.findAll();
+
+		// Obtener todas las fechas registradas (opcional dependiendo de tu lógica)
+		List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.findAll();
+
+		// Iterar sobre todas las carreras y verificar si tienen fechas asignadas
+		for (CatCarrera carrera : todasLasCarreras) {
+			boolean tieneFechaAsignada = false;
+
+			// Verificar si la carrera tiene alguna fecha asignada
+			for (FechasRegistradas fecha : fechasRegistradas) {
+				if (fecha.getCarrera().equals(carrera)) {
+					tieneFechaAsignada = true;
+					break;
+				}
+			}
+
+			// Si no tiene fecha asignada, agregar a la lista de carreras sin fecha
+			if (!tieneFechaAsignada) {
+				carrerasSinFecha.add(carrera);
+			}
+		}
+
+		return carrerasSinFecha;
+	}
 }

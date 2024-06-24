@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -233,12 +234,30 @@ public class AdministradorController {
 
     @GetMapping("/fechas")
     public String fechas(Model model) {
-        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+        List<CatCarrera> carrerasSinFecha = catCarreraService.buscarCarrerasSinFecha();
         List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.getAllFechasRegistradas();
-        model.addAttribute("carreras", carreras);
+
+        // Filtrar carreras que ya tienen fecha asignada
+        List<CatCarrera> carrerasDisponibles = new ArrayList<>();
+        for (CatCarrera carrera : carrerasSinFecha) {
+            boolean tieneFechaAsignada = false;
+            for (FechasRegistradas fecha : fechasRegistradas) {
+                if (fecha.getCarrera().getIdCatCarrera().equals(carrera.getIdCatCarrera())) {
+                    tieneFechaAsignada = true;
+                    break;
+                }
+            }
+            if (!tieneFechaAsignada) {
+                carrerasDisponibles.add(carrera);
+            }
+        }
+
+        model.addAttribute("carreras", carrerasDisponibles);
         model.addAttribute("fechasRegistradas", fechasRegistradas);
+
         return "administrarFecha"; // Nombre del archivo HTML de Thymeleaf
     }
+
 
 
     @PostMapping("/guardarFecha")
