@@ -446,10 +446,10 @@ async function fetchCodigoPostalByIdLocalidad(idLocalidad) {
 // Funcionamiento calendario
 $(document).ready(function () {
     $('#start').datepicker({
-        format: 'dd/mm/yyyy',
-        todayHighlight: true,
-        autoclose: true,
-        orientation: "bottom auto"
+            format: 'dd/mm/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+            orientation: "bottom auto"
     });
 
     $('#end').datepicker({
@@ -458,6 +458,7 @@ $(document).ready(function () {
         autoclose: true,
         orientation: "bottom auto"
     });
+<<<<<<< HEAD
     $('#start1').datepicker({
         format: 'dd/mm/yyyy',
         todayHighlight: true,
@@ -473,5 +474,8 @@ $(document).ready(function () {
     });
 
 
+=======
+>>>>>>> 943a442623ceefc648fd24aaefe6758af42937ef
 });
+
 
