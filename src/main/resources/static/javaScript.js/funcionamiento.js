@@ -6,6 +6,26 @@ function mostrarModal() {
 function mostrarModalFecha() {
     document.getElementById('modalFecha').style.display = 'block';
 }
+// Función para mostrar la ventana modal para agregar fecha
+function mostrarDatosModal(idFechasRegistradas, idCarrera, fechaInicio, fechaFin) {
+console.log("Mostrando datos en modal:");
+    console.log("ID Fechas Registradas:", idFechasRegistradas);
+    console.log("ID Carrera:", idCarrera);
+    console.log("Fecha Inicio:", fechaInicio);
+    console.log("Fecha Fin:", fechaFin);
+    // Seteamos los valores en el modal
+    document.getElementById('fechaId').value = idFechasRegistradas;
+    document.getElementById('carreraSelectFecha2').value = idCarrera;
+    document.getElementById('start1').value = fechaInicio;
+    document.getElementById('end1').value = fechaFin;
+
+    // Mostramos el modal usando Bootstrap modal.show()
+    var modal = new bootstrap.Modal(document.getElementById('modalFechaEdit'));
+    modal.show();
+}
+
+
+
 // Función para cerrar la ventana modal
 function cerrarModal() {
     document.getElementById('modal').style.display = 'none';
@@ -13,6 +33,10 @@ function cerrarModal() {
 // Función para cerrar la ventana modalFecha
 function cerrarModalFecha() {
     document.getElementById('modalFecha').style.display = 'none';
+}
+// Función para cerrar la ventana modalFechaEdit
+function cerrarModalFechaEdit() {
+    document.getElementById('modalFechaEdit').style.display = 'none';
 }
 function misDatos() {
     document.getElementById('modal2').style.display = 'block';
@@ -422,10 +446,10 @@ async function fetchCodigoPostalByIdLocalidad(idLocalidad) {
 // Funcionamiento calendario
 $(document).ready(function () {
     $('#start').datepicker({
-        format: 'dd/mm/yyyy',
-        todayHighlight: true,
-        autoclose: true,
-        orientation: "bottom auto"
+            format: 'dd/mm/yyyy',
+            todayHighlight: true,
+            autoclose: true,
+            orientation: "bottom auto"
     });
 
     $('#end').datepicker({
@@ -434,6 +458,22 @@ $(document).ready(function () {
         autoclose: true,
         orientation: "bottom auto"
     });
+
+    $('#start1').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        orientation: "bottom auto"
+    });
+
+    $('#end1').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        orientation: "bottom auto"
+    });
+
+
 });
 
 

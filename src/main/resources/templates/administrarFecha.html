@@ -36,6 +36,11 @@
         <button class="btn btn-primary mb-4 ms-5" style="background-color:#4F46E5;" onclick="mostrarModalFecha()"><img src="../img/calendario.png" style="width: 15%;" alt=""> Agregar fecha</button>
     </div>
 
+    <!-- Mensaje de error en la parte superior -->
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <!-- Ventana modalFecha -->
     <div id="modalFecha" class="modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -44,6 +49,7 @@
                     <h5 class="modal-title mx-auto" style="color: #4F46E5;">Agregar fecha</h5>
                 </div>
                 <div class="modal-body">
+
                     <div class="modal-body">
                         <form th:action="@{/administrador/guardarFecha}" method="post" autocomplete="off">
                             <div class="mb-3">
@@ -75,13 +81,54 @@
         </div>
     </div>
 
+    <!-- Ventana modalFechaEdit -->
+    <div id="modalFechaEdit" class="modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mx-auto" style="color: #4F46E5;">Editar fecha</h5>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/administrador/actualizarFecha}" method="post" autocomplete="off">
+                        <input type="hidden" id="fechaId" name="idFechasRegistradas">
+
+                        <div class="mb-3">
+                            <label for="carreraSelectFecha2" class="form-label">Carrera</label>
+                            <select id="carreraSelectFecha2" name="idCatCarrera" class="form-select">
+                                <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}" th:text="${carrera.carrera}"></option>
+                            </select>
+                        </div>
+
+                        <div class="row input-group input-daterange">
+                            <div class="col-6 mb-3">
+                                <label for="start1" class="form-label">Fecha inicial</label>
+                                <input type="text" id="start1" name="fechaInicio" class="form-control" >
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="end1" class="form-label">Fecha final</label>
+                                <input type="text" id="end1" name="fechaFin" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer mx-auto">
+                            <button type="button" class="btn btn-danger hBtn me-5" onclick="cerrarModalFechaEdit()">Cancelar</button>
+                            <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container">
         <div class="table-responsive">
             <table id="tablaSolicitudes" class="table table-striped">
                 <thead>
                 <tr>
+                    <th scope="col" style="color: #4F46E5;">Eliminar</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col" style="color: #4F46E5;">Actualizar</th>
                     <th scope="col" style="color: #4F46E5;">Carrera</th>
                     <th scope="col" style="color: #4F46E5;">Fecha inicial</th>
                     <th scope="col" style="color: #4F46E5;">Fecha final</th>
@@ -98,9 +145,17 @@
                         </form>
                     </td>
                     <td>
-                        <a th-href="@{/administrador/actualizarFecha(idFechasRegistradas=${idFechasRegistradas})}">
-                            <img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar">
-                        </a>
+                    <td>
+                    <a onclick="mostrarDatosModal(
+                            '${fechaRegistrada.idFechasRegistradas}',
+                            '${fechaRegistrada.carrera.idCatCarrera}',
+                            '${fechaRegistrada.carrera.idCatCarrera}',
+                            '${fechaRegistrada.fechaInicio}',
+                            '${fechaRegistrada.fechaFin}')">
+                        <img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar">
+                    </a>
+
+                </td>
                     </td>
                     <td class="subtitulo" th:text="${fechaRegistrada.carrera.carrera}"></td>
                     <td class="subtitulo" th:text="${#dates.format(fechaRegistrada.fechaInicio, 'dd-MM-yyyy')}"></td>
@@ -122,4 +177,5 @@
 <script src="../javaScript.js/funcionamiento.js"></script>
 
 </body>
+
 </html>
