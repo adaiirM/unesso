@@ -138,7 +138,7 @@
 								</div>
 								<div class="col">
 									<p class="textoInputs">Colonia</p>
-									<input th:field="*{trabajo.domicilio.coloniaBarrio}" id="coloniaBarrio" name="trabajo.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
+									<input th:field="*{trabajo.domicilio.coloniaBarrio}" id="coloniaBarrioTrabajo" name="trabajo.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 								</div>
 							</div>
 							<div class="row mt-4 hidden">
@@ -536,7 +536,10 @@
             $("#formDependienteEconomico").validate({
                 rules: {
 					gastoMensual : {
-						required: true
+						required: true,
+						number: true,
+						 min: 0
+
 					},
                     "tutorEconomico.nombreTutorEconomico": {
                         required: true
@@ -582,7 +585,9 @@
 							depends: function(element){
 								return $("#dependeEconomicamenteNo").is(":checked");
 							}
-						}
+						},
+						number: true,
+						min: 0
 					},
 					"trabajo.telefono": {
 						required:{
@@ -611,7 +616,7 @@
 						required:{
 							depends: function(element){
 								return $("#dependeEconomicamenteNo").is(":checked");
-							}
+							},
 						}
 					},					
 					"trabajo.domicilio.catLocalidad.catCodigoPostal.numeroCodigoPostal": {
@@ -624,7 +629,9 @@
                 },
                 messages: {
 					gastoMensual : {
-						required: "Ingresa una cantidad."
+						required: "Ingresa una cantidad.",
+						number: "Por favor, ingresa un número válido.",
+                        min: "El número no puede ser negativo."
 					},
                     "tutorEconomico.nombreTutorEconomico": {
                         required: "Por favor, ingresa su nombre."
@@ -642,6 +649,7 @@
                     },
                     "tutorEconomico.domicilio.numero": {
 						required: "Por favor, ingrese un dato, si no tiene número puede escribir s/n."
+						
 					},
 					dependeEconomicamente: {
 						required: "Por favor, seleccione una opción."
@@ -663,6 +671,16 @@
 					},
 					"trabajo.nombreTrabajo": {
 						required: "Por favor, ingresa el nombre del centro de tu trabajo"
+					},
+					"trabajo.telefono": {
+						required: "Por favor, ingrese el teléfono del tutor económico.",
+                        digits: "Por favor, ingrese solo números.",
+                        rangelength: "El teléfono debe tener 10 dígitos.",
+					},
+					"trabajo.ingresoMensual": {
+						required: "Ingresa una cantidad.",
+						number: "Por favor, ingresa un número válido.",
+                        min: "El número no puede ser negativo."
 					},
 					"trabajo.domicilio.coloniaBarrio": {
 						required: "Por favor, ingresa su colonia o barrio."

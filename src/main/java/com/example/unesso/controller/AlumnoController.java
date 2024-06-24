@@ -320,6 +320,11 @@ public class AlumnoController {
 		if(alumno.getTutorEconomico().getDomicilio().getCatLocalidad().getIdCatLocalidad() == null) {
 			alumno.getTutorEconomico().getDomicilio().setCatLocalidad(null);
 		}
+		
+		//Verificar que el alumno tenga un trabajo 
+		if(alumno.getTrabajo().getDomicilio().getCatLocalidad().getIdCatLocalidad() == null) {
+			alumno.getTrabajo().getDomicilio().setCatLocalidad(null);
+		}
 
 		//Asignar el gasto mensual a alumno
 		alumnoSesion.setGastoMensual(alumno.getGastoMensual());
@@ -328,6 +333,54 @@ public class AlumnoController {
 		alumnoSesion.setDependeEconomicamente(alumno.getDependeEconomicamente());
 		
 		System.out.println("Daots del alumnoSesion: " + alumnoSesion.toString());
+		
+		//Verificar si el alumno tiene registrado un trabajo
+		if(alumnoSesion.getTrabajo() == null) {
+			//Verificar que el alumno tenga un trabajo 
+			if (alumno.getTrabajo() != null) {
+				alumno.getTrabajo().setAlumno(alumnoSesion);
+			}	
+			alumnoSesion.setTrabajo(alumno.getTrabajo());
+			serviceAlumno.guardar(alumnoSesion);
+			
+			//Si ya tiene registrado uno, modificar
+		} else {
+			//Verificar que el usuario dependa economicamente
+			if(alumno.getDependeEconomicamente().equals(false)) {
+						
+				Domicilio domicilioTrabajoDB = serviceDomicilio.buscarPorId(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
+				Domicilio domicilioTrabajoForm = alumno.getTrabajo().getDomicilio();
+				domicilioTrabajoForm.setIdDomicilio(domicilioTrabajoDB.getIdDomicilio());
+				
+				serviceDomicilio.guardar(domicilioTrabajoForm);
+				
+				//Actualizar datos del trabajo con los datos del formulario
+				Trabajo trabajoDB = serviceTrabajo.buscarPorId(alumnoSesion.getTrabajo().getIdTrabajo());
+				Trabajo trabajoForm = alumno.getTrabajo();
+				trabajoForm.setIdTrabajo(trabajoDB.getIdTrabajo());
+				trabajoForm.setAlumno(alumnoSesion);
+				serviceTrabajo.guardarTrabajo(trabajoForm);
+				
+			} else {
+				
+				Domicilio domicilioVacio = new Domicilio();	
+				
+				if(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio() == null) {
+					domicilioVacio = null;
+				} 
+
+				domicilioVacio.setIdDomicilio(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
+
+				serviceDomicilio.guardar(domicilioVacio);
+				
+				alumnoSesion.getTrabajo().setTelefono(null);
+				alumnoSesion.getTrabajo().setNombreTrabajo(null);
+				alumnoSesion.getTrabajo().setIngresoMensual(null);
+				
+				System.out.println(alumnoSesion.getTrabajo() + " - ");
+				serviceAlumno.guardar(alumnoSesion);
+			}
+		}
 		
 		//Verificar si el alumno tiene relacionado un tutor
 			//Si tiene uno, actualizar datos
@@ -345,44 +398,13 @@ public class AlumnoController {
 			tutorForm.setIdTutorEconomico(tutorDB.getIdTutorEconomico());
 			serviceTutorEconomico.guardarTutor(tutorForm);
 			
-			//Verificar que el usuario dependa economicamente
-			if(alumno.getDependeEconomicamente().equals(false)) {
-				//Actualizar datos del domiciliio del trabajo del alumno con los datos del formulario
-				Domicilio domicilioTrabajoDB = serviceDomicilio.buscarPorId(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
-				Domicilio domicilioTrabajoForm = alumno.getTrabajo().getDomicilio();
-				domicilioTrabajoForm.setIdDomicilio(domicilioTrabajoDB.getIdDomicilio());
-				
-				//Validar si la localidad del domicilio viene vacia
-				if(domicilioTrabajoForm.getCatLocalidad().getIdCatLocalidad() == null) {
-					domicilioTrabajoForm.setCatLocalidad(null);
-				}
-				serviceDomicilio.guardar(domicilioTrabajoForm);
-				System.out.println(domicilioTrabajoForm.toString());
-				
-				//Actualizar datos del trabajo con los datos del formulario
-				Trabajo trabajoDB = serviceTrabajo.buscarPorId(alumnoSesion.getTrabajo().getIdTrabajo());
-				Trabajo trabajoForm = alumno.getTrabajo();
-				trabajoForm.setIdTrabajo(trabajoDB.getIdTrabajo());
-				trabajoForm.setAlumno(alumnoSesion);
-				serviceTrabajo.guardarTrabajo(trabajoForm);
-			} else {
-				
-			}
 			//Si no tiene un tutor relacionado, crear uno
 		} else {
-			//Verificar que el alumno tenga un trabajo 
-			if (alumno.getTrabajo() != null) {
-				alumno.getTrabajo().setAlumno(alumnoSesion);
-			}
-			alumnoSesion.setTrabajo(alumno.getTrabajo());
-			
 			TutorEconomico tutorE = serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());			
 			alumnoSesion.setTutorEconomico(tutorE);
 			//serviceAlumno.guardar(alumnoSesion);
 		}
-		
-		
-		 
+				 
 		if(accion.equals("enviar")) {
 			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
 		}
