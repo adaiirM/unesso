@@ -64,12 +64,6 @@ public class AdministradorController {
     }
 
     @GetMapping("/alumnos")
-    public String alumnos(Model model) {
-        List<Alumno> alumnos = alumnoService.getAllAlumnos();  // Método que obtiene todos los alumnos
-        System.out.println(alumnos);
-        model.addAttribute("alumnos", alumnos);
-        return "/administrarAlumno";
-    }
     public String listarAlumnos(Model model, @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
@@ -242,9 +236,8 @@ public class AdministradorController {
         List<CatCarrera> carreras = catCarreraService.buscarTodas();
         List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.getAllFechasRegistradas();
         model.addAttribute("carreras", carreras);
-        model.addAttribute("fechasRegistradas",fechasRegistradas);
-
-        return "administrarFecha";
+        model.addAttribute("fechasRegistradas", fechasRegistradas);
+        return "administrarFecha"; // Nombre del archivo HTML de Thymeleaf
     }
 
 
@@ -298,35 +291,39 @@ public class AdministradorController {
         return "redirect:/administrador/fechas";
     }
 
-    @GetMapping("/actualizarFecha")
-    public String mostrarFormularioActualizacionFecha(@RequestParam Integer idFecha, Model model) {
-        // Obtener la fecha registrada por su ID
-        FechasRegistradas fechaRegistrada = fechasRegistradasService.getByIdFechasRegistradas(idFecha);
+    @PostMapping("/actualizarFecha")
+    public String actualizarFecha(@RequestParam("idFechasRegistradas") Integer idFechasRegistradas,
+                                  @RequestParam("idCatCarrera") Integer idCatCarrera,
+                                  @RequestParam("fechaInicio") Date fechaInicio,
+                                  @RequestParam("fechaFin") Date fechaFin) {
 
-        // Verificar si la fecha existe
-        if (fechaRegistrada == null) {
-            // Manejar caso de error, redireccionar o mostrar mensaje de error
-            return "redirect:/error";
+        // Imprimir valores para depuración
+        System.out.println("Received idFechasRegistradas: " + idFechasRegistradas);
+        System.out.println("Received idCatCarrera: " + idCatCarrera);
+        System.out.println("Received fechaInicio: " + fechaInicio);
+        System.out.println("Received fechaFin: " + fechaFin);
+
+        // Buscar la carrera por su id
+        CatCarrera carrera = catCarreraService.findById(idCatCarrera);
+        if (carrera == null) {
+            throw new RuntimeException("No se encontró la carrera para el id: " + idCatCarrera);
         }
 
-        // Obtener lista de carreras u otros datos necesarios
-        List<CatCarrera> carreras = catCarreraService.buscarTodas();
+        // Obtener la fecha registrada por su id
+        FechasRegistradas fechaRegistrada = fechasRegistradasService.getByIdFechasRegistradas(idFechasRegistradas);
+        if (fechaRegistrada == null) {
+            throw new RuntimeException("No se encontró la fecha registrada para el id: " + idFechasRegistradas);
+        }
 
-        // Agregar objetos necesarios al modelo
-        model.addAttribute("fechaRegistrada", fechaRegistrada);
-        model.addAttribute("carreras", carreras);
+        // Actualizar los valores de la fecha registrada
+        fechaRegistrada.setCarrera(carrera);
+        fechaRegistrada.setFechaInicio(fechaInicio);
+        fechaRegistrada.setFechaFin(fechaFin);
 
-        // Devolver la vista del formulario de actualización de fecha
-        return "formActualizarFecha";
-    }
-
-    @PostMapping("/actualizarFecha")
-    public String actualizarFecha(@ModelAttribute("fechaRegistrada") FechasRegistradas fechaRegistrada) {
-        // Guardar la fecha actualizada en la base de datos
+        // Guardar los cambios en la base de datos
         fechasRegistradasService.guardar(fechaRegistrada);
 
-        // Redireccionar a una página de confirmación o a la lista de fechas actualizadas
-        return "redirect:/administrador/fechas";
+        return "redirect:/administrador/fechas"; // Redirigir a la vista de fechas administradas
     }
 
 }
