@@ -1,8 +1,9 @@
 package com.example.unesso.repository;
 
 import org.springframework.context.annotation.Description;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.domain.Pageable;
 import com.example.unesso.model.Alumno;
 import com.example.unesso.model.Usuario;
 
@@ -14,4 +15,5 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
 	Alumno findByUsuario_IdUsuario(Integer idUsuario);
 	Alumno findByIdAlumno(Integer idAlumno);
 	List<Alumno> findAll();
+	Page<Alumno> findByNombreContainingIgnoreCase(String keyword, Pageable pageable);
 }
