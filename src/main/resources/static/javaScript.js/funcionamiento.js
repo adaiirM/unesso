@@ -2,12 +2,18 @@
 function mostrarModal() {
     document.getElementById('modal').style.display = 'block';
 }
-
+// Función para mostrar la ventana modal para agregar fecha
+function mostrarModalFecha() {
+    document.getElementById('modalFecha').style.display = 'block';
+}
 // Función para cerrar la ventana modal
 function cerrarModal() {
     document.getElementById('modal').style.display = 'none';
 }
-
+// Función para cerrar la ventana modalFecha
+function cerrarModalFecha() {
+    document.getElementById('modalFecha').style.display = 'none';
+}
 function misDatos() {
     document.getElementById('modal2').style.display = 'block';
 }
@@ -413,5 +419,22 @@ async function fetchCodigoPostalByIdLocalidad(idLocalidad) {
     });
 }
 
+// Funcionamiento calendario
+$(document).ready(function () {
+    $('#start').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        orientation: "bottom auto"
+    });
 
+    $('#end').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight: true,
+        autoclose: true,
+        orientation: "bottom auto"
+    });
+
+
+});
 
