@@ -44,7 +44,7 @@
 		   
 		   <input hidden id="idAlumno"  value="alumno.idAlumno" name="alumno.idAlumno" th:field="*{alumno.idAlumno}">
 		   <input hidden id="idTutor"   value="tutorEconomico.idTutorEconomico" name="tutorEconomico.idTutorEconomico" th:field="*{tutorEconomico.idTutorEconomico}">
-		   <input hidden id="idLocalidadTutor"   value="tutorEconomico.domicilio.catLocalidad.idCatLocalidad" name="tutorEconomico.domicilio.catLocalidad.idCatLocalidad" th:field="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}">
+		   <input hidden id="idLocalidadAlumno"   value="alumno.domicilio.catLocalidad.idCatLocalidad" name="alumno.domicilio.catLocalidad.idCatLocalidad" th:field="*{alumno.domicilio.catLocalidad.idCatLocalidad}">
 		   <input hidden id="coloniaAlumno"   value="alumno.domicilio.coloniaBarrio" name="alumno.domicilio.coloniaBarrio" th:field="*{alumno.domicilio.coloniaBarrio}">
 		   <input hidden id="idLocalidad"   value="familia.domicilio.catLocalidad.idCatLocalidad" name="familia.domicilio.catLocalidad.idCatLocalidad" th:field="*{familia.domicilio.catLocalidad.idCatLocalidad}">
 		   <input hidden id="idDomicilio" value="domicilio.idDomicilio" name="domicilio.idDomicilio" th:field="*{domicilio.idDomicilio}">
@@ -556,9 +556,11 @@
 			var estado = true;
 
 			// Si el total es igual al número de hermanos, completar campos vacíos con 0
-			estado = alertarCamposNumericos(hermanosEstudiando,numHermanos);
-			estado = alertarCamposNumericos(hermanosDejoEstudio,numHermanos);
-			estado = alertarCamposNumericos(hermanosLicenciatura,numHermanos);
+			if(numHermanos >0){
+				estado = alertarCamposNumericos(hermanosEstudiando,numHermanos);
+				estado = alertarCamposNumericos(hermanosDejoEstudio,numHermanos);
+				estado = alertarCamposNumericos(hermanosLicenciatura,numHermanos);
+			}
 
 			// Alerta si el total es mayor que el número de hermanos
 			
@@ -1223,6 +1225,7 @@
 	            $('#colonia').prop('disabled', true);
 	
 	            console.log("El campo 'Si' está seleccionado");
+	            console.log("El id de la localidad: " +idCatLocalidad );
 	            setLocalidad(idCatLocalidad);
 	        }
 	    }
@@ -1254,3 +1257,4 @@
 </body>
 
 </html>
+
