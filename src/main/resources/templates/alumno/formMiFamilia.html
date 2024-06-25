@@ -264,15 +264,17 @@
 						<div id="personasViviendaError" class="error" style="display: none;">*Debes seleccionar una opción</div>
 						<!-- ********************************************************************* -->
 					</div>
-					<div class="col-12 col-sm-12 col-lg-6 mt-4">
+					<div class="col-12 col-sm-12 col-lg-6 mt-4 ">
 						<p class="textoInputs">¿Con qué servicios cuenta la vivienda?</p>
-						<div class="row" th:each="grupoCatServicios, catServiciosStatus : ${catServicios}">
-							<div class="col-7 me-2" th:each="servicio, servicioStatus : ${grupoCatServicios}">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox"  th:value="${servicio.idCatServicios}" th:field="*{serviciosVivienda}" name="serviciosVivienda">
-									<label class="form-check-label subtitulo" for="checkbox${servicio.idCatServicios}">
-										<p class="subtitulo" th:text="${servicio.nombreServicios}"></p>
-									</label>
+						<div class="containerServicios">
+							<div class="row " th:each="grupoCatServicios, catServiciosStatus : ${catServicios}">
+								<div class="col-7 me-2" th:each="servicio, servicioStatus : ${grupoCatServicios}">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox"  th:value="${servicio.idCatServicios}" th:field="*{serviciosVivienda}" name="serviciosVivienda">
+										<label class="form-check-label subtitulo" for="checkbox${servicio.idCatServicios}">
+											<p class="subtitulo" th:text="${servicio.nombreServicios}"></p>
+										</label>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -289,16 +291,18 @@
             <div class="row rounded colorFondo mt-3 p-3 ms-1">
                 <h3 style="color: #6366F1;">Información complementaria </h3>
 				<div class="row">
-					<div class="col-12 col-md-5 col-lg-4 mt-4">
+					<div class="col-12 col-md-5 col-lg-4 mt-4 ">
 						<p class="textoInputs">Medios para estudiar en casa</p>
-						<div class="row" th:each="medios, catMediosStatus : ${catMedios}">
-							<div class="col-12 col-md-6" th:each="medio, mediosStatus : ${medios}">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" th:field="*{mediosEstudios}" th:name="mediosEstudios"
-										th:value="${medio.getIdCatMedios()}">
-									<label class="form-check-label" for="checkbox${medio.idCatMedios}">
-										<p class="subtitulo" th:text="${medio.nombreMedios}"></p>
-									</label>
+						<div class="containerMediosEstudios">
+							<div class="row " th:each="medios, catMediosStatus : ${catMedios}">
+								<div class="col-12 col-md-6" th:each="medio, mediosStatus : ${medios}">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" th:field="*{mediosEstudios}" th:name="mediosEstudios"
+											th:value="${medio.getIdCatMedios()}">
+										<label class="form-check-label" for="checkbox${medio.idCatMedios}">
+											<p class="subtitulo" th:text="${medio.nombreMedios}"></p>
+										</label>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -311,13 +315,16 @@
 					<div class="col-12 col-md-7 col-lg-4 mt-4">
 						<p class="textoInputs">¿Cuentas con acceso a internet?</p>
 						<div class="row">
-							<div class="col-12 col-md-6 col-lg-12">
-								<input type="radio" class="input-outline-primary ms-4" id="internetSi" style="color: #6366F1;"
+							<div class="col-12 col-md-6 col-lg-12 ">
+								<div class="containerAccesoInternet">
+									<input type="radio" class="input-outline-primary ms-4" id="internetSi" style="color: #6366F1;"
 									th:field="*{alumno.tieneInternet}" name="alumno.tieneInternet" value="1">
-								<label for="internetSi" style="color: #6366F1;" class="me-5">Si</label>
-								<input type="radio" class="input-outline-primary" id="internetNo" style="color: #6366F1;"
-									th:field="*{alumno.tieneInternet}" name="alumno.tieneInternet" value="0">
-								<label for="domicilioNo" style="color: #6366F1;">No</label>
+									<label for="internetSi" style="color: #6366F1;" class="me-5">Si</label>
+									<input type="radio" class="input-outline-primary" id="internetNo" style="color: #6366F1;"
+										th:field="*{alumno.tieneInternet}" name="alumno.tieneInternet" value="0">
+									<label for="domicilioNo" style="color: #6366F1;">No</label>
+								</div>
+								
 							</div>
 						</div>
 						<!-- ********************************************************************* -->
@@ -544,28 +551,18 @@
 			var hermanosDejoEstudio = parseInt(hermanosDejoEstudioInput.value) || 0;
 			var hermanosLicenciatura = parseInt(hermanosLicenciaturaInput.value) || 0;
 
-			var total = hermanosEstudiando + hermanosDejoEstudio + hermanosLicenciatura;
+			var total = 0;
+			var estado = true;
 
 			// Si el total es igual al número de hermanos, completar campos vacíos con 0
-			if (total === numHermanos) {
-				if (numHermanosEstudiandoInput.value === "") {
-					numHermanosEstudiandoInput.value = 0;
-				}
-				if (hermanosDejoEstudioInput.value === "") {
-					hermanosDejoEstudioInput.value = 0;
-				}
-				if (hermanosLicenciaturaInput.value === "") {
-					hermanosLicenciaturaInput.value = 0;
-				}
-			}
+			estado = alertarCamposNumericos(hermanosEstudiando,numHermanos);
+			estado = alertarCamposNumericos(hermanosDejoEstudio,numHermanos);
+			estado = alertarCamposNumericos(hermanosLicenciatura,numHermanos);
 
 			// Alerta si el total es mayor que el número de hermanos
-			if (total > numHermanos) {
-				alert('La suma de los campos no puede ser mayor que el número de hermanos.');
-				return false; // Indica que la validación falló
-			}
+			
 
-			return true; // Indica que la validación pasó
+			return estado ; // Indica que la validación pasó
 		}
 
 		// Agregar event listener para validar y completar al cambiar cualquier valor
@@ -583,6 +580,25 @@
 
 			if (numHermanos > 0 || hermanosEstudiando > 0 || hermanosEstudiando > numHermanos || hermanosDejoEstudio > 0 || hermanosLicenciatura > 0) {
 				validarYCompletar();
+			}
+		}
+		
+		function completarCamposNumericos(){
+			if (numHermanosEstudiandoInput.value === "") {
+				numHermanosEstudiandoInput.value = 0;
+			}
+			if (hermanosDejoEstudioInput.value === "") {
+				hermanosDejoEstudioInput.value = 0;
+			}
+			if (hermanosLicenciaturaInput.value === "") {
+				hermanosLicenciaturaInput.value = 0;
+			}
+		} 
+		
+		function alertarCamposNumericos(total,numHermanos){
+			if (total > numHermanos) {
+				alert('El dato excede el número de hermanos que ingresaste .');
+				return false; // Indica que la validación falló
 			}
 		}
 
@@ -665,6 +681,48 @@
 					},
 					"esViviendaTutor":{
 						required: true
+					},
+					"familia.numPersonasDependen" : {
+						required: true
+					},
+					catEstado : {
+						required: true
+					},
+					catMunicipio : {
+						required: true
+					},
+					"domicilio.catLocalidad.idCatLocalidad": {
+						required: true
+					}, 
+					"infoFamilia.escolaridadPadre.idCatEscolaridad" : {
+						required: true
+					}, 
+					"infoFamilia.escolaridadMadre.idCatEscolaridad" : {
+						required: true
+					}, 
+					"viviendaFamiliar.catSituacionViviendaFamiliar.idCatSituacionViviendaFamiliar" : {
+						required: true
+					}, 
+					"viviendaFamiliar.catTipoVivienda.idCatTipoVivienda": {
+						required: true
+					}, 
+					"viviendaFamiliar.catMaterialVivienda.idCatMaterialVivienda" : {
+						required: true
+					}, 
+					"viviendaFamiliar.numPersonasHabitan" : {
+						required: true
+					}, 
+					"familia.telefono" : {
+						required: true
+					},
+					serviciosVivienda: {
+						required: true
+					},
+					mediosEstudios : {
+						required: true
+					},
+					"alumno.tieneInternet" : {
+						required: true
 					}
 
 				},
@@ -683,19 +741,85 @@
 					},
 					"esViviendaTutor":{
 						required: "*Selecciona un campo"
+					},
+					"familia.numPersonasDependen" : {
+						required: "*Llena el campo solicitado"
+					},
+					catEstado : {
+						required: "*Selecciona una opcion"
+					},
+					catMunicipio : {
+						required: "*Selecciona una opcion"
+					},
+					"domicilio.catLocalidad.idCatLocalidad": {
+						required: "*Selecciona una opcion"
+					},
+					"infoFamilia.escolaridadPadre.idCatEscolaridad" : {
+						required: "*Selecciona una opcion"
+					}, 
+					"infoFamilia.escolaridadMadre.idCatEscolaridad" : {
+						required: "*Selecciona una opcion"
+					}, 
+					"viviendaFamiliar.catSituacionViviendaFamiliar.idCatSituacionViviendaFamiliar" : {
+						required: "*Selecciona una opcion"
+					}, 
+					"viviendaFamiliar.catTipoVivienda.idCatTipoVivienda": {
+						required: "*Selecciona una opcion"
+					}, 
+					"viviendaFamiliar.catMaterialVivienda.idCatMaterialVivienda" : {
+						required: "*Selecciona una opcion"
+					}, 
+					"viviendaFamiliar.numPersonasHabitan" : {
+						required: "*Llena el campo solicitado"
+					},
+					"familia.telefono" : {
+						required: "*Llena el campo solicitado"
+					},
+					serviciosVivienda: {
+						required: "*Selecciona una opcion"
+					},
+					mediosEstudios : {
+						required: "*Selecciona una opcion"
+					},
+					"alumno.tieneInternet" : {
+						required: "*Selecciona una opcion"
 					}
 
 				},
 				errorPlacement: function (error, element) {
-					error.insertAfter(element);
+					if ( element.is(":radio") )  {
+		                var fieldName = element.attr('name');
+		                if(fieldName === "alumno.tieneInternet" ){  // Para los radio buttons en el primer grupo
+		                    error.insertAfter(element.parents('.containerAccesoInternet'));
+		                    mostrarError(error);
+		                }
+	                } else if ( element.is(":checkbox")){
+						var fieldName = element.attr('name');
+		                if(fieldName === "mediosEstudios" ){  // Para los radio buttons en el primer grupo
+		                    error.insertAfter(element.parents('.containerMediosEstudios'));
+		                    mostrarError(error);
+		                }else if(fieldName === "serviciosVivienda" ){  // Para los radio buttons en el primer grupo
+		                    error.insertAfter(element.parents('.containerServicios'));
+		                    mostrarError(error);
+		                }
+		                
+		                
+					}else{
+						error.insertAfter(element);
+						mostrarError(error);
+					}
+					
+				}
+			});
+			
+			function mostrarError(error){
 					// Mostrar el mensaje de error durante 10 segundos
 					setTimeout(function () {
 						error.fadeOut(500, function () {
 							$(this).remove();
 						});
 					}, 5000);
-				}
-			});
+			}
 
 
 			// Botón de guardado (sin validación)
@@ -713,30 +837,7 @@
 
 				var isValid = true;
 
-		        
-		       
-
-				var serviciosError = document.getElementById('serviciosError');
-				if (!$('input[name="serviciosVivienda"]:checked').length) {
-					serviciosError.style.display = 'block';
-					isValid = false;
-				} else {
-					
-					serviciosError.style.display = 'none';
-
-				}
-
-				var internetError = document.getElementById('accesoInternetError');
-
-				if (!$('input[name="alumno.tieneInternet"]').is(":checked")) {
-					isValid = false;
-					setTimeout(() => {
-						internetError.style.display = 'block';
-					}, 8000);
-				} else {
-					internetError.style.display = 'none';
-					
-				}
+		      
 				
 				const internetSi = document.getElementById("internetSi");
 				if(internetSi.checked){
@@ -755,19 +856,9 @@
 
 				// Validación de campos de texto y select
 				var fieldsToValidate = [
-					{id: 'catEstado', errorId: 'estadoError', type: 'select'},
 					{id: 'region', errorId: 'regionError', type: 'text'},
 					{id: 'colonia', errorId: 'coloniaError', type: 'text'},
 					{id: 'distrito', errorId: 'distritoError', type: 'text'},
-					{id: 'catMunicipio', errorId: 'municipioError', type: 'select'},
-					{id: 'catLocalidad', errorId: 'localidadError', type: 'select'},
-					{id: 'inputTel', errorId: 'telefonoError'},
-					{id: 'catEscolaridadPadre', errorId: 'escolaridadPadreError', type: 'select'},
-					{id: 'catEscolaridadMadre', errorId: 'escolaridadMadreError', type: 'select'},
-					{id: 'catSituacionvivienda', errorId: 'viviendaError', type: 'select'},
-					{id: 'catMaterialVivienda', errorId: 'materialError', type: 'select'},
-					{id: 'catTipoVivienda', errorId: 'tipoViviendaError', type: 'select'},
-					{id: 'inputNombre', errorId: 'personasViviendaError'}
 
 				];
 
