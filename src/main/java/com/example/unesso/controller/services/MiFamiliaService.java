@@ -323,8 +323,10 @@ public class MiFamiliaService {
 		    }
 
 		    // Verificar y guardar la localidad si es transitorio
-		    if (domicilio.getCatLocalidad().getIdCatLocalidad() != null) {
-		        domicilioDatosParaInsertar.setCatLocalidad(domicilio.getCatLocalidad());
+		    if (domicilio.getCatLocalidad() != null) {
+		    	if (domicilio.getCatLocalidad().getIdCatLocalidad() != null) {
+			        domicilioDatosParaInsertar.setCatLocalidad(domicilio.getCatLocalidad());
+			    }
 		    }
 
 		    // Verificar y asignar los campos de domicilio
