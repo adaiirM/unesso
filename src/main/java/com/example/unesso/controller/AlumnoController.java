@@ -248,7 +248,11 @@ public class AlumnoController {
 		Familia f = new Familia();
 		System.out.println("Ob: " + a.getObservaciones());
 		if(a.getFamilia() != null) {
+			
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+			System.out.println(f.toString());
+			System.out.println("Ingreso familiar: " + f.getIngresoFamiliar());
+
 			if(f.getGastosFam() != null) {
 				if(f.getGastosFam().getReciboLuz() != null) {
 					// Obtener la fecha del objeto

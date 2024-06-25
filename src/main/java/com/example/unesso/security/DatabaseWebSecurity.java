@@ -26,7 +26,7 @@ public class DatabaseWebSecurity {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/css/*", "/img/*").permitAll()
                 //.requestMatchers("/").permitAll()
-                //.requestMatchers("/admin/").hasAnyAuthority("ADMINISTRADOR") 
+                .requestMatchers("/alumno/*").hasAnyAuthority("Alumno") 
                 .anyRequest().authenticated());
 
         http.formLogin(form -> form.loginPage("/login").permitAll());
