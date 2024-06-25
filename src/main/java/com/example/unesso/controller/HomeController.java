@@ -46,7 +46,7 @@ public class HomeController {
 			/*Alumno a = serviceAlumno.buscarPorUsuario(serviceUsuario.buscarPorCorreo(correo));
 			model.addAttribute("nombreAlumno", a.getNombre());
 			System.out.println(a.getNombre());*/
-			return "menuAlumno";
+			return "alumno/menuAlumno";
 		}else {
 			return "administrador/menuAdministrador";
 		}
