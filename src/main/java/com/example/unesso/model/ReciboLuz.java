@@ -2,6 +2,8 @@ package com.example.unesso.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +25,10 @@ public class ReciboLuz {
 	
 	private String titular;
 	
-	private Date periodoInicio;
-	
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date periodoInicio;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date periodoFin;
 	
 	private String nombreArchivo;

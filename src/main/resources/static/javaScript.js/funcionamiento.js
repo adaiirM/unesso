@@ -219,18 +219,22 @@ function generarPersonas() {
                 </div>
                 <div class="col-sm-6 col-xl-4">
                     <p class="textoInputs">Parentesco</p>
-                    <select name="ingresoFamiliar[${i}].catParenteso" class="form-select estiloInputs" aria-label="Default select example">
+                    <select name="ingresoFamiliar[${i}].catParenteso" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
                         <option value="" class="subtitulo">Elige una opcion</option>
                         ${opcionesParentesco}
                     </select>
                 </div>
+                
                 <div class="col-sm-6 col-xl-4">
                     <p class="textoInputs">Empresa o lugar de trabajo</p>
-                    <input type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                    <input name="ingresoFamiliar[${i}].lugarTrabajo" th:field="*{ingresoFamiliar[__${i}__].lugarTrabajo}" id="lugarTrabajo" 
+                    		type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
                 </div>
+                
                 <div class="col-sm-6 col-xl-4">
                     <p class="textoInputs">Puesto o tipo de trabajo</p>
-                    <input type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+                    <input name="ingresoFamiliar[${i}].tipoTrabajo" th:field="*{ingresoFamiliar[__${i}__].tipoTrabajo}" id="tipoTrabajo" 
+                    	 	type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="">
                 </div>
             
                 <div class="col-sm-6 col-xl-4">
@@ -242,10 +246,10 @@ function generarPersonas() {
                     <p>IMN <span style="color: #6C757D;">(Ingreso Mensual Neto)</span></p>
                     <input name="ingresoFamiliar[${i}].ingresoNeto" th:field="*{ingresoFamiliar[__${i}__].ingresoNeto}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
                 </div>
-
+				<!--
                 <div class="col-sm-6 col-xl-4">
                     <p>Ingreso Total: <span style="color: #6C757D;">$200.5</span></p>
-                </div>
+                </div>-->
             </div>
     	</div>
         <hr>
