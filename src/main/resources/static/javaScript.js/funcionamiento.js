@@ -207,7 +207,7 @@ function generarPersonas() {
 	for (let i = 0; i < numPersonas; i++) {
 		let opcionesParentesco = '';
         parentescos.forEach(catParentesco => {
-            opcionesParentesco += `<option th:value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
+            opcionesParentesco += `<option value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
         });
 		var newElement = `
         
@@ -219,7 +219,7 @@ function generarPersonas() {
                 </div>
                 <div class="col-sm-6 col-xl-4">
                     <p class="textoInputs">Parentesco</p>
-                    <select name="ingresoFamiliar[${i}].catParenteso" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+                    <select name="ingresoFamiliar[${i}].catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
                         <option value="" class="subtitulo">Elige una opcion</option>
                         ${opcionesParentesco}
                     </select>
@@ -233,7 +233,7 @@ function generarPersonas() {
                 
                 <div class="col-sm-6 col-xl-4">
                     <p class="textoInputs">Puesto o tipo de trabajo</p>
-                    <input name="ingresoFamiliar[${i}].tipoTrabajo" th:field="*{ingresoFamiliar[__${i}__].tipoTrabajo}" id="tipoTrabajo" 
+                    <input name="ingresoFamiliar[${i}].puestoTrabajo" th:field="*{ingresoFamiliar[__${i}__].puestoTrabajo}" id="puestoTrabajo" 
                     	 	type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="">
                 </div>
             
