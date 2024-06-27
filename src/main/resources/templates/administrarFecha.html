@@ -51,7 +51,7 @@
                 <div class="modal-body">
 
                     <div class="modal-body">
-                        <form th:action="@{/administrador/guardarFecha}" method="post" autocomplete="off">
+                        <form th:action="@{/administrador/guardarFecha}" method="post" autocomplete="off" onsubmit="return validarFechas('start1', 'end1', 'errorFechasAgregar')">
                             <div class="mb-3">
                                 <label for="carreraSelectFecha" class="form-label">Carrera</label>
                                 <select id="carreraSelectFecha" name="carreraFecha" class="form-select">
@@ -62,11 +62,14 @@
                             <div class="row input-group input-daterange">
                                 <div class="col-6 mb-3">
                                     <label for="start" class="form-label">Fecha inicial</label>
-                                    <input type="text" id="start" name="fechaInicio" class="form-control">
+                                    <input type="text" id="start1" name="fechaInicio" class="form-control">
+                                    <div id="errorFechaInicioAgregar" class="error-fecha" style="color: red; display: none;">Fecha inicial no puede ser anterior a hoy.</div>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label for="end" class="form-label">Fecha final</label>
-                                    <input type="text" id="end" name="fechaFin" class="form-control">
+                                    <input type="text" id="end1" name="fechaFin" class="form-control">
+                                    <div id="errorFechaFinAgregar" class="error-fecha" style="color: red; display: none;">Fecha final no puede ser anterior a hoy.</div>
+                                    <div id="errorFechasAgregar" class="error-fecha" style="color: red; display: none;">Fecha final no puede ser antes de la fecha inicial.</div>
                                 </div>
                             </div>
 
@@ -81,6 +84,7 @@
         </div>
     </div>
 
+
     <!-- Ventana modalFechaEdit -->
     <div id="modalFechaEdit" class="modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -89,24 +93,20 @@
                     <h5 class="modal-title mx-auto" style="color: #4F46E5;">Editar fecha</h5>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/administrador/actualizarFecha}" method="post" autocomplete="off">
+                    <form th:action="@{/administrador/actualizarFecha}" method="post" autocomplete="off" onsubmit="return validarFechas('start', 'end', 'errorFechasEditar')">
                         <input type="hidden" id="fechaId" name="idFechasRegistradas">
-
-                        <div class="mb-3">
-                            <label for="carreraSelectFecha2" class="form-label">Carrera</label>
-                            <select id="carreraSelectFecha2" name="idCatCarrera" class="form-select">
-                                <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}" th:text="${carrera.carrera}"></option>
-                            </select>
-                        </div>
 
                         <div class="row input-group input-daterange">
                             <div class="col-6 mb-3">
-                                <label for="start1" class="form-label">Fecha inicial</label>
-                                <input type="text" id="start1" name="fechaInicio" class="form-control" >
+                                <label for="start" class="form-label">Fecha inicial</label>
+                                <input type="text" id="start" name="fechaInicio" class="form-control" >
+                                <div id="errorFechaInicioEditar" class="error-fecha" style="color: red; display: none;">Fecha inicial no puede ser anterior a hoy.</div>
                             </div>
                             <div class="col-6 mb-3">
-                                <label for="end1" class="form-label">Fecha final</label>
-                                <input type="text" id="end1" name="fechaFin" class="form-control">
+                                <label for="end" class="form-label">Fecha final</label>
+                                <input type="text" id="end" name="fechaFin" class="form-control">
+                                <div id="errorFechaFinEditar" class="error-fecha" style="color: red; display: none;">Fecha final no puede ser anterior a hoy.</div>
+                                <div id="errorFechasEditar" class="error-fecha" style="color: red; display: none;">Fecha final no puede ser antes de la fecha inicial.</div>
                             </div>
                         </div>
 
@@ -119,7 +119,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="container">
         <div class="table-responsive">
@@ -146,16 +145,17 @@
                     </td>
                     <td>
                     <td>
-                    <a onclick="mostrarDatosModal(
-                            '${fechaRegistrada.idFechasRegistradas}',
-                            '${fechaRegistrada.carrera.idCatCarrera}',
-                            '${fechaRegistrada.carrera.idCatCarrera}',
-                            '${fechaRegistrada.fechaInicio}',
-                            '${fechaRegistrada.fechaFin}')">
-                        <img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar">
-                    </a>
+                        <a th:onclick=
+                                   "'getByIdFechasRegistradas(' +
+                                    ${fechaRegistrada.idFechasRegistradas}
+                                    + ')'" >
+                            <img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar">
+                        </a>
 
-                </td>
+                    </td>
+
+
+                    </td>
                     </td>
                     <td class="subtitulo" th:text="${fechaRegistrada.carrera.carrera}"></td>
                     <td class="subtitulo" th:text="${#dates.format(fechaRegistrada.fechaInicio, 'dd-MM-yyyy')}"></td>
@@ -165,9 +165,6 @@
             </table>
         </div>
     </div>
-
-
-
 </main>
 
 <footer th:insert="~{footer.html}"></footer>
@@ -177,5 +174,83 @@
 <script src="../javaScript.js/funcionamiento.js"></script>
 
 </body>
+<script >
+
+    function getByIdFechasRegistradas(idFecha) {
+
+        const fechaInicio = document.getElementById('fechaInicio');
+        const fechaFin = document.getElementById('fechaFin');
+
+        fetch(`/administrador/getByIdFechasRegistradas/${idFecha}`)
+        .then(response => response.json())
+        .then(data => {
+
+            let fechaInicio = formatDate(data.fechaInicio);
+            let fechaFin = formatDate(data.fechaFin);
+            $('#start').val(fechaInicio);
+            $('#end').val(fechaFin);
+            $('#fechaId').val(idFecha);
+
+            $('#modalFechaEdit').show();
+
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        if (month.length < 2)
+        month = '0' + month;
+        if (day.length < 2)
+        day = '0' + day;
+
+        return [day, month, year].join('/');
+    }
+        function cerrarModalFechaEdit() {
+        document.getElementById('modalFechaEdit').style.display = 'none';
+    }
+
+    function validarFechas(startId, endId, errorId) {
+        let startDateInput = document.getElementById(startId);
+        let endDateInput = document.getElementById(endId);
+        let errorFechas = document.getElementById(errorId);
+        let errorFechaInicio = document.getElementById('errorFechaInicio' + (errorId.includes('Agregar') ? 'Agregar' : 'Editar'));
+        let errorFechaFin = document.getElementById('errorFechaFin' + (errorId.includes('Agregar') ? 'Agregar' : 'Editar'));
+
+        let startDate = new Date(startDateInput.value.split('/').reverse().join('-'));
+        let endDate = new Date(endDateInput.value.split('/').reverse().join('-'));
+        let today = new Date();
+        today.setHours(0, 0, 0, 0); // Ensure we compare only the date part
+
+        let valid = true;
+
+        if (startDate < today) {
+            errorFechaInicio.style.display = 'block';
+            valid = false;
+        } else {
+            errorFechaInicio.style.display = 'none';
+        }
+
+        if (endDate < today) {
+            errorFechaFin.style.display = 'block';
+            valid = false;
+        } else {
+            errorFechaFin.style.display = 'none';
+        }
+
+        if (startDate > endDate) {
+            errorFechas.style.display = 'block';
+            valid = false;
+        } else {
+            errorFechas.style.display = 'none';
+        }
+
+        return valid;
+    }
+</script>
 
 </html>

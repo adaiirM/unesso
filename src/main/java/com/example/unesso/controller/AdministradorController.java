@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -310,23 +311,47 @@ public class AdministradorController {
         return "redirect:/administrador/fechas";
     }
 
+
+
+    @GetMapping("/actualizarFecha")
+    public String editarFecha(@RequestParam Integer idFechasRegistradas, Model model) {
+        System.out.println(idFechasRegistradas);
+        FechasRegistradas fechasRegistradas = fechasRegistradasService.getByIdFechasRegistradas(idFechasRegistradas);
+
+        if (fechasRegistradas == null) {
+            return "redirect:/administrador/error";
+        }
+
+
+        model.addAttribute("fechaRegistrada", fechasRegistradas);
+
+        return "/administrarFecha";
+
+    }
+
+    @GetMapping("/obtenerFechas")
+    public String obtenerFechas(Model model) {
+        // Aquí obtienes las fechas desde tu servicio o repositorio
+        List<FechasRegistradas> fechas = fechasRegistradasService.getAllFechasRegistradas(); // Ejemplo: suponiendo que tienes un servicio para manejar las fechas
+
+        model.addAttribute("fechas", fechas);
+        return "modal_fechas"; // Nombre de la plantilla Thymeleaf para mostrar las fechas en la modal
+    }
+
+
     @PostMapping("/actualizarFecha")
     public String actualizarFecha(@RequestParam("idFechasRegistradas") Integer idFechasRegistradas,
-                                  @RequestParam("idCatCarrera") Integer idCatCarrera,
-                                  @RequestParam("fechaInicio") Date fechaInicio,
-                                  @RequestParam("fechaFin") Date fechaFin) {
+                                  @RequestParam("fechaInicio") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaInicioStr,
+                                  @RequestParam("fechaFin") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaFinStr) {
 
         // Imprimir valores para depuración
         System.out.println("Received idFechasRegistradas: " + idFechasRegistradas);
-        System.out.println("Received idCatCarrera: " + idCatCarrera);
-        System.out.println("Received fechaInicio: " + fechaInicio);
-        System.out.println("Received fechaFin: " + fechaFin);
+
+        System.out.println("Received fechaInicio: " + fechaInicioStr);
+        System.out.println("Received fechaFin: " + fechaFinStr);
 
         // Buscar la carrera por su id
-        CatCarrera carrera = catCarreraService.findById(idCatCarrera);
-        if (carrera == null) {
-            throw new RuntimeException("No se encontró la carrera para el id: " + idCatCarrera);
-        }
+
 
         // Obtener la fecha registrada por su id
         FechasRegistradas fechaRegistrada = fechasRegistradasService.getByIdFechasRegistradas(idFechasRegistradas);
@@ -335,9 +360,9 @@ public class AdministradorController {
         }
 
         // Actualizar los valores de la fecha registrada
-        fechaRegistrada.setCarrera(carrera);
-        fechaRegistrada.setFechaInicio(fechaInicio);
-        fechaRegistrada.setFechaFin(fechaFin);
+
+        fechaRegistrada.setFechaInicio(fechaInicioStr);
+        fechaRegistrada.setFechaFin(fechaFinStr);
 
         // Guardar los cambios en la base de datos
         fechasRegistradasService.guardar(fechaRegistrada);
@@ -345,5 +370,11 @@ public class AdministradorController {
         return "redirect:/administrador/fechas"; // Redirigir a la vista de fechas administradas
     }
 
-}
+    @GetMapping("/getByIdFechasRegistradas/{idFecha}")
+    @ResponseBody
+    public FechasRegistradas getByIdFechasRegistradas(@PathVariable Integer idFecha){
+        return fechasRegistradasService.getByIdFechasRegistradas(idFecha);
+    }
+
+    }
 
