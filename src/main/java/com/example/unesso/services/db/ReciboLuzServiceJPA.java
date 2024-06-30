@@ -22,12 +22,12 @@ public class ReciboLuzServiceJPA implements IReciboLuzService {
 		if(op.isPresent()) {
 			return op.get();
 		}
-		return null;	}
 
+		return null;	
+	}
+	
 	@Override
 	public ReciboLuz guardarReciboLuz(ReciboLuz reciboLuz) {
 		return reciboLuzRepo.save(reciboLuz);
 	}
-	
-	
 }

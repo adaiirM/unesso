@@ -9,4 +9,5 @@ public interface IFamiliaService {
 	Familia obtenerFamiliaPorId(Integer id);
 	Familia guardarFamilia(Familia familia);
 	Familia guardar(Familia familia);
+	void eliminarIngresosFamiliar(Integer idFamilia);
 }

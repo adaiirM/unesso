@@ -1,5 +1,6 @@
 package com.example.unesso.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,8 +15,8 @@ public class Trabajo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idTrabajo;
-	
-	@OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idDomicilio")
 	private Domicilio domicilio;
 	
@@ -25,6 +26,10 @@ public class Trabajo {
 	
 	private Double ingresoMensual;
 	
+
+	@OneToOne
+	@JoinColumn(name = "idAlumno")
+	private Alumno alumno;
 
 	public Integer getIdTrabajo() {
 		return idTrabajo;
@@ -64,6 +69,14 @@ public class Trabajo {
 
 	public void setIngresoMensual(Double ingresoMensual) {
 		this.ingresoMensual = ingresoMensual;
+	}
+
+	public Alumno getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
 	}
 
 	@Override

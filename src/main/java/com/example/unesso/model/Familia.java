@@ -161,9 +161,12 @@ public class Familia {
 
 	@Override
 	public String toString() {
-		return "Familia [idFamilia=" + idFamilia  + ", telefono=" + telefono + ", ingresoMensualPromedio="
-				+ ingresoMensualPromedio + ", numPersonasAportan=" + numPersonasAportan + ", numPersonasDependen="
-				+ numPersonasDependen + "]";
+		return "Familia [idFamilia=" + idFamilia + ", domicilio=" + domicilio + ", ingresoFamiliar=" + ingresoFamiliar
+				+ ", telefono=" + telefono + ", ingresoMensualPromedio=" + ingresoMensualPromedio
+				+ ", numPersonasAportan=" + numPersonasAportan + ", numPersonasDependen=" + numPersonasDependen
+				+ ", esViviendaTutor=" + esViviendaTutor + "]";
 	}
+
+	
 
 }

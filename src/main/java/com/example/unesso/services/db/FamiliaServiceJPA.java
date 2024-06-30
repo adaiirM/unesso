@@ -36,4 +36,17 @@ public class FamiliaServiceJPA implements IFamiliaService {
 		return familiaRepo.save(familia);
 	}
 
+
+	@Override
+	public void eliminarIngresosFamiliar(Integer idFamilia) {
+		Familia familia = new Familia();
+		Optional<Familia> op = familiaRepo.findById(idFamilia);
+		if(op.isPresent()) {
+			familia = op.get();
+		}
+		
+		familia.getIngresoFamiliar().clear();	
+		familiaRepo.save(familia);
+	}
+
 }

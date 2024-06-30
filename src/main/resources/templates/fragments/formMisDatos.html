@@ -67,7 +67,7 @@
 	    <h1 class="titulo ps-5 mb-2 mt-2" style="font: bold; font-weight: 660;">MIS DATOS</h1>
 	    <div class="row ps-5 pe-5">
 	        <div class="col-4 rounded colorFondo m-2 p-4">
-	            <h3 style="color: #6366F1;">Información general</h3>
+	            <h3 style="color: #6366F1;">Información generales efren </h3>
 	                <div class="col-md-12 pt-2">
 	                    <p class="textoInputs">Nombre Completo</p>
 	                    <input readonly type="text" class="form-control estiloInputs estiloInputs rounded" style="width: 100%;" id="inputNombreCompleto" >
@@ -392,7 +392,7 @@
 					</div>
 				</div>    
 	                <div class="col-md-12 mt-3">
-	                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidad?</p>
+	                    <p class="textoInputs">¿Qué otros medios utilizas para trasladarte a la universidades UNSIJ?</p>
 	                    
 	                    <!-- ********************************************************************* -->
 				        <!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no ha seleccionado un campo de esta seccion -->
@@ -401,19 +401,16 @@
 	                    
 	                    <!-- ********************************************************************* -->
 	                    
-	                    <div class="col-md-12">
+	                    <div class="col-12 col-md-12">
 								
 								<div th:each="grupoTransporte, grupoStatus : ${gruposTransporte}" style="display: flex; justify-content: space-between;">
-								    <div style="width: 48%;" th:each="transporte, transporteStatus : ${grupoTransporte}">
-								        <div class="form-check" style="margin-bottom: 30px;">
-								  
+								    <div style="width: 50%;" th:each="transporte, transporteStatus : ${grupoTransporte}">
 								             <div class="form-check" style="margin-bottom: 30px;">
 								                <input class="form-check-input" type="checkbox" th:field="*{mediosTraslado}" name="mediosTraslado" th:value="${transporte.idCatMediosTransporte}">
 								                <label class="form-check-label" for="checkbox${transporte.idCatMediosTransporte}">
 								                    <p class="subtitulo" th:text="${transporte.nombreMediosTransporte}"></p>
 								                </label>
 								            </div>
-								        </div>
 								    </div>
 								</div>
 
@@ -520,10 +517,10 @@
 		-->
 		
 		
-    	<button type="button" id="guardar" class="btn btn-primary">Guardar</button>
+    	<button type="button" id="guardar" class="btn btn-primary">Guardar avances</button>
 
 	    <!-- Botón para enviar con validaciones -->
-	    <button type="button" id="validar" class="btn btn-primary">Enviar</button>		       
+	    <button type="button" id="validar" class="btn btn-primary">Siguiente</button>		       
 	</div>
 </form>
 

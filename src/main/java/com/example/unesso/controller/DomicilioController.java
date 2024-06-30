@@ -19,6 +19,7 @@ import com.example.unesso.model.CatMunicipio;
 import com.example.unesso.model.Domicilio;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.services.IAlumnoService;
+import com.example.unesso.services.ICatCodigoPostalService;
 import com.example.unesso.services.ICatEstadoService;
 import com.example.unesso.services.ICatLocalidadService;
 import com.example.unesso.services.ICatMunicipioService;
@@ -47,6 +48,9 @@ public class DomicilioController {
 	@Autowired
 	private IDomicilioService serviceDomicilio;
 	
+	@Autowired
+	private ICatCodigoPostalService serviceCP;
+	
 	
 	@GetMapping("/obtenerMunicipiosPorEstado")
 	@ResponseBody
@@ -54,7 +58,6 @@ public class DomicilioController {
 		CatEstado estado = serviceEstado.estadoPorId(estadoId);
 		return serviceMunicipio.listaMunicipiosPorEstado(estado);
 	}
-	 
 	 
 	@GetMapping("/obtenerLocalidadesPorMunicipio")
 	@ResponseBody
@@ -67,7 +70,6 @@ public class DomicilioController {
 	@ResponseBody
 	public CatCodigoPostal obtenerCodigoPostalPorLocalidad(@RequestParam("localidadId") Integer localidadId) {
 		CatLocalidad localidad = serviceLocalidad.buscarPorId(localidadId);
-		System.out.println(localidad.getCatCodigoPostal());
 		return localidad.getCatCodigoPostal();
 	}
 	

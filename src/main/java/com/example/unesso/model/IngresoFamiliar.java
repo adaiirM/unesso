@@ -34,16 +34,18 @@ public class IngresoFamiliar {
 	
 	private Double ingresoNeto;
 	
-
+	private String lugarTrabajo;
 	
-	public Integer getIdIngresosFamiliar() {
+	private String puestoTrabajo;
+
+	public Integer getIdIngresoFamiliar() {
 		return idIngresoFamiliar;
 	}
 
 
 
-	public void setIdIngresosFamiliar(Integer idIngresosFamiliar) {
-		this.idIngresoFamiliar = idIngresosFamiliar;
+	public void setIdIngresoFamiliar(Integer idIngresoFamiliar) {
+		this.idIngresoFamiliar = idIngresoFamiliar;
 	}
 
 
@@ -120,13 +122,35 @@ public class IngresoFamiliar {
 
 
 
+	public String getLugarTrabajo() {
+		return lugarTrabajo;
+	}
+
+
+
+	public void setLugarTrabajo(String lugarTrabajo) {
+		this.lugarTrabajo = lugarTrabajo;
+	}
+
+
+
+	public String getPuestoTrabajo() {
+		return puestoTrabajo;
+	}
+
+
+
+	public void setPuestoTrabajo(String puestoTrabajo) {
+		this.puestoTrabajo = puestoTrabajo;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "IngresoFamiliar [idIngresosFamiliar=" + idIngresoFamiliar + ", catParentesco="
-				+ catParentesco + ", catOcupacion=" + catOcupacion + ", nombrePersona=" + nombrePersona
-				+ ", ingresoBruto=" + ingresoBruto + ", ingresoNeto=" + ingresoNeto + "]";
+		return "IngresoFamiliar [idIngresoFamiliar=" + idIngresoFamiliar + ", catParentesco=" + catParentesco
+				+ ", catOcupacion=" + catOcupacion + ", nombrePersona=" + nombrePersona + ", ingresoBruto="
+				+ ingresoBruto + ", ingresoNeto=" + ingresoNeto + ", lugarTrabajo=" + lugarTrabajo + ", puestoTrabajo="
+				+ puestoTrabajo + "]";
 	}
-	
-	
-	
 }

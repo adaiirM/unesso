@@ -36,10 +36,11 @@ import com.example.unesso.model.CatOcupacion;
 import com.example.unesso.model.CatParentesco;
 import com.example.unesso.model.CatServicios;
 import com.example.unesso.model.Domicilio;
-import com.example.unesso.model.EstadoFormularios;
 import com.example.unesso.model.Familia;
 import com.example.unesso.model.GastosFam;
+import com.example.unesso.model.IngresoFamiliar;
 import com.example.unesso.model.ReciboLuz;
+import com.example.unesso.model.Trabajo;
 import com.example.unesso.model.TutorEconomico;
 import com.example.unesso.model.Usuario;
 import com.example.unesso.services.IAlumnoService;
@@ -63,9 +64,12 @@ import com.example.unesso.services.IDomicilioService;
 import com.example.unesso.services.IEstadoFormulariosService;
 import com.example.unesso.services.IFamiliaService;
 import com.example.unesso.services.IGastosFamService;
+import com.example.unesso.services.IIngresoFamiliarService;
 import com.example.unesso.services.IReciboLuzService;
+import com.example.unesso.services.ITrabajoService;
 import com.example.unesso.services.ITutorEconomicoService;
 import com.example.unesso.services.IUsuarioService;
+import com.example.unesso.util.Utileria;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -78,8 +82,6 @@ public class AlumnoController {
 	
 	@Value("${unessi.ruta.comprobantes}")
 	private String rutaComprobantes;
-		
-		
 	
 	@Value("${inesis.ruta.recibosLuz}")
 	private String rutaRecibosLuz;
@@ -186,7 +188,11 @@ public class AlumnoController {
 	@Autowired
 	private ICatInternetService catInternetService;
 	
+	@Autowired 
+	private ITrabajoService serviceTrabajo;
 	
+	@Autowired
+	private IIngresoFamiliarService serviceIngresoFam;
 	
 	@GetMapping("/menuSolicitar")
 	public String menuSolicitar(Authentication auth, Model model) {
@@ -244,7 +250,11 @@ public class AlumnoController {
 		Familia f = new Familia();
 		System.out.println("Ob: " + a.getObservaciones());
 		if(a.getFamilia() != null) {
+			
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
+			System.out.println(f.toString());
+			System.out.println("Ingreso familiar: " + f.getIngresoFamiliar());
+
 			if(f.getGastosFam() != null) {
 				if(f.getGastosFam().getReciboLuz() != null) {
 					// Obtener la fecha del objeto
@@ -300,20 +310,10 @@ public class AlumnoController {
 	
 	@PostMapping("/guardarTutor")
 	public String guardarDom(@RequestParam("accion") String accion, Authentication auth, Alumno alumno, BindingResult result) {
-		/*if(result.hasErrors()) {
-			for (ObjectError error: result.getAllErrors()){
-				System.out.println("Ocurrio un error: " + error.getDefaultMessage());
-			}
-			
-			return "alumno/formTutor";
-		}*/
-		
-		//System.out.println("1. Alumno formulario: " + alumno.toString());
-		
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
 		
-		//System.out.println("2. Alumno sesion: " + alumnoSesion.toString());
+		System.out.println("DATOS: " + alumno);
 		
 		//Verificar cuando no fue seleecionada una opcion en los select 
 		if(alumno.getTutorEconomico().getCatOcupacion().getIdCatOcupacion() == null) {
@@ -328,159 +328,227 @@ public class AlumnoController {
 			alumno.getTutorEconomico().getDomicilio().setCatLocalidad(null);
 		}
 		
+		//Verificar que el alumno tenga un trabajo 
+		if(alumno.getTrabajo().getDomicilio().getCatLocalidad().getIdCatLocalidad() == null) {
+			alumno.getTrabajo().getDomicilio().setCatLocalidad(null);
+		}
+
 		//Asignar el gasto mensual a alumno
 		alumnoSesion.setGastoMensual(alumno.getGastoMensual());
 		
 		//Asignar si el alumno depende economicamente
 		alumnoSesion.setDependeEconomicamente(alumno.getDependeEconomicamente());
 		
+		System.out.println("Daots del alumnoSesion: " + alumnoSesion.toString());
+		
+		//Verificar si el alumno tiene registrado un trabajo
+		if(alumnoSesion.getTrabajo() == null) {
+			//Verificar que el alumno tenga un trabajo 
+			if (alumno.getTrabajo() != null) {
+				alumno.getTrabajo().setAlumno(alumnoSesion);
+			}	
+			alumnoSesion.setTrabajo(alumno.getTrabajo());
+			serviceAlumno.guardar(alumnoSesion);
+			
+			//Si ya tiene registrado uno, modificar
+		} else {
+			//Verificar que el usuario dependa economicamente
+			if(alumno.getDependeEconomicamente().equals(false)) {
+				
+				// Si depende, guardar el domiclio y trabajo actualizados.
+				Domicilio domicilioTrabajoDB = serviceDomicilio.buscarPorId(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
+				Domicilio domicilioTrabajoForm = alumno.getTrabajo().getDomicilio();
+				domicilioTrabajoForm.setIdDomicilio(domicilioTrabajoDB.getIdDomicilio());
+				
+				serviceDomicilio.guardar(domicilioTrabajoForm);
+				
+				//Actualizar datos del trabajo con los datos del formulario
+				Trabajo trabajoDB = serviceTrabajo.buscarPorId(alumnoSesion.getTrabajo().getIdTrabajo());
+				Trabajo trabajoForm = alumno.getTrabajo();
+				trabajoForm.setIdTrabajo(trabajoDB.getIdTrabajo());
+				trabajoForm.setAlumno(alumnoSesion);
+				serviceTrabajo.guardarTrabajo(trabajoForm);
+				
+				//Si no depende, se borran los registros
+			} else {
+				
+				Domicilio domicilioVacio = new Domicilio();	
+				
+				if(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio() == null) {
+					domicilioVacio = null;
+				} 
+				
+				domicilioVacio.setIdDomicilio(alumnoSesion.getTrabajo().getDomicilio().getIdDomicilio());
+				serviceDomicilio.guardar(domicilioVacio);
+				
+				alumnoSesion.getTrabajo().setTelefono(null);
+				alumnoSesion.getTrabajo().setNombreTrabajo(null);
+				alumnoSesion.getTrabajo().setIngresoMensual(null);
+				
+				serviceAlumno.guardar(alumnoSesion);
+			}
+		}
 		
 		//Verificar si el alumno tiene relacionado un tutor
 			//Si tiene uno, actualizar datos
 		if(alumnoSesion.getTutorEconomico() != null) {
 			
-			//Obtener el tutor de la base de datos mediante el id dentro del alumno
+			//Actualizar datos del domiciliio del tutor con los datos del formulario
+			Domicilio domicilioDB = serviceDomicilio.buscarPorId(alumnoSesion.getTutorEconomico().getDomicilio().getIdDomicilio());
+			Domicilio domicilioForm = alumno.getTutorEconomico().getDomicilio();
+			domicilioForm.setIdDomicilio(domicilioDB.getIdDomicilio());
+			serviceDomicilio.guardar(domicilioForm);
+			
+			//Actualizar datos del tutor con los datos del formulario
 			TutorEconomico tutorDB =  serviceTutorEconomico.obtenerPorId(alumnoSesion.getTutorEconomico().getIdTutorEconomico());
-			//System.out.println("Tutor de la base de datos: " + tutorDB.toString());
-			
-			//Verificar si el domicilio del tutor es igual al del alumno
-			if(alumno.getTutorEconomico().getEsViviendaAlumno().equals(true)) {
-				//Obtener el domicilio relacionado al alumno 
-				Domicilio domAlumno = serviceDomicilio.buscarPorId(alumnoSesion.getDomicilio().getIdDomicilio());
-				
-				//Quitar los datos traidos de la base de datos
-				tutorDB.setDomicilio(null);
-				//Asignar el objeto obtenido del domiclio del alumno
-				tutorDB.setDomicilio(domAlumno);
-				
-				//Guardara en la bd
-				serviceDomicilio.guardarDomicilio(tutorDB.getDomicilio());
-				
-				//Si no es igual, actualizar el domicilio de la base de datos
-			} else {
-				//Crear domicilio que almacena el domicilio de la base de datos
-				Domicilio dommicilioBD = serviceDomicilio.buscarPorId(alumnoSesion.getTutorEconomico().getDomicilio().getIdDomicilio());
-				
-				//Crear objeto de domicilio para almacenar el domicilio proveniente del formulario
-				Domicilio domicilioFormulario = alumno.getTutorEconomico().getDomicilio();
-				
-				//Asignar al domiclio del formulario el id del domiclio de la base de datos. para que teber el id correspondiente y los nuevos datos
-				domicilioFormulario.setIdDomicilio(dommicilioBD.getIdDomicilio());
-				
-				//Asignar el id del tutor y el objeto del domicilio
-				alumno.getTutorEconomico().setIdTutorEconomico(tutorDB.getIdTutorEconomico());
-				alumno.getTutorEconomico().setDomicilio(domicilioFormulario);
-				
-				tutorDB = alumno.getTutorEconomico();
-				
-				//Guardara en la bd
-				serviceDomicilio.guardarDomicilio(domicilioFormulario);
-			}
-			
-			serviceTutorEconomico.guardarTutor(tutorDB);
+			TutorEconomico tutorForm = alumno.getTutorEconomico();
+			tutorForm.setIdTutorEconomico(tutorDB.getIdTutorEconomico());
+			serviceTutorEconomico.guardarTutor(tutorForm);
 			
 			//Si no tiene un tutor relacionado, crear uno
 		} else {
-			
-			//Obtener el tutor de la base de datos mediante el id dentro del alumno
-			TutorEconomico t =  serviceTutorEconomico.obtenerPorId(alumnoSesion.getTutorEconomico().getIdTutorEconomico());
-			System.out.println("Tutor de la base de datos: " + t.toString());
-				
-			//Verificar si el domicilio del tutor es igual al del alumno
-			if(alumno.getTutorEconomico().getEsViviendaAlumno().equals(true)) {
-				
-				//Buscar el el domiclio por el id del alumno de la sesion para encontrar el domiclio asociado
-				Domicilio domAlumno = serviceDomicilio.buscarPorId(alumnoSesion.getDomicilio().getIdDomicilio());
-				
-				//Crear objeto para guardar los datos del tutor del formulario
-				TutorEconomico tutorEconomicoForm = alumno.getTutorEconomico();
-				//Quitar los datos traidos del formulario
-				tutorEconomicoForm.setDomicilio(null);
-				
-				//Asignar el objeto obtenido del domiclio del alumno
-				tutorEconomicoForm.setDomicilio(domAlumno);
-				
-				//Actualizar el tutor del alumno del formulario
-				alumno.setTutorEconomico(tutorEconomicoForm);
-			}
-			
-			//Guardar el nuevo tutor 
-			serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());
-			//Actualizar el alumno de la base de datos
-			serviceAlumno.guardarAlumno(alumnoSesion);
-		}
-		
-		
-		if(accion.equals("enviar")) {
-			if(alumnoSesion.getEstadoFormularios() == null) {
-				EstadoFormularios ef = new EstadoFormularios();
-				ef.setFormDependienteEconomico(true);
-				EstadoFormularios e = serviceEstadoFormularios.guardarEstadoFormularios(ef);
-				alumnoSesion.setEstadoFormularios(e);
-				serviceAlumno.guardarAlumno(alumnoSesion);
-			} else {
-				alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(false);
-				if(alumnoSesion.getTutorEconomico().getCatOcupacion() != null) {
-					alumnoSesion.getTutorEconomico();
-				}
-				serviceAlumno.guardarAlumno(alumnoSesion);
-			}
+			TutorEconomico tutorE = serviceTutorEconomico.guardarTutor(alumno.getTutorEconomico());			
+			alumnoSesion.setTutorEconomico(tutorE);
+			//serviceAlumno.guardar(alumnoSesion);
 		}
 
-		return "redirect:/alumno/menuSolicitar";
-	}
-	
-	private void actualizarDomicilio(Alumno alumno) {
+		
+
+		if(accion.equals("enviar")) {
+			alumnoSesion.getEstadoFormularios().setFormDependienteEconomico(true);
+			serviceAlumno.guardarAlumno(alumnoSesion);
+			return "redirect:/alumno/miFamilia";
+		} else {
+			serviceAlumno.guardarAlumno(alumnoSesion);
+			return "redirect:/alumno/menuSolicitar";
+		}
+		
 		
 	}
+	
 	
 	@PostMapping("/guardarGastos")
-	public String guardarGastos(Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
-			@RequestParam("observaciones") String observacones) {
-		if (!multiPart.isEmpty()) {
-			System.out.print(multiPart);
-
-		}
+	public String guardarGastos(@RequestParam("accion") String accion, Authentication auth, Familia familia,  @RequestParam("archivoReciboLuz") MultipartFile multiPart, 
+								@RequestParam("observaciones") String observacones) {
 		
-		System.out.println("Familia del formulario: " + familia.toString());
-		System.out.println(observacones);
+		
 		
 		//Recuperar datos de sesion para conocer el alumno de la sesión
-		Alumno a = obtenerAlumnoSesion(auth);
+		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
+		Familia familiaDB = new Familia();
 		
-		if(a.getFamilia() != null) {
-			
-			familia.setIdFamilia(a.getFamilia().getIdFamilia());
-			System.out.println("Antes del if" + a.getFamilia().getIdFamilia());
-			
-			
-			if(a.getFamilia().getGastosFam() != null) {
-				GastosFam gf = serviceGastosFam.buscarPorId(a.getFamilia().getGastosFam().getIdGastosFam());
-				GastosFam gfEnviar = familia.getGastosFam();
-				gfEnviar.setIdGastosFam(gf.getIdGastosFam());
-				
-				if(a.getFamilia().getGastosFam().getReciboLuz() != null) {
-					System.out.println("Entra");
-					ReciboLuz rb = serviceReciboLuz.buscarPorId(a.getFamilia().getGastosFam().getReciboLuz().getIdReciboLuz());
-					ReciboLuz rbEnviar = familia.getGastosFam().getReciboLuz();
-					rbEnviar.setIdReciboLuz(rb.getIdReciboLuz());
-					System.out.println(rbEnviar.toString());
-					serviceReciboLuz.guardarReciboLuz(rbEnviar);
-				}
-				serviceGastosFam.guardarGastoFam(gfEnviar);
-			}			
-			
-			serviceFamilia.guardarFamilia(familia);
-		} else {
-			Familia f = serviceFamilia.guardarFamilia(familia);
-			a.setFamilia(f);
-			serviceAlumno.guardarAlumno(a);
+		System.out.println("FAMILIA: " + familia.getIngresoFamiliar());
+		List<IngresoFamiliar> ingresoFamiliarDB = new ArrayList<>();
+		
+		if(alumnoSesion.getFamilia().getIngresoFamiliar() != null) {
+			ingresoFamiliarDB = alumnoSesion.getFamilia().getIngresoFamiliar();
 		}
 		
-		a.setObservaciones(observacones);
-		serviceAlumno.guardarAlumno(a);
+		if(alumnoSesion.getFamilia() != null) {
+			//Recuperar datos de la base de datos de la familia
+			familiaDB = serviceFamilia.obtenerFamiliaPorId(alumnoSesion.getFamilia().getIdFamilia());
+		} 
+			
+		//Verificar que el alumno tenga un objeto familia
+		if(familiaDB != null) {
+			familiaDB.setNumPersonasAportan(familia.getNumPersonasAportan());
+			
+			System.out.println("Datos de ingreso DB: " + ingresoFamiliarDB);
+			System.out.println("Datos de ingreso form: " + familia.getIngresoFamiliar());
+
+			if(!alumnoSesion.getFamilia().getIngresoFamiliar().isEmpty()) {
+				Boolean nuevasPersonasAportan = false;
+				//Verificar si se ingresaron nuevas personas 
+				for(IngresoFamiliar ingreso: familia.getIngresoFamiliar()) {
+					if(ingreso.getIdIngresoFamiliar() == null) {
+						nuevasPersonasAportan = true;
+					}
+				}
+				
+				System.out.println("Se ingresaron nuevas personas: " + nuevasPersonasAportan + ", " + familiaDB.getIdFamilia());
+
+				
+				//Si se agregraron nuevas personas
+				if(nuevasPersonasAportan.equals(true)) {
+					System.out.print("quee " + alumnoSesion.getFamilia().getIngresoFamiliar());
+					for(IngresoFamiliar ingreso : alumnoSesion.getFamilia().getIngresoFamiliar()) {
+						serviceIngresoFam.eliminar(ingreso.getIdIngresoFamiliar());
+						alumnoSesion.getFamilia().getIngresoFamiliar().remove(ingreso);
+					}
+				} else {
+					for(IngresoFamiliar ingreso : familia.getIngresoFamiliar()) {
+						
+						ingreso.setFamilia(familiaDB);
+					}
+					familiaDB.setIngresoFamiliar(familia.getIngresoFamiliar());
+					serviceFamilia.guardarFamilia(familiaDB);
+				}
+			
+				
+			}else {
+				if(familia.getIngresoFamiliar() != null) {
+					for(IngresoFamiliar ingreso: familia.getIngresoFamiliar()) {
+						ingreso.setFamilia(familiaDB);
+					}
+					
+					familiaDB.setIngresoFamiliar(familia.getIngresoFamiliar());
+				}
+				
+			}
+			
+			//Si el pago bimestral no contiene nada, guardar un 0
+			if(familia.getGastosFam().getReciboLuz().getPagoBimestral().equals("")) {
+				familia.getGastosFam().getReciboLuz().setPagoBimestral("0");
+				familia.getGastosFam().getReciboLuz().setPagoPromedioMes("0");
+			}
+			
+			if(alumnoSesion.getFamilia().getGastosFam() != null) {
+				//Obtener datos de gastosFam de la base de datos
+				GastosFam gastosFamDB = serviceGastosFam.buscarPorId(alumnoSesion.getFamilia().getGastosFam().getIdGastosFam());
+				//Guaradar los datos del formulario
+				GastosFam gastosFamForm = familia.getGastosFam();
+				
+				//Asignar el id de la base datos a los nuevos datos
+				gastosFamForm.setIdGastosFam(gastosFamDB.getIdGastosFam());
+
+				//Verificar el alumno ya tiene un recibo de luz registrado
+				if(alumnoSesion.getFamilia().getGastosFam().getReciboLuz() != null) {
+					//Obtener datos del reciboLuz de la base de datos
+					ReciboLuz reciboLuzDB = serviceReciboLuz.buscarPorId(alumnoSesion.getFamilia().getGastosFam().getReciboLuz().getIdReciboLuz());
+					//Guaradar los datos del formulario
+					ReciboLuz reciboLuzForm = familia.getGastosFam().getReciboLuz();
+					
+					System.out.println("Datos del recibo de luz: " + reciboLuzForm.toString());
+					
+					if (!multiPart.isEmpty()) {
+						String nombreArchivo = Utileria.guardarArchivo(multiPart, rutaRecibosLuz);
+						if (nombreArchivo != null){ // La imagen si se subio
+							// Procesamos la variable nombreImagen
+							reciboLuzForm.setNombreArchivo(nombreArchivo);
+							reciboLuzForm.setNombreOriginal(multiPart.getOriginalFilename());
+						}
+					}
+					
+					//Asignar el id de la base datos a los nuevos datos
+					reciboLuzForm.setIdReciboLuz(reciboLuzDB.getIdReciboLuz());
+					
+					//Actualizar reciboLuz en la base de datos
+					serviceReciboLuz.guardarReciboLuz(reciboLuzForm);
+				} 
+				//Actualizar gastosFam en la base de datos
+				serviceGastosFam.guardarGastoFam(gastosFamForm);
+			}else {
+				familiaDB.setGastosFam(familia.getGastosFam());
+				serviceFamilia.guardarFamilia(familiaDB);
+			}
+		}
+		
+		if(accion.equals("enviar")) {
+			alumnoSesion.getEstadoFormularios().setFormMisGatos(true);
+		}
 		
 		return "redirect:/alumno/menuSolicitar";
+
 	}
 	
 	@ModelAttribute
@@ -500,23 +568,22 @@ public class AlumnoController {
 			model.addAttribute("parentescos", listaParentesco);
 			System.out.println(a);
 			model.addAttribute("alumnoSesion", a);
-		}
-		
-		
+
+		}		
 		
 		model.addAttribute("carreras", catCarreraService.buscarTodas());
-		 model.addAttribute("catEstado", catEstadoService.buscarTodos());
-		 model.addAttribute("estadosCiviles", catEstadoCivilService.buscarTodos()); 
-		 model.addAttribute("catTipoTransporte", catTipoTransporteService.buscarTodos()); 
-		 model.addAttribute("catSemestre",iCatSemestreService.buscarTodos());
-		 model.addAttribute("catEscolaridad", catEscolaridadService.buscarTodas());
-		 model.addAttribute("catTipoVivienda", vatTipoViviendaService.buscarTodas());
-		 model.addAttribute("catSituacionViviendaFam", catSituacionViviendaService.buscarTodas());
-		 model.addAttribute("catMaterialVivienda",catMaterialViviendaService.buscarTodas());
-		 model.addAttribute("catPerentesco",catParentescoService.buscarTodos());
-		 model.addAttribute("catSituacionViviendaUni", catSituacionViviendaUniService.buscarTodas());
-		 model.addAttribute("catOcupacion",catOcupacionService.buscarTodas());
-		 model.addAttribute("catInternet",catInternetService.buscarTodos());
+		model.addAttribute("catEstado", catEstadoService.buscarTodos());
+		model.addAttribute("estadosCiviles", catEstadoCivilService.buscarTodos()); 
+		model.addAttribute("catTipoTransporte", catTipoTransporteService.buscarTodos()); 
+		model.addAttribute("catSemestre",iCatSemestreService.buscarTodos());
+		model.addAttribute("catEscolaridad", catEscolaridadService.buscarTodas());
+		model.addAttribute("catTipoVivienda", vatTipoViviendaService.buscarTodas());
+		model.addAttribute("catSituacionViviendaFam", catSituacionViviendaService.buscarTodas());
+		model.addAttribute("catMaterialVivienda",catMaterialViviendaService.buscarTodas());
+		model.addAttribute("catPerentesco",catParentescoService.buscarTodos());
+		model.addAttribute("catSituacionViviendaUni", catSituacionViviendaUniService.buscarTodas());
+		model.addAttribute("catOcupacion",catOcupacionService.buscarTodas());
+		model.addAttribute("catInternet",catInternetService.buscarTodos());
 		 
 		 //Lista de catMediosTransporte
 		 List<CatMediosTransporte> mediosTransporte =  catMediosTransporteService.buscarTodos();
@@ -544,13 +611,9 @@ public class AlumnoController {
 	            IntStream.range(0, (catMedios.size() + 1) / 2)
 	                .mapToObj(i -> catMedios.subList(i * 2, Math.min(i * 2 + 2, catMedios.size())))
 	                .collect(Collectors.toList());
-	               
-	     model.addAttribute("catMedios", medios);
-		 
-		 
-		
+
+	     model.addAttribute("catMedios", medios);	
 	}
-	
 	
 	private Alumno obtenerAlumnoSesion(Authentication auth) {
 		String correo = auth.getName();

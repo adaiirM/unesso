@@ -37,6 +37,7 @@ public class HomeController {
 			rols.add(rol.getAuthority());
 		}
 		
+		
 		if(rols.get(0).equals("Alumno")) {
 			Usuario u = serviceUsuario.buscarPorCorreo(correo);
 			Alumno a = serviceAlumno.buscarPorUsuario(u);
@@ -45,9 +46,9 @@ public class HomeController {
 			/*Alumno a = serviceAlumno.buscarPorUsuario(serviceUsuario.buscarPorCorreo(correo));
 			model.addAttribute("nombreAlumno", a.getNombre());
 			System.out.println(a.getNombre());*/
-			return "menuAlumno";
+			return "alumno/menuAlumno";
 		}else {
-			return "menuAlumno";
+			return "administrador/menuAdministrador";
 		}
 	}
 	
