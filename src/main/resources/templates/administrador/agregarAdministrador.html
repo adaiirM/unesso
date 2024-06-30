@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Agregar Alumnos</title>
+</head>
+<body>
+<nav id="navAdministrador"></nav>
+<div class="m-5 mt-3">
+    <div class="row">
+        <ol class="p-1 colorFondo breadcrumb bread-primary ">
+            <a href="menuAdministrador.html"><button class="btn camino" id="botonInicio">Inicio</button></a>
+            <a href="administrarAdministradores.html"><button class="btn camino" id="botonSolicitudes">Administradores</button></a>
+            <a href="agregarAdminsitrador.html"><button class="btn btn-primary camino localizacion" id="solicitudesCarrera">Agregar</button></a>
+        </ol>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center ms-4 me-4">
+    <h1 class="titulo text-center">Agregar administrador</h1>
+</div>
+
+<div class="mt-5 ms-5 me-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xs-12 col-sm-12 col-sm-10 col-lg-6 col-md-6 rounded colorFondo m-2 p-4">
+            <h3 style="color: #6366F1;">Datos personales</h3>
+            <label for="nombreAlumno" class="ms-1" style="color: #6366F1;">
+                Nombre
+            </label>
+            <input id="nombreAlumno" type="text" class="ms-1 w-100 form-control">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <label for="apellidoPaternoAlumno" class="ms-1" style="color: #6366F1;">
+                        Apellido Paterno
+                    </label>
+                    <input id="apellidoPaternoAlumno" type="text" class="ms-1 w-100 form-control">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="apellidoMaternoAlumno" class="ms-1" style="color: #6366F1;">
+                        Apellido Materno
+                    </label>
+                    <input id="apellidoMaternoAlumno" type="text" class="ms-1 w-100 form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <label for="curpAlumno" class="ms-1" style="color: #6366F1;">Correo electronico</label>
+                    <input id="curpAlumno" type="text" class="ms-1 w-100 form-control">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="carreraSelect" class="ms-1" style="color: #6366F1;">
+                        Area
+                    </label>
+                    <select id="carreraSelect" name="opciones" class="col-1 text-start estiloInputs form-select"
+                            style="width: 100%;">
+                        <option value="opcion1" class="textoInputs">Ingeniería Forestal</option>
+                        <option value="opcion2" class="textoInputs">Licenciatura en Ciencias Ambientales para el
+                            Desarrollo Comunitario</option>
+                        <option value="opcion3" class="textoInputs">Ingeniería de Desarrollo de Software y Sistemas
+                            Inteligentes</option>
+                        <option value="opcion4" class="textoInputs">Licenciatura en Biología</option>
+                        <option value="opcion4" class="textoInputs">Licenciatura en Administración Turística</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center text-center">
+        <div class="col-6">
+            <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Agregar</button>
+        </div>
+    </div>
+</div>
+
+<footer id="footer"></footer>
+<script src="../javaScript.js/funcionamiento.js"></script>
+</body>
+</html>
