@@ -11,17 +11,17 @@ import jakarta.persistence.Table;
 public class CatSituacionTrabajo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer idCatSituacionTrabajo;
+	private Integer idCatSituacion;
 	
 	private String nombreSituacionTrabajo;
 	
 	
-	public Integer getIdCatSituacionTrabajo() {
-		return idCatSituacionTrabajo;
+	public Integer getIdCatSituacion() {
+		return idCatSituacion;
 	}
 	
-	public void setIdCatSituacionTrabajo(Integer idCatSituacionTrabajo) {
-		this.idCatSituacionTrabajo = idCatSituacionTrabajo;
+	public void setIdCatSituacion(Integer idCatSituacion) {
+		this.idCatSituacion = idCatSituacion;
 	}
 	
 	public String getNombreSituacionTrabajo() {
@@ -35,7 +35,7 @@ public class CatSituacionTrabajo {
 	
 	@Override
 	public String toString() {
-		return "CatSituacionTrabajo [idCatSituacionTrabajo=" + idCatSituacionTrabajo + ", nombreSituacionTrabajo="
+		return "CatSituacionTrabajo [idCatSituacionTrabajo=" + idCatSituacion + ", nombreSituacionTrabajo="
 				+ nombreSituacionTrabajo + "]";
 	}
 	

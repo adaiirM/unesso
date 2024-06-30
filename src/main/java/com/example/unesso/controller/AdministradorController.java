@@ -55,14 +55,9 @@ public class AdministradorController {
         return "administrador/menuAdministrador";
     }
 
-    @GetMapping("/estudiosSocieconomicos")
-    public String todasLasSolicitudes() {
-        return "administrador/todasSolicitudes";
-    }
-
-    @GetMapping("/solicitudesRevisadas")
-    public String solicitudesRevisadas() {
-        return "administrador/solicitudesRevisadas";
+    @GetMapping("/administradores")
+    public String Administradores() {
+        return "administrador/Administradores";
     }
 
     @GetMapping("/alumnos")
@@ -87,6 +82,62 @@ public class AdministradorController {
 
         return "administrador/administrarAlumno";
 
+    }
+
+    @GetMapping("/estudiosSocieconomicos")
+    public String estudiosSocioeconomicos(Model model, @RequestParam("page") Optional<Integer> page,
+                                @RequestParam("size") Optional<Integer> size,
+                                @RequestParam("keyword") Optional<String> keyword) {
+        int currentPage = page.orElse(0);
+        int pageSize = size.orElse(10); // Valor por defecto (solicitudes que muestra)
+
+        String currentKeyword = keyword.orElse("");
+
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by("nombre").ascending());
+
+        Page<Alumno> alumnoPage = alumnoService.buscarAlumno(currentKeyword, pageable);
+
+
+        model.addAttribute("alumnos", alumnoPage.getContent());
+        model.addAttribute("totalPages", alumnoPage.getTotalPages());
+        model.addAttribute("totalAlumnos", alumnoPage.getTotalElements());
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("size", pageSize);
+        model.addAttribute("keyword", currentKeyword);
+
+        return "administrador/todasSolicitudes";
+
+    }
+
+    @GetMapping("/solicitudAlumno")
+    public String getSolicitudAlumno(@RequestParam("idAlumno") Integer idAlumno,
+                                     Model model){
+        Alumno alumno = alumnoService.getByIdAlumno(idAlumno);
+        List<IngresoFamiliar> ingresosFamiliares = alumno.getFamilia().getIngresoFamiliar();
+
+        double ingresoTotal = ingresosFamiliares.stream()
+                .mapToDouble(IngresoFamiliar::getIngresoNeto)
+                .sum();
+
+        double gastoTotal = 0;
+
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastosAlimentacion();
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastoRenta();
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastoServicios();
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastoEscolares();
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastoRopa();
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastoTransporte();
+        gastoTotal += alumno.getFamilia().getGastosFam().getGastoOtros();
+
+
+        if (alumno == null) {
+            return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
+        }
+
+        model.addAttribute("alumno", alumno);
+        model.addAttribute("ingresoTotal", ingresoTotal);
+        model.addAttribute("gastosTotales",gastoTotal);
+        return "administrador/formResultado";
     }
 
     @PostMapping("/eliminarAlumno")
