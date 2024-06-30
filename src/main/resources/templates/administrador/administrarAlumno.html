@@ -9,7 +9,7 @@
     <title>Administrar alumnos</title>
 </head>
 <body>
-<nav th:replace="~{navAdministrador.html}"></nav>
+<nav th:insert="~{administrador/navAdministrador.html}"></nav>
 
 <div class="m-5 mt-3">
     <div class="row">
@@ -41,10 +41,10 @@
             <p class="textoInputs me-2 mb-0 ms-5">Mostrar</p>
             <form th:action="@{/administrador/alumnos}" method="get" class="d-flex">
                 <select name="size" class="estiloInputs" style="width: 55px;" onchange="this.form.submit()">
-                    <option value="1" class="textoInputs" th:selected="${size == 1}">1</option>
-                    <option value="2" class="textoInputs" th:selected="${size == 2}">2</option>
-                    <option value="3" class="textoInputs" th:selected="${size == 3}">3</option>
                     <option value="10" class="textoInputs" th:selected="${size == 10}">10</option>
+                    <option value="20" class="textoInputs" th:selected="${size == 20}">20</option>
+                    <option value="30" class="textoInputs" th:selected="${size == 30}">30</option>
+                    <option value="40" class="textoInputs" th:selected="${size == 40}">40</option>
                 </select>
                 <p class="textoInputs ms-2 mb-0 me-2">Solicitudes</p>
                 <input type="hidden" name="keyword" th:value="${keyword}">
@@ -130,7 +130,7 @@
 
 
 
-<footer th:replace="~{footer.html}"></footer>
+<footer th:insert="~{fragments/footer.html}"></footer>
 <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
 </html>

@@ -52,17 +52,17 @@ public class AdministradorController {
 
     @GetMapping("/menuAdministrador")
     public String menuAdministrador() {
-        return "/menuAdministrador";
+        return "administrador/menuAdministrador";
     }
 
     @GetMapping("/estudiosSocieconomicos")
     public String todasLasSolicitudes() {
-        return "/todasSolicitudes";
+        return "administrador/todasSolicitudes";
     }
 
     @GetMapping("/solicitudesRevisadas")
     public String solicitudesRevisadas() {
-        return "/solicitudesRevisadas";
+        return "administrador/solicitudesRevisadas";
     }
 
     @GetMapping("/alumnos")
@@ -70,7 +70,7 @@ public class AdministradorController {
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("keyword") Optional<String> keyword) {
         int currentPage = page.orElse(0);
-        int pageSize = size.orElse(3); // Valor por defecto (solicitudes que muestra)
+        int pageSize = size.orElse(10); // Valor por defecto (solicitudes que muestra)
 
         String currentKeyword = keyword.orElse("");
 
@@ -85,7 +85,7 @@ public class AdministradorController {
         model.addAttribute("size", pageSize);
         model.addAttribute("keyword", currentKeyword);
 
-        return "administrarAlumno";
+        return "administrador/administrarAlumno";
 
     }
 
@@ -122,7 +122,7 @@ public class AdministradorController {
         model.addAttribute("carreras", carreras);
         model.addAttribute("semestres", semestres);
 
-        return "/formActualizarAlumno";
+        return "administrador/formActualizarAlumno";
     }
 
     @PostMapping("/actualizarAlumno")
@@ -190,7 +190,7 @@ public class AdministradorController {
         List<CatCarrera> carreras = catCarreraService.buscarTodas(); // Obtener las carreras desde el servicio
         model.addAttribute("semestres", semestres); // Agregar los semestres al modelo
         model.addAttribute("carreras", carreras); // Agregar las carreras al modelo
-        return "/formAgregarAlumno";
+        return "administrador/formAgregarAlumno";
     }
     @PostMapping("/guardarAlumno")
     public String guardarAlumno(Alumno alumno, @RequestParam("nombreGrupo") String nombreGrupo) {
@@ -256,7 +256,7 @@ public class AdministradorController {
         model.addAttribute("carreras", carrerasDisponibles);
         model.addAttribute("fechasRegistradas", fechasRegistradas);
 
-        return "administrarFecha"; // Nombre del archivo HTML de Thymeleaf
+        return "administrador/administrarFecha"; // Nombre del archivo HTML de Thymeleaf
     }
 
 
@@ -325,7 +325,7 @@ public class AdministradorController {
 
         model.addAttribute("fechaRegistrada", fechasRegistradas);
 
-        return "/administrarFecha";
+        return "administrador/administrarFecha";
 
     }
 

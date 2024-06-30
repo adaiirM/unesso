@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<nav th:insert="navAdministrador.html"></nav>
+<nav th:insert="~{administrador/navAdministrador.html}"></nav>
 <div class="container m-7 mt-3">
     <div class="row">
         <ol class="p-1 colorFondo breadcrumb bread-primary ">
@@ -192,7 +192,7 @@
             alt="">Exportar todo</button>
 </div>
 
-<footer th:insert="footer.html"></footer>
+<footer th:insert="~{fragments/footer.html}"></footer>
 
 <script src="../javaScript.js/funcionamiento.js"></script>
 </body>
