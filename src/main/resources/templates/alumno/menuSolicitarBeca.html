@@ -58,7 +58,10 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        <a class="btn btn-outline-primary hBtn mt-3  estiloBoton" role="button" th:href="@{/alumno/misDatos}">Enviar formulario</a>
+        <a id="btnSolicitarBeca" class="btn btn-outline-primary hBtn mt-3 estiloBoton" role="button" th:href="@{/alumno/misDatos}" >Solicitar Beca</a>
+        <!--
+        <a id="btnSolicitarBeca" class="btn btn-outline-primary hBtn mt-3 estiloBoton" role="button" th:href="@{/alumno/misDatos}" style="display:none;">Solicitar Beca</a>
+        -->
     </div>
 
     <footer th:insert="fragments/footer.html :: footer"/>
@@ -66,6 +69,27 @@
 
     <script src="../static/javaScript.js/funcionamiento.js"></script>
     <script>
+        function verificarEstados() {
+            var misDatos = document.getElementById("misDatos").value === 'true';
+            var dependienteEconomico = document.getElementById("dependienteEconomico").value === 'true';
+            var miFamilia = document.getElementById("miFamilia").value === 'true';
+            var misGastos = document.getElementById("misGastos").value === 'true';
+
+             console.log("Mis Datos: " + misDatos);
+            console.log("Dependiente Económico: " + dependienteEconomico);
+            console.log("Mi Familia: " + miFamilia);
+            console.log("Mis Gastos: " + misGastos);
+
+            /*
+            if (misDatos && dependienteEconomico && miFamilia && misGastos) {
+                document.getElementById("btnSolicitarBeca").style.display = "block";
+            } else {
+                document.getElementById("btnSolicitarBeca").style.display = "none";
+            }*/
+        }
+
+
+
 		 document.addEventListener('DOMContentLoaded', function () {
 	        var misDatos = document.getElementById('misDatos').value === 'true';
 	        var btnDependiente = document.getElementById('btnDependiente');
@@ -93,6 +117,8 @@
 	            btnMisGastos.classList.add('enabled');
 	            btnMisGastos.removeAttribute('disabled');
 	        }
+
+	        verificarEstados();
     });
 
 	</script>

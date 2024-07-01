@@ -93,8 +93,15 @@
 						</div>
 						<div class="col">
 							<p class="textoInputs">Región</p>
-							<input type="text" id="region" name="region" class="form-control estiloInputs subtitulo"
-								style="width: 96%;" aria-label="Default select example">
+							<!-- Campo editable -->
+							<input type="text" id="region" name="domicilio.region" th:field="*{domicilio.region}"  class="form-control estiloInputs subtitulo"
+								   style="width: 96%;" aria-label="Default select example">
+
+							<!-- Campo no editable -->
+							<input type="text" id="regionNoEditable" class="form-control estiloInputs subtitulo"
+								   style="width: 96%; display: none;" aria-label="Default select example">
+
+
 							<!-- ********************************************************************* -->
 							<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
 							<div id="regionError" class="error" style="display: none;">*Campo obligatorio</div>
@@ -102,8 +109,17 @@
 						</div>
 						<div class="col">
 							<p class="textoInputs">Distrito</p>
-							<input type="text" value="" id="distrito" name="distrito" class="form-control estiloInputs subtitulo"
-								style="width: 96%;" aria-label="Default select example">
+
+							<input type="text" id="distrito" name="domicilio.region" th:field="*{domicilio.distrito}"  class="form-control estiloInputs subtitulo"
+								   style="width: 96%;" aria-label="Default select example">
+
+							<!-- Campo no editable -->
+							<input type="text" id="distritoNoEditable" class="form-control estiloInputs subtitulo"
+								   style="width: 96%; display: none;" aria-label="Default select example">
+
+
+
+
 							<!-- ********************************************************************* -->
 							<!--En este div se muestra un mensaje cuando el usuario quiere enviar el formulario pero no lo ha seleccionado  -->
 							<div id="distritoError" class="error" style="display: none;">*CampoObligatorio</div>
@@ -622,6 +638,8 @@
 	            var municipio = $(this).val();
 				//Se obtiene los datos haciendo una consulta al metodo de DomicilioController
 	            obtenerLocalidadesDeMunicipio(municipio);
+	            obtenerRegionPorIdMunicipio(municipio);
+	            obtenerDistritoPorIdMunicipio(municipio);
 	        });
 		        
 	        //Esta funcion obtiene el codigo postal de una localidaden base al id de la localidad seleccionada
@@ -859,9 +877,9 @@
 
 				// Validación de campos de texto y select
 				var fieldsToValidate = [
-					{id: 'region', errorId: 'regionError', type: 'text'},
-					{id: 'colonia', errorId: 'coloniaError', type: 'text'},
-					{id: 'distrito', errorId: 'distritoError', type: 'text'},
+					//{id: 'region', errorId: 'regionError', type: 'text'},
+					{id: 'colonia', errorId: 'coloniaError', type: 'text'}
+					//,{id: 'distrito', errorId: 'distritoError', type: 'text'},
 
 				];
 
@@ -1142,7 +1160,8 @@
 				success: function (data) {
 					var idMunicipio = data.idCatMunicipio;
 					console.log("id de municipio: " + idMunicipio);
-
+					obtenerRegionPorIdMunicipio(idMunicipio);
+					obtenerDistritoPorIdMunicipio(idMunicipio)
 					//Obtener idEstado
 					$.ajax({
 						url: '/direccion/estadoByIdMunicipio/' + idMunicipio,
@@ -1253,6 +1272,74 @@
 				tipoConexionContainer.style.display = "none";
 			}
 		}
+
+		 function obtenerRegionPorIdMunicipio(municipio){
+			 $.ajax({
+                url: '/direccion/regionByIdMunicipio/' + municipio,
+                type: 'GET',
+                success: function(data) {
+		            var nombre = data.nombreRegion; // Nombre de la región
+		            //var nombreDistrito = data.nombreRegion;
+		            console.log(nombre);
+		            var id = data.idCatRegion; // ID de la región
+
+		            // Obtener los elementos del DOM
+		            var editableRegion = $('#region');
+		            var noEditableRegion = $('#regionNoEditable');
+
+		            // Verificar el ID de la región
+		             if (id !== 0) {
+		                // Bloquear y ocultar el campo editable, mostrar el no editable
+		                editableRegion.prop('disabled', true).hide();
+		                noEditableRegion.prop('disabled', true);
+		                noEditableRegion.val(nombre).show();
+		                obtenerDistrito(nombre);
+		            } else {
+		                // Habilitar el campo editable, ocultar el no editable y mostrar el editable
+		                editableRegion.prop('disabled', false).show();
+		                noEditableRegion.prop('disabled', true).hide();
+		            }
+		        },
+		        error: function() {
+		            // Manejar errores si es necesario
+		            console.error('Error al obtener la región por ID de municipio');
+		        }
+            });
+		}
+		 function obtenerDistritoPorIdMunicipio(municipio){
+			 $.ajax({
+                url: '/direccion/distritoByIdMunicipio/' + municipio,
+                type: 'GET',
+                success: function(data) {
+		            var nombre = data.nombreDistrito; // Nombre de distrito
+		            //var nombreDistrito = data.nombreDistrito;
+		            console.log(nombre);
+		            var id = data.idCatDistrito; // ID de distrito
+
+		            // Obtener los elementos del DOM
+		            var editableRegion = $('#distrito');
+		            var noEditableRegion = $('#distritoNoEditable');
+
+		            // Verificar el ID de la región
+		             if (id !== 0) {
+		                // Bloquear y ocultar el campo editable, mostrar el no editable
+		                editableRegion.prop('disabled', true).hide();
+		                noEditableRegion.prop('disabled', true);
+		                noEditableRegion.val(nombre).show();
+		                obtenerDistrito(nombre);
+		            } else {
+		                // Habilitar el campo editable, ocultar el no editable y mostrar el editable
+		                editableRegion.prop('disabled', false).show();
+		                noEditableRegion.prop('disabled', true).hide();
+		            }
+		        },
+		        error: function() {
+		            // Manejar errores si es necesario
+		            console.error('Error al obtener la región por ID de municipio');
+		        }
+            });
+		}
+
 	</script>
 </body>
 

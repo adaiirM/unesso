@@ -2,6 +2,7 @@ package com.example.unesso.services;
 
 import java.util.List;
 
+import com.example.unesso.model.CatDistrito;
 import com.example.unesso.model.CatLocalidad;
 import com.example.unesso.model.CatMunicipio;
 
@@ -14,4 +15,5 @@ public interface ICatLocalidadService {
 	List<CatLocalidad> localidadesPorIdCatMunicipio(Integer idCatMunicipio);
 	//CatCodigoPostal cpPorLocalidad(Integer idCatLocalidad);
 	CatMunicipio municipioPorIdCatLocalidad(Integer idCatLocalidad);
+
 }

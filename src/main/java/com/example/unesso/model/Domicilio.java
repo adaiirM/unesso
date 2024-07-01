@@ -21,24 +21,19 @@ public class Domicilio {
 	
 	private String numero;
 
+	private String region;
+
+	private String distrito;
 	@OneToOne
 	@JoinColumn(name="idCatLocalidad")
 	private CatLocalidad catLocalidad;
-	
+
 	public Integer getIdDomicilio() {
 		return idDomicilio;
 	}
 
 	public void setIdDomicilio(Integer idDomicilio) {
 		this.idDomicilio = idDomicilio;
-	}
-
-	public CatLocalidad getCatLocalidad() {
-		return catLocalidad;
-	}
-
-	public void setCatLocalidad(CatLocalidad catLocalidad) {
-		this.catLocalidad = catLocalidad;
 	}
 
 	public String getColoniaBarrio() {
@@ -65,12 +60,40 @@ public class Domicilio {
 		this.numero = numero;
 	}
 
-	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getDistrito() {
+		return distrito;
+	}
+
+	public void setDistrito(String distrito) {
+		this.distrito = distrito;
+	}
+
+	public CatLocalidad getCatLocalidad() {
+		return catLocalidad;
+	}
+
+	public void setCatLocalidad(CatLocalidad catLocalidad) {
+		this.catLocalidad = catLocalidad;
+	}
+
 	@Override
 	public String toString() {
-		return "Domicilio [idDomicilio=" + idDomicilio + ", catLocalidad=" + catLocalidad + ", coloniaBarrio="
-				+ coloniaBarrio + ", calle=" + calle + ", numero=" + numero + "]";
+		return "Domicilio{" +
+				"idDomicilio=" + idDomicilio +
+				", coloniaBarrio='" + coloniaBarrio + '\'' +
+				", calle='" + calle + '\'' +
+				", numero='" + numero + '\'' +
+				", region='" + region + '\'' +
+				", distrito='" + distrito + '\'' +
+				", catLocalidad=" + catLocalidad +
+				'}';
 	}
-	
-
 }
