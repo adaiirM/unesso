@@ -32,10 +32,10 @@
             <h1 class="titulo">Actualizar alumnos </h1>
         </div>
 
-        <div class="container mt-5">
+        <div class="container-auto mt-5">
             <form id="formularioAlumno" action="#" th:action="@{actualizarAlumno(idAlumno=${alumno.idAlumno})}" th:object="${alumno}" method="post">
-                <div class="row ps-5 pe-5">
-                    <div class=" col-6 rounded colorFondo m-2 p-4">
+                <div class="row ps-5 pe-5 col-sm-12 col-xl-12 ">
+                    <div class="col-12 col-xl-5 rounded colorFondo m-2 p-4">
                         <h3 style="color: #6366F1;">Datos personales</h3>
                         <label for="nombreAlumno" class="ms-1" style="color: #6366F1;">
                             Nombre
@@ -86,14 +86,14 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="col rounded colorFondo m-2 p-4 h-70">
+                        <div class="col-12 rounded colorFondo m-2 p-4 h-70">
                             <h3 style="color: #6366F1; padding-bottom: 2%;">Datos academicos</h3>
                             <div class="row">
                                 <div class="col">
                                     <label for="carreraSelect" class="ms-1" style="color: #6366F1;">
                                         Carrera
                                     </label>
-                                    <select id="carreraSelect" name="opciones" class="col-1 text-start estiloInputs w-100">
+                                    <select id="carreraSelect" name="opciones" class="col-1 text-start estiloInputs w-100 form-control">
                                         <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}" th:text="${carrera.carrera}"
                                                 th:selected="${carrera.idCatCarrera == alumno.catGrupo.catCarrera.idCatCarrera}"></option>
                                     </select>
@@ -102,7 +102,7 @@
                                     <label for="semestreSelect" class="ms-1" style="color: #6366F1;">
                                         Semestre
                                     </label>
-                                    <select id="semestreSelect" name="opciones" class="col-1 text-start estiloInputs w-100">
+                                    <select id="semestreSelect" name="opciones" class="col-1 text-start estiloInputs w-100 form-control">
                                         <option th:each="semestre : ${semestres}" th:value="${semestre.idCatSemestre}" th:text="${semestre.nombreSemestre}"
                                                 th:selected="${semestre.idCatSemestre == alumno.catGrupo.catSemestre.idCatSemestre}"></option>
                                     </select>

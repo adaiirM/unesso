@@ -15,7 +15,7 @@
 
 <body>
 <nav th:insert="~{administrador/navAdministrador.html}"></nav>
-    <div class="container m-7 mt-3">
+    <div class=" ms-5 mt-3 w-75">
         <div class="row">
             <ol class="p-1 colorFondo breadcrumb bread-primary ">
                 <a th:href="@{/administrador/menuAdministrador}"><button class="btn camino"
@@ -33,49 +33,59 @@
     </div>
 
     <div class="container mt-5">
-        <form id="formularioAlumno" action="#" th:action="@{/administrador/guardarAlumno}" th:object="${alumno}" method="post">
+        <form id="formularioAlumno" action="#" th:action="@{/administrador/guardarAlumno}" th:object="${alumno}"
+            method="post">
             <div class="row ps-5 pe-5">
-                <div class=" col-6 rounded colorFondo m-2 p-4">
+                <div class="col-12 col-xl-5 rounded colorFondo m-2 p-4">
                     <h3 style="color: #6366F1;">Datos personales</h3>
-                    <label for="nombreAlumno" class="ms-1" style="color: #6366F1;">
-                        Nombre
-                    </label>
-                    <input id="nombreAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{nombre}" required>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <label for="nombreAlumno" class="ms-1" style="color: #6366F1;">
+                                Nombre
+                            </label>
+                            <input id="nombreAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{nombre}"
+                                required>
+                        </div>
+    
+                        <div class="col-12 col-sm-12 col-md-6">
                             <label for="apellidoPaternoAlumno" class="ms-1" style="color: #6366F1;">
                                 Apellido Paterno
                             </label>
-                            <input id="apellidoPaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoP}" required>
+                            <input id="apellidoPaternoAlumno" type="text" class="ms-1 w-100 form-control"
+                                th:field="*{apellidoP}" required>
                         </div>
-                        <div class="col">
+    
+                        <div class="col-12 col-sm-12 col-md-6">
                             <label for="apellidoMaternoAlumno" class="ms-1" style="color: #6366F1;">
                                 Apellido Materno
                             </label>
-                            <input id="apellidoMaternoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{apellidoM}" required>
+                            <input id="apellidoMaternoAlumno" type="text" class="ms-1 w-100 form-control"
+                                th:field="*{apellidoM}" required>
                         </div>
-                    </div>
-                    <label for="curpAlumno" class="ms-1" style="color: #6366F1;">
-                        CURP
-                    </label>
-                    <input id="curpAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{curp}">
-                    <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-sm-12">
+                            <label for="curpAlumno" class="ms-1" style="color: #6366F1;">
+                                CURP
+                            </label>
+                            <input id="curpAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{curp}">
+                        </div>
+    
+                        <div class="col-12 col-sm-6">
                             <label for="correoAlumno" class="ms-1" style="color: #6366F1;">
                                 Correo electronico
                             </label>
-                            <input id="correoAlumno" name="correoAlumno" type="text" class="ms-1 w-100 form-control" th:field="*{usuario.username}">
+                            <input id="correoAlumno" name="correoAlumno" type="text" class="ms-1 w-100 form-control"
+                                th:field="*{usuario.username}">
                         </div>
-                        <div class="col">
+    
+                        <div class="col-12 col-sm-6">
                             <label for="telefonoAlumno" class="ms-1" style="color: #6366F1;">
                                 Numero telefonico
                             </label>
-                            <input id="telefonoAlumno" type="number" class="ms-1 w-100 form-control"
-                                th:field="*{telefono}">
+                            <input id="telefonoAlumno" type="number" class="ms-1 w-100 form-control" th:field="*{telefono}">
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-xl-5">
                     <div class="col rounded colorFondo m-2 p-4 h-70">
                         <h3 style="color: #6366F1; padding-bottom: 2%;">Datos academicos</h3>
                         <div class="row">
@@ -83,66 +93,70 @@
                                 <label for="carreraSelect" class="ms-1" style="color: #6366F1;">
                                     Carrera
                                 </label>
-                                <select id="carreraSelect" name="carrera" class="col-1 text-start estiloInputs w-100 form-select">
-                                    <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}" th:text="${carrera.carrera}"></option>
+                                <select id="carreraSelect" name="carrera"
+                                    class="col-1 text-start estiloInputs w-100 form-select">
+                                    <option th:each="carrera : ${carreras}" th:value="${carrera.idCatCarrera}"
+                                        th:text="${carrera.carrera}"></option>
                                     <!--<option value="opcion1" class="textoInputs">Ingeniería Forestal</option>
-                                    <option value="opcion2" class="textoInputs">Licenciatura en Ciencias Ambientales
-                                        para el
-                                        Desarrollo Comunitario</option>
-                                    <option value="opcion3" class="textoInputs">Ingeniería de Desarrollo de Software y
-                                        Sistemas Inteligentes</option>
-                                    <option value="opcion4" class="textoInputs">Licenciatura en Biología</option>
-                                    <option value="opcion4" class="textoInputs">Licenciatura en Administración Turística
-                                    </option>-->
+                                        <option value="opcion2" class="textoInputs">Licenciatura en Ciencias Ambientales
+                                            para el
+                                            Desarrollo Comunitario</option>
+                                        <option value="opcion3" class="textoInputs">Ingeniería de Desarrollo de Software y
+                                            Sistemas Inteligentes</option>
+                                        <option value="opcion4" class="textoInputs">Licenciatura en Biología</option>
+                                        <option value="opcion4" class="textoInputs">Licenciatura en Administración Turística
+                                        </option>-->
                                 </select>
                             </div>
                             <div class="col">
                                 <label for="semestreSelect" class="ms-1" style="color: #6366F1;">
                                     Semestre
                                 </label>
-                                <select id="semestreSelect" name="semestre" class="col-1 text-start estiloInputs w-100 form-select">
-                                    <option th:each="semestre : ${semestres}" th:value="${semestre.idCatSemestre}" th:text="${semestre.nombreSemestre}"></option>
+                                <select id="semestreSelect" name="semestre"
+                                    class="col-1 text-start estiloInputs w-100 form-select">
+                                    <option th:each="semestre : ${semestres}" th:value="${semestre.idCatSemestre}"
+                                        th:text="${semestre.nombreSemestre}"></option>
                                     <!--  <option value="opcion1" class="textoInputs">Primero</option>
-                                     <option value="opcion2" class="textoInputs">Segundo</option>
-                                     <option value="opcion3" class="textoInputs">Tercero</option>
-                                     <option value="opcion4" class="textoInputs">Cuarto</option>
-                                     <option value="opcion4" class="textoInputs">Quinto</option>
-                                     <option value="opcion4" class="textoInputs">Sexto</option>
-                                     <option value="opcion4" class="textoInputs">Séptimo</option>
-                                     <option value="opcion4" class="textoInputs">Octavo</option>
-                                     <option value="opcion4" class="textoInputs">Noveno</option>
-                                     <option value="opcion4" class="textoInputs">Décimo</option> -->
-                                 </select>
-                             </div>
-                         </div>
-                         <div class="row">
-                             <div class="col">
-                                 <label for="nombreGrupo" class="ms-1" style="color: #6366F1;">
-                                     Grupo
-                                 </label>
-                                 <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control" readonly="true" required>
-                             </div>
-                             <div class="col">
-                                 <label for="matriculaAlumno" class="ms-1" style="color: #6366F1;">
-                                     Matricula
-                                 </label>
-                                 <input id="matriculaAlumno" type="number" class="ms-1 w-100 form-control"
-                                     th:field="*{matricula}">
-                             </div>
-                         </div>
-                     </div>
-                     <div class="container mt-5">
-                         <div class="row justify-content-center text-center">
-                             <div class="col-6">
-                                 <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Guardar</button>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </form>
-     </div>
-     </div>
+                                         <option value="opcion2" class="textoInputs">Segundo</option>
+                                         <option value="opcion3" class="textoInputs">Tercero</option>
+                                         <option value="opcion4" class="textoInputs">Cuarto</option>
+                                         <option value="opcion4" class="textoInputs">Quinto</option>
+                                         <option value="opcion4" class="textoInputs">Sexto</option>
+                                         <option value="opcion4" class="textoInputs">Séptimo</option>
+                                         <option value="opcion4" class="textoInputs">Octavo</option>
+                                         <option value="opcion4" class="textoInputs">Noveno</option>
+                                         <option value="opcion4" class="textoInputs">Décimo</option> -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="nombreGrupo" class="ms-1" style="color: #6366F1;">
+                                    Grupo
+                                </label>
+                                <input id="nombreGrupo" name="nombreGrupo" type="number" class="ms-1 w-100 form-control"
+                                    readonly="true" required>
+                            </div>
+                            <div class="col">
+                                <label for="matriculaAlumno" class="ms-1" style="color: #6366F1;">
+                                    Matricula
+                                </label>
+                                <input id="matriculaAlumno" type="number" class="ms-1 w-100 form-control"
+                                    th:field="*{matricula}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container mt-5">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-outline-primary hBtn estiloBoton">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
 <footer th:insert="~{fragments/footer.html}"></footer>
      <script src="../javaScript.js/funcionamiento.js"></script>

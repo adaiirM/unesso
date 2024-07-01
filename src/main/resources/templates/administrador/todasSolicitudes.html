@@ -11,14 +11,35 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <style>
+        body {
+            overflow-x: hidden; /* Evitar desbordamiento horizontal */
+        }
 
+        .container-fluid,
+        .row,
+        .col-auto,
+        .breadcrumb,
+        .pagination,
+        .form-control {
+            max-width: 100%; /* Asegurar que los elementos no excedan el ancho de la pantalla */
+        }
+
+        .table-responsive {
+            overflow-x: auto; /* Asegurar que las tablas sean responsivas */
+        }
+
+        .table {
+            width: 100%; /* Asegurar que las tablas ocupen todo el ancho disponible */
+        }
+    </style>
 </head>
 
 <body>
     <nav th:insert="~{administrador/navAdministrador.html}"></nav>
-    <div class="container m-7 mt-3">
+    <div class="ms-4 mt-3 w-75">
         <div class="row">
-            <ol class="p-1 colorFondo breadcrumb bread-primary ">
+            <ol class="p-1 colorFondo breadcrumb bread-primary">
                 <a th:href="@{/administrador/menuAdministrador}"><button class="btn camino"
                         id="botonInicio">Inicio</button></a>
                 <a href="#"><button class="btn btn-primary camino localizacion" id="solicitudesCarrera">Estudios
@@ -61,7 +82,7 @@
     </div>
 
 
-    <div class="row mb-4 mt-4 mb-4">
+    <div class="row mb-4 mt-4">
         <div class="d-flex col-12 justify-content-between align-items-center flex-wrap">
             <div class="d-flex align-items-center me-auto ms-3 mb-2 mb-md-0">
                 <p class="textoInputs me-2 mb-0 ms-5">Mostrar</p>
@@ -91,7 +112,6 @@
 
                     <!-- Buscar -->
                     <div class="col-12 col-md-6 d-flex align-items-center mt-4 justify-content-end">
-                        <!-- <p class="textoInputs me-2 mb-0 ms-5">Buscar</p> -->
                         <form th:action="@{/administrador/estudiosSocieconomicos}" class="d-flex" method="get">
                             <button type="submit" class="btn btn-primary custom-btn me-4">Buscar</button>
                             <input type="text" name="keyword" class="estiloInputs form-control rounded"
@@ -119,9 +139,7 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     <tr th:each="alumno : ${alumnos}">
-
                         <td class="subtitulo" th:text="${alumno.matricula}"></td>
                         <td class="subtitulo"
                             th:text="${alumno.nombre + ' ' + alumno.apellidoP + ' ' + alumno.apellidoM}"></td>
@@ -135,54 +153,6 @@
                             <p class="subtitulo" style="color: green;">Finalizado ✓</p>
                         </td>
                     </tr>
-
-                    <!--
-            <tr>
-                <td class="subtitulo">3405574398</td>
-                <td class="subtitulo">Emmanuel Gracida Tapia</td>
-                <td class="subtitulo">603</td>
-                <td class="subtitulo">Sexto</td>
-                <td><a href=""><img class="iconoAdminAlumnos" src="../img/solicitudIcono.png" alt="Eliminar"></a></td>
-
-                <td><p class="subtitulo" style="color: green;">Finalizado ✓</p></td>
-            </tr>
-            <tr>
-                <td class="subtitulo">807598274935</td>
-                <td class="subtitulo">Adriana Hernández Ramírez</td>
-                <td class="subtitulo">1003</td>
-                <td class="subtitulo">Decimo</td>
-                <td><a href=""><img class="iconoAdminAlumnos" src="../img/solicitudIcono.png" alt="Eliminar"></a></td>
-                <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/exportarIcono.png" alt="Actualizar"></a></td>
-                <td><p class="subtitulo" style="color: green;">Finalizado ✓</p></td>
-            </tr>
-            <tr>
-                <td class="subtitulo">028854273954</td>
-                <td class="subtitulo">Hipólito Javier Domínguez Hernández</td>
-                <td class="subtitulo">803</td>
-                <td class="subtitulo">Octavo</td>
-                <td><a href=""><img class="iconoAdminAlumnos" src="../img/solicitudIcono.png" alt="Eliminar"></a></td>
-                <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/exportarIcono.png" alt="Actualizar"></a></td>
-                <td><p class="subtitulo" style="color: green;">Finalizado ✓</p></td>
-            </tr>
-            <tr>
-                <td class="subtitulo">028854273954</td>
-                <td class="subtitulo">Efren David Jimenez Martinez</td>
-                <td class="subtitulo">803</td>
-                <td class="subtitulo">Decimo</td>
-                <td><a href=""><img class="iconoAdminAlumnos" src="../img/solicitudIcono.png" alt="Eliminar"></a></td>
-                <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/exportarIcono.png" alt="Actualizar"></a></td>
-                <td><p class="subtitulo" style="color: green;">Finalizado ✓</p></td>
-            </tr>
-            <tr>
-                <td class="subtitulo">028854273954</td>
-                <td class="subtitulo">Luis David Perez Cruz</td>
-                <td class="subtitulo">803</td>
-                <td class="subtitulo">Primero</td>
-                <td><a href=""><img class="iconoAdminAlumnos" src="../img/solicitudIcono.png" alt="Eliminar"></a></td>
-                <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/exportarIcono.png" alt="Actualizar"></a></td>
-                <td><p class="subtitulo" style="color: green;">Finalizado ✓</p></td>
-            </tr>
-            -->
                 </tbody>
             </table>
         </div>
@@ -193,7 +163,7 @@
             <p class="textoInputs ms-5">Mostrando <span th:text="${size}">5</span> de <span
                     th:text="${totalAlumnos}">20</span> solicitudes</p>
         </div>
-        <div>
+        <div class="me-5">
             <nav aria-label="Page navigation example" class="textoInputs">
                 <ul class="pagination">
                     <li th:classappend="${currentPage == 0} ? 'disabled'">
