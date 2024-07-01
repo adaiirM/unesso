@@ -126,6 +126,7 @@ function obtenerLocalidadDP(selectMunicipios, selectLocalidades, inputCodigoP){
 	  function(){
 	    //var selectedOption = this.options[select.selectedIndex];
 	    selectIndex = select.value;
+
 	    $.ajax({
 	        url: '/domicilio/obtenerLocalidadesPorMunicipio',
 	        type: 'GET',
@@ -200,62 +201,73 @@ function generarPersonas() {
 	
     // Referencia al contenedor donde se agregarán los elementos
     const container = document.getElementById('containerPersonas');
+    		container.innerHTML = '';
+
 
     // Limpia el contenedor antes de agregar nuevos elementos
-    container.innerHTML = '';
 
-	for (let i = 0; i < numPersonas; i++) {
-		let opcionesParentesco = '';
-        parentescos.forEach(catParentesco => {
-            opcionesParentesco += `<option value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
-        });
-		var newElement = `
-        
-        <div class="rounded mb-4">
-            <div class="row">
-                <div class="col-sm-6 col-xl-4">
-                    <p class="textoInputs">Nombre completo</p>
-                    <input th:field="*{ingresoFamiliar[__${i}__].nombrePersona}" id="nombrePersona" name="ingresoFamiliar[${i}].nombrePersona" type="text" class="form-control rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                </div>
-                <div class="col-sm-6 col-xl-4">
-                    <p class="textoInputs">Parentesco</p>
-                    <select name="ingresoFamiliar[${i}].catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
-                        <option value="" class="subtitulo">Elige una opcion</option>
-                        ${opcionesParentesco}
-                    </select>
-                </div>
-                
-                <div class="col-sm-6 col-xl-4">
-                    <p class="textoInputs">Empresa o lugar de trabajo</p>
-                    <input name="ingresoFamiliar[${i}].lugarTrabajo" th:field="*{ingresoFamiliar[__${i}__].lugarTrabajo}" id="lugarTrabajo" 
-                    		type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                </div>
-                
-                <div class="col-sm-6 col-xl-4">
-                    <p class="textoInputs">Puesto o tipo de trabajo</p>
-                    <input name="ingresoFamiliar[${i}].puestoTrabajo" th:field="*{ingresoFamiliar[__${i}__].puestoTrabajo}" id="puestoTrabajo" 
-                    	 	type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="">
-                </div>
-            
-                <div class="col-sm-6 col-xl-4">
-                    <p>IMB <span style="color: #6C757D;">(Ingreso Mensual Bruto)</span></p>
-                    <input name="ingresoFamiliar[${i}].ingresoBruto" th:field="*{ingresoFamiliar[__${i}__].ingresoBruto}" id="ingresoBruto" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                    </div>
-                
-                <div class="col-sm-6 col-xl-4">
-                    <p>IMN <span style="color: #6C757D;">(Ingreso Mensual Neto)</span></p>
-                    <input name="ingresoFamiliar[${i}].ingresoNeto" th:field="*{ingresoFamiliar[__${i}__].ingresoNeto}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
-                </div>
-				<!--
-                <div class="col-sm-6 col-xl-4">
-                    <p>Ingreso Total: <span style="color: #6C757D;">$200.5</span></p>
-                </div>-->
-            </div>
-    	</div>
-        <hr>
-        `;
-        container.innerHTML += newElement;
-   	}
+	//if(numPersonas >= 0 && numPersonas <= 3){
+		    container.innerHTML = '';
+
+		for (let i = 0; i < numPersonas; i++) {
+			let opcionesParentesco = '';
+	        parentescos.forEach(catParentesco => {
+	            opcionesParentesco += `<option value="${catParentesco.idCatParentesco}"  class="subtitulo" >${catParentesco.nombreParentesco}</option>`;
+	        });
+			var newElement = `
+	        
+	        <div class="rounded mb-4">
+	            <div class="row">
+	                <div class="col-sm-6 col-xl-4">
+	                    <p class="textoInputs">Nombre completo</p>
+	                    <input th:field="*{ingresoFamiliar[__${i}__].nombrePersona}" id="nombrePersona" name="ingresoFamiliar[${i}].nombrePersona" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+	                </div>
+	                <div class="col-sm-6 col-xl-4">
+	                    <p class="textoInputs">Parentesco</p>
+	                    <select name="ingresoFamiliar[${i}].catParentesco" class="form-select estiloInputs" style="width: 100%;" aria-label="Default select example">
+	                        <option value="" class="subtitulo">Elige una opcion</option>
+	                        ${opcionesParentesco}
+	                    </select>
+	                </div>
+	                
+	                <div class="col-sm-6 col-xl-4">
+	                    <p class="textoInputs">Empresa o lugar de trabajo</p>
+	                    <input name="ingresoFamiliar[${i}].lugarTrabajo" th:field="*{ingresoFamiliar[__${i}__].lugarTrabajo}" id="lugarTrabajo" 
+	                    		type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+	                </div>
+	                
+	                <div class="col-sm-6 col-xl-4">
+	                    <p class="textoInputs">Puesto o tipo de trabajo</p>
+	                    <input name="ingresoFamiliar[${i}].puestoTrabajo" th:field="*{ingresoFamiliar[__${i}__].puestoTrabajo}" id="puestoTrabajo" 
+	                    	 	type="text" class="form-control estiloInputs rounded" style="width: 100%;" placeholder="">
+	                </div>
+	            
+	                <div class="col-sm-6 col-xl-4">
+	                    <p>IMB <span style="color: #6C757D;">(Ingreso Mensual Bruto)</span></p>
+	                    <input name="ingresoFamiliar[${i}].ingresoBruto" th:field="*{ingresoFamiliar[__${i}__].ingresoBruto}" id="ingresoBruto" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+	                    </div>
+	                
+	                <div class="col-sm-6 col-xl-4">
+	                    <p>IMN <span style="color: #6C757D;">(Ingreso Mensual Neto)</span></p>
+	                    <input name="ingresoFamiliar[${i}].ingresoNeto" th:field="*{ingresoFamiliar[__${i}__].ingresoNeto}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="inputNombre" placeholder="">
+	                </div>
+					<!--
+	                <div class="col-sm-6 col-xl-4">
+	                    <p>Ingreso Total: <span style="color: #6C757D;">$200.5</span></p>
+	                </div>-->
+	            </div>
+	    	</div>
+	        <hr>
+	        `;
+	        container.innerHTML += newElement;
+	   	}
+	/*} else {
+		alert("Num persona");
+		container.innerHTML = '';
+
+	}*/
+
+	
     
     fetch('/api/productos')
     .then(response => response.json())

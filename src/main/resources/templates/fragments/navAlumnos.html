@@ -67,7 +67,7 @@
 	                    <input id="contraseñaActual" name="contraseñaActual" type="password" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 	                    <p class="textoInputs mt-5" style="color: #4F46E5;">Contraseña nueva</p>
 	                    <input id="contraseñaNueva1" name="contraseñaNueva1" type="password"  class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-	                    <p class="textoInputs mt-5" style="color: #4F46E5;">Contraseña nueva</p>
+	                    <p class="textoInputs mt-5" style="color: #4F46E5;">Confirmar contraseña nueva</p>
 	                    <input id="contraseñaNueva2" name="contraseñaNueva2" type="password" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 	                </div>
 	                <div class="modal-footer mx-auto">
@@ -119,6 +119,22 @@
     </div>
 
     <script>
+		
+		var eye = document.getElementById('eye');
+		var input = document.getElementById('input');
+
+		
+		eye.addEventListener("click", function(){
+		    if (input.type === "password") {
+		        input.type = "text";
+				input.class="estiloInputs"
+		        eye.style.opacity = 0.8;
+		    } else {
+		        input.type = "password";
+		        eye.style.opacity = 0.2;
+		    }
+		});
+		
 	    $().ready(function () {
 	        // Agrega las reglas de validación
 	        $("#cambiarContraseñaForm").validate({

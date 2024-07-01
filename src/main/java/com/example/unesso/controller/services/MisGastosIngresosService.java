@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,9 @@ public class MisGastosIngresosService {
 		Alumno a = obtenerAlumnoSesion(auth);
 		Familia f = new Familia();
 		System.out.println("Ob: " + a.getObservaciones());
+		
+		
+		
 		if(a.getFamilia() != null) {
 			
 			f = serviceFamilia.obtenerFamiliaPorId(a.getFamilia().getIdFamilia());
@@ -105,8 +109,7 @@ public class MisGastosIngresosService {
 			f.setIngresoFamiliar(new ArrayList<>());
 		}
 		
-		model.addAttribute(""
-				+ "", a.getObservaciones());
+		model.addAttribute("observaciones", a.getObservaciones());
 		model.addAttribute("familia", f);
 	}
 	
@@ -115,6 +118,8 @@ public class MisGastosIngresosService {
 		//Recuperar datos de sesion para conocer el alumno de la sesión
 		Alumno alumnoSesion = obtenerAlumnoSesion(auth);
 		Familia familiaDB = new Familia();
+		
+		alumnoSesion.setObservaciones(observacones);
 		
 		System.out.println("FAMILIA: " + familia.getIngresoFamiliar());
 		List<IngresoFamiliar> ingresoFamiliarDB = new ArrayList<>();
@@ -149,11 +154,18 @@ public class MisGastosIngresosService {
 				
 				//Si se agregraron nuevas personas
 				if(nuevasPersonasAportan.equals(true)) {
-					System.out.print("quee " + alumnoSesion.getFamilia().getIngresoFamiliar());
-					for(IngresoFamiliar ingreso : alumnoSesion.getFamilia().getIngresoFamiliar()) {
-						serviceIngresoFam.eliminar(ingreso.getIdIngresoFamiliar());
-						alumnoSesion.getFamilia().getIngresoFamiliar().remove(ingreso);
+					System.out.println("quee " + alumnoSesion.getFamilia().getIngresoFamiliar());
+					List<Integer> ids = new ArrayList<Integer>();
+					for (IngresoFamiliar ingreso : alumnoSesion.getFamilia().getIngresoFamiliar()){
+						ids.add(ingreso.getIdIngresoFamiliar());
 					}
+					
+					System.out.println(ids);
+					
+					serviceIngresoFam.eliminarIngresosFamiliares(ids);
+					alumnoSesion.getFamilia().setIngresoFamiliar(null);
+				    System.out.println("Elementos 'eliminados': " + alumnoSesion.getFamilia().getIngresoFamiliar());
+				    serviceAlumno.guardar(alumnoSesion);
 				} else {
 					for(IngresoFamiliar ingreso : familia.getIngresoFamiliar()) {
 						
@@ -174,6 +186,8 @@ public class MisGastosIngresosService {
 				}
 				
 			}
+			
+			alumnoSesion = serviceAlumno.buscarAlumnoPorIdUsuario(alumnoSesion.getIdAlumno());
 			
 			//Si el pago bimestral no contiene nada, guardar un 0
 			if(familia.getGastosFam().getReciboLuz().getPagoBimestral().equals("")) {

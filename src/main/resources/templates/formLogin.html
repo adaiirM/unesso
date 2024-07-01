@@ -38,17 +38,16 @@
 									<input type="password" id="input"  name="password"  class="col-10 pass estiloInputs rounded">
 			                    	<img th:src="@{/img/show.png}" alt="" class="icon" id="eye">
 								</div>
-		                        
 							</div>
 							<br>
 							<div th:if="${error}" class=" alert alert-danger alert-dismissible fade show" role="alert" style="width: 50%; height: 50%; margin: auto; font-size: 12px;">
-							  Datos incorrectos. Vuelve a intentarlo
-							  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								Datos incorrectos. Vuelve a intentarlo
+					  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 							</div>
 							
 							<div class="justify-items-center">
 		                        <a>
-		                            <button class="btn btn-outline-primary hBtn mt-3 estiloBoton" type="submit">Iniciar sesión</button>
+	                            	<button class="btn btn-outline-primary hBtn mt-3 estiloBoton" type="submit">Iniciar sesión</button>
 		                        </a>      
 		                    </div>
 	                    </form>

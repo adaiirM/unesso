@@ -277,11 +277,14 @@
 		});
 		
 		document.getElementById('numPersonasAportan').addEventListener('input', function() {
+			// Referencia al contenedor donde se agregarán los elementos
+    		const container = document.getElementById('containerPersonas');
 			var num = parseInt(document.getElementById('numPersonasAportan').value);
 			if(num > 0 && num <=3){
 				generarPersonas();	
 			}else {
-				
+	    		container.innerHTML = '';
+
 			}
 	    });
 		
@@ -340,7 +343,8 @@
 		    
 		    // Crear un objeto Date con el valor del campo de entrada
 		    const date = new Date(dateValue);
-		
+		    date.setDate(date.getDate() + 1);
+			
 		    // Obtener el nombre del mes
 		    const nombreMes = meses[date.getMonth()];
 			
@@ -354,6 +358,7 @@
             
             // Crear un objeto Date con el valor del campo de entrada
             const date = new Date(dateValue);
+            date.setDate(date.getDate() + 1);
 
 			const nombreMes = meses[date.getMonth()];
 			

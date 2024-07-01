@@ -292,7 +292,7 @@
 	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 	                        </div>
 	                    </div>
-	                    <div class="row mt-4 hidden">
+	                    <div class="row mt-4">
 	                        <div class="col">
 	                            <p class="textoInputs">Distrito</p>
 	                            <select id="selectDistritos" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
@@ -475,6 +475,7 @@
 										var municipio = document.getElementById('selectMunicipios');
 										municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
 	
+											
 									    selectIndex = municipio.value;
 									    $.ajax({
 									        url: '/domicilio/obtenerLocalidadesPorMunicipio',
