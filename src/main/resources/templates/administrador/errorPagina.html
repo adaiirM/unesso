@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Administrador no se encuentra</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1.1);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-bounceIn {
+            animation: bounceIn 1s;
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 1.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="animate-fadeInUp">Error</h4>
+                    </div>
+                    <div class="card-body">
+                        <img src="/img/gatoError.gif" alt="Error" class="w-25 img-fluid mb-4 animate-bounceIn">
+                        <h1 class="display-4 animate-fadeInUp">El usuario ya existe</h1>
+                        <p class="lead animate-fadeInUp">El usuario que estás buscando ya se encuentra en nuestra base de datos.</p>
+                        <hr>
+                        <a href="index.html" class="btn btn-primary animate-fadeInUp">Volver a la página principal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

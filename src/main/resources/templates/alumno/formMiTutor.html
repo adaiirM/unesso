@@ -288,11 +288,16 @@
 	                            <input th:value="*{tutorEconomico.domicilio.catLocalidad.idCatLocalidad}" type="hidden" id="valorOculto" name="tutorEconomico.domicilio.catLocalidad">
 	                        </div>
 	                        <div class="col">
-	                            <p class="textoInputs">Colonia</p>
-	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
+								<p class="textoInputs">Región</p>
+	                            <select id="selectRegiones" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
+	                                <option value=""  class="subtitulo">Elige una opción</option>
+	                                <option value="1" class="subtitulo">Región 1</option>
+	                                <option value="2" class="subtitulo">Región 2</option>
+	                                <option value="3" class="subtitulo">Región 3</option>
+	                            </select>
 	                        </div>
 	                    </div>
-	                    <div class="row mt-4 hidden">
+	                    <div class="row mt-4 ">
 	                        <div class="col">
 	                            <p class="textoInputs">Distrito</p>
 	                            <select id="selectDistritos" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
@@ -303,18 +308,14 @@
 	                            </select>
 	                        </div>
 	                        <div class="col">
-	                            <p class="textoInputs">Región</p>
-	                            <select id="selectRegiones" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
-	                                <option value=""  class="subtitulo">Elige una opción</option>
-	                                <option value="1" class="subtitulo">Región 1</option>
-	                                <option value="2" class="subtitulo">Región 2</option>
-	                                <option value="3" class="subtitulo">Región 3</option>
-	                            </select>
+								<p class="textoInputs">Colonia</p>
+	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
+	                       
 	                        </div>
 	                    </div>
 	                </div>
 	
-	                <div class="row ms-3 me-3">
+	                <div class="row ms-2 me-3">
 	                    <div class="col-12 col-md-6 mt-4">
 	                        <label>Calle</label>
 	                        <input th:field="*{tutorEconomico.domicilio.calle}" type="text" class="form-control estiloInputs rounded" style="width: 100%;" id="calle" name="tutorEconomico.domicilio.calle" placeholder="Nombre de la calle">
