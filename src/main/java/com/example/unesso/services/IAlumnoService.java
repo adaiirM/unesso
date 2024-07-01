@@ -11,4 +11,6 @@ public interface IAlumnoService {
 	void guardarAlumno(Alumno alumno);
 	Alumno buscarAlumnoPorIdUsuario (Integer idUsuario);
 	Alumno guardar (Alumno alumno);
+
+	Alumno alumnoPorIdAlumno(Integer idAlumno);
 }

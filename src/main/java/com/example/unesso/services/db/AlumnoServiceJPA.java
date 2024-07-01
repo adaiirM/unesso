@@ -47,4 +47,9 @@ public class AlumnoServiceJPA implements  IAlumnoService {
 		return alumnoRepo.save(alumno);
 	}
 
+	@Override
+	public Alumno alumnoPorIdAlumno(Integer idAlumno) {
+		return alumnoRepo.findByIdAlumno(idAlumno);
+	}
+
 }
