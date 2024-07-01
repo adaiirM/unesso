@@ -139,21 +139,31 @@ public class AdministradorController {
             return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
         }
 
-        if (alumno.getEstadoFormularios().getFormDependienteEconomico() == null ||
-                alumno.getEstadoFormularios().getFormMiFamilia() || alumno.getEstadoFormularios().getFormMisDatos() == null
-                || alumno.getEstadoFormularios().getFormMisGatos() == null) {
+        if (!alumno.getEstadoFormularios().getFormDependienteEconomico() ||
+                !alumno.getEstadoFormularios().getFormMiFamilia() || !alumno.getEstadoFormularios().getFormMisDatos()
+                || !alumno.getEstadoFormularios().getFormMisGatos()) {
             model.addAttribute("tipoError", "Formularios incompletos");
             model.addAttribute("descError", "El Alumno solicitado tiene formularios incompletos");
             return "administrador/errorPagina"; // Redirige si los formularios están incompletos
         }
 
-        List<IngresoFamiliar> ingresosFamiliares = alumno.getFamilia().getIngresoFamiliar();
-
-        double ingresoTotal = ingresosFamiliares.stream()
-                .mapToDouble(IngresoFamiliar::getIngresoNeto)
-                .sum();
-
+        List<IngresoFamiliar> ingresosFamiliares;
         double gastoTotal = 0;
+        double ingresoTotal = 0;
+
+        try {
+            ingresosFamiliares = alumno.getFamilia().getIngresoFamiliar();
+            ingresoTotal = ingresosFamiliares.stream()
+                    .mapToDouble(IngresoFamiliar::getIngresoNeto)
+                    .sum();
+        }catch (Exception e) {
+            model.addAttribute("tipoError", "No existe el registro de ingresos Familiares");
+            model.addAttribute("descError", "Registros icompletos");
+            return "administrador/errorPagina";
+        }
+
+
+
 
         gastoTotal += alumno.getFamilia().getGastosFam().getGastosAlimentacion();
         gastoTotal += alumno.getFamilia().getGastosFam().getGastoRenta();

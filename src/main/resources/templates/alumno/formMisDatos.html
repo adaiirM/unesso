@@ -954,6 +954,7 @@
 	    var idAlumno = $('#idAlumno').val();
 	    var idAlumnoInt = parseInt(idAlumno);
 	    var url = "/formulario/marcarFormularioRealizado/" + idAlumnoInt;
+	    console.log("Este es el metodo que llama al controlaor para cambiar estadoMisDatos, el id es :"+ idAlumnoInt);
 	
 	    $.ajax({
 	        url: url,
@@ -963,13 +964,13 @@
 	                alert("Información enviada correctamente.");
 	                $("#myForm").submit();
 	            } else {
-	                alert("Información guardada correctamente.");
+	                alert("Tus datos no ha podido ser actualizados.");
 	                console.error("Error al marcar el formulario como realizado.");
 	                $("#myForm").submit();
 	            }
 	        },
 	        error: function(xhr, status, error) {
-	            console.error("Error en la solicitud Ajax: " + error);
+	            alert("Error. Tus datos no han podido ser actualizados");
 	        }
 	    });
 	}

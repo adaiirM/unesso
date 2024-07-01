@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,7 +186,6 @@ public class MisGastosIngresosService {
 				
 			}
 			
-			alumnoSesion = serviceAlumno.buscarAlumnoPorIdUsuario(alumnoSesion.getIdAlumno());
 			
 			//Si el pago bimestral no contiene nada, guardar un 0
 			if(familia.getGastosFam().getReciboLuz().getPagoBimestral().equals("")) {

@@ -16,6 +16,8 @@ public interface IAlumnoService {
 	Alumno buscarAlumnoPorIdUsuario (Integer idUsuario);
 	Alumno getByIdAlumno(Integer idAlumno);
 	Alumno guardar (Alumno alumno);
+
+	Alumno alumnoPorIdAlumno(Integer idAlumno);
 	List<Alumno> getAllAlumnos();
 	Page<Alumno> buscarAlumno(String keyword, Pageable pageable);
 }
