@@ -40,7 +40,6 @@ public class Familia {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "familia", cascade = CascadeType.ALL,  orphanRemoval = false)
-	@Column(name="idIngresoFamiliar")
 	private List<IngresoFamiliar> ingresoFamiliar;
 	
 	private String telefono;

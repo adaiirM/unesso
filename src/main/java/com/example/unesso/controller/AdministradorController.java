@@ -47,6 +47,10 @@ public class AdministradorController {
     private CatCarreraServiceJPA catCarreraService;
     @Autowired
     private FechasRegistradasServiceJPA fechasRegistradasService;
+    @Autowired
+    private CatAreaServiceJPA catAreaService;
+    @Autowired
+    private AdministradorServiceJPA administradorService;
 
 
 
@@ -56,7 +60,25 @@ public class AdministradorController {
     }
 
     @GetMapping("/administradores")
-    public String Administradores() {
+    public String Administradores(Model model, @RequestParam("page") Optional<Integer> page,
+                                  @RequestParam("size") Optional<Integer> size,
+                                  @RequestParam("keyword") Optional<String> keyword) {
+        int currentPage = page.orElse(0);
+        int pageSize = size.orElse(10); // Valor por defecto (solicitudes que muestra)
+
+        String currentKeyword = keyword.orElse("");
+
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by("nombre").ascending());
+
+        Page<Administrador> adminPage = administradorService.buscarAdministrador(currentKeyword, pageable);
+
+        model.addAttribute("administradores", adminPage.getContent());
+        model.addAttribute("totalPages", adminPage.getTotalPages());
+        model.addAttribute("totalAdministradores", adminPage.getTotalElements());
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("size", pageSize);
+        model.addAttribute("keyword", currentKeyword);
+
         return "administrador/Administradores";
     }
 
@@ -234,6 +256,104 @@ public class AdministradorController {
         return "redirect:/administrador/alumnos";
     }
 
+    @GetMapping("/agregarAdministrador")
+    public String agregarAdministrador(Model model) {
+        model.addAttribute("administrador",new Administrador());
+        return "administrador/formAgregarAdministrador";
+    }
+
+    @PostMapping("/guardarAdministrador")
+    public String guardarAdministrador(Administrador administrador) {
+        String usuarioCorreo = administrador.getUsuario().getUsername();
+        // Busca si ya existe el usuario en la base de datos
+        Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
+        if (usuario == null) {
+            // Si el usuario no existe, crea el usuario y el administrador
+            usuario = new Usuario();
+            usuario.setUsername(usuarioCorreo);
+            usuario.setPassword("{noop}UNSIJ2024");
+            usuario.setStatus(true);
+
+            CatRol catRol = catRolService.findByIdRol(2);
+            usuario.setCatRol(catRol);
+
+
+            usuarioService.saveUsuario(usuario);
+            administrador.setUsuario(usuario); // Asignar el usuario al administrador
+            administradorService.guardarAdministrador(administrador);
+        }else{
+            // Si el usuario ya existe, envía un mensaje de error y vuelve al formulario de agregar administrador
+            return "redirect:/administrador/error";
+        }
+        return "redirect:/administrador/administradores";
+    }
+
+    @GetMapping("/editarAdministrador")
+    public String editarAdministrador(@RequestParam Integer idAdministrador, Model model) {
+        Administrador administrador = administradorService.getByIdAdministrador(idAdministrador);
+
+        if (administrador == null) {
+            return "redirect:/administrador/ERROR";
+        }
+
+        // Remover {noop} del password
+        if (administrador.getUsuario() != null && administrador.getUsuario().getPassword().startsWith("{noop}")) {
+            administrador.getUsuario().setPassword(administrador.getUsuario().getPassword().substring(6));
+        }
+
+        model.addAttribute("administrador", administrador);
+
+        return "administrador/formActualizarAdministrador";
+    }
+
+    @PostMapping("/actualizarAdministrador")
+    @Transactional
+    public String actualizarAdministrador(@RequestParam("idAdministrador") Integer idAdministrador,
+                                          @ModelAttribute("administrador") Administrador administrador,
+                                          @RequestParam("correoParam") String correoParam,
+                                          @RequestParam("contraseniaParam") String contraseniaParam) {
+
+        Administrador administradorExistente = administradorService.getByIdAdministrador(idAdministrador);
+
+        if (administradorExistente == null) {
+            return "redirect:/administrador/ERROR";
+        }
+        // Buscar el usuario existente en la base de datos
+        Usuario usuario = usuarioService.findByCorreo(correoParam);
+
+        String usuarioCorreo = administradorExistente.getUsuario().getUsername();
+        String usuarioContrasenia = administradorExistente.getUsuario().getPassword();
+
+
+        //si se cambio el correo o la contraseña se actualiza a el usuario
+        if (!usuarioCorreo.equals(correoParam) || !usuarioContrasenia.equals(contraseniaParam)) {
+            usuario.setUsername(usuarioCorreo);
+            usuario.setPassword("{noop}" + contraseniaParam);
+            usuarioService.saveUsuario(usuario);
+            administradorExistente.setUsuario(usuario);
+        }
+
+        administradorExistente.setNombre(administrador.getNombre());
+        administradorExistente.setApellidoP(administrador.getApellidoP());
+        administradorExistente.setApellidoM(administrador.getApellidoM());
+
+        administradorService.guardarAdministrador(administradorExistente);
+
+        return "redirect:/administrador/administradores";
+    }
+
+    @PostMapping("/eliminarAdministrador")
+    @Transactional
+    public String eliminarAdministrador(@RequestParam Integer idAdministrador) {
+        Administrador administradorExistente = administradorService.getByIdAdministrador(idAdministrador);
+        if (administradorExistente == null) {
+            return "redirect:/administrador/error"; // Redirige si el admin no se encuentra
+        }
+
+        administradorService.deleteAdministrador(idAdministrador);
+        return "redirect:/administrador/alumnos";
+    }
+
     @GetMapping("/agregarAlumno")
     public String agregarAlumno(Model model) {
         model.addAttribute("alumno", new Alumno());
@@ -257,7 +377,6 @@ public class AdministradorController {
 
             CatRol catRol = catRolService.findByIdRol(1);
             usuario.setCatRol(catRol);
-            usuario.setCatRol(catRol);
 
             usuarioService.saveUsuario(usuario);
             alumno.setUsuario(usuario);
@@ -279,7 +398,7 @@ public class AdministradorController {
             alumnoService.saveAlumno(alumno);
             return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
         } else {
-            return "error";
+            return "error"; // si el usuario no se encuentra
         }
 
     }

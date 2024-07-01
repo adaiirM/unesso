@@ -31,7 +31,7 @@
 </div>
 
 <div class="d-flex justify-content-center">
-    <a href="../html/agregarAdminsitrador.html">
+    <a th:href="@{/administrador/agregarAdministrador}">
         <button class="btn btn-primary mb-4 ms-5 custom-btn">
             <img src="../img/agregaraAlumnos.png" style="width: 15%;" alt="">
             Agregar administrador
@@ -44,22 +44,24 @@
     <div class="d-flex col-12 justify-content-between align-items-center flex-wrap">
         <div class="d-flex align-items-center me-auto ms-3 mb-2 mb-md-0">
             <p class="textoInputs me-2 mb-0 ms-5">Mostrar</p>
-            <select name="opciones" class="form-select estiloInputs" style="width: 60px;">
-                <option value="opcion1" class="textoInputs">1</option>
-                <option value="opcion2" class="textoInputs">2</option>
-                <option value="opcion3" class="textoInputs">3</option>
-                <option value="opcion4" class="textoInputs">4</option>
-                <option value="opcion5" class="textoInputs">5</option>
-                <option value="opcion6" class="textoInputs">6</option>
-                <option value="opcion7" class="textoInputs">7</option>
-                <option value="opcion8" class="textoInputs">8</option>
-                <option value="opcion9" class="textoInputs">9</option>
-            </select>
-            <p class="textoInputs ms-2 mb-0 me-2">Solicitudes</p>
+            <form th:action="@{/administrador/administradores}" method="get" class="d-flex">
+                <select name="size" class="estiloInputs" style="width: 55px;" onchange="this.form.submit()">
+                    <option value="10" class="textoInputs" th:selected="${size == 10}">10</option>
+                    <option value="20" class="textoInputs" th:selected="${size == 20}">20</option>
+                    <option value="30" class="textoInputs" th:selected="${size == 30}">30</option>
+                    <option value="40" class="textoInputs" th:selected="${size == 40}">40</option>
+                </select>
+                <p class="textoInputs ms-2 mb-0 me-2">Solicitudes</p>
+                <input type="hidden" name="keyword" th:value="${keyword}">
+            </form>
         </div>
         <div class="d-flex align-items-center ms-md-auto me-5">
             <p class="textoInputs me-2 mb-0 ms-5">Buscar</p>
-            <input type="text" class="estiloInputs rounded form-control" style="width: 100%; height: 100%">
+            <form th:action="@{/administrador/administradores}" method="get">
+                <input type="text" name="keyword" class="estiloInputs rounded" style="width: 200px; height: 25px;" th:value="${keyword}">
+                <input type="hidden" name="size" th:value="${size}">
+                <button type="submit" class="btn btn-primary ms-2 custom-btn">Buscar</button>
+            </form>
         </div>
     </div>
 </div>
@@ -71,82 +73,48 @@
                 <tr>
                     <th scope="col"></th>
                     <th scope="col"></th>
-                    <th scope="col" style="color: #4F46E5;">Matricula</th>
                     <th scope="col" style="color: #4F46E5;">Nombre</th>
-                    <th scope="col" style="color: #4F46E5;">Carrera</th>
-                    <th scope="col" style="color: #4F46E5;">Semestre</th>
-                    <th scope="col" style="color: #4F46E5;">Grupo</th>
+                    <th scope="col" style="color: #4F46E5;">Apellidos</th>
+                    <th scope="col" style="color: #4F46E5;">Correo</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">3405574398</td>
-                    <td class="subtitulo">Emmanuel Gracida Tapia</td>
-                    <td class="subtitulo">Informatica</td>
-                    <td class="subtitulo">Sexto</td>
-                    <td class="subtitulo">603</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">807598274935</td>
-                    <td class="subtitulo">Adriana Hernández Ramírez</td>
-                    <td class="subtitulo">Forestal</td>
-                    <td class="subtitulo">Decimo</td>
-                    <td class="subtitulo">1003</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">028854273954</td>
-                    <td class="subtitulo">Hipólito Javier Domínguez Hernández</td>
-                    <td class="subtitulo">Biología</td>
-                    <td class="subtitulo">Octavo</td>
-                    <td class="subtitulo">803</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">028854273954</td>
-                    <td class="subtitulo">Efren David Jimenez Martinez</td>
-                    <td class="subtitulo">Biología</td>
-                    <td class="subtitulo">Decimo</td>
-                    <td class="subtitulo">803</td>
-                </tr>
-                <tr>
-                    <td><a href=""><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></a></td>
-                    <td><a href="../html/ActualizarAlumno.html"><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
-                    <td class="subtitulo">028854273954</td>
-                    <td class="subtitulo">Luis David Perez Cruz</td>
-                    <td class="subtitulo">Turismo</td>
-                    <td class="subtitulo">Primero</td>
-                    <td class="subtitulo">803</td>
+                <tr th:each="administrador : ${administradores}">
+                    <td>
+                        <form th:action="@{/administrador/eliminarAdministrador}" method="post">
+                            <input type="hidden" th:name="idAdministrador" th:value="${administrador.idAdministrador}">
+                            <button type="submit" style="border: none; background: none; padding: 0; margin: 0;"><img class="iconoAdminAlumnos" src="../img/eliminar.png" alt="Eliminar"></button>
+                        </form>
+                    </td>
+                    <td><a th:href="@{/administrador/editarAdministrador(idAdministrador=${administrador.idAdministrador})}"><img class="iconoAdminAlumnos" src="../img/actualizar.png" alt="Actualizar"></a></td>
+                    <td class="subtitulo" th:text="${administrador.nombre}"></td>
+                    <td class="subtitulo" th:text="${administrador.ApellidoP + ' ' + administrador.ApellidoM}"></td>
+                    <td class="subtitulo" th:text="${administrador.usuario.username}"></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<div class=" d-flex row mt-4 me-2 ms-2">
-    <div class="d-flex col">
-        <h6 class="textoInputs text-start">Mostrando 1 a 8 de 20 solicitudes</h6>
+<div class="d-flex justify-content-between align-items-center">
+    <div>
+        <p class="textoInputs ms-5">Mostrando <span th:text="${size}">5</span> de <span th:text="${totalAdministradores}"></span> registros</p>
     </div>
-    <div class="d-flex col justify-content-end">
+    <div>
         <nav aria-label="Page navigation example" class="textoInputs">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span class="sr-only">Anterior</span>
+                <li th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/administrador/administradores(size=${size}, keyword=${keyword}, page=${currentPage - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span class="sr-only">Siguiente</span>
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/administrador/administradores(size=${size}, keyword=${keyword}, page=${i})}" th:text="${i + 1}">1</a>
+                </li>
+                <li th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/administrador/administradores(size=${size}, keyword=${keyword}, page=${currentPage + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
