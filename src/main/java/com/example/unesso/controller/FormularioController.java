@@ -34,8 +34,11 @@ public class FormularioController {
 	    Map<String, Boolean> response = new HashMap<>();
 	    try {
 	        // Realizar inserción en la base de datos para marcar el formulario como realizado
-	        Alumno alumno = alumnoService.buscarAlumnoPorIdUsuario(idAlumno);
+	        Alumno alumno = alumnoService.alumnoPorIdAlumno(idAlumno);
+			System.out.println("Es es el id del alumno: " + idAlumno);
+
 	        EstadoFormularios estadoFormulario = alumno.getEstadoFormularios();
+			System.out.println(estadoFormulario);
 	        estadoFormulario.setFormMisDatos(true);
 	        estadoFormulariosService.guardar(estadoFormulario);
 
@@ -53,7 +56,7 @@ public class FormularioController {
 	    Map<String, Boolean> response = new HashMap<>();
 	    try {
 	        // Realizar inserción en la base de datos para marcar el formulario como realizado
-	        Alumno alumno = alumnoService.buscarAlumnoPorIdUsuario(idAlumno);
+	        Alumno alumno = alumnoService.alumnoPorIdAlumno(idAlumno);
 	        EstadoFormularios estadoFormulario = alumno.getEstadoFormularios();
 	        estadoFormulario.setFormMiFamilia(true);
 	        estadoFormulariosService.guardar(estadoFormulario);
