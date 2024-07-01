@@ -313,21 +313,72 @@ public class AdministradorController {
 
 
     @PostMapping("/guardarFecha")
-    public String guardarFecha(@RequestParam("carreraFecha") Integer idCatCarrera,
-                               @RequestParam("fechaInicio") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaInicioStr,
-                               @RequestParam("fechaFin") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaFinStr,
-                                Model model) {
+    public String guardarFecha(@RequestParam(value = "carreraFecha", required = false) Integer idCatCarrera,
+                               @RequestParam(value = "fechaInicio", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaInicioStr,
+                               @RequestParam(value = "fechaFin", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date fechaFinStr,
+                               Model model) {
+
+        // Verificar si los campos de las fechas están vacíos
+        if (fechaInicioStr == null || fechaFinStr == null) {
+            model.addAttribute("errorMessage", "Las fechas de inicio y fin son obligatorias.");
+
+            // Recargar los datos necesarios para la vista
+            List<CatCarrera> carrerasSinFecha = catCarreraService.buscarCarrerasSinFecha();
+            List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.getAllFechasRegistradas();
+
+            // Filtrar carreras que ya tienen fecha asignada
+            List<CatCarrera> carrerasDisponibles = new ArrayList<>();
+            for (CatCarrera carrera : carrerasSinFecha) {
+                boolean tieneFechaAsignada = false;
+                for (FechasRegistradas fecha : fechasRegistradas) {
+                    if (fecha.getCarrera().getIdCatCarrera().equals(carrera.getIdCatCarrera())) {
+                        tieneFechaAsignada = true;
+                        break;
+                    }
+                }
+                if (!tieneFechaAsignada) {
+                    carrerasDisponibles.add(carrera);
+                }
+            }
+
+            model.addAttribute("carreras", carrerasDisponibles);
+            model.addAttribute("fechasRegistradas", fechasRegistradas);
+
+            return "administrador/administrarFecha"; // Retornar a la vista con el mensaje de error
+        }
 
         // Imprimir valores para depuración
         System.out.println("Received carreraFecha: " + idCatCarrera);
         System.out.println("Received fechaInicio: " + fechaInicioStr);
         System.out.println("Received fechaFin: " + fechaFinStr);
 
-
-        //Valida si la fecha de inicio es
+        // Valida si la fecha de inicio es mayor que la fecha de fin
         if (fechaInicioStr.after(fechaFinStr)) {
             model.addAttribute("errorMessage", "La fecha de inicio no puede ser mayor que la fecha de fin.");
-            return "redirect:/administrador/fechas?error"; // Redirigir a la vista con un mensaje de error
+
+            // Recargar los datos necesarios para la vista
+            List<CatCarrera> carrerasSinFecha = catCarreraService.buscarCarrerasSinFecha();
+            List<FechasRegistradas> fechasRegistradas = fechasRegistradasService.getAllFechasRegistradas();
+
+            // Filtrar carreras que ya tienen fecha asignada
+            List<CatCarrera> carrerasDisponibles = new ArrayList<>();
+            for (CatCarrera carrera : carrerasSinFecha) {
+                boolean tieneFechaAsignada = false;
+                for (FechasRegistradas fecha : fechasRegistradas) {
+                    if (fecha.getCarrera().getIdCatCarrera().equals(carrera.getIdCatCarrera())) {
+                        tieneFechaAsignada = true;
+                        break;
+                    }
+                }
+                if (!tieneFechaAsignada) {
+                    carrerasDisponibles.add(carrera);
+                }
+            }
+
+            model.addAttribute("carreras", carrerasDisponibles);
+            model.addAttribute("fechasRegistradas", fechasRegistradas);
+
+            return "administrador/administrarFecha"; // Retornar a la vista con el mensaje de error
         }
 
         // Buscar la carrera en la base de datos usando el id
@@ -347,7 +398,7 @@ public class AdministradorController {
         // Guardar las fechas registradas en la base de datos
         fechasRegistradasService.guardar(fechasRegistradas);
 
-        return "redirect:/administrador/fechas"; // Redirigir a la vista de administración de fechas
+        return "redirect:/administrador/fechas";
     }
 
     @PostMapping("/eliminarFecha")
