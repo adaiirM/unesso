@@ -1,7 +1,10 @@
 package com.example.unesso.controller;
 
-import java.util.List;
-
+import com.example.unesso.model.*;
+import com.example.unesso.services.ICatCodigoPostalService;
+import com.example.unesso.services.ICatEstadoService;
+import com.example.unesso.services.ICatLocalidadService;
+import com.example.unesso.services.ICatMunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,14 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.unesso.model.CatCodigoPostal;
-import com.example.unesso.model.CatEstado;
-import com.example.unesso.model.CatLocalidad;
-import com.example.unesso.model.CatMunicipio;
-import com.example.unesso.services.ICatCodigoPostalService;
-import com.example.unesso.services.ICatEstadoService;
-import com.example.unesso.services.ICatLocalidadService;
-import com.example.unesso.services.ICatMunicipioService;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/direccion")
@@ -97,5 +93,26 @@ public class DireccionController {
         return catMunicipioService.estadoPorIdCatMunicipio(municipioId);
     }
 
+	/**
+	 * Recupera la region en base al id de un municipio
+	 * @param municipioId
+	 * @return
+	 */
+	@GetMapping("/regionByIdMunicipio/{municipioId}")
+	@ResponseBody
+	public CatRegion getRegionByIdMunicipio(@PathVariable Integer municipioId) {
+		return catMunicipioService.regionPorIdMinucipio(municipioId);
+	}
+
+	/**
+	 * Recupera la region en base al id de un municipio
+	 * @param municipioId
+	 * @return
+	 */
+	@GetMapping("/distritoByIdMunicipio/{municipioId}")
+	@ResponseBody
+	public CatDistrito getDistritoByIdLocalidad(@PathVariable Integer municipioId) {
+		return catMunicipioService.distritoPorIdMunicipio(municipioId);
+	}
 	 
 }

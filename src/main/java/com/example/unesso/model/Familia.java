@@ -52,7 +52,6 @@ public class Familia {
 	
 	private Boolean esViviendaTutor;
 	
-	
 
 	public Integer getIdFamilia() {
 		return idFamilia;

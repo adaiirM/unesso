@@ -22,4 +22,6 @@ public interface CatLocalidadRepository extends JpaRepository<CatLocalidad, Inte
 	//Recupera el municipio por la localidad
 	@Query("SELECT cl.catMunicipio FROM CatLocalidad cl WHERE cl.idCatLocalidad = :idLocalidad")
 	CatMunicipio municipioPorLocalidad(@Param("idLocalidad") Integer idLocalidad);
+
+
 }

@@ -44,11 +44,20 @@
 
 		<div class="ms-5 me-5 mb-4">
             <h1 class="titulo">MIS GASTOS E INGRESOS</h1>
-            <p style="text-align: justify;" class="fontPoppins">
+            <!--
+				<p style="text-align: justify;" class="fontPoppins">
                 Deberás incluir TODAS las fuentes de ingreso familiar, y deberá acompañarse de comprobantes oficiales de Ingresos. En caso de no depender económicamente de otras personas, deberá presentarse comprobante oficial de Ingresos del alumno. <br>
                 Se deberán reportar el ingreso bruto así como el ingreso neto. 
                 <br>
                 Los datos de agua y consumo de electricidad deberán corresponder al semestre más reciente y deberán ser del domicilio del padre, madre o tutor. En el caso de no depender económicamente, deberán ser del domicilio del alumno.
+            </p>
+			-->
+            
+            <p style="text-align: justify;" class="fontPoppins">
+                Deberás incluir TODAS las fuentes de ingreso familiar. En caso de no depender económicamente de otras personas, deberá presentarse comprobante oficial de Ingresos del alumno. <br>
+                Se deberán reportar el ingreso bruto así como el ingreso neto. 
+                <br>
+                Los datos de consumo de electricidad deberán corresponder al semestre más reciente y deberán ser del domicilio del padre, madre o tutor. En el caso de no depender económicamente, deberán ser del domicilio del alumno.
             </p>
         </div>
 
@@ -268,11 +277,14 @@
 		});
 		
 		document.getElementById('numPersonasAportan').addEventListener('input', function() {
+			// Referencia al contenedor donde se agregarán los elementos
+    		const container = document.getElementById('containerPersonas');
 			var num = parseInt(document.getElementById('numPersonasAportan').value);
 			if(num > 0 && num <=3){
 				generarPersonas();	
 			}else {
-				
+	    		container.innerHTML = '';
+
 			}
 	    });
 		
@@ -331,7 +343,8 @@
 		    
 		    // Crear un objeto Date con el valor del campo de entrada
 		    const date = new Date(dateValue);
-		
+		    date.setDate(date.getDate() + 1);
+			
 		    // Obtener el nombre del mes
 		    const nombreMes = meses[date.getMonth()];
 			
@@ -345,6 +358,7 @@
             
             // Crear un objeto Date con el valor del campo de entrada
             const date = new Date(dateValue);
+            date.setDate(date.getDate() + 1);
 
 			const nombreMes = meses[date.getMonth()];
 			

@@ -1,16 +1,17 @@
 package com.example.unesso.services.db;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.unesso.model.CatDistrito;
+import com.example.unesso.model.CatEstado;
+import com.example.unesso.model.CatMunicipio;
+import com.example.unesso.model.CatRegion;
+import com.example.unesso.repository.CatMunicipioRepository;
+import com.example.unesso.services.ICatMunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.example.unesso.model.CatEstado;
-import com.example.unesso.model.CatMunicipio;
-import com.example.unesso.repository.CatMunicipioRepository;
-import com.example.unesso.services.ICatMunicipioService;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Primary
@@ -39,5 +40,14 @@ public class CatMunicipioServiceJPA implements ICatMunicipioService {
 	@Override
 	public CatEstado estadoPorIdCatMunicipio(Integer idCatMunicipio) {
 		return catMunicipioRepo.obtenerEstadoPorIdMunicipio(idCatMunicipio);
+	}
+	@Override
+	public CatRegion regionPorIdMinucipio(Integer idCatRegion) {
+		return catMunicipioRepo.findRegionByMunicipioId(idCatRegion);
+	}
+
+	@Override
+	public CatDistrito distritoPorIdMunicipio(Integer idMunicipio) {
+		return catMunicipioRepo.findDistritoByMunicipioId(idMunicipio);
 	}
 }
