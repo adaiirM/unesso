@@ -572,10 +572,11 @@
 			var estado = true;
 
 			// Si el total es igual al número de hermanos, completar campos vacíos con 0
-			if(numHermanos >0){
-				estado = alertarCamposNumericos(hermanosEstudiando,numHermanos);
-				estado = alertarCamposNumericos(hermanosDejoEstudio,numHermanos);
-				estado = alertarCamposNumericos(hermanosLicenciatura,numHermanos);
+			
+			if(numHermanos > 0){
+				alertarCamposNumericos(hermanosEstudiando,numHermanos);
+				alertarCamposNumericos(hermanosDejoEstudio,numHermanos);
+				alertarCamposNumericos(hermanosLicenciatura,numHermanos);
 			}
 
 			// Alerta si el total es mayor que el número de hermanos
@@ -1013,6 +1014,7 @@
 						}
 					});
 				} else {
+					alert(validarYCompletar());
 					alert("Ups. Tienes datos obligatorios sin llenar");
 				}
 

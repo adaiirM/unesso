@@ -292,7 +292,7 @@
 	                            <input th:field="*{tutorEconomico.domicilio.coloniaBarrio}" id="coloniaBarrio" name="tutorEconomico.domicilio.coloniaBarrio" class="form-control estiloInputs rounded" style="width: 96%;" aria-label="Default select example">
 	                        </div>
 	                    </div>
-	                    <div class="row mt-4 hidden">
+	                    <div class="row mt-4">
 	                        <div class="col">
 	                            <p class="textoInputs">Distrito</p>
 	                            <select id="selectDistritos" class="form-select estiloInputs" style="width: 96%;" aria-label="Default select example">
@@ -370,7 +370,7 @@
 					document.getElementById('selectDistritos').disabled = true;
 					document.getElementById('selectRegiones').disabled = true;
                 } else {
-					cambiarInputDistritoRegion();
+					//cambiarInputDistritoRegion();
 				}
             }
             
@@ -475,6 +475,7 @@
 										var municipio = document.getElementById('selectMunicipios');
 										municipio.value = domAlumno.catLocalidad.catMunicipio.idCatMunicipio;
 	
+											
 									    selectIndex = municipio.value;
 									    $.ajax({
 									        url: '/domicilio/obtenerLocalidadesPorMunicipio',
@@ -787,10 +788,9 @@
             });
         });
 
-		document.getElementById('selectEstados').addEventListener('change', function() {
-		   cambiarInputDistritoRegion();
-		});
 		
+		
+		/*
 		function cambiarInputDistritoRegion(){
 			 var selectEstados = document.getElementById('selectEstados');
 		    var selectDistritos = document.getElementById('selectDistritos');
@@ -827,7 +827,7 @@
 
 			// Reemplaza el select con el input							
         	selectRegiones.parentNode.replaceChild(inputRegion, selectRegiones);
-		}
+		}*/
 		
 		
 		

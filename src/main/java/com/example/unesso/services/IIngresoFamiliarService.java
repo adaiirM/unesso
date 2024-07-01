@@ -1,11 +1,11 @@
 package com.example.unesso.services;
 
-import com.example.unesso.model.IngresoFamiliar;
+import java.util.List;
 
 /**
  * Description: Interfaz que define operaciones relacionadas con la gestión de ingresoFamiliar en el sistema.
  */
 public interface IIngresoFamiliarService {
-	void eliminar(Integer idIngresoFamiliar);
+	void eliminarIngresosFamiliares(List<Integer> idsIngresosFamiliar);
 	
 }
