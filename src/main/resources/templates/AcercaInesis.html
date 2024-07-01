@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Información Económica - UNSIJ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .hero {
+            background: linear-gradient(to right, #0062E6, #33AEFF);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .container {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            margin: 15px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        .card-text {
+            color: #213635;
+            text-align: justify;
+        }
+        .logo-img {
+            max-width: 40%;
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<nav th:insert="~{administrador/navAdministrador.html}"></nav>  
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Sistema de Información Económica <br><span style="font-weight: bold;">INESIS</span></h1>
+    <p>Diseñado para realizar estudios socioeconómicos de los alumnos de la Universidad de la Sierra Juárez (UNSIJ).</p>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    <div class="row justify-content-center">
+        <!-- Card 1 -->
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card p-3">
+                <img src="../static/img/INESIS.png" alt="INESIS Logo" class="logo-img">
+                <div class="card-body">
+                    <h3 class="card-title" style="color: #4F46E5;">¿Qué es INESIS?</h3>
+                    <p class="card-text">INESIS es una aplicación diseñada específicamente para realizar estudios
+                         socioeconómicos de los alumnos de la Universidad de la Sierra Juárez (UNSIJ).
+                         <br> Permite a los administradores y al personal docente obtener una visión clara y
+                          precisa del estado socioeconómico de los estudiantes, facilitando la toma de decisiones y
+                           la implementación de políticas que promuevan la igualdad y el apoyo a los más necesitados.
+                        </br>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card p-3">
+                <img src="../static/img/unsijSinFondo.png" alt="UNSIJ Logo" class="logo-img">
+                <div class="card-body">
+                    <h3 class="card-title" style="color: #009f41;">¿Qué es la UNSIJ?</h3>
+                    <p class="card-text">La UNSIJ forma parte del Sistema de Universidades Estatales de Oaxaca, 
+                        enfocada en la educación superior e investigación científica.
+                    <br>La UNSIJ es un instrumento de desarrollo para la región de la Sierra Norte, como Centro de Educación Superior e Investigación Científica, enfocado a la formación, especialización y desarrollo integral de profesionales en diversos aspectos de las necesidades del país, así como para generar empresas y activar la economía regional, fomentando constantemente la dignificación del trabajo, la honestidad y el respeto a los valores morales nacionales y universales.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Add more cards as needed -->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<footer th:insert="~{fragments/footer.html}"></footer>
+</body>
+</html>
