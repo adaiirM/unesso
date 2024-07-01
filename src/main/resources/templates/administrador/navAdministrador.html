@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +33,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="../html/inicioSesion.html"><p class="letraNav">Cerrar sesion</p></a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}"><p class="letraNav">Cerrar sesion</p></a></li>
                     </ul>
               </li>
             </ul>
@@ -70,8 +70,8 @@
                 <div class=" d-flex justify-content-end">
                     <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModal2()"></button>
                 </div>
-                <div class="modal-header">
-                    <h2 class="modal-title mx-auto" style="color: #4F46E5; font: bolder;">Información del administrador</h2>
+                <div class="modal-header d-flex justify-content-center">
+                    <h2 class="modal-title mx-auto text-center" style="color: #4F46E5; font: bolder;">Información del administrador</h2>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -79,7 +79,7 @@
                             <p class="textoInputs" style="color: #4F46E5;">Nombre: </p>
                         </div>
                         <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            Efren David Jimenez Martinez
+                            <p class="ms-3 subtitulo">Efren David Jimenez Martinez</p>
                         </div>
                         
                     </div>
@@ -88,7 +88,7 @@
                             <p class="textoInputs" style="color: #4F46E5;">Area: </p>
                         </div>
                         <div class="col d-flex justify-content-start textoInputs" style="color: #4F46E5;">
-                            Servicios escolares
+                            <p class="subtitulo">Servicios escolares</p>
                         </div>
                     </div>
                 </div>
