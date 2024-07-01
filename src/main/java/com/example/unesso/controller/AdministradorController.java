@@ -135,6 +135,20 @@ public class AdministradorController {
     public String getSolicitudAlumno(@RequestParam("idAlumno") Integer idAlumno,
                                      Model model){
         Alumno alumno = alumnoService.getByIdAlumno(idAlumno);
+        if(alumno == null){
+            model.addAttribute("tipoError", "Alumno no encontrado");
+            model.addAttribute("descError", "El alumno solicitado no se encuentra en nuestra base de datos");
+            return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
+        }
+
+        if (alumno.getEstadoFormularios().getFormDependienteEconomico() == null ||
+                alumno.getEstadoFormularios().getFormMiFamilia() || alumno.getEstadoFormularios().getFormMisDatos() == null
+                || alumno.getEstadoFormularios().getFormMisGatos() == null) {
+            model.addAttribute("tipoError", "Formularios incompletos");
+            model.addAttribute("descError", "El Alumno solicitado tiene formularios incompletos");
+            return "administrador/errorPagina"; // Redirige si los formularios están incompletos
+        }
+
         List<IngresoFamiliar> ingresosFamiliares = alumno.getFamilia().getIngresoFamiliar();
 
         double ingresoTotal = ingresosFamiliares.stream()
@@ -152,9 +166,6 @@ public class AdministradorController {
         gastoTotal += alumno.getFamilia().getGastosFam().getGastoOtros();
 
 
-        if (alumno == null) {
-            return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
-        }
 
         model.addAttribute("alumno", alumno);
         model.addAttribute("ingresoTotal", ingresoTotal);
@@ -164,10 +175,12 @@ public class AdministradorController {
 
     @PostMapping("/eliminarAlumno")
     @Transactional
-    public String eliminarAlumno(@RequestParam Integer idAlumno) {
+    public String eliminarAlumno(@RequestParam Integer idAlumno,Model model) {
         Alumno alumnoExistente = alumnoService.getByIdAlumno(idAlumno);
-        if (alumnoExistente == null) {
-            return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
+        if(alumnoExistente == null){
+            model.addAttribute("tipoError", "Alumno no encontrado");
+            model.addAttribute("descError", "El alumno solicitado no se encuentra en nuestra base de datos");
+            return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
         }
 
         alumnoService.deleteAlumno(idAlumno);
@@ -179,8 +192,10 @@ public class AdministradorController {
         System.out.println(idAlumno);
         Alumno alumno = alumnoService.getByIdAlumno(idAlumno);
 
-        if (alumno == null) {
-            return "redirect:/administrador/error"; // Redirige si el alumno no se encuentra
+        if(alumno == null){
+            model.addAttribute("tipoError", "Alumno no encontrado");
+            model.addAttribute("descError", "El alumno solicitado no se encuentra en nuestra base de datos");
+            return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
         }
 
         // Remover {noop} del password
@@ -263,7 +278,7 @@ public class AdministradorController {
     }
 
     @PostMapping("/guardarAdministrador")
-    public String guardarAdministrador(Administrador administrador) {
+    public String guardarAdministrador(Administrador administrador, Model model) {
         String usuarioCorreo = administrador.getUsuario().getUsername();
         // Busca si ya existe el usuario en la base de datos
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
@@ -283,7 +298,9 @@ public class AdministradorController {
             administradorService.guardarAdministrador(administrador);
         }else{
             // Si el usuario ya existe, envía un mensaje de error y vuelve al formulario de agregar administrador
-            return "redirect:/administrador/error";
+            model.addAttribute("tipoError", "El Usuario ya existe");
+            model.addAttribute("descError", "El correo que estas tratando de ingresar ya esta relacionado con un usuario");
+            return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
         }
         return "redirect:/administrador/administradores";
     }
@@ -344,10 +361,12 @@ public class AdministradorController {
 
     @PostMapping("/eliminarAdministrador")
     @Transactional
-    public String eliminarAdministrador(@RequestParam Integer idAdministrador) {
+    public String eliminarAdministrador(@RequestParam Integer idAdministrador, Model model) {
         Administrador administradorExistente = administradorService.getByIdAdministrador(idAdministrador);
         if (administradorExistente == null) {
-            return "redirect:/administrador/error"; // Redirige si el admin no se encuentra
+            model.addAttribute("tipoError", "Administrador no encontrado");
+            model.addAttribute("descError", "El Administrador solicitado no se encuentra en nuestra base de datos");
+            return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
         }
 
         administradorService.deleteAdministrador(idAdministrador);
@@ -364,7 +383,7 @@ public class AdministradorController {
         return "administrador/formAgregarAlumno";
     }
     @PostMapping("/guardarAlumno")
-    public String guardarAlumno(Alumno alumno, @RequestParam("nombreGrupo") String nombreGrupo) {
+    public String guardarAlumno(Alumno alumno, @RequestParam("nombreGrupo") String nombreGrupo, Model model) {
         String usuarioCorreo = alumno.getUsuario().getUsername();
         //busca si ya existe el usuario en la base de datos
         Usuario usuario = usuarioService.findByCorreo(usuarioCorreo);
@@ -398,7 +417,9 @@ public class AdministradorController {
             alumnoService.saveAlumno(alumno);
             return "redirect:/administrador/alumnos"; // Redirige a la lista de alumnos después de guardar
         } else {
-            return "error"; // si el usuario no se encuentra
+            model.addAttribute("tipoError", "El Usuario ya existe");
+            model.addAttribute("descError", "El correo que estas tratando de registrar ya existe en la base de datos y ya esta relacionado con un alumno");
+            return "administrador/errorPagina";
         }
 
     }
@@ -522,10 +543,12 @@ public class AdministradorController {
 
     @PostMapping("/eliminarFecha")
     @Transactional
-    public String eliminarFecha(@RequestParam("idFechasRegistradas") Integer idFecha) {
+    public String eliminarFecha(@RequestParam("idFechasRegistradas") Integer idFecha,Model model) {
         FechasRegistradas fechaExistente = fechasRegistradasService.getByIdFechasRegistradas(idFecha);
         if (fechaExistente == null) {
-            return "redirect:/administrador/error"; // Redirige si la fecha no se encuentra
+                model.addAttribute("tipoError", "Fecha no encontrada");
+                model.addAttribute("descError", "La fecha solicitada no se encuentra en nuestra base de datos");
+                return "administrador/errorPagina"; // Redirige si la fecha no se encuentra
         }
 
         fechasRegistradasService.deleteFechasRegistradas(idFecha);
@@ -540,7 +563,9 @@ public class AdministradorController {
         FechasRegistradas fechasRegistradas = fechasRegistradasService.getByIdFechasRegistradas(idFechasRegistradas);
 
         if (fechasRegistradas == null) {
-            return "redirect:/administrador/error";
+            model.addAttribute("tipoError", "No existen fehas registradas");
+            model.addAttribute("descError", "No existen fehas registradas en la base de datos");
+            return "administrador/errorPagina"; // Redirige si el alumno no se encuentra
         }
 
 
