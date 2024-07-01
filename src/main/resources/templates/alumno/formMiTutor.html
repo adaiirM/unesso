@@ -371,7 +371,7 @@
 					document.getElementById('selectDistritos').disabled = true;
 					document.getElementById('selectRegiones').disabled = true;
                 } else {
-					cambiarInputDistritoRegion();
+					//cambiarInputDistritoRegion();
 				}
             }
             
@@ -789,10 +789,9 @@
             });
         });
 
-		document.getElementById('selectEstados').addEventListener('change', function() {
-		   cambiarInputDistritoRegion();
-		});
 		
+		
+		/*
 		function cambiarInputDistritoRegion(){
 			 var selectEstados = document.getElementById('selectEstados');
 		    var selectDistritos = document.getElementById('selectDistritos');
@@ -829,7 +828,7 @@
 
 			// Reemplaza el select con el input							
         	selectRegiones.parentNode.replaceChild(inputRegion, selectRegiones);
-		}
+		}*/
 		
 		
 		

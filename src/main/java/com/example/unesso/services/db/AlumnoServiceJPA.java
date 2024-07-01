@@ -59,6 +59,11 @@ public class AlumnoServiceJPA implements  IAlumnoService {
 	}
 
 	@Override
+	public Alumno alumnoPorIdAlumno(Integer idAlumno) {
+		return alumnoRepo.findByIdAlumno(idAlumno);
+	}
+
+	@Override
 	public List<Alumno> getAllAlumnos() {
 		return alumnoRepo.findAll();
 	}
