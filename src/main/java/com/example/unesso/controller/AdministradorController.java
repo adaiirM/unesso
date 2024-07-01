@@ -48,8 +48,6 @@ public class AdministradorController {
     @Autowired
     private FechasRegistradasServiceJPA fechasRegistradasService;
     @Autowired
-    private CatAreaServiceJPA catAreaService;
-    @Autowired
     private AdministradorServiceJPA administradorService;
 
 

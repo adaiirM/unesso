@@ -13,9 +13,6 @@ public class Administrador {
     private String nombre;
     private String ApellidoP;
     private String ApellidoM;
-    @OneToOne
-    @JoinColumn(name = "idArea")
-    private CatArea catArea;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
@@ -54,14 +51,6 @@ public class Administrador {
         ApellidoM = apellidoM;
     }
 
-    public CatArea getCatArea() {
-        return catArea;
-    }
-
-    public void setCatArea(CatArea catArea) {
-        this.catArea = catArea;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -77,7 +66,6 @@ public class Administrador {
                 ", nombreAdministrador='" + nombre + '\'' +
                 ", ApellidoP='" + ApellidoP + '\'' +
                 ", ApellidoM='" + ApellidoM + '\'' +
-                ", catArea=" + catArea +
                 ", usuario=" + usuario +
                 '}';
     }
